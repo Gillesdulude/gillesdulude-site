@@ -205,15 +205,22 @@ h1{text-transform:none;letter-spacing:-.02em;font-size:clamp(36px,5.4vw,60px)}
 h1 em,h2 em{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-weight:400}
 .btn{border-radius:999px;letter-spacing:.06em;padding:14px 24px}
 .menu .cta{border-radius:999px}
-.hero.light{background:var(--warm);color:var(--nb)}
+.hero.light{background:var(--bc);color:var(--nb)}
 .hero.light .lead{color:var(--ch)}
 .hero.light .over{color:var(--ch)}
 .hero.light .wrap{min-height:0;padding-top:72px;align-items:center}
 .hero.light .txt{padding-bottom:72px}
 .hero.light .photo{align-self:center;padding:0 0 56px}
-.hero.light .photo img{mask-image:none;-webkit-mask-image:none;border-radius:200px 200px 24px 24px;aspect-ratio:4/5;object-fit:cover;object-position:50% 15%;background:#1b1714;box-shadow:0 30px 60px rgba(19,15,12,.18)}
+.hero.light .photo{position:relative;padding:0!important;align-self:end}
+.hero.light .photo::before{content:"";position:absolute;left:8%;right:8%;bottom:0;aspect-ratio:1/1;border-radius:50%;background:var(--warm)}
+.hero.light .photo img{position:relative;mask-image:none;-webkit-mask-image:none;width:100%;height:auto}
+.hero.light .txt{padding-bottom:96px}
+@media (max-width:860px){.hero.light .txt{padding-bottom:16px}.hero.light .photo{max-width:340px}}
 .hero.light .motif{filter:invert(1);opacity:.06}
-.hero.light.small .wrap{padding:80px 24px 64px}
+.hero.light.small{background:var(--warm)}
+.hero.light.small .wrap{padding:72px 24px 56px}
+section+section{border-top:1px solid var(--line)}
+.beige+section,section[style*=warm]+section{border-top:0}
 .figure img{border-radius:24px}
 .figure .tag{border-radius:0 14px 0 24px}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
@@ -234,7 +241,9 @@ h1 em,h2 em{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-we
 .steps3 h3{margin:0 0 6px}.steps3 p{margin:0;color:var(--ch);font-size:16px}
 @media (max-width:860px){.steps3{grid-template-columns:1fr}}
 .cta-warm{background:var(--warm);border-radius:28px;padding:56px 40px;text-align:center}
-.cta-warm h2{max-width:720px;margin:0 auto 10px}.cta-warm .lead{margin:0 auto}.cta-warm .btns{justify-content:center}
+.cta-warm h2{max-width:720px;margin:0 auto 10px}
+.cta-warm[style*="text-align:left"] h2{margin:0 0 12px}
+@media (max-width:860px){.cta-warm[style*="grid"]{grid-template-columns:1fr!important;padding:36px 24px}}.cta-warm .lead{margin:0 auto}.cta-warm .btns{justify-content:center}
 .pill{display:inline-block;background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;margin-bottom:16px;border:1px solid var(--line)}
 section{padding:80px 0}
 `;
@@ -249,7 +258,7 @@ function head(cfg, title, desc) {
 <meta name="description" content="${esc(desc)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="assets/gilles.jpg">
+<meta property="og:image" content="assets/gilles-apropos.jpg">
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -388,7 +397,7 @@ function pageAccueil(cfg, listings) {
       <p class="lead">Vendre la maison familiale ou trouver la prochaine : je vous accompagne à chaque étape, simplement et honnêtement.</p>
       <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="proprietes.html">Voir mes propriétés</a></div>
     </div>
-    <div class="photo"><img src="assets/gilles.jpg" alt="Gilles Jr. Dulude" width="1000" height="1000"></div>
+    <div class="photo"><img src="assets/gilles-detoure.webp" alt="Gilles Jr. Dulude" width="1000" height="1021"></div>
   </div>
 </section>
 
@@ -402,16 +411,17 @@ function pageAccueil(cfg, listings) {
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap cols">
-  <div class="figure"><img src="assets/gilles.jpg" alt="Gilles Jr. Dulude" loading="lazy"><div class="tag">Gilles Jr. Dulude</div></div>
+<section style="padding-top:0"><div class="wrap"><div class="cta-warm" style="text-align:left;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
   <div>
     <p class="over">Qui je suis</p>
     <h2>Un ancien constructeur <em>devenu courtier.</em></h2>
-    <p class="lead">J'ai passé 10 ans sur les chantiers avant l'immobilier. Je vois ce qui fait la valeur d'une maison, et ce qui peut nuire à sa vente.</p>
-    <p>Je vous dis les vraies affaires, je reste disponible et je m'implique personnellement dans chaque dossier.</p>
+    <p class="lead" style="margin:0">J'ai passé 10 ans sur les chantiers avant l'immobilier. Je vois ce qui fait la valeur d'une maison, et ce qui peut nuire à sa vente.</p>
+  </div>
+  <div>
+    <div class="stats" style="margin-top:0;border:0;padding:0"><div><b>10+</b><span>ans en construction</span></div><div><b>10+</b><span>ans en courtage</span></div></div>
     <div class="btns"><a class="btn ghost" href="a-propos.html">Mon histoire</a></div>
   </div>
-</div></section>
+</div></div></section>
 
 ${vedette.length ? `<section class="beige" style="background:var(--warm)"><div class="wrap">
   <div class="cols" style="align-items:end;margin-bottom:32px">
@@ -437,7 +447,7 @@ function pageAPropos(cfg) {
     header(cfg, "a-propos.html") +
     pageHero("À propos", "Le terrain <em>et le marché.</em>", "Plus de 20 ans d'expérience combinée en construction et en immobilier.") + `
 <section><div class="wrap cols">
-  <div class="figure"><img src="assets/gilles.jpg" alt="Gilles Jr. Dulude" loading="lazy"></div>
+  <div class="figure"><img src="assets/gilles-apropos.jpg" alt="Gilles Jr. Dulude" loading="lazy" style="aspect-ratio:4/5;object-position:45% 30%"></div>
   <div>
     <p class="over">Mon parcours</p>
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
@@ -471,9 +481,8 @@ function pageVendre(cfg) {
     <p class="over">La Méthode V8</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
     <p class="lead">La plupart des courtiers en utilisent 2 ou 3. J'en active 8, adaptés à votre maison.</p>
-    <div class="chipsv8">${V8.map(([n, t]) => `<span><b>${n}</b>${t}</span>`).join("")}</div>
   </div>
-  <div class="figure"><img src="assets/gilles.jpg" alt="Gilles Jr. Dulude" loading="lazy"></div>
+  <div class="chipsv8" style="margin-top:0">${V8.map(([n, t]) => `<span><b>${n}</b>${t}</span>`).join("")}</div>
 </div></section>
 
 <section style="background:var(--warm)"><div class="wrap">
