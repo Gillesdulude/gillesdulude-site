@@ -1,0 +1,34 @@
+{
+  "courtier": {
+    "nom": "Gilles Dulude",
+    "titre": "Courtier immobilier",
+    "agence": "Royal LePage Distinction, agence immobilière",
+    "telephone": "+1 (450) 700-1533",
+    "courriel": "gilles@gillesdulude.com",
+    "siteWeb": "https://gillesdulude.com",
+    "photo": "",
+    "adresseAgence": "559, rue Pierre-Caisse, Saint-Jean-sur-Richelieu (Québec) J3A 1P1"
+  },
+  "page": {
+    "titre": "Mes propriétés à vendre",
+    "sousTitre": "Inscriptions en vigueur de Gilles Dulude, mises à jour automatiquement à partir de Centris.",
+    "domainePersonnalise": "gillesdulude.com"
+  },
+  "filtres": {
+    "statutsAffiches": [
+      "Active",
+      "Active Under Contract",
+      "Pending"
+    ],
+    "memberKey": "",
+    "vendus": {
+      "afficher": false,
+      "note": "Interdit par l'Annexe II Centris (art. 2.3) : aucune donnée Centris sur une propriété vendue ou dont le contrat est terminé."
+    }
+  },
+  "ava": {
+    "webhook": "",
+    "note": "Adresse du « Inbound Webhook » d'un workflow Ava. Le site envoie : nom, courriel, telephone, mls, tag (ex. « mls: 16781318 »), adresse, demande, source."
+  },
+  "rendezVous": "https://link.avaclient.com/widget/booking/5NomABVdTSUmPty9i4m6"
+}
