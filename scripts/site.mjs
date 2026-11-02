@@ -595,7 +595,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  dlg.querySelector("#docs").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   const payload={nom:d.nom,courriel:d.courriel,telephone:d.telephone||"",mls:cur.id,tag:"mls: "+cur.id,adresse:cur.adresse+", "+cur.ville,source:"site web gillesdulude.com",demande:"documents",consentement:true};
   const ok=f.querySelector("#docsok");
-  if(ava){try{await fetch(ava,{method:"POST",mode:"no-cors",body:new URLSearchParams(payload)});
+  if(ava){try{await fetch(ava+(ava.includes("?")?"&":"?")+new URLSearchParams(payload),{mode:"no-cors"});
     ok.textContent="Merci ! Les documents s'en viennent dans votre boîte courriel (vérifiez aussi les indésirables).";ok.style.display="block";f.querySelector("button").disabled=true;return}catch(err){}}
   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Documents : "+cur.adresse+" (MLS "+cur.id+")")+"&body="+encodeURIComponent("Nom : "+d.nom+"\\nCourriel : "+d.courriel+"\\nTéléphone : "+(d.telephone||"")+"\\n\\nJ'aimerais recevoir les documents de la propriété No MLS "+cur.id+".");
  });
@@ -661,7 +661,7 @@ f.addEventListener("submit",e=>{
   e.preventDefault();const d=new FormData(f);
   const AVA=${JSON.stringify(cfg.ava?.webhook || "")};
   if(AVA){const o=Object.fromEntries(d);o.source="site web gillesdulude.com";o.demande=o.sujet;if(mls){o.mls=mls;o.tag="mls: "+mls}
-    fetch(AVA,{method:"POST",mode:"no-cors",body:new URLSearchParams(o)}).then(()=>{const k=document.getElementById("ok");k.textContent="Merci ! Votre message est envoyé. Je vous réponds rapidement.";k.style.display="block";f.reset()});return}const sujet=f.sujet.options[f.sujet.selectedIndex].text;
+    fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{const k=document.getElementById("ok");k.textContent="Merci ! Votre message est envoyé. Je vous réponds rapidement.";k.style.display="block";f.reset()});return}const sujet=f.sujet.options[f.sujet.selectedIndex].text;
   const corps="Nom : "+d.get("nom")+"\\nTéléphone : "+(d.get("telephone")||"")+"\\nCourriel : "+d.get("courriel")+"\\nProjet : "+sujet+"\\n\\n"+(d.get("message")||"");
   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Site web : "+sujet)+"&body="+encodeURIComponent(corps);
   document.getElementById("ok").style.display="block";
