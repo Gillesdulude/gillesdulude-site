@@ -247,6 +247,19 @@ section+section{border-top:1px solid var(--line)}
 @media (max-width:860px){.cta-warm[style*="grid"]{grid-template-columns:1fr!important;padding:36px 24px}}.cta-warm .lead{margin:0 auto}.cta-warm .btns{justify-content:center}
 .pill{display:inline-block;background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;margin-bottom:16px;border:1px solid var(--line)}
 section{padding:80px 0}
+
+/* Fiche : photo en haut, texte en bas */
+dialog#dlg{overflow:auto}
+#dlg .dlg{display:block;max-height:none}
+#dlg .gal{min-height:0;aspect-ratio:16/9;background:var(--nb)}
+#dlg .gal img{object-fit:cover}
+#dlg .thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px;background:var(--nb);scrollbar-width:thin}
+#dlg .thumbs img{width:84px;height:56px;object-fit:cover;border-radius:6px;opacity:.55;cursor:pointer;flex:none;transition:opacity .2s}
+#dlg .thumbs img.on,#dlg .thumbs img:hover{opacity:1}
+#dlg .info{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;padding:28px 32px 32px;overflow:visible}
+#dlg .info .side .pcta:first-child{margin-top:0}
+#dlg .close{position:sticky;top:10px;float:right;margin:10px 12px -50px 0;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+@media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:1fr;padding:22px 20px}}
 `;
 
 function head(cfg, title, desc) {
@@ -562,10 +575,10 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  const sujet=encodeURIComponent("Propriété "+cur.adresse+", "+cur.ville+" (MLS "+cur.id+")");
  dlg.innerHTML='<button class="close" aria-label="Fermer">×</button><div class="dlg"><div class="gal"><img id="gimg" alt="">'+
  (cur.photos.length>1?'<button class="nav prev" aria-label="Photo précédente">‹</button><button class="nav next" aria-label="Photo suivante">›</button>':'')+
- '<div class="idx" id="gidx"></div></div><div class="info"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
+ '<div class="idx" id="gidx"></div></div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
  '<div class="price">'+priceOf(cur)+'</div><div class="addr">'+esc(cur.adresse)+'</div><div class="city">'+esc([cur.ville,cur.codePostal].filter(Boolean).join(", "))+'</div>'+
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
- '<div class="desc">'+esc(cur.description)+'</div>'+
+ '<div class="desc">'+esc(cur.description)+'</div><div class="mls">No MLS '+esc(cur.id)+'</div></div><div class="side">'+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><input name="nom" placeholder="Nom" required autocomplete="name"><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété.</label>'+
@@ -574,7 +587,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<a class="btn" href="contact.html?sujet=visite&mls='+encodeURIComponent(cur.id)+'">Demander une visite</a>'+
  (courtier.telephone?'<a class="btn ghost" href="tel:'+courtier.telephone.replace(/[^0-9+]/g,"")+'">'+esc(courtier.telephone)+'</a>':'')+
  (cur.visiteVirtuelle?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(cur.visiteVirtuelle)+'">Visite virtuelle</a>':'')+
- '</div></div><div class="mls">No MLS '+esc(cur.id)+'</div></div></div>';
+ '</div></div></div></div></div>';
  showPhoto();dlg.querySelector(".close").onclick=()=>dlg.close();
  dlg.querySelector("#docs").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   const payload={nom:d.nom,courriel:d.courriel,telephone:d.telephone||"",mls:cur.id,tag:"mls: "+cur.id,adresse:cur.adresse+", "+cur.ville,source:"site web gillesdulude.com",demande:"documents",consentement:true};
@@ -583,9 +596,11 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
     ok.textContent="Merci ! Les documents s'en viennent dans votre boîte courriel (vérifiez aussi les indésirables).";ok.style.display="block";f.querySelector("button").disabled=true;return}catch(err){}}
   location.href="mailto:"+courtier.courriel+"?subject="+encodeURIComponent("Documents : "+cur.adresse+" (MLS "+cur.id+")")+"&body="+encodeURIComponent("Nom : "+d.nom+"\\nCourriel : "+d.courriel+"\\nTéléphone : "+(d.telephone||"")+"\\n\\nJ'aimerais recevoir les documents de la propriété No MLS "+cur.id+".");
  });
- dlg.querySelector(".prev")?.addEventListener("click",()=>step(-1));dlg.querySelector(".next")?.addEventListener("click",()=>step(1));
+ dlg.querySelector(".prev")?.addEventListener("click",()=>step(-1));
+ document.getElementById("thumbs")?.addEventListener("click",e=>{const t=e.target.closest("img[data-i]");if(t){pi=+t.dataset.i;showPhoto()}});dlg.querySelector(".next")?.addEventListener("click",()=>step(1));
  if(!dlg.open)dlg.showModal();history.replaceState(null,"","#"+encodeURIComponent(cur.id))}
-function showPhoto(){const p=cur.photos[pi],img=$("#gimg");if(p){img.src=p.url;img.alt=p.legende||cur.adresse}$("#gidx").textContent=cur.photos.length?(pi+1)+" / "+cur.photos.length:""}
+function showPhoto(){const p=cur.photos[pi],img=$("#gimg");if(p){img.src=p.url;img.alt=p.legende||cur.adresse}
+ const th=document.getElementById("thumbs");if(th){th.querySelectorAll("img").forEach((t,i)=>t.classList.toggle("on",i===pi));const a=th.children[pi];if(a)a.scrollIntoView({block:"nearest",inline:"center"})}$("#gidx").textContent=cur.photos.length?(pi+1)+" / "+cur.photos.length:""}
 function step(d){if(!cur.photos.length)return;pi=(pi+d+cur.photos.length)%cur.photos.length;showPhoto()}
 $("#grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(c)open(c.dataset.id)});
 dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
