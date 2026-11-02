@@ -27,7 +27,7 @@
     }
   },
   "ava": {
-    "webhook": "",
+    "webhook": "https://services.leadconnectorhq.com/hooks/ILy8UOL6elLU6t3EBhkm/webhook-trigger/0621979b-d64c-44fb-b012-2163f315dbc6",
     "note": "Adresse du « Inbound Webhook » d'un workflow Ava. Le site envoie : nom, courriel, telephone, mls, tag (ex. « mls: 16781318 »), adresse, demande, source."
   },
   "rendezVous": "https://link.avaclient.com/widget/booking/5NomABVdTSUmPty9i4m6"
