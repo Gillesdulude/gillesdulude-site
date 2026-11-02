@@ -63,6 +63,7 @@ section{padding:96px 0}
 .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;align-items:end;gap:40px;min-height:min(88vh,760px);padding-top:64px}
 .hero .txt{padding-bottom:96px}
 .hero .photo{align-self:end;position:relative}
+.hero .photo.detoure img{mask-image:linear-gradient(to bottom,#000 85%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 85%,transparent);max-height:640px;width:auto;margin:0 auto}
 .hero .photo img{width:100%;height:auto;mask-image:radial-gradient(ellipse 62% 75% at 50% 42%,#000 55%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 62% 75% at 50% 42%,#000 55%,transparent 100%)}
 .motif{position:absolute;z-index:1;opacity:.13;pointer-events:none;width:720px;right:-160px;top:-90px}
 .hero.small .wrap{grid-template-columns:1fr;min-height:0;padding:96px 24px 80px}
@@ -388,16 +389,16 @@ function pageAccueil(cfg, listings) {
   const vedette = listings.slice(0, 3);
   return head(cfg, `${c.nom} | Courtier immobilier, Rive-Sud de Montréal`, "Gilles Jr. Dulude, courtier immobilier Royal LePage Distinction sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.") +
     header(cfg, "index.html") + `
-<section class="hero light">
+<section class="hero dark">
   <img class="motif" src="assets/motif-contour.png" alt="">
   <div class="wrap">
     <div class="txt">
-      <span class="pill">Courtier immobilier sur la Rive-Sud</span>
-      <h1>Votre prochain chapitre <em>commence ici.</em></h1>
+      <p class="over">Gilles Jr. Dulude, courtier immobilier</p>
+      <h1 style="text-transform:uppercase;letter-spacing:.01em">Votre prochain chapitre commence ici.</h1>
       <p class="lead">Vendre la maison familiale ou trouver la prochaine : je vous accompagne à chaque étape, simplement et honnêtement.</p>
       <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="proprietes.html">Voir mes propriétés</a></div>
     </div>
-    <div class="photo"><div class="arch"><img src="assets/gilles-detoure.webp" alt="Gilles Jr. Dulude" width="1000" height="1021"></div></div>
+    <div class="photo detoure"><img src="assets/gilles-hero-detoure.webp" alt="Gilles Jr. Dulude" width="870" height="1100"></div>
   </div>
 </section>
 
@@ -447,7 +448,7 @@ function pageAPropos(cfg) {
     header(cfg, "a-propos.html") +
     pageHero("À propos", "Le terrain <em>et le marché.</em>", "Plus de 20 ans d'expérience combinée en construction et en immobilier.") + `
 <section><div class="wrap cols">
-  <div class="figure"><img src="assets/gilles-apropos.jpg" alt="Gilles Jr. Dulude" loading="lazy" style="aspect-ratio:4/3;object-position:62% 40%"></div>
+  <div style="background:var(--warm);border-radius:24px;display:flex;justify-content:center;align-items:flex-end;padding:32px 24px 0;overflow:hidden"><img src="assets/gilles-apropos-detoure.webp" alt="Gilles Jr. Dulude" loading="lazy" style="max-height:520px;width:auto"></div>
   <div>
     <p class="over">Mon parcours</p>
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
