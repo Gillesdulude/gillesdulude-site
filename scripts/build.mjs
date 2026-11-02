@@ -244,6 +244,7 @@ function toPublic(p, lookups) {
     photos,
     modifie: p.ModificationTimestamp || "",
     enVigueurDepuis: p.OnMarketTimestamp || "",
+    lien: p.ListingURL || `https://passerelle.centris.ca/redirect.aspx?NoMLS=${p.ListingId || p.ListingKey}`,
     vendu: p.StandardStatus === "Closed",
     dateStatut: p.StatusChangeTimestamp || p.CloseDate || "",
   };

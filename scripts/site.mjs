@@ -258,6 +258,8 @@ dialog#dlg{overflow:auto}
 #dlg .thumbs img.on,#dlg .thumbs img:hover{opacity:1}
 #dlg .info{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;padding:28px 32px 32px;overflow:visible}
 #dlg .info .side .pcta:first-child{margin-top:0}
+.mlslink{display:inline-block;margin-top:16px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--nb);font-size:14px;transition:background .2s}
+.mlslink:hover{background:var(--warm)}
 #dlg .close{position:sticky;top:10px;float:right;margin:10px 12px -50px 0;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 @media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:1fr;padding:22px 20px}}
 `;
