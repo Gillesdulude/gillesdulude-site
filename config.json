@@ -4,10 +4,14 @@
     "titre": "Courtier immobilier",
     "agence": "Royal LePage Distinction, agence immobilière",
     "telephone": "+1 (450) 700-1533",
-    "courriel": "gilles@gillesdulude.com",
+    "courriel": "info@gillesdulude.com",
     "siteWeb": "https://gillesdulude.com",
     "photo": "",
-    "adresseAgence": "559, rue Pierre-Caisse, Saint-Jean-sur-Richelieu (Québec) J3A 1P1"
+    "adresseAgence": "559, rue Pierre-Caisse, Saint-Jean-sur-Richelieu (Québec) J3A 1P1",
+    "courrielsNotification": [
+      "info@gillesdulude.com",
+      "gilles@gillesdulude.com"
+    ]
   },
   "page": {
     "titre": "Mes propriétés à vendre",

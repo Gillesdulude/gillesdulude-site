@@ -176,6 +176,7 @@ dialog::backdrop{background:rgba(19,15,12,.75)}
 .form label{display:grid;gap:6px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
 .form input,.form select,.form textarea{padding:14px;border:1px solid var(--line);background:#fff;font-size:16px;letter-spacing:0;text-transform:none;font-weight:400;border-radius:var(--r)}
 .form textarea{min-height:140px;resize:vertical}
+.form select{appearance:none;-webkit-appearance:none;padding-right:48px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23130F0C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 18px center}
 .form .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:600px){.form .row{grid-template-columns:1fr}}
 .note{font-size:14px;color:var(--ch)}
@@ -596,7 +597,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
   const ok=f.querySelector("#docsok");
   if(ava){try{await fetch(ava,{method:"POST",mode:"no-cors",body:new URLSearchParams(payload)});
     ok.textContent="Merci ! Les documents s'en viennent dans votre boîte courriel (vérifiez aussi les indésirables).";ok.style.display="block";f.querySelector("button").disabled=true;return}catch(err){}}
-  location.href="mailto:"+courtier.courriel+"?subject="+encodeURIComponent("Documents : "+cur.adresse+" (MLS "+cur.id+")")+"&body="+encodeURIComponent("Nom : "+d.nom+"\\nCourriel : "+d.courriel+"\\nTéléphone : "+(d.telephone||"")+"\\n\\nJ'aimerais recevoir les documents de la propriété No MLS "+cur.id+".");
+  location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Documents : "+cur.adresse+" (MLS "+cur.id+")")+"&body="+encodeURIComponent("Nom : "+d.nom+"\\nCourriel : "+d.courriel+"\\nTéléphone : "+(d.telephone||"")+"\\n\\nJ'aimerais recevoir les documents de la propriété No MLS "+cur.id+".");
  });
  dlg.querySelector(".prev")?.addEventListener("click",()=>step(-1));
  document.getElementById("thumbs")?.addEventListener("click",e=>{const t=e.target.closest("img[data-i]");if(t){pi=+t.dataset.i;showPhoto()}});dlg.querySelector(".next")?.addEventListener("click",()=>step(1));
@@ -635,8 +636,8 @@ function pageContact(cfg) {
         <option value="autre">Autre question</option>
       </select></label>
       <label>Message<textarea name="message" id="message" placeholder="Adresse de la propriété, délais, questions..."></textarea></label>
-      <div><button class="btn" type="submit">Envoyer</button></div>
       <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi.</label>
+      <div><button class="btn" type="submit">Envoyer</button></div>
       <div class="ok" id="ok">Merci ! Votre message est prêt à être envoyé. Je vous réponds rapidement.</div>
     </form>
   </div>
@@ -662,7 +663,7 @@ f.addEventListener("submit",e=>{
   if(AVA){const o=Object.fromEntries(d);o.source="site web gillesdulude.com";o.demande=o.sujet;if(mls){o.mls=mls;o.tag="mls: "+mls}
     fetch(AVA,{method:"POST",mode:"no-cors",body:new URLSearchParams(o)}).then(()=>{const k=document.getElementById("ok");k.textContent="Merci ! Votre message est envoyé. Je vous réponds rapidement.";k.style.display="block";f.reset()});return}const sujet=f.sujet.options[f.sujet.selectedIndex].text;
   const corps="Nom : "+d.get("nom")+"\\nTéléphone : "+(d.get("telephone")||"")+"\\nCourriel : "+d.get("courriel")+"\\nProjet : "+sujet+"\\n\\n"+(d.get("message")||"");
-  location.href="mailto:${esc(c.courriel)}?subject="+encodeURIComponent("Site web : "+sujet)+"&body="+encodeURIComponent(corps);
+  location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Site web : "+sujet)+"&body="+encodeURIComponent(corps);
   document.getElementById("ok").style.display="block";
 });})();
 </script>
