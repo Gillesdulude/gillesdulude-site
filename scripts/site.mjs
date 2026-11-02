@@ -205,17 +205,17 @@ h1{text-transform:none;letter-spacing:-.02em;font-size:clamp(36px,5.4vw,60px)}
 h1 em,h2 em{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-weight:400}
 .btn{border-radius:999px;letter-spacing:.06em;padding:14px 24px}
 .menu .cta{border-radius:999px}
-.hero.light{background:var(--bc);color:var(--nb)}
+.hero.light{background:var(--warm);color:var(--nb)}
 .hero.light .lead{color:var(--ch)}
 .hero.light .over{color:var(--ch)}
 .hero.light .wrap{min-height:0;padding-top:72px;align-items:center}
 .hero.light .txt{padding-bottom:72px}
 .hero.light .photo{align-self:center;padding:0 0 56px}
-.hero.light .photo{position:relative;padding:0!important;align-self:end}
-.hero.light .photo::before{content:"";position:absolute;left:8%;right:8%;bottom:0;aspect-ratio:1/1;border-radius:50%;background:var(--warm)}
-.hero.light .photo img{position:relative;mask-image:none;-webkit-mask-image:none;width:100%;height:auto}
+.hero.light .photo{position:relative;align-self:center;padding:0 0 56px}
+.hero.light .photo .arch{border-radius:220px 220px 24px 24px;background:#DCD3C1;overflow:hidden;aspect-ratio:4/5;display:flex;align-items:flex-end;justify-content:center;box-shadow:0 30px 60px rgba(19,15,12,.14)}
+.hero.light .photo img{mask-image:none;-webkit-mask-image:none;width:100%;height:auto;display:block}
 .hero.light .txt{padding-bottom:96px}
-@media (max-width:860px){.hero.light .txt{padding-bottom:16px}.hero.light .photo{max-width:340px}}
+@media (max-width:860px){.hero.light .txt{padding-bottom:16px}.hero.light .photo{max-width:340px;padding-bottom:40px}}
 .hero.light .motif{filter:invert(1);opacity:.06}
 .hero.light.small{background:var(--warm)}
 .hero.light.small .wrap{padding:72px 24px 56px}
@@ -397,7 +397,7 @@ function pageAccueil(cfg, listings) {
       <p class="lead">Vendre la maison familiale ou trouver la prochaine : je vous accompagne à chaque étape, simplement et honnêtement.</p>
       <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="proprietes.html">Voir mes propriétés</a></div>
     </div>
-    <div class="photo"><img src="assets/gilles-detoure.webp" alt="Gilles Jr. Dulude" width="1000" height="1021"></div>
+    <div class="photo"><div class="arch"><img src="assets/gilles-detoure.webp" alt="Gilles Jr. Dulude" width="1000" height="1021"></div></div>
   </div>
 </section>
 
@@ -447,7 +447,7 @@ function pageAPropos(cfg) {
     header(cfg, "a-propos.html") +
     pageHero("À propos", "Le terrain <em>et le marché.</em>", "Plus de 20 ans d'expérience combinée en construction et en immobilier.") + `
 <section><div class="wrap cols">
-  <div class="figure"><img src="assets/gilles-apropos.jpg" alt="Gilles Jr. Dulude" loading="lazy" style="aspect-ratio:4/5;object-position:45% 30%"></div>
+  <div class="figure"><img src="assets/gilles-apropos.jpg" alt="Gilles Jr. Dulude" loading="lazy" style="aspect-ratio:4/3;object-position:62% 40%"></div>
   <div>
     <p class="over">Mon parcours</p>
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
