@@ -187,6 +187,19 @@ function adresse(p) {
   return `${unite}${debut}${fin} ${rueFr}`.trim() || String(p.UnparsedAddress || "").trim();
 }
 
+// Adresse publique de l'annonce (format des pages d'annonces : type~a-vendre~ville/numéro)
+function slug(s) {
+  return String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+function lienAnnonce(p) {
+  const id = p.ListingId || p.ListingKey;
+  const st = String(p.PropertySubType || "");
+  const t = /duplex/i.test(st) ? "duplex" : /triplex/i.test(st) ? "triplex" : /quadruplex/i.test(st) ? "quadruplex" : /quintuplex/i.test(st) ? "quintuplex"
+    : /condo/i.test(st) ? "condo" : /lot|land/i.test(st) || /land/i.test(p.PropertyType || "") ? "terrain" : /income/i.test(p.PropertyType || "") ? "immeuble-a-revenus" : "maison";
+  const ville = slug(p.Township || p.City || "quebec");
+  return `https://www.centris.ca/fr/${t}~a-vendre~${ville}/${id}`;
+}
+
 // Les acheteurs au Québec lisent en pieds carrés : on convertit tout en pi².
 function aire(v, unite) {
   const n = num(v);
@@ -244,7 +257,7 @@ function toPublic(p, lookups) {
     photos,
     modifie: p.ModificationTimestamp || "",
     enVigueurDepuis: p.OnMarketTimestamp || "",
-    lien: p.ListingURL || `https://passerelle.centris.ca/redirect.aspx?NoMLS=${p.ListingId || p.ListingKey}`,
+    lien: lienAnnonce(p),
     vendu: p.StandardStatus === "Closed",
     dateStatut: p.StatusChangeTimestamp || p.CloseDate || "",
   };
