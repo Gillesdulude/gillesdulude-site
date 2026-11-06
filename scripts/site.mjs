@@ -226,7 +226,13 @@ h1 em,h2 em{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-we
 @media (max-width:860px){.hero.light .txt{padding-bottom:16px}.hero.light .photo{max-width:340px;padding-bottom:40px}}
 .hero.light .motif{filter:invert(1);opacity:.06}
 .hero.light.small{background:var(--warm)}
-.hero.light.small .wrap{padding:72px 24px 56px}
+.hero.light.small .wrap{padding:48px 24px 40px}
+.hero.light.small{padding:0}
+.hero.light.small .txt{padding:0}
+.hero.light.small h1{margin:.1em 0 .25em}
+.hero.light.small .lead{margin:0}
+.hero.light.small+section{padding-top:56px}
+@media (max-width:860px){.hero.light.small .wrap{padding:32px 20px 28px}.hero.light.small+section{padding-top:40px}}
 section+section{border-top:1px solid var(--line)}
 .beige+section,section[style*=warm]+section{border-top:0}
 .figure img{border-radius:24px}
