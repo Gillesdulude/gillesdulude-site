@@ -614,7 +614,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
  '<div class="desc">'+esc(cur.description)+'</div>'+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
- '<div class="form" style="margin-top:12px;gap:10px"><input name="nom" placeholder="Nom" required autocomplete="name"><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
+ '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété.</label>'+
  '<button class="btn" type="submit">Recevoir les documents</button><div class="ok" id="docsok"></div></div></form>'+
  '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong>'+esc(courtier.nom)+', '+esc(courtier.titre)+'<div>'+
@@ -624,11 +624,11 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '</div></div></div></div></div>';
  showPhoto();dlg.querySelector(".close").onclick=()=>dlg.close();
  dlg.querySelector("#docs").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
-  const payload={nom:d.nom,courriel:d.courriel,telephone:d.telephone||"",mls:cur.id,tag:"mls: "+cur.id,adresse:cur.adresse+", "+cur.ville,source:"site web gillesdulude.com",demande:"documents",consentement:true};
+  const payload={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone||"",mls:cur.id,tag:"mls: "+cur.id,adresse:cur.adresse+", "+cur.ville,source:"site web gillesdulude.com",demande:"documents",consentement:true};
   const ok=f.querySelector("#docsok");
   if(ava){try{await fetch(ava+(ava.includes("?")?"&":"?")+new URLSearchParams(payload),{mode:"no-cors"});
     ok.textContent="Merci ! Les documents s'en viennent dans votre boîte courriel (vérifiez aussi les indésirables).";ok.style.display="block";f.querySelector("button").disabled=true;return}catch(err){}}
-  location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Documents : "+cur.adresse+" (MLS "+cur.id+")")+"&body="+encodeURIComponent("Nom : "+d.nom+"\\nCourriel : "+d.courriel+"\\nTéléphone : "+(d.telephone||"")+"\\n\\nJ'aimerais recevoir les documents de la propriété No MLS "+cur.id+".");
+  location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Documents : "+cur.adresse+" (MLS "+cur.id+")")+"&body="+encodeURIComponent("Nom : "+d.prenom+" "+d.nomfamille+"\\nCourriel : "+d.courriel+"\\nTéléphone : "+(d.telephone||"")+"\\n\\nJ'aimerais recevoir les documents de la propriété No MLS "+cur.id+".");
  });
  dlg.querySelector(".prev")?.addEventListener("click",()=>step(-1));
  document.getElementById("thumbs")?.addEventListener("click",e=>{const t=e.target.closest("img[data-i]");if(t){pi=+t.dataset.i;showPhoto()}});dlg.querySelector(".next")?.addEventListener("click",()=>step(1));
@@ -657,8 +657,8 @@ function pageContact(cfg) {
   <div>
     <p class="over">Écrivez-moi</p>
     <form class="form" id="form" ${action ? `action="${esc(action)}" method="post"` : ""}>
-      <div class="row"><label>Nom<input name="nom" required autocomplete="name"></label><label>Téléphone<input name="telephone" type="tel" autocomplete="tel"></label></div>
-      <label>Courriel<input name="courriel" type="email" required autocomplete="email"></label>
+      <div class="row"><label>Prénom<input name="prenom" required autocomplete="given-name"></label><label>Nom<input name="nomfamille" required autocomplete="family-name"></label></div>
+      <div class="row"><label>Courriel<input name="courriel" type="email" required autocomplete="email"></label><label>Téléphone<input name="telephone" type="tel" autocomplete="tel"></label></div>
       <label>Votre projet<select name="sujet" id="sujet">
         <option value="evaluation">Évaluation gratuite de ma propriété</option>
         <option value="vente">Vendre ma propriété</option>
@@ -692,9 +692,9 @@ f.addEventListener("submit",e=>{
   if(f.getAttribute("action"))return;
   e.preventDefault();const d=new FormData(f);
   const AVA=${JSON.stringify(cfg.ava?.webhook || "")};
-  if(AVA){const o=Object.fromEntries(d);o.source="site web gillesdulude.com";o.demande=o.sujet;if(mls){o.mls=mls;o.tag="mls: "+mls}
+  if(AVA){const o=Object.fromEntries(d);o.nom=(o.prenom||"")+" "+(o.nomfamille||"");o.source="site web gillesdulude.com";o.demande=o.sujet;if(mls){o.mls=mls;o.tag="mls: "+mls}
     fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{const k=document.getElementById("ok");k.textContent="Merci ! Votre message est envoyé. Je vous réponds rapidement.";k.style.display="block";f.reset()});return}const sujet=f.sujet.options[f.sujet.selectedIndex].text;
-  const corps="Nom : "+d.get("nom")+"\\nTéléphone : "+(d.get("telephone")||"")+"\\nCourriel : "+d.get("courriel")+"\\nProjet : "+sujet+"\\n\\n"+(d.get("message")||"");
+  const corps="Nom : "+d.get("prenom")+" "+d.get("nomfamille")+"\\nTéléphone : "+(d.get("telephone")||"")+"\\nCourriel : "+d.get("courriel")+"\\nProjet : "+sujet+"\\n\\n"+(d.get("message")||"");
   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Site web : "+sujet)+"&body="+encodeURIComponent(corps);
   document.getElementById("ok").style.display="block";
 });})();
