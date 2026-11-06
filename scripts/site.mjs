@@ -198,6 +198,8 @@ footer .g{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px}
 .socs{display:flex;flex-direction:column;gap:10px}
 .soc{display:inline-flex;align-items:center;gap:10px}
 .follow{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:var(--warm);border-radius:24px;padding:32px 36px}
+.suivez-sec{border-top:0!important}
+.suivez-sec+section{border-top:0;padding-top:48px}
 .follow-btns{display:flex;gap:12px;flex-wrap:wrap}
 .soc-btn{display:inline-flex;align-items:center;gap:10px}
 footer a{text-decoration:none;color:#d9d4cb}footer a:hover{color:var(--bc)}
@@ -393,8 +395,8 @@ function socialLinks(cfg, cls = "soc") {
 }
 function suivezMoi(cfg) {
   if (!cfg.reseaux) return "";
-  return `<section style="padding-top:0"><div class="wrap"><div class="follow">
-  <div><p class="over" style="margin:0 0 6px">Suivez-moi</p><h3 style="margin:0">Les nouvelles propriétés, mes conseils et les coulisses.</h3></div>
+  return `<section class="suivez-sec" style="padding:0"><div class="wrap"><div class="follow">
+  <div><p class="over" style="margin:0 0 6px">Suivez-moi</p><h3 style="margin:0">Mes nouvelles propriétés et mes conseils immobiliers.</h3></div>
   <div class="follow-btns">${socialLinks(cfg, "btn soc-btn")}</div>
 </div></div></section>`;
 }
