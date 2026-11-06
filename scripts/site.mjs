@@ -227,6 +227,10 @@ h1 em,h2 em{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-we
 .hero.light .motif{filter:invert(1);opacity:.06}
 .hero.light.small{background:var(--warm)}
 .hero.light.small .wrap{padding:48px 24px 40px}
+.hero.dark:not(.small){padding:0}
+.hero.dark:not(.small) .wrap{min-height:0;padding-top:40px}
+.hero.dark:not(.small) .txt{padding-bottom:72px}
+@media (max-width:860px){.hero.dark:not(.small) .txt{padding-bottom:8px}.hero.dark:not(.small) .wrap{padding-top:28px;gap:16px}}
 .hero.light.small{padding:0}
 .hero.light.small .txt{padding:0}
 .hero.light.small h1{margin:.1em 0 .25em}
