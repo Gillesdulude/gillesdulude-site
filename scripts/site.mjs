@@ -207,6 +207,14 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .prose ul{padding-left:20px}
 .prose li{margin:6px 0}
 .prose a{color:inherit}
+.etoiles{color:#E3A33B;letter-spacing:2px}
+.avis-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.note-g{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.note-g b{font-size:34px;line-height:1}.note-g span:last-child{color:var(--ch);font-size:14px}
+.avis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width:800px){.avis-grid{grid-template-columns:1fr}}
+.prix{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.prix div{background:#fff;border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:4px}
+.prix b{font-size:22px}.prix span{color:var(--ch);font-size:14px}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
 @media (max-width:860px){footer .g{grid-template-columns:1fr}}
 .apercu{background:var(--be);color:var(--nb);text-align:center;padding:8px 16px;font-size:14px}
@@ -286,6 +294,54 @@ dialog#dlg{overflow:auto}
 @media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:1fr;padding:22px 20px}}
 `;
 
+
+const SECTEURS = ["Chambly", "Carignan", "La Prairie", "Saint-Jean-sur-Richelieu", "Saint-Hubert", "Longueuil", "Brossard", "Mont-Saint-Hilaire", "Beloeil"];
+const PRIX = [
+  ["Rubis", "2025"], ["Top 5 % national", "2022"], ["Rubis", "2022"], ["Prix Diamant rouge", "2021"],
+  ["Attestation Diamant", "2020"], ["Attestation Platine de directeur", "2019"], ["Palme d'or du président", "2018"],
+];
+function jsonLd(cfg) {
+  const c = cfg.courtier, r = cfg.reseaux || {};
+  const site = cfg.page?.domainePersonnalise ? "https://" + cfg.page.domainePersonnalise + "/" : (c.siteWeb || "");
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    name: "Gilles Jr. Dulude, courtier immobilier",
+    alternateName: ["Gilles Dulude", "Gilles Jr Dulude", "Équipe Dulude Immobilier"],
+    description: "Courtier immobilier résidentiel sur la Rive-Sud de Montréal, spécialisé en maisons familiales et en immeubles à revenus (plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.",
+    url: site, image: site + "assets/gilles-apropos.jpg",
+    telephone: c.telephone, email: c.courriel,
+    address: { "@type": "PostalAddress", streetAddress: "559, rue Pierre-Caisse", addressLocality: "Saint-Jean-sur-Richelieu", addressRegion: "QC", postalCode: "J3A 1P1", addressCountry: "CA" },
+    parentOrganization: { "@type": "RealEstateAgent", name: "Royal LePage Distinction" },
+    areaServed: SECTEURS.map((v) => ({ "@type": "City", name: v })),
+    knowsAbout: ["Vente de maisons unifamiliales", "Achat de propriété", "Immeubles à revenus", "Duplex, triplex et plex", "Évaluation de propriété", "Construction et rénovation"],
+    award: PRIX.map(([n, y]) => `${n} Royal LePage ${y}`),
+    knowsLanguage: "fr",
+    sameAs: [r.facebook, r.instagram, "https://www.royallepage.ca/fr/agent/quebec/st-jean-sur-richelieu/gilles-jr-dulude/53410/"].filter(Boolean),
+  };
+  return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
+}
+
+const AVIS_GOOGLE = [
+  ["Grâce au travail de toute son équipe, notre maison s'est vendue très rapidement. Nous recommandons Gilles Jr. Dulude sans hésitation à toute personne qui cherche un courtier immobilier professionnel, disponible, efficace et humain.", "Laurence L.", "2026"],
+  ["Toujours un plaisir de faire affaire avec Junior et ce depuis maintes années. Pour une expérience sans tracas, juste, agréable et sereine, il est vraiment le courtier immobilier à contacter et en plus, il a les plus belles pancartes en ville !", "France A.", "Janvier 2025"],
+  ["Super équipe, confiance entière.", "Lise C.", "Décembre 2023"],
+  ["Une équipe authentique, efficace et qui travaille pour vous! N'hésitez pas à les contacter.", "YOMA", "Janvier 2023"],
+];
+const AVIS_URL = "https://www.google.com/search?q=%C3%89quipe+Dulude+-+Immobilier";
+const avisGoogle = () => `<section><div class="wrap">
+  <div class="avis-top"><div><p class="over">Avis Google</p><h2>Ce que mes clients <em>en disent.</em></h2></div>
+  <div class="note-g"><b>5,0</b><span class="etoiles" aria-label="5 étoiles sur 5">★★★★★</span><span>${AVIS_GOOGLE.length} avis sur Google</span></div></div>
+  <div class="avis-grid">${AVIS_GOOGLE.map(([q, n, d]) => `<figure class="quote" style="margin:0"><span class="etoiles" aria-hidden="true">★★★★★</span><p>« ${q} »</p><figcaption class="who">${n}<span>${d}</span></figcaption></figure>`).join("")}</div>
+  <p style="margin-top:28px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir les avis sur Google</a></p>
+</div></section>`;
+
+const prixSection = () => `<section style="background:var(--warm)"><div class="wrap">
+  <p class="over">Distinctions Royal LePage</p>
+  <h2 style="margin-bottom:28px">Reconnu <em>année après année.</em></h2>
+  <div class="prix">${PRIX.map(([n, y]) => `<div><b>${y}</b><span>${n}</span></div>`).join("")}</div>
+</div></section>`;
+
 function head(cfg, title, desc) {
   return `<!DOCTYPE html>
 <html lang="fr-CA">
@@ -297,6 +353,7 @@ function head(cfg, title, desc) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="assets/gilles-apropos.jpg">
+${jsonLd(cfg)}
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -516,6 +573,7 @@ function pageAPropos(cfg) {
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
     <p>Avant l'immobilier, j'ai passé 10 ans sur les chantiers, jusqu'à devenir entrepreneur général. Aujourd'hui, ça me permet d'évaluer rapidement la vraie valeur d'une maison.</p>
     <p>Je suis direct et transparent. Mon rôle est simple : protéger mes clients et les aider à prendre les bonnes décisions.</p>
+    <p>Je me spécialise dans les maisons familiales et les immeubles à revenus (duplex, triplex et plex) sur la Rive-Sud : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
     <div class="stats"><div><b>10+</b><span>ans en construction</span></div><div><b>10+</b><span>ans en courtage</span></div></div>
   </div>
 </div></section>
@@ -530,7 +588,8 @@ function pageAPropos(cfg) {
   </div>
 </div></section>
 
-${temoignages()}
+${prixSection()}
+${avisGoogle()}
 ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
@@ -785,6 +844,39 @@ function pageConfidentialite(cfg) {
 ` + footer(cfg) + end;
 }
 
+
+function llmsTxt(cfg) {
+  const c = cfg.courtier, r = cfg.reseaux || {};
+  return `# Gilles Jr. Dulude, courtier immobilier
+
+> Courtier immobilier résidentiel chez Royal LePage Distinction, sur la Rive-Sud de Montréal (Québec). Spécialisé dans la vente et l'achat de maisons familiales et d'immeubles à revenus (duplex, triplex, plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.
+
+## Secteurs desservis
+${SECTEURS.map((v) => "- " + v).join("\n")}
+
+## Distinctions Royal LePage
+${PRIX.map(([n, y]) => `- ${n} (${y})`).join("\n")}
+
+## Avis
+- Note de 5,0 sur 5 sur Google (fiche « Équipe Dulude - Immobilier »)
+
+## Coordonnées
+- Téléphone : ${c.telephone}
+- Courriel : ${c.courriel}
+- Agence : ${c.agence}, ${c.adresseAgence || ""}
+- Facebook : ${r.facebook || ""}
+- Instagram : ${r.instagram || ""}
+
+## Pages
+- [Accueil](index.html)
+- [À propos](a-propos.html)
+- [Vendre](vendre.html)
+- [Acheter et investir](acheter.html)
+- [Propriétés à vendre](proprietes.html)
+- [Contact](contact.html)
+`;
+}
+
 export function renderSite(cfg, listings, { apercu = "" } = {}) {
   const pages = {
     "index.html": pageAccueil(cfg, listings),
@@ -794,8 +886,9 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
     "proprietes.html": pageProprietes(cfg, listings),
     "contact.html": pageContact(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
+    "llms.txt": llmsTxt(cfg),
   };
   const banner = apercu ? `<div class="apercu">${esc(apercu)}</div>` : "";
-  for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
+  for (const k of Object.keys(pages)) if (k.endsWith(".html")) pages[k] = pages[k].replace("{{APERCU}}", banner);
   return pages;
 }
