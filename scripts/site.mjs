@@ -191,7 +191,12 @@ dialog::backdrop{background:rgba(19,15,12,.75)}
 
 /* Pied */
 footer{background:var(--nb);color:#bdb7ad;padding:72px 0 28px;font-size:15px}
-footer .g{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px}
+footer .g{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px}
+.socs{display:flex;flex-direction:column;gap:10px}
+.soc{display:inline-flex;align-items:center;gap:10px}
+.follow{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:var(--warm);border-radius:24px;padding:32px 36px}
+.follow-btns{display:flex;gap:12px;flex-wrap:wrap}
+.soc-btn{display:inline-flex;align-items:center;gap:10px}
 footer a{text-decoration:none;color:#d9d4cb}footer a:hover{color:var(--bc)}
 footer h4{color:var(--bc);font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 14px}
 footer .logo{height:40px;width:auto;margin-bottom:18px}
@@ -300,6 +305,25 @@ function header(cfg, current) {
 </div></header>`;
 }
 
+
+// ---------- Réseaux sociaux ----------
+const ICO_FB = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21h2.9z"/></svg>';
+const ICO_IG = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>';
+function socialLinks(cfg, cls = "soc") {
+  const r = cfg.reseaux || {};
+  const a = [];
+  if (r.facebook) a.push(`<a class="${cls}" href="${esc(r.facebook)}" target="_blank" rel="noopener">${ICO_FB}<span>Facebook</span></a>`);
+  if (r.instagram) a.push(`<a class="${cls}" href="${esc(r.instagram)}" target="_blank" rel="noopener">${ICO_IG}<span>Instagram</span></a>`);
+  return a.join("");
+}
+function suivezMoi(cfg) {
+  if (!cfg.reseaux) return "";
+  return `<section style="padding-top:0"><div class="wrap"><div class="follow">
+  <div><p class="over" style="margin:0 0 6px">Suivez-moi</p><h3 style="margin:0">Les nouvelles propriétés, mes conseils et les coulisses.</h3></div>
+  <div class="follow-btns">${socialLinks(cfg, "btn soc-btn")}</div>
+</div></div></section>`;
+}
+
 function footer(cfg) {
   const c = cfg.courtier;
   const modal = cfg.rendezVous ? `<dialog id="rdv" aria-label="Prendre rendez-vous" style="width:min(760px,96vw)"><button class="close" aria-label="Fermer" onclick="this.closest('dialog').close()">×</button><div style="padding:28px 20px 8px"><p class="over" style="margin:0 0 4px">Prendre rendez-vous</p><h3 style="margin:0 0 12px">Choisissez le moment qui vous convient</h3><div id="rdvbox"></div></div></dialog>
@@ -322,6 +346,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
       ${c.courriel ? `<li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li>` : ""}
       <li style="margin-top:10px">${esc(c.agence)}<br>${esc(c.adresseAgence || "")}</li>
     </ul></div>
+    ${cfg.reseaux ? `<div><h4>Suivez-moi</h4><div class="socs">${socialLinks(cfg)}</div></div>` : ""}
   </div>
   <div class="legal"><span>© ${y} Gilles Jr. Dulude, courtier immobilier. ${esc(c.agence)}.</span><span>Les renseignements sur les propriétés sont fournis à titre indicatif et ne sont pas garantis.</span></div>
 </div></footer>`;
@@ -457,6 +482,8 @@ document.getElementById("vedette").innerHTML=D.listings.map(l=>card(l,"a")).join
 </script>` : ""}
 
 ${temoignages()}
+
+${suivezMoi(cfg)}
 
 ${band("Parlons de votre projet.", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
@@ -651,6 +678,7 @@ function pageContact(cfg) {
       ${c.telephone ? `<a href="${telHref(c.telephone)}"><span>Téléphone</span><b>${esc(c.telephone)}</b></a>` : ""}
       ${c.courriel ? `<a href="mailto:${esc(c.courriel)}"><span>Courriel</span><b>${esc(c.courriel)}</b></a>` : ""}
       <div><span>Agence</span><b>${esc(c.agence)}</b><br>${esc(c.adresseAgence || "")}</div>
+      ${cfg.reseaux ? `<div><span>Suivez-moi</span><div class="socs" style="margin-top:6px">${socialLinks(cfg)}</div></div>` : ""}
       <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>La Prairie, Carignan, Chambly, Saint-Jean-sur-Richelieu et les environs</div>
     </div>
   </div>

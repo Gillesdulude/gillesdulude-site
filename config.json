@@ -34,5 +34,9 @@
     "webhook": "https://services.leadconnectorhq.com/hooks/ILy8UOL6elLU6t3EBhkm/webhook-trigger/d61e2e63-ecfb-4c3e-beab-e2bfda3473a2",
     "note": "Adresse du « Inbound Webhook » d'un workflow Ava. Le site envoie : nom, courriel, telephone, mls, tag (ex. « mls: 16781318 »), adresse, demande, source."
   },
-  "rendezVous": "https://link.avaclient.com/widget/booking/5NomABVdTSUmPty9i4m6"
+  "rendezVous": "https://link.avaclient.com/widget/booking/5NomABVdTSUmPty9i4m6",
+  "reseaux": {
+    "facebook": "https://www.facebook.com/GillesJrDulude/",
+    "instagram": "https://www.instagram.com/gillesjrdulude/"
+  }
 }
