@@ -202,6 +202,11 @@ footer h4{color:var(--bc);font-size:13px;letter-spacing:.14em;text-transform:upp
 footer .logo{height:40px;width:auto;margin-bottom:18px}
 footer .rlp{height:58px;width:auto;margin-top:6px}
 footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
+.prose{max-width:760px}
+.prose h2{font-size:24px;margin:40px 0 10px}
+.prose ul{padding-left:20px}
+.prose li{margin:6px 0}
+.prose a{color:inherit}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
 @media (max-width:860px){footer .g{grid-template-columns:1fr}}
 .apercu{background:var(--be);color:var(--nb);text-align:center;padding:8px 16px;font-size:14px}
@@ -359,7 +364,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
     </ul></div>
     ${cfg.reseaux ? `<div><h4>Suivez-moi</h4><div class="socs">${socialLinks(cfg)}</div></div>` : ""}
   </div>
-  <div class="legal"><span>© ${y} Gilles Jr. Dulude, courtier immobilier. ${esc(c.agence)}.</span><span>Les renseignements sur les propriétés sont fournis à titre indicatif et ne sont pas garantis.</span></div>
+  <div class="legal"><span>© ${y} Gilles Jr. Dulude, courtier immobilier. ${esc(c.agence)}.</span><span>Les renseignements sur les propriétés sont fournis à titre indicatif et ne sont pas garantis. <a href="confidentialite.html" style="text-decoration:underline">Politique de confidentialité</a></span></div>
 </div></footer>`;
 }
 
@@ -625,7 +630,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="desc">'+esc(cur.description)+'</div>'+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
- '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété.</label>'+
+ '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></label>'+
  '<button class="btn" type="submit">Recevoir les documents</button><div class="ok" id="docsok"></div></div></form>'+
  '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong>'+esc(courtier.nom)+', '+esc(courtier.titre)+'<div>'+
  '<a class="btn" href="contact.html?sujet=visite&mls='+encodeURIComponent(cur.id)+'">Demander une visite</a>'+
@@ -677,7 +682,7 @@ function pageContact(cfg) {
         <option value="autre">Autre question</option>
       </select></label>
       <label>Message<textarea name="message" id="message" placeholder="Adresse de la propriété, délais, questions..."></textarea></label>
-      <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi.</label>
+      <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></label>
       <div><button class="btn" type="submit">Envoyer</button></div>
       <div class="ok" id="ok">Merci ! Votre message est prêt à être envoyé. Je vous réponds rapidement.</div>
     </form>
@@ -712,6 +717,74 @@ f.addEventListener("submit",e=>{
 ` + footer(cfg) + end;
 }
 
+
+function pageConfidentialite(cfg) {
+  const c = cfg.courtier;
+  const courriel = esc(c.courriel), tel = esc(c.telephone);
+  return head(cfg, "Politique de confidentialité | Gilles Jr. Dulude", "Comment Gilles Jr. Dulude, courtier immobilier, recueille, utilise et protège vos renseignements personnels.") +
+    header(cfg, "confidentialite.html") +
+    pageHero("Confidentialité", "Vos renseignements, <em>protégés.</em>", "Comment je recueille, j'utilise et je protège vos renseignements personnels, en mots simples.") + `
+<section><div class="wrap prose">
+  <p class="note">En vigueur depuis le 6 novembre 2026. Dernière mise à jour : 6 novembre 2026.</p>
+
+  <h2>Qui est responsable</h2>
+  <p>Gilles Jr. Dulude, courtier immobilier, est responsable de la protection des renseignements personnels recueillis sur ce site.</p>
+  <p>Pour toute question ou demande : <a href="mailto:${courriel}">${courriel}</a>, ${tel}.<br>${esc(c.agence)}, ${esc(c.adresseAgence || "")}</p>
+
+  <h2>Ce que je recueille</h2>
+  <p>Seulement ce que vous me donnez vous-même, quand vous remplissez un formulaire, écrivez au clavardage ou réservez un rendez-vous :</p>
+  <ul>
+    <li>votre prénom et votre nom;</li>
+    <li>votre courriel et votre numéro de téléphone;</li>
+    <li>votre demande ou votre message (par exemple, la propriété qui vous intéresse ou votre projet de vente ou d'achat);</li>
+    <li>le moment de votre rendez-vous, si vous en réservez un.</li>
+  </ul>
+  <p>Le site ne vous demande jamais de renseignements bancaires ni de numéro d'assurance sociale.</p>
+
+  <h2>Pourquoi je les utilise</h2>
+  <ul>
+    <li>répondre à votre demande et vous envoyer les documents d'une propriété;</li>
+    <li>planifier un appel, une visite ou une rencontre;</li>
+    <li>faire un suivi au sujet de votre projet immobilier;</li>
+    <li>vous envoyer des textos ou des courriels, si vous l'avez accepté.</li>
+  </ul>
+  <p>Je ne vends jamais vos renseignements et je ne les utilise pas à d'autres fins sans votre consentement.</p>
+
+  <h2>Qui y a accès</h2>
+  <p>Seuls Gilles Jr. Dulude et les membres de son équipe qui en ont besoin pour vous servir y ont accès. Certains outils m'aident à faire fonctionner le site :</p>
+  <ul>
+    <li><strong>Ava Client</strong> (plateforme LeadConnector) : gestion des contacts, formulaires, clavardage, calendrier et envoi des courriels et textos;</li>
+    <li><strong>GitHub Pages</strong> : hébergement du site;</li>
+    <li><strong>Google Fonts</strong> : affichage des polices de caractères du site.</li>
+  </ul>
+  <p>Ces fournisseurs peuvent conserver des renseignements sur des serveurs situés à l'extérieur du Québec, notamment aux États-Unis. Je fais affaire avec eux seulement pour les besoins décrits ici.</p>
+
+  <h2>Témoins (cookies) et données techniques</h2>
+  <p>Le site lui-même n'utilise pas d'outil de suivi publicitaire ni de statistiques. Comme tout site web, l'hébergeur et les outils ci-dessus peuvent recevoir des données techniques, comme votre adresse IP et le type de navigateur, pour afficher les pages. Le clavardage et le calendrier peuvent utiliser des témoins pour fonctionner. Vous pouvez les refuser ou les effacer dans les réglages de votre navigateur.</p>
+
+  <h2>Combien de temps je les garde</h2>
+  <p>Je garde vos renseignements tant qu'ils sont utiles pour votre projet immobilier ou pour respecter mes obligations professionnelles. Ensuite, ils sont détruits.</p>
+
+  <h2>Vos droits</h2>
+  <p>Vous pouvez en tout temps :</p>
+  <ul>
+    <li>demander à voir les renseignements que je détiens sur vous;</li>
+    <li>les faire corriger;</li>
+    <li>retirer votre consentement ou demander qu'ils soient supprimés;</li>
+    <li>vous désabonner des textos en répondant STOP, ou des courriels avec le lien de désabonnement.</li>
+  </ul>
+  <p>Écrivez-moi simplement à <a href="mailto:${courriel}">${courriel}</a>. Je vous réponds dans un délai de 30 jours.</p>
+  <p>Si vous n'êtes pas satisfait de ma réponse, vous pouvez vous adresser à la Commission d'accès à l'information du Québec.</p>
+
+  <h2>Sécurité</h2>
+  <p>Vos renseignements sont conservés dans des outils protégés par mot de passe, accessibles seulement aux personnes autorisées. En cas d'incident de confidentialité qui présente un risque sérieux, vous en serez avisé, comme la loi le prévoit.</p>
+
+  <h2>Changements</h2>
+  <p>Cette politique peut être mise à jour. La date de la dernière mise à jour est indiquée en haut de la page.</p>
+</div></section>
+` + footer(cfg) + end;
+}
+
 export function renderSite(cfg, listings, { apercu = "" } = {}) {
   const pages = {
     "index.html": pageAccueil(cfg, listings),
@@ -720,6 +793,7 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
     "acheter.html": pageAcheter(cfg),
     "proprietes.html": pageProprietes(cfg, listings),
     "contact.html": pageContact(cfg),
+    "confidentialite.html": pageConfidentialite(cfg),
   };
   const banner = apercu ? `<div class="apercu">${esc(apercu)}</div>` : "";
   for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
