@@ -137,6 +137,7 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .card:hover .ph img{transform:scale(1.03)}
 .badge{position:absolute;top:14px;left:14px;background:var(--bc);color:var(--nb);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px}
 .badge.pending{background:var(--nb);color:var(--bc)}
+.badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
 .nphotos{position:absolute;right:14px;bottom:14px;background:rgba(19,15,12,.7);color:var(--bc);font-size:12px;padding:4px 9px}
 .card .body{padding:20px 22px 22px}
 .price{font-size:26px;font-weight:600;line-height:1.2}
@@ -382,6 +383,8 @@ const esc=(s)=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":
 const money=(n)=>n?n.toLocaleString("fr-CA",{maximumFractionDigits:0})+" $":"";
 const priceOf=(l)=>l.prix?money(l.prix):l.loyer?money(l.loyer)+" / mois":"Prix sur demande";
 const kind=(l)=>l.sousType||l.type||"Propriété";
+const isNew=(l)=>{const t=Date.parse(l.enVigueurDepuis||"");return t&&Date.now()-t<30*864e5};
+const dateOf=(l)=>Date.parse(l.enVigueurDepuis||"")||0;
 function facts(l){const f=[];
  if(l.logements)f.push('<span><b>'+l.logements+'</b> logements</span>');
  if(l.chambres)f.push('<span><b>'+l.chambres+'</b> ch.</span>');
@@ -390,7 +393,7 @@ function facts(l){const f=[];
  return f.join("")}
 function card(l,tag){return '<'+tag+' class="card" '+(tag==="a"?'href="proprietes.html#'+esc(l.id)+'"':'data-id="'+esc(l.id)+'"')+' aria-label="Voir '+esc(l.adresse)+'">'+
  '<div class="ph">'+(l.photos[0]?'<img loading="lazy" src="'+esc(l.photos[0].url)+'" alt="'+esc(l.adresse)+'">':'')+
- '<span class="badge '+(l.statut!=="Active"?"pending":"")+'">'+esc(l.statutTexte)+'</span>'+
+ '<span class="badge '+(l.statut!=="Active"?"pending":"")+'">'+esc(l.statutTexte)+'</span>'+(isNew(l)?'<span class="badge new">Nouveauté</span>':'')+
  (l.photos.length>1?'<span class="nphotos">'+l.photos.length+' photos</span>':'')+'</div>'+
  '<div class="body"><div class="price">'+priceOf(l)+'</div><div class="addr">'+esc(l.adresse)+'</div><div class="city">'+esc(l.ville)+'</div>'+
  (facts(l)?'<div class="facts">'+facts(l)+'</div>':'')+'<div class="ptype">'+esc(kind(l))+'</div></div></'+tag+'>'}
@@ -551,7 +554,7 @@ function pageProprietes(cfg, listings) {
 <section style="padding-top:0"><div class="wrap">
   <div class="filters">
     <div class="chips" id="chips" role="group" aria-label="Filtrer par type"></div>
-    <select id="sort" aria-label="Trier"><option value="desc">Prix décroissant</option><option value="asc">Prix croissant</option><option value="new">Plus récentes</option></select>
+    <select id="sort" aria-label="Trier"><option value="new">Plus récentes</option><option value="desc">Prix décroissant</option><option value="asc">Prix croissant</option></select>
   </div>
   <div class="grid" id="grid"></div>
   <p class="note" id="maj" style="margin-top:40px"></p>
@@ -563,14 +566,14 @@ ${dataTag({ listings, courtier: { nom: c.nom, titre: c.titre, telephone: c.telep
 (()=>{
 const {listings,courtier,ava,majLe}=JSON.parse(document.getElementById("data").textContent);
 const $=(s)=>document.querySelector(s);
-let filter="Toutes",sort="desc";
+let filter="Toutes",sort="new";
 const types=["Toutes",...new Set(listings.map(kind))];
 const chips=$("#chips");
 if(types.length>2){chips.innerHTML=types.map(t=>'<button class="chip" aria-pressed="'+(t===filter)+'" data-t="'+esc(t)+'">'+esc(t)+'</button>').join("");
  chips.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;filter=b.dataset.t;chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.t===filter));draw()})}
 $("#sort").addEventListener("change",e=>{sort=e.target.value;draw()});
 function draw(){let rows=listings.filter(l=>filter==="Toutes"||kind(l)===filter);
- rows=rows.slice().sort((a,b)=>sort==="asc"?(a.prix||a.loyer||0)-(b.prix||b.loyer||0):sort==="new"?String(b.enVigueurDepuis||b.modifie).localeCompare(String(a.enVigueurDepuis||a.modifie)):(b.prix||b.loyer||0)-(a.prix||a.loyer||0));
+ rows=rows.slice().sort((a,b)=>sort==="asc"?(a.prix||a.loyer||0)-(b.prix||b.loyer||0):sort==="new"?dateOf(b)-dateOf(a):(b.prix||b.loyer||0)-(a.prix||a.loyer||0));
  $("#grid").innerHTML=rows.length?rows.map(l=>card(l,"button")).join(""):'<div class="empty">Aucune propriété en ce moment. Revenez bientôt, ou contactez-moi pour être avisé des nouveautés.</div>'}
 const dlg=$("#dlg");let cur=null,pi=0;
 function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
@@ -581,7 +584,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="idx" id="gidx"></div></div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
  '<div class="price">'+priceOf(cur)+'</div><div class="addr">'+esc(cur.adresse)+'</div><div class="city">'+esc([cur.ville,cur.codePostal].filter(Boolean).join(", "))+'</div>'+
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
- '<div class="desc">'+esc(cur.description)+'</div><div class="mls">No MLS '+esc(cur.id)+'</div></div><div class="side">'+
+ '<div class="desc">'+esc(cur.description)+'</div>'+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><input name="nom" placeholder="Nom" required autocomplete="name"><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété.</label>'+

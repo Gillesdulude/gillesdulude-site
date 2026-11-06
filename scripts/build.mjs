@@ -314,7 +314,7 @@ async function main() {
     listings = mine
       .filter((r) => wanted.has(r.StandardStatus))
       .map((r) => toPublic(r, lookups))
-      .sort((a, b) => (a.statut === "Active" ? 0 : 1) - (b.statut === "Active" ? 0 : 1) || (b.prix || 0) - (a.prix || 0));
+      .sort((a, b) => (Date.parse(b.enVigueurDepuis) || 0) - (Date.parse(a.enVigueurDepuis) || 0));
     const v = config.filtres.vendus || {};
     if (false && v.afficher) { // désactivé : Annexe II Centris, art. 2.3
       const limite = Date.now() - (v.moisMaximum || 24) * 30.44 * 864e5;
