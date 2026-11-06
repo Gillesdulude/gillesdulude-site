@@ -723,7 +723,7 @@ function pageConfidentialite(cfg) {
   const courriel = esc(c.courriel), tel = esc(c.telephone);
   return head(cfg, "Politique de confidentialité | Gilles Jr. Dulude", "Comment Gilles Jr. Dulude, courtier immobilier, recueille, utilise et protège vos renseignements personnels.") +
     header(cfg, "confidentialite.html") +
-    pageHero("Confidentialité", "Vos renseignements, <em>protégés.</em>", "Comment je recueille, j'utilise et je protège vos renseignements personnels, en mots simples.") + `
+    pageHero("Confidentialité", "Vos renseignements, <em>protégés.</em>", "Comment je recueille, j'utilise et je protège vos renseignements personnels.") + `
 <section><div class="wrap prose">
   <p class="note">En vigueur depuis le 6 novembre 2026. Dernière mise à jour : 6 novembre 2026.</p>
 
