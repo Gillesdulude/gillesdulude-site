@@ -185,6 +185,9 @@ dialog::backdrop{background:rgba(19,15,12,.75)}
 .coord a,.coord div{display:block;padding:18px 0;border-top:1px solid var(--line);text-decoration:none}
 .coord span{display:block;font:italic 15px "Source Serif 4",Georgia,serif;color:var(--ch)}
 .coord b{font-size:20px;font-weight:600}
+.coord .suivez .socrow{display:flex;gap:28px;flex-wrap:wrap;margin:8px 0 0}
+.coord .suivez a.socx{display:inline-flex;align-items:center;gap:8px;padding:0;border:0;font-size:18px;font-weight:600;color:var(--nb)}
+.coord .suivez a.socx span{display:inline;font:inherit;color:inherit}
 .ok{display:none;background:var(--be);padding:14px 16px;font-size:15px}
 .docs .ok{background:#fff}
 .docs .note{display:block;font-size:14px;color:var(--ch)}
@@ -753,7 +756,7 @@ function pageContact(cfg) {
       ${c.telephone ? `<a href="${telHref(c.telephone)}"><span>Téléphone</span><b>${esc(c.telephone)}</b></a>` : ""}
       ${c.courriel ? `<a href="mailto:${esc(c.courriel)}"><span>Courriel</span><b>${esc(c.courriel)}</b></a>` : ""}
       <div><span>Agence</span><b>${esc(c.agence)}</b><br>${esc(c.adresseAgence || "")}</div>
-      ${cfg.reseaux ? `<div><span>Suivez-moi</span><div class="socs" style="margin-top:6px">${socialLinks(cfg)}</div></div>` : ""}
+      ${cfg.reseaux ? `<div class="suivez"><span>Suivez-moi</span><p class="socrow">${socialLinks(cfg, "socx")}</p></div>` : ""}
       <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>La Prairie, Carignan, Chambly, Saint-Jean-sur-Richelieu et les environs</div>
     </div>
   </div>
