@@ -333,7 +333,8 @@ if(!box.firstChild)box.innerHTML=${JSON.stringify(rdvFrame(cfg.rendezVous, 700))
 d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
 <script src="https://link.avaclient.com/js/form_embed.js" async></script>` : "";
   const y = new Date().getFullYear();
-  return modal + `<footer><div class="wrap">
+  const chat = cfg.clavardage ? `<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="${esc(cfg.clavardage)}"></script>` : "";
+  return modal + chat + `<footer><div class="wrap">
   <div class="g">
     <div>
       <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier">
