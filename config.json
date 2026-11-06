@@ -39,5 +39,51 @@
     "facebook": "https://www.facebook.com/GillesJrDulude/",
     "instagram": "https://www.instagram.com/gillesjrdulude/"
   },
-  "clavardage": "6a99ccc7ba70a028e7ac7429"
+  "clavardage": "6a99ccc7ba70a028e7ac7429",
+  "marche": {
+    "mois": "Septembre 2026",
+    "region": "Rive-Sud de Montréal",
+    "source": "APCIQ par le système Centris, statistiques mensuelles de septembre 2026",
+    "ventes": [
+      746,
+      -7
+    ],
+    "inscriptions": [
+      4050,
+      32
+    ],
+    "nouvelles": [
+      1616,
+      20
+    ],
+    "prix": {
+      "Unifamiliale": [
+        640300,
+        -1
+      ],
+      "Copropriété": [
+        405500,
+        -3
+      ],
+      "Plex (2 à 5 logements)": [
+        775000,
+        2
+      ]
+    },
+    "delais": {
+      "Unifamiliale": [
+        37,
+        2
+      ],
+      "Copropriété": [
+        57,
+        16
+      ],
+      "Plex": [
+        61,
+        22
+      ]
+    },
+    "lecture": "Le marché penche vers les acheteurs : il y a 32 % plus de propriétés à vendre qu'il y a un an, pour 7 % moins de ventes. Les acheteurs ont plus de choix et plus de temps pour négocier. Les plex, eux, restent recherchés : leurs ventes ont bondi de 26 %."
+  }
 }

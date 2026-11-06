@@ -10,6 +10,7 @@ const PAGES = [
   { file: "vendre.html", nav: "Vendre" },
   { file: "acheter.html", nav: "Acheter" },
   { file: "proprietes.html", nav: "Propriétés" },
+  { file: "marche.html", nav: "Marché" },
   { file: "contact.html", nav: "Contact" },
 ];
 
@@ -220,6 +221,17 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .prix{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
 .prix div{background:#fff;border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:4px}
 .prix b{font-size:22px}.prix span{color:var(--ch);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:6px}
+.kpi span{font-size:13px;color:var(--ch)}.kpi b{font-size:26px;line-height:1.15}
+.var{font-size:14px;font-weight:600}.var.up{color:#2F7D4F}.var.dn{color:#B5532F}.var.eq{color:var(--ch)}
+.lecture{margin-top:22px;background:var(--warm);border-radius:18px;padding:22px 26px;max-width:860px}
+.delais div{background:#fff;border:1px solid var(--line)}
+.calc{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;margin-top:28px;align-items:start}
+.calc .res{display:grid;gap:12px}
+.kpi.big.pos{background:#E7F2EA}.kpi.big.neg{background:#F6E5DD}
+@media (max-width:860px){.calc{grid-template-columns:1fr}}
+@media (max-width:600px){.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi{padding:14px 16px}.kpi b{font-size:20px}.delais{grid-template-columns:repeat(3,1fr)!important;gap:8px}.delais div{padding:12px}.delais b{font-size:17px}}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
 @media (max-width:860px){footer .g{grid-template-columns:1fr}}
 .apercu{background:var(--be);color:var(--nb);text-align:center;padding:8px 16px;font-size:14px}
@@ -649,6 +661,7 @@ function pageAcheter(cfg) {
   </div>
 </div></section>
 
+${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc(cfg.marche.mois.toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="marche.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
 ${band("Vous cherchez votre prochaine maison ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
@@ -694,7 +707,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="desc">'+esc(cur.description)+'</div>'+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
- '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></label>'+
+ '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
  '<button class="btn" type="submit">Recevoir les documents</button><div class="ok" id="docsok"></div></div></form>'+
  '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong>'+esc(courtier.nom)+', '+esc(courtier.titre)+'<div>'+
  '<a class="btn" href="contact.html?sujet=visite&mls='+encodeURIComponent(cur.id)+'">Demander une visite</a>'+
@@ -746,7 +759,7 @@ function pageContact(cfg) {
         <option value="autre">Autre question</option>
       </select></label>
       <label>Message<textarea name="message" id="message" placeholder="Adresse de la propriété, délais, questions..."></textarea></label>
-      <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></label>
+      <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
       <div><button class="btn" type="submit">Envoyer</button></div>
       <div class="ok" id="ok">Merci ! Votre message est prêt à être envoyé. Je vous réponds rapidement.</div>
     </form>
@@ -882,6 +895,94 @@ ${PRIX.map(([n, y]) => `- ${n} (${y})`).join("\n")}
 `;
 }
 
+
+const fmt$ = (n) => Math.round(n).toLocaleString("fr-CA").replace(/ /g, " ") + " $";
+const fleche = (v, inverse = false) => { const up = v > 0, dn = v < 0; const cls = !v ? "eq" : (up !== inverse ? "up" : "dn"); return `<span class="var ${cls}">${up ? "▲" : dn ? "▼" : "●"} ${v > 0 ? "+" : ""}${v} %</span>`; };
+const flecheJ = (v) => `<span class="var ${v > 0 ? "dn" : v < 0 ? "up" : "eq"}">${v > 0 ? "▲ +" : v < 0 ? "▼ " : "● "}${v} j</span>`;
+
+function marcheStats(cfg) {
+  const m = cfg.marche; if (!m) return "";
+  const prix = Object.entries(m.prix).map(([t, [v, d]]) => `<div class="kpi"><span>Prix médian · ${t}</span><b>${fmt$(v)}</b>${fleche(d)}</div>`).join("");
+  const delais = Object.entries(m.delais).map(([t, [v, d]]) => `<div><b>${v} jours</b><span>${t}</span>${flecheJ(d)}</div>`).join("");
+  return `<div class="kpis">
+    ${prix}
+    <div class="kpi"><span>Ventes du mois</span><b>${m.ventes[0].toLocaleString("fr-CA")}</b>${fleche(m.ventes[1])}</div>
+    <div class="kpi"><span>Propriétés à vendre</span><b>${m.inscriptions[0].toLocaleString("fr-CA")}</b>${fleche(m.inscriptions[1])}</div>
+  </div>
+  <div class="lecture"><p class="over" style="margin:0 0 6px">Ce que ça veut dire</p><p style="margin:0">${esc(m.lecture)}</p></div>
+  <h3 style="margin:40px 0 14px">Délai moyen pour vendre</h3>
+  <div class="prix delais">${delais}</div>
+  <p class="note" style="margin-top:18px">Variations par rapport au même mois l'an dernier. Source : ${esc(m.source)}. ${esc(m.region)}.</p>`;
+}
+
+function pageMarche(cfg) {
+  const m = cfg.marche || {};
+  return head(cfg, "Marché immobilier Rive-Sud | Gilles Jr. Dulude", `Statistiques du marché immobilier de la ${m.region || "Rive-Sud"} (${m.mois || ""}) et calculateur de rendement pour plex.`) +
+    header(cfg, "marche.html") +
+    pageHero("Marché", "Le marché <em>en chiffres.</em>", `${m.region || "Rive-Sud de Montréal"}, ${(m.mois || "").toLowerCase()}. Pour savoir quand acheter, vendre ou investir.`) + `
+<section><div class="wrap">
+  ${marcheStats(cfg)}
+</div></section>
+
+<section id="calculateur" style="background:var(--warm)"><div class="wrap">
+  <p class="over">Investisseurs</p>
+  <h2>Calculez le rendement <em>d'un plex.</em></h2>
+  <p class="lead" style="max-width:640px">Entrez les chiffres de l'immeuble. Le calcul est fait sur votre écran, rien n'est envoyé.</p>
+  <div class="calc">
+    <form class="form" id="calc" onsubmit="return false">
+      <div class="row"><label>Prix de l'immeuble ($)<input name="prix" type="number" inputmode="numeric" value="775000" min="0" step="1000"></label>
+      <label>Loyers par mois, tous les logements ($)<input name="loyers" type="number" inputmode="numeric" value="4200" min="0" step="50"></label></div>
+      <div class="row"><label>Dépenses par année ($)<input name="depenses" type="number" inputmode="numeric" value="12000" min="0" step="100"></label>
+      <label>Mise de fonds (%)<input name="mdf" type="number" inputmode="decimal" value="20" min="0" max="100" step="1"></label></div>
+      <div class="row"><label>Taux hypothécaire (%)<input name="taux" type="number" inputmode="decimal" value="4.5" min="0" step="0.05"></label>
+      <label>Amortissement (années)<select name="amort"><option>25</option><option selected>30</option><option>40</option></select></label></div>
+      <p class="note" style="margin:0">Dépenses : taxes municipales et scolaires, assurances, électricité et chauffage payés par le propriétaire, entretien, vacance.</p>
+    </form>
+    <div class="res" id="res" aria-live="polite"></div>
+  </div>
+  <p class="note" style="margin-top:20px">Calcul approximatif, à titre indicatif seulement. Il ne remplace pas l'analyse complète d'un immeuble ni les conseils d'un professionnel du financement.</p>
+  <div class="btns" style="margin-top:16px"><a class="btn" ${rdvAttrs(cfg)} href="${RDV(cfg)}">Analyser un immeuble avec moi</a></div>
+</div></section>
+
+<section><div class="wrap cols top-al">
+  <div><p class="over">Chaque mois</p><h2>Recevez les chiffres <em>de votre secteur.</em></h2>
+  <p class="lead">Les prix, les ventes et ce que ça change pour vous, une fois par mois dans votre boîte courriel. Désabonnement en un clic.</p></div>
+  <form class="form" id="stats">
+    <div class="row"><label>Prénom<input name="prenom" required autocomplete="given-name"></label><label>Nom<input name="nomfamille" required autocomplete="family-name"></label></div>
+    <label>Courriel<input name="courriel" type="email" required autocomplete="email"></label>
+    <label>Votre secteur<select name="secteur">${SECTEURS.map((v) => `<option>${v}</option>`).join("")}<option>Autre secteur de la Rive-Sud</option></select></label>
+    <label>Vous êtes plutôt<select name="profil"><option>Propriétaire qui pense vendre</option><option>Acheteur</option><option>Investisseur (plex)</option><option>Simplement curieux</option></select></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte de recevoir les statistiques et l'infolettre de Gilles Jr. Dulude par courriel. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
+    <div><button class="btn" type="submit">M'inscrire</button></div>
+    <div class="ok" id="statsok"></div>
+  </form>
+</div></section>
+<script>
+(()=>{const f=document.getElementById("calc"),r=document.getElementById("res");
+const $=(n)=>parseFloat(f.elements[n].value)||0;
+const m$=(n)=>(Math.round(n)).toLocaleString("fr-CA")+" $";
+function calc(){const prix=$("prix"),rev=$("loyers")*12,dep=$("depenses"),mdf=$("mdf")/100,t=$("taux")/100,n=$("amort")*12;
+ const pret=prix*(1-mdf),i=Math.pow(1+t/2,1/6)-1,pmt=i?pret*i/(1-Math.pow(1+i,-n)):pret/n;
+ const net=rev-dep,cash=net/12-pmt;
+ const mrb=rev?prix/rev:0,brut=prix?rev/prix*100:0,cap=prix?net/prix*100:0;
+ r.innerHTML='<div class="kpi"><span>Multiplicateur de revenus (MRB)</span><b>'+(mrb?mrb.toFixed(1).replace(".",","):"–")+'</b></div>'+
+ '<div class="kpi"><span>Rendement brut</span><b>'+brut.toFixed(1).replace(".",",")+' %</b></div>'+
+ '<div class="kpi"><span>Taux de capitalisation</span><b>'+cap.toFixed(1).replace(".",",")+' %</b></div>'+
+ '<div class="kpi"><span>Paiement hypothécaire</span><b>'+m$(pmt)+' / mois</b></div>'+
+ '<div class="kpi big '+(cash>=0?"pos":"neg")+'"><span>Cashflow approximatif</span><b>'+(cash>=0?"+":"")+m$(cash)+' / mois</b></div>'}
+f.addEventListener("input",calc);calc();
+const s=document.getElementById("stats");const AVA=${JSON.stringify(cfg.ava?.webhook || "")};
+s.addEventListener("submit",e=>{e.preventDefault();const d=Object.fromEntries(new FormData(s));
+ const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,secteur:d.secteur,profil:d.profil,tag:"infolettre - site web",source:"site web gillesdulude.com",demande:"infolettre statistiques",consentement:true};
+ const k=document.getElementById("statsok");
+ if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Vous recevrez les prochaines statistiques de votre secteur par courriel.";k.style.display="block";s.reset()});return}
+ location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Inscription infolettre statistiques")+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" ("+d.courriel+"), secteur : "+d.secteur+", "+d.profil)});
+})();
+</script>
+${band("Est-ce le bon moment pour vous ?", "Chaque situation est différente. Parlons de la vôtre, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+` + footer(cfg) + end;
+}
+
 export function renderSite(cfg, listings, { apercu = "" } = {}) {
   const pages = {
     "index.html": pageAccueil(cfg, listings),
@@ -889,11 +990,12 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
     "vendre.html": pageVendre(cfg),
     "acheter.html": pageAcheter(cfg),
     "proprietes.html": pageProprietes(cfg, listings),
+    "marche.html": pageMarche(cfg),
     "contact.html": pageContact(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
     "llms.txt": llmsTxt(cfg),
   };
   const banner = apercu ? `<div class="apercu">${esc(apercu)}</div>` : "";
-  for (const k of Object.keys(pages)) if (k.endsWith(".html")) pages[k] = pages[k].replace("{{APERCU}}", banner);
+  for (const k of Object.keys(pages)) if (k.endsWith(".html")) pages[k] = pages[k].replace(/([A-Za-zÀ-ÿ0-9.»]) ([?!])(?=<|")/g, "$1&nbsp;$2").replace("{{APERCU}}", banner);
   return pages;
 }
