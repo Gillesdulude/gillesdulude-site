@@ -232,6 +232,14 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .kpi.big.pos{background:#E7F2EA}.kpi.big.neg{background:#F6E5DD}
 @media (max-width:860px){.calc{grid-template-columns:1fr}}
 @media (max-width:600px){.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi{padding:14px 16px}.kpi b{font-size:20px}.delais{grid-template-columns:repeat(3,1fr)!important;gap:8px}.delais div{padding:12px}.delais b{font-size:17px}}
+.v8list{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+.v8list div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px}
+.v8list b{font:italic 400 15px "Source Serif 4",Georgia,serif;color:var(--ch)}
+.v8list h3{margin:4px 0 6px;font-size:19px}.v8list p{margin:0;font-size:15px;color:var(--ch)}
+@media (max-width:1000px){.v8list{grid-template-columns:1fr 1fr}}@media (max-width:560px){.v8list{grid-template-columns:1fr}}
+.facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
+.evalbox{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.cards3 .quote .etoiles{display:block;margin-bottom:8px}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
 @media (max-width:860px){footer .g{grid-template-columns:1fr}}
 .apercu{background:var(--be);color:var(--nb);text-align:center;padding:8px 16px;font-size:14px}
@@ -325,7 +333,7 @@ function jsonLd(cfg) {
     "@type": "RealEstateAgent",
     name: "Gilles Jr. Dulude, courtier immobilier",
     alternateName: ["Gilles Dulude", "Gilles Jr Dulude", "Équipe Dulude Immobilier"],
-    description: "Courtier immobilier résidentiel sur la Rive-Sud de Montréal, spécialisé en maisons familiales et en immeubles à revenus (plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.",
+    description: "Courtier immobilier résidentiel et commercial sur la Rive-Sud de Montréal, spécialisé en maisons familiales et en immeubles à revenus (plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.",
     url: site, image: site + "assets/gilles-apropos.jpg",
     telephone: c.telephone, email: c.courriel,
     address: { "@type": "PostalAddress", streetAddress: "559, rue Pierre-Caisse", addressLocality: "Saint-Jean-sur-Richelieu", addressRegion: "QC", postalCode: "J3A 1P1", addressCountry: "CA" },
@@ -333,7 +341,7 @@ function jsonLd(cfg) {
     areaServed: SECTEURS.map((v) => ({ "@type": "City", name: v })),
     knowsAbout: ["Vente de maisons unifamiliales", "Achat de propriété", "Immeubles à revenus", "Duplex, triplex et plex", "Évaluation de propriété", "Construction et rénovation"],
     award: PRIX.map(([n, y]) => `${n} Royal LePage ${y}`),
-    knowsLanguage: "fr",
+    knowsLanguage: ["fr", "en"],
     sameAs: [r.facebook, r.instagram, "https://www.royallepage.ca/fr/agent/quebec/st-jean-sur-richelieu/gilles-jr-dulude/53410/"].filter(Boolean),
   };
   return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
@@ -427,7 +435,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
   <div class="g">
     <div>
       <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier">
-      <p>Courtier immobilier résidentiel et immeubles à revenus.<br>Rive-Sud de Montréal : La Prairie, Carignan, Chambly, Saint-Jean-sur-Richelieu et les environs.</p>
+      <p>Courtier immobilier résidentiel et commercial, immeubles à revenus.<br>Rive-Sud de Montréal. Français et anglais.</p>
       <img class="rlp" src="assets/rlp-blanc.png" alt="Royal LePage Distinction">
     </div>
     <div><h4>Navigation</h4><ul>${PAGES.map((p) => `<li><a href="${p.file}">${p.nav}</a></li>`).join("")}</ul></div>
@@ -469,9 +477,10 @@ const TEMOIGNAGES = [
 ];
 
 const temoignages = () => `<section><div class="wrap">
-  <p class="over">Ils m'ont fait confiance</p>
-  <h2>Des familles <em>bien accompagnées.</em></h2>
-  <div class="cards3" style="margin-top:40px">${TEMOIGNAGES.map(([q, n, s]) => `<figure class="quote" style="margin:0"><p>« ${q} »</p><figcaption class="who">${n}<span>${s}</span></figcaption></figure>`).join("")}</div>
+  <div class="avis-top"><div><p class="over">Avis Google</p><h2>Ils m'ont fait <em>confiance.</em></h2></div>
+  <div class="note-g"><b>5,0</b><span class="etoiles" aria-label="5 étoiles sur 5">★★★★★</span><span>${AVIS_GOOGLE.length} avis sur Google</span></div></div>
+  <div class="cards3">${AVIS_GOOGLE.slice(0, 3).map(([q, n, d]) => `<figure class="quote" style="margin:0"><span class="etoiles" aria-hidden="true">★★★★★</span><p>« ${q} »</p><figcaption class="who">${n}<span>${d}</span></figcaption></figure>`).join("")}</div>
+  <p style="margin-top:24px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir tous les avis</a></p>
 </div></section>`;
 
 const band = (titre, texte, bouton = "Réserver un appel", href = "contact.html", attrs = "") => `<section><div class="wrap"><div class="cta-warm">
@@ -528,9 +537,9 @@ function pageAccueil(cfg, listings) {
   <div class="wrap">
     <div class="txt">
       <p class="over">Gilles Jr. Dulude, courtier immobilier</p>
-      <h1 style="text-transform:uppercase;letter-spacing:.01em">Votre prochain chapitre commence ici.</h1>
-      <p class="lead">Vendre la maison familiale ou trouver la prochaine : je vous accompagne à chaque étape, simplement et honnêtement.</p>
-      <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="proprietes.html">Voir mes propriétés</a></div>
+      <h1 style="text-transform:uppercase;letter-spacing:.01em">Vendre, acheter ou investir sur la Rive-Sud.</h1>
+      <p class="lead">Un ancien entrepreneur devenu courtier, qui connaît le bâtiment et les chiffres. Je m'adapte à vous, pas l'inverse.</p>
+      <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="vendre.html#evaluation">Évaluation gratuite</a></div>
     </div>
     <div class="photo detoure"><img src="assets/gilles-hero-detoure.webp" alt="Gilles Jr. Dulude" width="870" height="1100"></div>
   </div>
@@ -543,6 +552,16 @@ function pageAccueil(cfg, listings) {
     <a class="tile" href="vendre.html"><span class="ic">${ICON.maison}</span><h3>Vendre</h3><p>Obtenir le meilleur prix, sans stress inutile.</p><span class="go">En savoir plus →</span></a>
     <a class="tile" href="acheter.html"><span class="ic">${ICON.cle}</span><h3>Acheter</h3><p>Trouver la bonne maison et savoir exactement ce que vous achetez.</p><span class="go">En savoir plus →</span></a>
     <a class="tile" href="acheter.html#investir"><span class="ic">${ICON.plex}</span><h3>Investir</h3><p>Duplex, triplex et plex : on parle chiffres.</p><span class="go">En savoir plus →</span></a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <p class="over">À votre façon</p>
+  <h2 style="margin-bottom:32px">Chacun son style. <em>Je m'adapte au vôtre.</em></h2>
+  <div class="tiles facon">
+    <a class="tile" href="vendre.html#etapes"><h3>« Expliquez-moi simplement. »</h3><p>Je vous explique chaque étape, sans jargon. Vous n'êtes jamais seul avec une question.</p><span class="go">Comment ça se passe →</span></a>
+    <a class="tile" href="${RDV(cfg)}"${rdvAttrs(cfg)}><h3>« Allons droit au but. »</h3><p>Combien, combien de temps, quoi faire. En 15 minutes, vous avez l'heure juste.</p><span class="go">Réserver 15 minutes →</span></a>
+    <a class="tile" href="marche.html"><h3>« Montrez-moi les chiffres. »</h3><p>Prix médians, délais de vente, MRB, rendement, comparables. Les données d'abord, la décision vous revient.</p><span class="go">Voir le marché →</span></a>
   </div>
 </div></section>
 
@@ -590,7 +609,7 @@ function pageAPropos(cfg) {
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
     <p>Avant l'immobilier, j'ai passé 10 ans sur les chantiers, jusqu'à devenir entrepreneur général. Aujourd'hui, ça me permet d'évaluer rapidement la vraie valeur d'une maison.</p>
     <p>Je suis direct et transparent. Mon rôle est simple : protéger mes clients et les aider à prendre les bonnes décisions.</p>
-    <p>Je me spécialise dans les maisons familiales et les immeubles à revenus (duplex, triplex et plex) sur la Rive-Sud : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
+    <p>Courtier résidentiel et commercial, je me spécialise dans les maisons familiales et les immeubles à revenus (duplex, triplex et plex) sur la Rive-Sud, en français comme en anglais : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
     <div class="stats"><div><b>10+</b><span>ans en construction</span></div><div><b>10+</b><span>ans en courtage</span></div></div>
   </div>
 </div></section>
@@ -619,12 +638,14 @@ function pageVendre(cfg) {
   <div>
     <p class="over">La Méthode V8</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
-    <p class="lead">La plupart des courtiers en utilisent 2 ou 3. J'en active 8, adaptés à votre maison.</p>
+    <p class="lead">Huit étapes concrètes, adaptées à votre maison et à votre échéancier.</p>
   </div>
-  <div class="chipsv8" style="margin-top:0">${V8.map(([n, t]) => `<span><b>${n}</b>${t}</span>`).join("")}</div>
-</div></section>
+  <div></div>
+</div>
+<div class="wrap"><div class="v8list">${V8.map(([n, t, d]) => `<div><b>${n}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
+</section>
 
-<section style="background:var(--warm)"><div class="wrap">
+<section id="etapes" style="background:var(--warm)"><div class="wrap">
   <p class="over">Comment ça commence</p>
   <h2 style="margin-bottom:32px">Simple, <em>sans engagement.</em></h2>
   <div class="steps3">
@@ -636,7 +657,13 @@ function pageVendre(cfg) {
 </div></section>
 
 ${temoignages()}
-${band("Combien vaut votre maison ?", "Parlons-en, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+<section id="evaluation"><div class="wrap cols top-al">
+  <div><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
+  <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
+  <p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
+  <div class="evalbox">${cfg.evaluationForm ? `<iframe src="https://link.avaclient.com/widget/form/${esc(cfg.evaluationForm)}" style="width:100%;height:100%;border:none;border-radius:16px;min-height:900px" id="inline-${esc(cfg.evaluationForm)}" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="Évaluation gratuite" data-height="3181" data-layout-iframe-id="inline-${esc(cfg.evaluationForm)}" data-form-id="${esc(cfg.evaluationForm)}" title="Évaluation gratuite"></iframe><script src="https://link.avaclient.com/js/form_embed.js"></script>` : ""}</div>
+</div></section>
+
 ` + footer(cfg) + end;
 }
 
@@ -772,7 +799,8 @@ function pageContact(cfg) {
       ${c.courriel ? `<a href="mailto:${esc(c.courriel)}"><span>Courriel</span><b>${esc(c.courriel)}</b></a>` : ""}
       <div><span>Agence</span><b>${esc(c.agence)}</b><br>${esc(c.adresseAgence || "")}</div>
       ${cfg.reseaux ? `<div class="suivez"><span>Suivez-moi</span><p class="socrow">${socialLinks(cfg, "socx")}</p></div>` : ""}
-      <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>La Prairie, Carignan, Chambly, Saint-Jean-sur-Richelieu et les environs</div>
+      <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>${SECTEURS.join(", ")}</div>
+      <div><span>Langues</span><b>Français et anglais</b></div>
     </div>
   </div>
 </div></section>
@@ -867,7 +895,7 @@ function llmsTxt(cfg) {
   const c = cfg.courtier, r = cfg.reseaux || {};
   return `# Gilles Jr. Dulude, courtier immobilier
 
-> Courtier immobilier résidentiel chez Royal LePage Distinction, sur la Rive-Sud de Montréal (Québec). Spécialisé dans la vente et l'achat de maisons familiales et d'immeubles à revenus (duplex, triplex, plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.
+> Courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud de Montréal (Québec). Spécialisé dans la vente et l'achat de maisons familiales et d'immeubles à revenus (duplex, triplex, plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.
 
 ## Secteurs desservis
 ${SECTEURS.map((v) => "- " + v).join("\n")}
