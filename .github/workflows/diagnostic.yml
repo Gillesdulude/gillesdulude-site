@@ -1,0 +1,21 @@
+name: Diagnostic des champs Centris
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  champs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Lister les champs (noms seulement)
+        env:
+          CENTRIS_API_KEY: ${{ secrets.CENTRIS_API_KEY }}
+          CENTRIS_MEMBER_KEY: ${{ secrets.CENTRIS_MEMBER_KEY }}
+        run: node scripts/champs.mjs
