@@ -9,6 +9,7 @@ const PAGES = [
   { file: "a-propos.html", nav: "À propos" },
   { file: "vendre.html", nav: "Vendre" },
   { file: "acheter.html", nav: "Acheter" },
+  { file: "investir.html", nav: "Investir" },
   { file: "proprietes.html", nav: "Propriétés" },
   { file: "marche.html", nav: "Marché" },
   { file: "contact.html", nav: "Contact" },
@@ -237,6 +238,24 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .v8list b{font:italic 400 15px "Source Serif 4",Georgia,serif;color:var(--ch)}
 .v8list h3{margin:4px 0 6px;font-size:19px}.v8list p{margin:0;font-size:15px;color:var(--ch)}
 @media (max-width:1000px){.v8list{grid-template-columns:1fr 1fr}}@media (max-width:560px){.v8list{grid-template-columns:1fr}}
+.faq{max-width:860px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;position:relative;font-size:18px;font-weight:500}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:6px;top:14px;font-size:26px;font-weight:400;color:var(--ch)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 22px;color:var(--ch);font-size:16px;max-width:760px}
+.prem{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+.prem div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px}
+.prem h3{margin:0 0 6px;font-size:19px}.prem p{margin:0;font-size:15px;color:var(--ch)}
+@media (max-width:960px){.prem{grid-template-columns:1fr 1fr}}@media (max-width:560px){.prem{grid-template-columns:1fr}}
+.defs{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;max-width:980px}
+.defs div{border-top:1px solid var(--line);padding:18px 0}
+.defs b{display:block;font-size:17px;margin-bottom:4px}.defs span{color:var(--ch);font-size:15px}
+@media (max-width:700px){.defs{grid-template-columns:1fr}}
+.menu a{white-space:nowrap}
+@media (min-width:961px) and (max-width:1400px){.menu{gap:20px}.menu a{letter-spacing:.1em}}
+@media (min-width:961px) and (max-width:1120px){.menu{gap:13px}.menu a{letter-spacing:.04em;font-size:12px}.menu .cta{padding:9px 12px}.top .logo img{width:150px;height:auto}}
 .facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
 .evalform{background:#fff;border:1px solid var(--line);border-radius:22px;padding:36px 40px}
 .evalform .evh{margin:14px 0 0;font-size:20px;padding-top:14px;border-top:1px solid var(--line)}.evalform .evh:first-child{border:0;padding-top:0;margin-top:0}
@@ -376,7 +395,7 @@ const prixSection = () => `<section style="background:var(--warm)"><div class="w
   <div class="prix">${PRIX.map(([n, y]) => `<div><b>${y}</b><span>${n}</span></div>`).join("")}</div>
 </div></section>`;
 
-function head(cfg, title, desc) {
+function head(cfg, title, desc, extra = "") {
   return `<!DOCTYPE html>
 <html lang="fr-CA">
 <head>
@@ -387,7 +406,7 @@ function head(cfg, title, desc) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="assets/gilles-apropos.jpg">
-${jsonLd(cfg)}
+${jsonLd(cfg)}${extra}
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -536,6 +555,35 @@ const dataTag = (obj) => `<script id="data" type="application/json">${JSON.strin
 
 // ---------- Pages ----------
 
+// ---------- FAQ ----------
+const delai = (cfg, t) => cfg.marche?.delais?.[t]?.[0];
+const FAQ = {
+  vendre: (cfg) => [
+    ["Combien ça coûte de vendre ma maison?", "La rémunération du courtier, convenue avec vous et écrite au contrat de courtage. Prévoyez souvent un certificat de localisation à jour et, si vous remboursez votre prêt avant la fin du terme, une pénalité de votre banque. Les frais de notaire sont habituellement payés par l'acheteur."],
+    ["Combien de temps ça prend pour vendre?", delai(cfg, "Unifamiliale") ? `Sur la Rive-Sud, une maison unifamiliale se vend en moyenne en ${delai(cfg, "Unifamiliale")} jours, une copropriété en ${delai(cfg, "Copropriété")} jours (${(cfg.marche.mois || "").toLowerCase()}). Une maison bien préparée et affichée au bon prix part plus vite.` : "Ça dépend du secteur, du type de propriété et du prix demandé. Une maison bien préparée et affichée au bon prix part plus vite."],
+    ["Est-ce que je dois rénover avant de vendre?", "Pas forcément. Avec mes années en construction, je vous dis quels petits travaux rapportent et lesquels ne valent pas la dépense."],
+    ["Je dois vendre avant d'acheter?", "Les deux se font. On peut rendre votre offre d'achat conditionnelle à la vente de votre maison, ou planifier les dates pour éviter de payer deux hypothèques en même temps."],
+  ],
+  acheter: () => [
+    ["Combien de mise de fonds faut-il?", "Au minimum 5 % jusqu'à 500 000 $, puis 10 % sur la portion au-delà de 500 000 $, pour une propriété de moins de 1,5 M$. Sous 20 %, l'assurance prêt hypothécaire est obligatoire."],
+    ["C'est quoi la taxe de bienvenue?", "Ce sont les droits de mutation, payés une fois à la ville après l'achat. En 2026, comptez environ 5 600 $ pour une propriété de 500 000 $. La facture arrive quelques semaines après le notaire : gardez cette somme de côté."],
+    ["Ça coûte combien d'avoir un courtier quand j'achète?", "Dans la plupart des cas, rien de votre poche : ma rémunération est habituellement payée à même la vente. On en parle clairement avant de commencer, et c'est écrit au contrat."],
+    ["L'inspection est-elle obligatoire?", "Non, mais je la recommande toujours. Je visite avec vous en ancien entrepreneur, et l'inspecteur confirme ce qu'on voit et ce qu'on ne voit pas."],
+  ],
+  investir: () => [
+    ["Combien de mise de fonds pour un plex?", "Si vous habitez un des logements : 5 % pour un duplex (10 % sur la portion au-delà de 500 000 $), 10 % pour un triplex ou un quadruplex. Si vous n'y habitez pas : 20 %. À partir de 5 logements, c'est un financement commercial, avec d'autres règles."],
+    ["Qu'est-ce qu'un bon MRB?", "Il n'y a pas de chiffre magique. Un MRB se compare à celui des immeubles semblables vendus dans le même secteur, en tenant compte de l'état de l'immeuble et des loyers par rapport au marché."],
+    ["Les locataires restent-ils quand j'achète?", "Oui. Les baux suivent l'immeuble : les locataires restent, aux mêmes conditions. C'est pourquoi on lit chaque bail avant de faire une offre."],
+    ["Est-ce le bon moment pour investir?", "Ça dépend moins du marché que de l'immeuble et de votre plan. Les chiffres du mois sont sur la page Marché, et on peut analyser un immeuble précis ensemble."],
+  ],
+};
+const faqSection = (items, titre = "Questions fréquentes", bg = "") => `<section${bg ? ` style="background:${bg}"` : ""}><div class="wrap">
+  <p class="over">FAQ</p>
+  <h2 style="margin-bottom:28px">${titre}</h2>
+  <div class="faq">${items.map(([q, r]) => `<details><summary>${esc(q)}</summary><p>${esc(r)}</p></details>`).join("")}</div>
+</div></section>`;
+const faqLd = (items) => `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map(([q, r]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: r } })) }).replace(/</g, "\\u003c")}</script>`;
+
 function pageAccueil(cfg, listings) {
   const c = cfg.courtier;
   const vedette = listings.slice(0, 3);
@@ -560,7 +608,7 @@ function pageAccueil(cfg, listings) {
   <div class="tiles">
     <a class="tile" href="vendre.html"><span class="ic">${ICON.maison}</span><h3>Vendre</h3><p>Obtenir le meilleur prix, sans stress inutile.</p><span class="go">En savoir plus →</span></a>
     <a class="tile" href="acheter.html"><span class="ic">${ICON.cle}</span><h3>Acheter</h3><p>Trouver la bonne maison et savoir exactement ce que vous achetez.</p><span class="go">En savoir plus →</span></a>
-    <a class="tile" href="acheter.html#investir"><span class="ic">${ICON.plex}</span><h3>Investir</h3><p>Duplex, triplex et plex : on parle chiffres.</p><span class="go">En savoir plus →</span></a>
+    <a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir</h3><p>Duplex, triplex et plex : on parle chiffres.</p><span class="go">En savoir plus →</span></a>
   </div>
 </div></section>
 
@@ -640,7 +688,8 @@ ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver u
 }
 
 function pageVendre(cfg) {
-  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre maison au meilleur prix avec la Méthode V8. Réservez un appel avec Gilles Jr. Dulude.") +
+  const faq = FAQ.vendre(cfg);
+  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre maison au meilleur prix avec la Méthode V8. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
     header(cfg, "vendre.html") +
     pageHero("Vendre", "Vendre <em>autrement.</em>", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.") + `
 <section><div class="wrap cols">
@@ -666,6 +715,7 @@ function pageVendre(cfg) {
 </div></section>
 
 ${temoignages()}
+${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 <section id="evaluation"><div class="wrap">
   <div style="max-width:760px;margin-bottom:28px"><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
   <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
@@ -713,7 +763,8 @@ ${temoignages()}
 }
 
 function pageAcheter(cfg) {
-  return head(cfg, "Acheter | Gilles Jr. Dulude, courtier immobilier", "Acheter une maison, un condo ou un plex sur la Rive-Sud avec un courtier qui comprend le bâtiment.") +
+  const faq = FAQ.acheter(cfg);
+  return head(cfg, "Acheter | Gilles Jr. Dulude, courtier immobilier", "Acheter une maison, un condo ou un plex sur la Rive-Sud avec un courtier qui comprend le bâtiment. Mise de fonds, CELIAPP, taxe de bienvenue : l'essentiel du premier achat.", faqLd(faq)) +
     header(cfg, "acheter.html") +
     pageHero("Acheter", "Achetez <em>l'esprit tranquille.</em>", "Avec un ancien entrepreneur à vos côtés pendant les visites.") + `
 <section><div class="wrap">
@@ -726,15 +777,75 @@ function pageAcheter(cfg) {
   </div>
 </div></section>
 
-<section id="investir" style="background:var(--warm)"><div class="wrap cols">
-  <div><p class="over">Investisseurs</p><h2>Duplex, triplex, plex : <em>on parle chiffres.</em></h2><p class="lead">Revenus, dépenses, baux, état de l'immeuble. Un bon investissement se juge sur du concret.</p></div>
-  <div class="tiles" style="grid-template-columns:1fr">
-    <div class="tile"><span class="ic">${ICON.plex}</span><h3>Les immeubles à revenus, c'est ma spécialité</h3><p>Accès à mon réseau d'investisseurs et de vendeurs.</p></div>
+<section id="premier" style="background:var(--warm)"><div class="wrap">
+  <p class="over">Premier achat</p>
+  <h2>Votre première maison, <em>sans mauvaise surprise.</em></h2>
+  <p class="lead" style="max-width:680px">L'essentiel à savoir avant de commencer les visites.</p>
+  <div class="prem">
+    <div><h3>La mise de fonds</h3><p>5 % minimum jusqu'à 500 000 $, puis 10 % sur la portion au-delà. Sous 20 %, une assurance prêt hypothécaire s'ajoute au prêt.</p></div>
+    <div><h3>Le CELIAPP</h3><p>Jusqu'à 8 000 $ par année, 40 000 $ au total. Déductible d'impôt, et retiré sans impôt pour votre premier achat.</p></div>
+    <div><h3>Le RAP</h3><p>Jusqu'à 60 000 $ par personne retirés de vos REER pour la mise de fonds, à rembourser sur 15 ans.</p></div>
+    <div><h3>La préapprobation</h3><p>À faire avant de visiter. Vous connaissez votre vrai budget, et votre offre est plus solide face aux autres acheteurs.</p></div>
+    <div><h3>La taxe de bienvenue</h3><p>Environ 5 600 $ pour une maison de 500 000 $ en 2026. Elle arrive après le notaire et ne s'ajoute pas au prêt.</p></div>
+    <div><h3>Les autres frais</h3><p>Notaire, inspection, ajustement des taxes, déménagement. Comptez quelques milliers de dollars en plus de la mise de fonds.</p></div>
   </div>
+  <p class="note" style="margin-top:20px">Montants à titre indicatif. Votre institution financière ou votre courtier hypothécaire confirme ce qui s'applique à votre situation.</p>
+</div></section>
+
+<section id="investir"><div class="wrap cols">
+  <div><p class="over">Investisseurs</p><h2>Duplex, triplex, plex : <em>on parle chiffres.</em></h2><p class="lead">Revenus, dépenses, baux, état de l'immeuble. Un bon investissement se juge sur du concret.</p></div>
+  <div><a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir avec moi</h3><p>Ce que j'analyse avant chaque offre, les chiffres que je regarde et le calculateur de rendement.</p><span class="go">Voir la page Investir →</span></a></div>
 </div></section>
 
 ${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc(cfg.marche.mois.toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="marche.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
+${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine maison ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+` + footer(cfg) + end;
+}
+
+function pageInvestir(cfg) {
+  const faq = FAQ.investir(cfg), m = cfg.marche, px = m?.prix?.["Plex (2 à 5 logements)"], dl = m?.delais?.Plex;
+  return head(cfg, "Investir dans un plex sur la Rive-Sud | Gilles Jr. Dulude", "Acheter ou vendre un duplex, triplex ou plex sur la Rive-Sud. Analyse des revenus, des baux et de l'état de l'immeuble par un courtier ancien entrepreneur.", faqLd(faq)) +
+    header(cfg, "investir.html") +
+    pageHero("Investir", "Un plex, <em>ça se calcule.</em>", "Duplex, triplex, quintuplex : on vérifie que les chiffres tiennent avant que vous signiez.") + `
+<section><div class="wrap">
+  <p class="over">Avant chaque offre</p>
+  <h2 style="margin-bottom:8px">Ce que je vérifie <em>pour vous.</em></h2>
+  <div class="v8list">
+    <div><b>01</b><h3>Les revenus</h3><p>Je compare chaque loyer au bail signé et aux loyers du secteur. Un loyer bas, c'est du potentiel. Un loyer gonflé, c'est un risque.</p></div>
+    <div><b>02</b><h3>Les dépenses</h3><p>Taxes, assurances, chauffage, entretien, logements vacants. Toutes les dépenses, pas seulement celles qu'on vous montre.</p></div>
+    <div><b>03</b><h3>Le bâtiment</h3><p>Toiture, fondation, électricité, plomberie, fenêtres. Avec mon œil d'entrepreneur, j'estime les travaux à prévoir. En plus de l'inspection, pas à la place.</p></div>
+    <div><b>04</b><h3>Le financement</h3><p>La mise de fonds change selon le nombre de logements et si vous habitez l'immeuble. On monte un plan qui tient avec votre prêteur.</p></div>
+  </div>
+</div></section>
+
+<section style="background:var(--warm)"><div class="wrap">
+  <p class="over">Pour les analytiques</p>
+  <h2 style="margin-bottom:28px">Les chiffres <em>que je regarde.</em></h2>
+  <div class="defs">
+    <div><b>MRB (multiplicateur de revenus bruts)</b><span>Le prix divisé par les loyers d'une année. Plus il est bas, moins vous payez chaque dollar de revenu.</span></div>
+    <div><b>Taux de capitalisation</b><span>Le revenu net (loyers moins dépenses) divisé par le prix. Il compare des immeubles sans tenir compte du financement.</span></div>
+    <div><b>Cashflow</b><span>Ce qui reste chaque mois une fois les dépenses et l'hypothèque payées. Positif, l'immeuble se paie seul.</span></div>
+    <div><b>Prix par porte</b><span>Le prix divisé par le nombre de logements. Utile pour comparer rapidement des immeubles du même secteur.</span></div>
+  </div>
+  <div class="btns" style="margin-top:28px"><a class="btn" href="marche.html#calculateur">Calculer le rendement d'un plex</a><a class="btn ghost" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Analyser un immeuble avec moi</a></div>
+</div></section>
+
+${px ? `<section><div class="wrap">
+  <p class="over">Le marché des plex, ${esc(m.mois.toLowerCase())}</p>
+  <h2 style="margin-bottom:28px">Les plex <em>sur la Rive-Sud.</em></h2>
+  <div class="kpis"><div class="kpi"><span>Prix médian · plex (2 à 5 logements)</span><b>${fmt$(px[0])}</b>${fleche(px[1])}</div>${dl ? `<div class="kpi"><span>Délai moyen pour vendre</span><b>${dl[0]} jours</b>${flecheJ(dl[1])}</div>` : ""}</div>
+  <p class="note" style="margin-top:18px">Variations par rapport au même mois l'an dernier. Source : ${esc(m.source)}. <a href="marche.html" style="text-decoration:underline">Toutes les statistiques du mois</a></p>
+</div></section>` : ""}
+
+<section${px ? ' style="padding-top:0"' : ""}><div class="wrap"><div class="cta-warm" style="text-align:left;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
+  <div><p class="over">Vous vendez un immeuble?</p><h2>Un dossier clair <em>vend plus vite.</em></h2>
+  <p class="lead" style="margin:0">Je prépare pour les acheteurs un dossier complet : revenus, dépenses, baux et état de l'immeuble. Un investisseur qui comprend les chiffres fait une offre plus vite.</p></div>
+  <div class="btns"><a class="btn" href="vendre.html#evaluation">Évaluer mon immeuble</a><a class="btn ghost" href="marche.html#stats">Recevoir les chiffres chaque mois</a></div>
+</div></div></section>
+
+${faqSection(faq, "Les questions <em>des investisseurs.</em>", "var(--warm)")}
+${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde ensemble s'il tient la route, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
@@ -962,9 +1073,14 @@ ${PRIX.map(([n, y]) => `- ${n} (${y})`).join("\n")}
 - [Accueil](index.html)
 - [À propos](a-propos.html)
 - [Vendre](vendre.html)
-- [Acheter et investir](acheter.html)
+- [Acheter](acheter.html)
+- [Investir dans un plex](investir.html)
+- [Marché immobilier de la Rive-Sud](marche.html)
 - [Propriétés à vendre](proprietes.html)
 - [Contact](contact.html)
+
+## Questions fréquentes
+${[...FAQ.vendre(cfg), ...FAQ.acheter(cfg), ...FAQ.investir(cfg)].map(([q, r]) => `### ${q}\n${r}`).join("\n\n")}
 `;
 }
 
@@ -1062,6 +1178,7 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
     "a-propos.html": pageAPropos(cfg),
     "vendre.html": pageVendre(cfg),
     "acheter.html": pageAcheter(cfg),
+    "investir.html": pageInvestir(cfg),
     "proprietes.html": pageProprietes(cfg, listings),
     "marche.html": pageMarche(cfg),
     "contact.html": pageContact(cfg),
