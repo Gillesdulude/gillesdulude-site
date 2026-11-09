@@ -1,10 +1,11 @@
 // Diagnostic 2 : expansions de chaque inscription + exemples de valeurs codées (listes seulement, pas de texte libre).
 const API = "https://datadistributionqc.centris.ca/v1/odata";
-const KEY = process.env.CENTRIS_API_KEY, MK = process.env.CENTRIS_MEMBER_KEY || "";
+import { readFileSync } from "node:fs";
+const KEY = process.env.CENTRIS_API_KEY, MK = process.env.CENTRIS_MEMBER_KEY || JSON.parse(readFileSync(new URL("../config.json", import.meta.url))).filtres.memberKey || "";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function get(u) { const r = await fetch(`${API}/${u}`, { headers: { Authorization: `Bearer ${KEY}`, Accept: "application/json", "Accept-Language": "fr" } }); await sleep(300); return r; }
 const NAV = ["AdditionalBuildings", "AdditionalSpaces", "Animals", "Equipment", "Expenses", "GreenBuildingVerification", "OpenHouse", "Parkings", "Renovations", "RentedEquipment", "Rooms", "Translations", "UnitTypes", "Units", "Zonings"];
-const f = encodeURIComponent(`(ListAgentKey eq '${MK}' or CoListAgentKey eq '${MK}') and StandardStatus eq 'Active'`);
+const f = encodeURIComponent(MK ? `(ListAgentKey eq '${MK}' or CoListAgentKey eq '${MK}') and StandardStatus eq 'Active'` : `StandardStatus eq 'Active'`);
 const r = await get(`Property?$filter=${f}`);
 let rows = r.ok ? (await r.json()).value || [] : [];
 console.log("inscriptions :", r.status, rows.length);
