@@ -5,10 +5,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function get(u) { const r = await fetch(`${API}/${u}`, { headers: { Authorization: `Bearer ${KEY}`, Accept: "application/json", "Accept-Language": "fr" } }); await sleep(300); return r; }
 const NAV = ["AdditionalBuildings", "AdditionalSpaces", "Animals", "Equipment", "Expenses", "GreenBuildingVerification", "OpenHouse", "Parkings", "Renovations", "RentedEquipment", "Rooms", "Translations", "UnitTypes", "Units", "Zonings"];
 const f = encodeURIComponent(`(ListAgentKey eq '${MK}' or CoListAgentKey eq '${MK}') and StandardStatus eq 'Active'`);
-const r = await get(`Property?$filter=${f}&$expand=${NAV.join(",")}`);
-console.log("expand tout :", r.status);
-let rows = r.ok ? (await r.json()).value : [];
-if (!r.ok) { console.log((await r.text()).slice(0, 300)); }
+const r = await get(`Property?$filter=${f}`);
+let rows = r.ok ? (await r.json()).value || [] : [];
+console.log("inscriptions :", r.status, rows.length);
+for (const p of rows) for (const n of NAV) {
+  const t = await get(`Property?$filter=${encodeURIComponent(`ListingKey eq '${p.ListingKey}'`)}&$expand=${n}`);
+  if (t.ok) p[n] = ((await t.json()).value || [])[0]?.[n]; else p[n] = "ERR" + t.status;
+}
 const ex = {};
 for (const p of rows) {
   console.log(`\n# Inscription type=${p.PropertyType} sous-type=${p.PropertySubType}`);
