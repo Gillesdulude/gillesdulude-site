@@ -238,7 +238,8 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .v8list h3{margin:4px 0 6px;font-size:19px}.v8list p{margin:0;font-size:15px;color:var(--ch)}
 @media (max-width:1000px){.v8list{grid-template-columns:1fr 1fr}}@media (max-width:560px){.v8list{grid-template-columns:1fr}}
 .facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
-.evalbox{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;width:100%}
+.evalform{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;max-width:900px}
+@media (max-width:600px){.evalform{padding:20px}}
 .cards3 .quote .etoiles{display:block;margin-bottom:8px}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
 @media (max-width:860px){footer .g{grid-template-columns:1fr}}
@@ -661,7 +662,25 @@ ${temoignages()}
   <div style="max-width:760px;margin-bottom:28px"><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
   <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
   <p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
-  <div class="evalbox">${cfg.evaluationForm ? `<iframe src="https://link.avaclient.com/widget/form/${esc(cfg.evaluationForm)}" style="width:100%;height:100%;border:none;border-radius:16px;min-height:900px" id="inline-${esc(cfg.evaluationForm)}" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="Évaluation gratuite" data-height="3181" data-layout-iframe-id="inline-${esc(cfg.evaluationForm)}" data-form-id="${esc(cfg.evaluationForm)}" title="Évaluation gratuite"></iframe><script src="https://link.avaclient.com/js/form_embed.js"></script>` : ""}</div>
+  <form class="form evalform" id="evalf">
+    <div class="row"><label>Prénom<input name="prenom" required autocomplete="given-name"></label><label>Nom<input name="nomfamille" required autocomplete="family-name"></label></div>
+    <div class="row"><label>Courriel<input name="courriel" type="email" required autocomplete="email"></label><label>Téléphone<input name="telephone" type="tel" required autocomplete="tel"></label></div>
+    <div class="row"><label>Adresse de la propriété<input name="adresse" required autocomplete="street-address" placeholder="Numéro et rue"></label><label>Ville<select name="ville">${SECTEURS.map((v) => `<option>${v}</option>`).join("")}<option>Autre ville</option></select></label></div>
+    <div class="row"><label>Type de propriété<select name="type"><option>Maison unifamiliale</option><option>Condo</option><option>Duplex</option><option>Triplex</option><option>Quadruplex ou plus</option><option>Terrain</option><option>Commercial</option><option>Autre</option></select></label>
+    <label>Quand pensez-vous vendre?<select name="delai"><option>Le plus tôt possible</option><option>D'ici 3 à 6 mois</option><option>D'ici 6 à 12 mois</option><option>Je m'informe pour l'instant</option></select></label></div>
+    <label>Rénovations ou détails importants (facultatif)<textarea name="details" placeholder="Ex. toiture refaite en 2022, sous-sol fini, piscine, garage..." style="min-height:110px"></textarea></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour préparer mon évaluation et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
+    <div><button class="btn" type="submit">Recevoir mon évaluation</button></div>
+    <div class="ok" id="evalok"></div>
+  </form>
+  <script>(()=>{const f=document.getElementById("evalf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
+  f.addEventListener("submit",e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
+   const resume="Évaluation gratuite : "+d.adresse+", "+d.ville+" | "+d.type+" | Vendre : "+d.delai+(d.details?" | "+d.details:"");
+   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,adresse:d.adresse,ville:d.ville,type:d.type,delai:d.delai,details:d.details||"",message:resume,demande:"evaluation gratuite",tag:"évaluation gratuite - site web",source:"site web gillesdulude.com",consentement:true};
+   const k=document.getElementById("evalok");
+   if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Je prépare votre évaluation et je vous reviens rapidement.";k.style.display="block";f.reset()});return}
+   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Évaluation gratuite : "+d.adresse)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+"\\n"+d.courriel+" "+d.telephone+"\\n"+resume)});})();</script>
+</div>
 </div></section>
 
 ` + footer(cfg) + end;
