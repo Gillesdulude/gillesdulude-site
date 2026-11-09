@@ -238,7 +238,7 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .v8list h3{margin:4px 0 6px;font-size:19px}.v8list p{margin:0;font-size:15px;color:var(--ch)}
 @media (max-width:1000px){.v8list{grid-template-columns:1fr 1fr}}@media (max-width:560px){.v8list{grid-template-columns:1fr}}
 .facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
-.evalbox{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.evalbox{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;width:100%}
 .cards3 .quote .etoiles{display:block;margin-bottom:8px}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
 @media (max-width:860px){footer .g{grid-template-columns:1fr}}
@@ -657,8 +657,8 @@ function pageVendre(cfg) {
 </div></section>
 
 ${temoignages()}
-<section id="evaluation"><div class="wrap cols top-al">
-  <div><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
+<section id="evaluation"><div class="wrap">
+  <div style="max-width:760px;margin-bottom:28px"><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
   <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
   <p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
   <div class="evalbox">${cfg.evaluationForm ? `<iframe src="https://link.avaclient.com/widget/form/${esc(cfg.evaluationForm)}" style="width:100%;height:100%;border:none;border-radius:16px;min-height:900px" id="inline-${esc(cfg.evaluationForm)}" data-layout="{'id':'INLINE'}" data-trigger-type="alwaysShow" data-trigger-value="" data-activation-type="alwaysActivated" data-activation-value="" data-deactivation-type="neverDeactivate" data-deactivation-value="" data-form-name="Évaluation gratuite" data-height="3181" data-layout-iframe-id="inline-${esc(cfg.evaluationForm)}" data-form-id="${esc(cfg.evaluationForm)}" title="Évaluation gratuite"></iframe><script src="https://link.avaclient.com/js/form_embed.js"></script>` : ""}</div>
