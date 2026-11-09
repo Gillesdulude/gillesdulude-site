@@ -4,7 +4,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   champs:
@@ -18,4 +18,14 @@ jobs:
         env:
           CENTRIS_API_KEY: ${{ secrets.CENTRIS_API_KEY }}
           CENTRIS_MEMBER_KEY: ${{ secrets.CENTRIS_MEMBER_KEY }}
-        run: node scripts/champs.mjs
+        run: node scripts/champs.mjs > /tmp/champs.txt 2>&1 || true
+      - name: Enregistrer le résultat dans la branche diagnostic
+        run: |
+          git config user.name "diagnostic"
+          git config user.email "diagnostic@users.noreply.github.com"
+          git checkout --orphan diagnostic
+          git rm -rf --quiet .
+          cp /tmp/champs.txt champs.txt
+          git add champs.txt
+          git commit -m "Résultat du diagnostic"
+          git push -f origin diagnostic
