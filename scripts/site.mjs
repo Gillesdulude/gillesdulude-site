@@ -238,7 +238,15 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .v8list h3{margin:4px 0 6px;font-size:19px}.v8list p{margin:0;font-size:15px;color:var(--ch)}
 @media (max-width:1000px){.v8list{grid-template-columns:1fr 1fr}}@media (max-width:560px){.v8list{grid-template-columns:1fr}}
 .facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
-.evalform{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;max-width:900px}
+.evalform{background:#fff;border:1px solid var(--line);border-radius:22px;padding:36px 40px}
+.evalform .evh{margin:14px 0 0;font-size:20px;padding-top:14px;border-top:1px solid var(--line)}.evalform .evh:first-child{border:0;padding-top:0;margin-top:0}
+.form .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.form .row4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.form .row5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.form .span2{grid-column:span 2}
+.evalform label{min-width:0}.evalform input:not([type=checkbox]),.evalform select,.evalform textarea{width:100%;min-width:0;box-sizing:border-box}
+.grp .glab{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.chks{display:flex;flex-wrap:wrap;gap:10px}.form .chk{display:inline-flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-weight:400;font-size:15px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--bc)}
+@media (max-width:900px){.form .row3,.form .row4,.form .row5{grid-template-columns:1fr 1fr}.form .span2{grid-column:span 2}}
+@media (max-width:600px){.form .row3,.form .row4{grid-template-columns:1fr}.form .span2{grid-column:auto}.evalform{padding:22px 18px}}
 @media (max-width:600px){.evalform{padding:20px}}
 .cards3 .quote .etoiles{display:block;margin-bottom:8px}
 footer .legal{margin-top:56px;padding-top:22px;border-top:1px solid rgba(249,246,244,.12);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8f8a82}
@@ -663,23 +671,41 @@ ${temoignages()}
   <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
   <p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
   <form class="form evalform" id="evalf">
-    <div class="row"><label>Prénom<input name="prenom" required autocomplete="given-name"></label><label>Nom<input name="nomfamille" required autocomplete="family-name"></label></div>
-    <div class="row"><label>Courriel<input name="courriel" type="email" required autocomplete="email"></label><label>Téléphone<input name="telephone" type="tel" required autocomplete="tel"></label></div>
-    <div class="row"><label>Adresse de la propriété<input name="adresse" required autocomplete="street-address" placeholder="Numéro et rue"></label><label>Ville<select name="ville">${SECTEURS.map((v) => `<option>${v}</option>`).join("")}<option>Autre ville</option></select></label></div>
-    <div class="row"><label>Type de propriété<select name="type"><option>Maison unifamiliale</option><option>Condo</option><option>Duplex</option><option>Triplex</option><option>Quadruplex ou plus</option><option>Terrain</option><option>Commercial</option><option>Autre</option></select></label>
-    <label>Quand pensez-vous vendre?<select name="delai"><option>Le plus tôt possible</option><option>D'ici 3 à 6 mois</option><option>D'ici 6 à 12 mois</option><option>Je m'informe pour l'instant</option></select></label></div>
-    <label>Rénovations ou détails importants (facultatif)<textarea name="details" placeholder="Ex. toiture refaite en 2022, sous-sol fini, piscine, garage..." style="min-height:110px"></textarea></label>
+    <h3 class="evh">À propos de votre propriété</h3>
+    <div class="row3"><label>Année de construction *<input name="annee" type="number" inputmode="numeric" min="1800" max="2030" required></label>
+    <label>Superficie habitable (pc)<input name="superficie" type="number" inputmode="numeric" min="0" placeholder="pc"></label>
+    <label>Genre de propriété<select name="genre"><option>Inconnu</option><option>Maison à étage</option><option>Maison à un étage et demi</option><option>Copropriété</option><option>Maison mobile</option><option>Maison à paliers multiples</option><option>Maison de plain-pied</option><option>Duplex</option><option>Triplex</option><option>Quadruplex</option><option>Quintuplex</option><option>Commerciale</option><option>Industrielle</option><option>Entreprise (fonds de commerce)</option><option>Chalet</option><option>Ferme</option><option>Fermette</option><option>Appartement</option><option>Loft/Studio</option><option>Autre</option></select></label></div>
+    <label>Avez-vous amélioré ou rénové votre demeure depuis votre acquisition?<textarea name="renovations" style="min-height:90px"></textarea></label>
+    <div class="grp"><span class="glab">Caractéristiques qui s'appliquent à la propriété</span><div class="chks"><label class="chk"><input type="checkbox" name="caract" value="Sous-sol aménagé"> Sous-sol aménagé</label><label class="chk"><input type="checkbox" name="caract" value="Piscine hors terre"> Piscine hors terre</label><label class="chk"><input type="checkbox" name="caract" value="Piscine creusée"> Piscine creusée</label><label class="chk"><input type="checkbox" name="caract" value="Stationnement/garage"> Stationnement/garage</label><label class="chk"><input type="checkbox" name="caract" value="Foyer-Poêle"> Foyer-Poêle</label></div></div>
+    <div class="row4"><label class="span2">No civique et rue *<input name="adresse" required autocomplete="street-address"></label>
+    <label>Ville *<input name="ville" required autocomplete="address-level2" placeholder="Saisissez votre ville"></label>
+    <label>Code postal *<input name="codepostal" required autocomplete="postal-code"></label></div>
+    <h3 class="evh">Les pièces</h3>
+    <div class="row5"><label>Pièce(s) *<input name="pieces" type="number" min="0" required></label>
+    <label>Chambre(s) hors-sol *<input name="ch_hs" type="number" min="0" required></label>
+    <label>Chambre(s) sous-sol<input name="ch_ss" type="number" min="0"></label>
+    <label>Salle(s) de bain<input name="sdb" type="number" min="0"></label>
+    <label>Salle(s) d'eau<input name="sde" type="number" min="0"></label></div>
+    <h3 class="evh">Contact</h3>
+    <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
+    <label>Votre nom *<input name="nomfamille" required autocomplete="family-name" placeholder="Entrez votre nom"></label>
+    <label>Votre téléphone *<input name="telephone" type="tel" required autocomplete="tel" placeholder="Ex. : 555-000-0000"></label>
+    <label>Votre courriel *<input name="courriel" type="email" required autocomplete="email" placeholder="Ex. : votrenom@domaine.com"></label></div>
+    <div class="grp"><span class="glab">Disponibilité d'appel</span><div class="chks"><label class="chk"><input type="checkbox" name="dispo" value="AM"> AM</label><label class="chk"><input type="checkbox" name="dispo" value="PM"> PM</label><label class="chk"><input type="checkbox" name="dispo" value="Soirée"> Soirée</label></div></div>
+    <h3 class="evh">Message</h3>
+    <label>Avez-vous autre chose à mentionner?<textarea name="autre" style="min-height:90px"></textarea></label>
     <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour préparer mon évaluation et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
     <div><button class="btn" type="submit">Recevoir mon évaluation</button></div>
     <div class="ok" id="evalok"></div>
   </form>
   <script>(()=>{const f=document.getElementById("evalf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
-  f.addEventListener("submit",e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));
-   const resume="Évaluation gratuite : "+d.adresse+", "+d.ville+" | "+d.type+" | Vendre : "+d.delai+(d.details?" | "+d.details:"");
-   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,adresse:d.adresse,ville:d.ville,type:d.type,delai:d.delai,details:d.details||"",message:resume,demande:"evaluation gratuite",tag:"évaluation gratuite - site web",source:"site web gillesdulude.com",consentement:true};
+  f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
+   const car=fd.getAll("caract").join(", "),dis=fd.getAll("dispo").join(", ");
+   const resume="Évaluation gratuite : "+d.adresse+", "+d.ville+" "+d.codepostal+" | "+d.genre+" | Année "+d.annee+(d.superficie?" | "+d.superficie+" pc":"")+" | "+d.pieces+" pièces, "+d.ch_hs+" ch. hors-sol"+(d.ch_ss?", "+d.ch_ss+" ch. sous-sol":"")+(d.sdb?", "+d.sdb+" sdb":"")+(d.sde?", "+d.sde+" s. d'eau":"")+(car?" | "+car:"")+(d.renovations?" | Rénovations : "+d.renovations:"")+(dis?" | Rappel : "+dis:"")+(d.autre?" | "+d.autre:"");
+   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,adresse:d.adresse,ville:d.ville,codepostal:d.codepostal,province:"Québec",pays:"Canada",genre:d.genre,annee:d.annee,superficie:d.superficie||"",pieces:d.pieces,chambres_hors_sol:d.ch_hs,chambres_sous_sol:d.ch_ss||"",salles_de_bain:d.sdb||"",salles_eau:d.sde||"",caracteristiques:car,renovations:d.renovations||"",disponibilite:dis,autre:d.autre||"",message:resume,demande:"evaluation gratuite",tag:"évaluation gratuite - site web",source:"site web gillesdulude.com",consentement:true};
    const k=document.getElementById("evalok");
    if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Je prépare votre évaluation et je vous reviens rapidement.";k.style.display="block";f.reset()});return}
-   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Évaluation gratuite : "+d.adresse)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+"\\n"+d.courriel+" "+d.telephone+"\\n"+resume)});})();</script>
+   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Évaluation gratuite : "+d.adresse)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" "+d.courriel+" "+d.telephone+" | "+resume)});})();</script>
 </div>
 </div></section>
 
