@@ -797,14 +797,14 @@ function pageAcheter(cfg) {
   <div><a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir avec moi</h3><p>Ce que j'analyse avant chaque offre, les chiffres que je regarde et le calculateur de rendement.</p><span class="go">Voir la page Investir →</span></a></div>
 </div></section>
 
-${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc(cfg.marche.mois.toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="marche.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
+${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc(cfg.marche.mois.toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine maison ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
 function pageInvestir(cfg) {
-  const faq = FAQ.investir(cfg), m = cfg.marche, px = m?.prix?.["Plex (2 à 5 logements)"], dl = m?.delais?.Plex;
+  const faq = FAQ.investir(cfg);
   return head(cfg, "Investir dans un plex sur la Rive-Sud | Gilles Jr. Dulude", "Acheter ou vendre un duplex, triplex ou plex sur la Rive-Sud. Analyse des revenus, des baux et de l'état de l'immeuble par un courtier ancien entrepreneur.", faqLd(faq)) +
     header(cfg, "investir.html") +
     pageHero("Investir", "Un plex, <em>ça se calcule.</em>", "Duplex, triplex, quintuplex : on vérifie que les chiffres tiennent avant que vous signiez.") + `
@@ -828,17 +828,44 @@ function pageInvestir(cfg) {
     <div><b>Cashflow</b><span>Ce qui reste chaque mois une fois les dépenses et l'hypothèque payées. Positif, l'immeuble se paie seul.</span></div>
     <div><b>Prix par porte</b><span>Le prix divisé par le nombre de logements. Utile pour comparer rapidement des immeubles du même secteur.</span></div>
   </div>
-  <div class="btns" style="margin-top:28px"><a class="btn" href="marche.html#calculateur">Calculer le rendement d'un plex</a><a class="btn ghost" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Analyser un immeuble avec moi</a></div>
+  <div class="btns" style="margin-top:28px"><a class="btn" href="#calculateur">Calculer le rendement d'un plex</a><a class="btn ghost" href="marche.html">Voir les chiffres du mois</a></div>
 </div></section>
 
-${px ? `<section><div class="wrap">
-  <p class="over">Le marché des plex, ${esc(m.mois.toLowerCase())}</p>
-  <h2 style="margin-bottom:28px">Les plex <em>sur la Rive-Sud.</em></h2>
-  <div class="kpis"><div class="kpi"><span>Prix médian · plex (2 à 5 logements)</span><b>${fmt$(px[0])}</b>${fleche(px[1])}</div>${dl ? `<div class="kpi"><span>Délai moyen pour vendre</span><b>${dl[0]} jours</b>${flecheJ(dl[1])}</div>` : ""}</div>
-  <p class="note" style="margin-top:18px">Variations par rapport au même mois l'an dernier. Source : ${esc(m.source)}. <a href="marche.html" style="text-decoration:underline">Toutes les statistiques du mois</a></p>
-</div></section>` : ""}
+<section id="calculateur"><div class="wrap">
+  <p class="over">Calculateur</p>
+  <h2>Calculez le rendement <em>d'un plex.</em></h2>
+  <p class="lead" style="max-width:640px">Entrez les chiffres de l'immeuble. Le calcul est fait sur votre écran, rien n'est envoyé.</p>
+  <div class="calc">
+    <form class="form" id="calc" onsubmit="return false">
+      <div class="row"><label>Prix de l'immeuble ($)<input name="prix" type="number" inputmode="numeric" value="775000" min="0" step="1000"></label>
+      <label>Loyers par mois, tous les logements ($)<input name="loyers" type="number" inputmode="numeric" value="4200" min="0" step="50"></label></div>
+      <div class="row"><label>Dépenses par année ($)<input name="depenses" type="number" inputmode="numeric" value="12000" min="0" step="100"></label>
+      <label>Mise de fonds (%)<input name="mdf" type="number" inputmode="decimal" value="20" min="0" max="100" step="1"></label></div>
+      <div class="row"><label>Taux hypothécaire (%)<input name="taux" type="number" inputmode="decimal" value="4.5" min="0" step="0.05"></label>
+      <label>Amortissement (années)<select name="amort"><option>25</option><option selected>30</option><option>40</option></select></label></div>
+      <p class="note" style="margin:0">Dépenses : taxes municipales et scolaires, assurances, électricité et chauffage payés par le propriétaire, entretien, vacance.</p>
+    </form>
+    <div class="res" id="res" aria-live="polite"></div>
+  </div>
+  <p class="note" style="margin-top:20px">Calcul approximatif, à titre indicatif seulement. Il ne remplace pas l'analyse complète d'un immeuble ni les conseils d'un professionnel du financement.</p>
+  <div class="btns" style="margin-top:16px"><a class="btn" ${rdvAttrs(cfg)} href="${RDV(cfg)}">Analyser un immeuble avec moi</a></div>
+</div></section>
+<script>(()=>{const f=document.getElementById("calc"),r=document.getElementById("res");
+const $=(n)=>parseFloat(f.elements[n].value)||0;
+const m$=(n)=>(Math.round(n)).toLocaleString("fr-CA")+" $";
+function calc(){const prix=$("prix"),rev=$("loyers")*12,dep=$("depenses"),mdf=$("mdf")/100,t=$("taux")/100,n=$("amort")*12;
+ const pret=prix*(1-mdf),i=Math.pow(1+t/2,1/6)-1,pmt=i?pret*i/(1-Math.pow(1+i,-n)):pret/n;
+ const net=rev-dep,cash=net/12-pmt;
+ const mrb=rev?prix/rev:0,brut=prix?rev/prix*100:0,cap=prix?net/prix*100:0;
+ r.innerHTML='<div class="kpi"><span>Multiplicateur de revenus (MRB)</span><b>'+(mrb?mrb.toFixed(1).replace(".",","):"–")+'</b></div>'+
+ '<div class="kpi"><span>Rendement brut</span><b>'+brut.toFixed(1).replace(".",",")+' %</b></div>'+
+ '<div class="kpi"><span>Taux de capitalisation</span><b>'+cap.toFixed(1).replace(".",",")+' %</b></div>'+
+ '<div class="kpi"><span>Paiement hypothécaire</span><b>'+m$(pmt)+' / mois</b></div>'+
+ '<div class="kpi big '+(cash>=0?"pos":"neg")+'"><span>Cashflow approximatif</span><b>'+(cash>=0?"+":"")+m$(cash)+' / mois</b></div>'}
+f.addEventListener("input",calc);calc();})();</script>
+</div></section>
 
-<section${px ? ' style="padding-top:0"' : ""}><div class="wrap"><div class="cta-warm" style="text-align:left;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
+<section><div class="wrap"><div class="cta-warm" style="text-align:left;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
   <div><p class="over">Vous vendez un immeuble?</p><h2>Un dossier clair <em>vend plus vite.</em></h2>
   <p class="lead" style="margin:0">Je prépare pour les acheteurs un dossier complet : revenus, dépenses, baux et état de l'immeuble. Un investisseur qui comprend les chiffres fait une offre plus vite.</p></div>
   <div class="btns"><a class="btn" href="vendre.html#evaluation">Évaluer mon immeuble</a><a class="btn ghost" href="marche.html#stats">Recevoir les chiffres chaque mois</a></div>
@@ -1113,25 +1140,7 @@ function pageMarche(cfg) {
   ${marcheStats(cfg)}
 </div></section>
 
-<section id="calculateur" style="background:var(--warm)"><div class="wrap">
-  <p class="over">Investisseurs</p>
-  <h2>Calculez le rendement <em>d'un plex.</em></h2>
-  <p class="lead" style="max-width:640px">Entrez les chiffres de l'immeuble. Le calcul est fait sur votre écran, rien n'est envoyé.</p>
-  <div class="calc">
-    <form class="form" id="calc" onsubmit="return false">
-      <div class="row"><label>Prix de l'immeuble ($)<input name="prix" type="number" inputmode="numeric" value="775000" min="0" step="1000"></label>
-      <label>Loyers par mois, tous les logements ($)<input name="loyers" type="number" inputmode="numeric" value="4200" min="0" step="50"></label></div>
-      <div class="row"><label>Dépenses par année ($)<input name="depenses" type="number" inputmode="numeric" value="12000" min="0" step="100"></label>
-      <label>Mise de fonds (%)<input name="mdf" type="number" inputmode="decimal" value="20" min="0" max="100" step="1"></label></div>
-      <div class="row"><label>Taux hypothécaire (%)<input name="taux" type="number" inputmode="decimal" value="4.5" min="0" step="0.05"></label>
-      <label>Amortissement (années)<select name="amort"><option>25</option><option selected>30</option><option>40</option></select></label></div>
-      <p class="note" style="margin:0">Dépenses : taxes municipales et scolaires, assurances, électricité et chauffage payés par le propriétaire, entretien, vacance.</p>
-    </form>
-    <div class="res" id="res" aria-live="polite"></div>
-  </div>
-  <p class="note" style="margin-top:20px">Calcul approximatif, à titre indicatif seulement. Il ne remplace pas l'analyse complète d'un immeuble ni les conseils d'un professionnel du financement.</p>
-  <div class="btns" style="margin-top:16px"><a class="btn" ${rdvAttrs(cfg)} href="${RDV(cfg)}">Analyser un immeuble avec moi</a></div>
-</div></section>
+
 
 <section><div class="wrap cols top-al">
   <div><p class="over">Chaque mois</p><h2>Recevez les chiffres <em>de votre secteur.</em></h2>
@@ -1147,19 +1156,7 @@ function pageMarche(cfg) {
   </form>
 </div></section>
 <script>
-(()=>{const f=document.getElementById("calc"),r=document.getElementById("res");
-const $=(n)=>parseFloat(f.elements[n].value)||0;
-const m$=(n)=>(Math.round(n)).toLocaleString("fr-CA")+" $";
-function calc(){const prix=$("prix"),rev=$("loyers")*12,dep=$("depenses"),mdf=$("mdf")/100,t=$("taux")/100,n=$("amort")*12;
- const pret=prix*(1-mdf),i=Math.pow(1+t/2,1/6)-1,pmt=i?pret*i/(1-Math.pow(1+i,-n)):pret/n;
- const net=rev-dep,cash=net/12-pmt;
- const mrb=rev?prix/rev:0,brut=prix?rev/prix*100:0,cap=prix?net/prix*100:0;
- r.innerHTML='<div class="kpi"><span>Multiplicateur de revenus (MRB)</span><b>'+(mrb?mrb.toFixed(1).replace(".",","):"–")+'</b></div>'+
- '<div class="kpi"><span>Rendement brut</span><b>'+brut.toFixed(1).replace(".",",")+' %</b></div>'+
- '<div class="kpi"><span>Taux de capitalisation</span><b>'+cap.toFixed(1).replace(".",",")+' %</b></div>'+
- '<div class="kpi"><span>Paiement hypothécaire</span><b>'+m$(pmt)+' / mois</b></div>'+
- '<div class="kpi big '+(cash>=0?"pos":"neg")+'"><span>Cashflow approximatif</span><b>'+(cash>=0?"+":"")+m$(cash)+' / mois</b></div>'}
-f.addEventListener("input",calc);calc();
+(()=>{
 const s=document.getElementById("stats");const AVA=${JSON.stringify(cfg.ava?.webhook || "")};
 s.addEventListener("submit",e=>{e.preventDefault();const d=Object.fromEntries(new FormData(s));
  const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,secteur:d.secteur,profil:d.profil,tag:"infolettre - site web",source:"site web gillesdulude.com",demande:"infolettre statistiques",consentement:true};
