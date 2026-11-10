@@ -238,7 +238,7 @@ function toPublic(p, lookups) {
   return {
     id: String(p.ListingId || p.ListingKey),
     statut: p.StandardStatus,
-    statutTexte: isLease && p.StandardStatus === "Active" ? "À louer" : tr(lookups, "StandardStatus", p.StandardStatus),
+    statutTexte: isLease && p.StandardStatus === "Active" ? "À louer" : FR[p.StandardStatus] || tr(lookups, "StandardStatus", p.StandardStatus),
     prix: num(p.ListPrice),
     loyer: num(p.RentPrice),
     type: tr(lookups, "PropertyType", rawType),
