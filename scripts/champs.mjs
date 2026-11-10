@@ -1,26 +1,27 @@
-// Diagnostic 2 : expansions de chaque inscription + exemples de valeurs codées (listes seulement, pas de texte libre).
+// Diagnostic 3 : Centris fournit-il les valeurs en français (Translations, Lookup) ?
 const API = "https://datadistributionqc.centris.ca/v1/odata";
-import { readFileSync } from "node:fs";
-const KEY = process.env.CENTRIS_API_KEY, MK = process.env.CENTRIS_MEMBER_KEY || JSON.parse(readFileSync(new URL("../config.json", import.meta.url))).filtres.memberKey || "";
+const KEY = process.env.CENTRIS_API_KEY;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-async function get(u) { const r = await fetch(`${API}/${u}`, { headers: { Authorization: `Bearer ${KEY}`, Accept: "application/json", "Accept-Language": "fr" } }); await sleep(300); return r; }
-const NAV = ["AdditionalBuildings", "AdditionalSpaces", "Animals", "Equipment", "Expenses", "GreenBuildingVerification", "OpenHouse", "Parkings", "Renovations", "RentedEquipment", "Rooms", "Translations", "UnitTypes", "Units", "Zonings"];
-const f = encodeURIComponent(MK ? `(ListAgentKey eq '${MK}' or CoListAgentKey eq '${MK}') and StandardStatus eq 'Active'` : `StandardStatus eq 'Active'`);
-const r = await get(`Property?$filter=${f}`);
-let rows = r.ok ? (await r.json()).value || [] : [];
-console.log("inscriptions :", r.status, rows.length);
-for (const p of rows) for (const n of NAV) {
-  const t = await get(`Property?$filter=${encodeURIComponent(`ListingKey eq '${p.ListingKey}'`)}&$expand=${n}`);
-  if (t.ok) p[n] = ((await t.json()).value || [])[0]?.[n]; else p[n] = "ERR" + t.status;
-}
-const ex = {};
-for (const p of rows) {
-  console.log(`\n# Inscription type=${p.PropertyType} sous-type=${p.PropertySubType}`);
-  for (const n of NAV) { const v = p[n]; if (Array.isArray(v) && v.length) { console.log(`  ${n}: ${v.length}`); for (const it of v) for (const [k, val] of Object.entries(it)) if (val != null && val !== "" && !/Key$|Timestamp$|ListingId$/.test(k) && (typeof val !== "string" || val.length < 60)) (ex[`${n}.${k}`] ??= new Set()).add(JSON.stringify(val)); } }
-  for (const [k, v] of Object.entries(p)) {
-    if (Array.isArray(v) && v.length && typeof v[0] !== "object") (ex[k] ??= new Set()).add(JSON.stringify(v));
-    else if (["AboveGroundBedroomsTotal","CommonWalls","Levels","Floor","CoOwnershipType","ParkingTotal","LivingAreaSource","ListPriceShort","ListPriceFull","SpecialListingConditions","ZoningDescription","StateRegion","MlsStatus","DaysBeforeAvailability","NeighborhoodName","BuildingSizeDimensions","LotSizeDimensions","LotSizeDimensionsUnits","FoundationArea","StoriesTotal","GrossScheduledIncomeResidential","NumberOfUnitsTotal","TaxYear","RoomsTotal"].includes(k) && v != null) (ex[k] ??= new Set()).add(JSON.stringify(v));
+async function get(u, lang = "fr") { const r = await fetch(`${API}/${u}`, { headers: { Authorization: `Bearer ${KEY}`, Accept: "application/json", "Accept-Language": lang } }); await sleep(300); return r; }
+const r = await get(`Property?$filter=${encodeURIComponent("StandardStatus eq 'Active' and PropertyType eq 'Residential Income'")}&$top=1&$expand=Translations,Rooms,Units`);
+const p = r.ok ? (await r.json()).value[0] : null;
+console.log("fiche :", r.status, !!p);
+if (p) {
+  for (const t of p.Translations || []) {
+    console.log(`\n=== Translations ${t.Locale} ===`);
+    for (const v of t.Values || []) if (!/Remarks|Addenda|Inclusions|Exclusions/.test(v.FieldName)) console.log(`${v.FieldName} = ${JSON.stringify(v.Value).slice(0, 200)}`);
   }
+  console.log("\nHeating brut :", JSON.stringify(p.Heating), "| Roof :", JSON.stringify(p.Roof));
+  console.log("Pièce brute :", JSON.stringify((p.Rooms || [])[0] || {}).slice(0, 300));
+  console.log("Translations dans une pièce ?", Object.keys((p.Rooms || [])[0] || {}).filter((k) => /transl|fr/i.test(k)));
 }
-console.log("\n=== Exemples de valeurs ===");
-for (const k of Object.keys(ex).sort()) console.log(`${k} : ${[...ex[k]].slice(0, 8).join(" | ").slice(0, 400)}`);
+for (const lang of ["fr", "fr-CA"]) {
+  const l = await get(`Lookup?$filter=${encodeURIComponent("LookupName eq 'Heating'")}&$top=6`, lang);
+  console.log(`\n=== Lookup Heating (${lang}) : ${l.status} ===`);
+  if (l.ok) for (const x of (await l.json()).value || []) console.log(JSON.stringify(x).slice(0, 300));
+}
+const names = await get(`Lookup?$select=LookupName&$top=2000`);
+if (names.ok) { const v = (await names.json()).value || []; console.log("\nNoms de listes :", [...new Set(v.map((x) => x.LookupName))].join(", ").slice(0, 3000)); }
+const tr = await get(`Translation?$top=5`);
+console.log("\n=== Ensemble Translation :", tr.status);
+if (tr.ok) for (const x of (await tr.json()).value || []) console.log(JSON.stringify(x).slice(0, 300));
