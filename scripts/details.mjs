@@ -170,7 +170,7 @@ export function details(p) {
   const parks = (Array.isArray(p.Parkings) ? p.Parkings : []).filter((x) => x.ParkingFeatures).map((x) => `${fr(x.ParkingFeatures, "ParkingFeatures")}${n(x.ParkingSpaces) ? ` (${x.ParkingSpaces})` : ""}`);
   const lot = Array.isArray(p.LotFeatures) ? p.LotFeatures : [];
   add("Extérieur et stationnement", [
-    ["Stationnement", [n(p.ParkingTotal) && `${p.ParkingTotal} place${p.ParkingTotal > 1 ? "s" : ""}`, parks.join(", ")].filter(Boolean).join(" : ")],
+    ["Stationnement", [n(p.ParkingTotal) && `${p.ParkingTotal} place${p.ParkingTotal > 1 ? "s" : ""}`, joindre(parks)].filter(Boolean).join(" : ")],
     ["Caractéristiques du stationnement", joindre(liste(p.ParkingFeatures, "ParkingFeatures"))],
     ["Piscine", joindre(liste(p.PoolFeatures, "PoolFeatures"))],
     ["Clôture", joindre(liste(p.Fencing, "Fencing"))],
