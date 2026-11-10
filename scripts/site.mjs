@@ -33,7 +33,7 @@ h1{font-size:clamp(38px,6vw,68px);text-transform:uppercase;letter-spacing:.01em}
 h2{font-size:clamp(28px,3.6vw,42px)}
 h3{font-size:21px;font-weight:600}
 p{margin:0 0 16px}
-.lead{font-size:clamp(18px,2vw,21px);color:var(--ch);max-width:640px}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--ch)}
 .dark{background:var(--nb);color:var(--bc)}.dark .lead,.dark p{color:#d9d4cb}
 .beige{background:var(--be)}
 section{padding:96px 0}
@@ -131,7 +131,7 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 @media (max-width:900px){.ben{grid-template-columns:1fr 1fr}}
 
 .band{text-align:center}
-.band h2{max-width:820px;margin:0 auto 14px}
+.band h2{margin:0 auto 14px}
 .band .lead{margin:0 auto}
 .band .btns{justify-content:center}
 
@@ -216,7 +216,7 @@ footer h4{color:var(--bc);font-size:13px;letter-spacing:.14em;text-transform:upp
 footer .logo{height:40px;width:auto;margin-bottom:18px}
 footer .rlp{height:58px;width:auto;margin-top:6px}
 footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
-.prose{max-width:760px}
+.prose{}
 .prose h2{font-size:24px;margin:40px 0 10px}
 .prose ul{padding-left:20px}
 .prose li{margin:6px 0}
@@ -233,7 +233,7 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:6px}
 .kpi span{font-size:13px;color:var(--ch)}.kpi b{font-size:26px;line-height:1.15}
 .var{font-size:14px;font-weight:600}.var.up{color:#2F7D4F}.var.dn{color:#B5532F}.var.eq{color:var(--ch)}
-.lecture{margin-top:22px;background:var(--warm);border-radius:18px;padding:22px 26px;max-width:860px}
+.lecture{margin-top:22px;background:var(--warm);border-radius:18px;padding:22px 26px;}
 .delais div{background:#fff;border:1px solid var(--line)}
 .calc{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;margin-top:28px;align-items:start}
 .calc .res{display:grid;gap:12px}
@@ -245,18 +245,18 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .v8list b{font:italic 400 15px "Source Serif 4",Georgia,serif;color:var(--ch)}
 .v8list h3{margin:4px 0 6px;font-size:19px}.v8list p{margin:0;font-size:15px;color:var(--ch)}
 @media (max-width:1000px){.v8list{grid-template-columns:1fr 1fr}}@media (max-width:560px){.v8list{grid-template-columns:1fr}}
-.faq{max-width:860px;border-top:1px solid var(--line)}
+.faq{border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
 .faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;position:relative;font-size:18px;font-weight:500}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";position:absolute;right:6px;top:14px;font-size:26px;font-weight:400;color:var(--ch)}
 .faq details[open] summary::after{content:"–"}
-.faq details p{margin:0 0 22px;color:var(--ch);font-size:16px;max-width:760px}
+.faq details p{margin:0 0 22px;color:var(--ch);font-size:16px}
 .prem{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
 .prem div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px}
 .prem h3{margin:0 0 6px;font-size:19px}.prem p{margin:0;font-size:15px;color:var(--ch)}
 @media (max-width:960px){.prem{grid-template-columns:1fr 1fr}}@media (max-width:560px){.prem{grid-template-columns:1fr}}
-.defs{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;max-width:980px}
+.defs{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
 .defs div{border-top:1px solid var(--line);padding:18px 0}
 .defs b{display:block;font-size:17px;margin-bottom:4px}.defs span{color:var(--ch);font-size:15px}
 @media (max-width:700px){.defs{grid-template-columns:1fr}}
@@ -335,7 +335,7 @@ section+section{border-top:1px solid var(--line)}
 .steps3 h3{margin:0 0 6px}.steps3 p{margin:0;color:var(--ch);font-size:16px}
 @media (max-width:860px){.steps3{grid-template-columns:1fr}}
 .cta-warm{background:var(--warm);border-radius:28px;padding:56px 40px;text-align:center}
-.cta-warm h2{max-width:720px;margin:0 auto 10px}
+.cta-warm h2{margin:0 auto 10px}
 .cta-warm[style*="text-align:left"] h2{margin:0 0 12px}
 @media (max-width:860px){.cta-warm[style*="grid"]{grid-template-columns:1fr!important;padding:36px 24px}}.cta-warm .lead{margin:0 auto}.cta-warm .btns{justify-content:center}
 .pill{display:inline-block;background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;margin-bottom:16px;border:1px solid var(--line)}
@@ -719,13 +719,12 @@ function pageVendre(cfg) {
   return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre propriété au meilleur prix avec la Méthode V8. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
     header(cfg, "vendre.html") +
     pageHero("Vendre", "Vendre <em>autrement.</em>", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.") + `
-<section><div class="wrap cols">
+<section><div class="wrap">
   <div>
     <p class="over">La Méthode V8</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
     <p class="lead">Huit étapes concrètes, adaptées à votre propriété et à votre échéancier.</p>
   </div>
-  <div></div>
 </div>
 <div class="wrap"><div class="v8list">${V8.map(([n, t, d]) => `<div><b>${n}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
 </section>
@@ -744,7 +743,7 @@ function pageVendre(cfg) {
 ${temoignages()}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 <section id="evaluation"><div class="wrap">
-  <div style="max-width:760px;margin-bottom:28px"><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
+  <div style="margin-bottom:28px"><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
   <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
   <p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
   <form class="form evalform" id="evalf">
@@ -807,7 +806,7 @@ function pageAcheter(cfg) {
 <section id="premier" style="background:var(--warm)"><div class="wrap">
   <p class="over">Premier achat</p>
   <h2>Votre première propriété, <em>sans mauvaise surprise.</em></h2>
-  <p class="lead" style="max-width:680px">L'essentiel à savoir avant de commencer les visites.</p>
+  <p class="lead">L'essentiel à savoir avant de commencer les visites.</p>
   <div class="prem">
     <div><h3>La mise de fonds</h3><p>5 % minimum jusqu'à 500 000 $, puis 10 % sur la portion au-delà. Sous 20 %, une assurance prêt hypothécaire s'ajoute au prêt.</p></div>
     <div><h3>Le CELIAPP</h3><p>Jusqu'à 8 000 $ par année, 40 000 $ au total. Déductible d'impôt, et retiré sans impôt pour votre premier achat.</p></div>
@@ -861,7 +860,7 @@ function pageInvestir(cfg) {
 <section id="calculateur"><div class="wrap">
   <p class="over">Calculateur</p>
   <h2>Calculez le rendement <em>d'un plex.</em></h2>
-  <p class="lead" style="max-width:640px">Entrez les chiffres de l'immeuble. Le calcul est fait sur votre écran, rien n'est envoyé.</p>
+  <p class="lead">Entrez les chiffres de l'immeuble. Le calcul est fait sur votre écran, rien n'est envoyé.</p>
   <div class="calc">
     <form class="form" id="calc" onsubmit="return false">
       <div class="row"><label>Prix de l'immeuble ($)<input name="prix" type="number" inputmode="numeric" value="775000" min="0" step="1000"></label>
