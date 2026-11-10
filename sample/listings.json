@@ -1,0 +1,124 @@
+[
+ {
+  "id": "10000001",
+  "statut": "Active",
+  "statutTexte": "À vendre",
+  "prix": 899000,
+  "type": "Immeuble à revenus",
+  "sousType": "Triplex",
+  "adresse": "123 rue Exemple",
+  "ville": "Saint-Jean-sur-Richelieu",
+  "logements": 3,
+  "terrain": "4 500 pi²",
+  "anneeConstruction": 1978,
+  "description": "Triplex bien entretenu, idéal pour investisseur ou propriétaire occupant.\n\nTexte d'exemple : la vraie description viendra directement de Centris.",
+  "photos": [
+   {
+    "url": "exemple/p0.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p1.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p2.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p3.svg",
+    "legende": ""
+   }
+  ],
+  "modifie": "2026-10-20"
+ },
+ {
+  "id": "10000002",
+  "statut": "Active",
+  "statutTexte": "À vendre",
+  "prix": 549000,
+  "type": "Résidentiel",
+  "sousType": "Maison unifamiliale",
+  "adresse": "45 avenue Modèle",
+  "ville": "Chambly",
+  "chambres": 3,
+  "sallesDeBain": 2,
+  "superficie": "1 450 pi²",
+  "terrain": "6 200 pi²",
+  "anneeConstruction": 1995,
+  "description": "Description d'exemple.",
+  "photos": [
+   {
+    "url": "exemple/p1.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p4.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p5.svg",
+    "legende": ""
+   }
+  ],
+  "modifie": "2026-10-25"
+ },
+ {
+  "id": "10000003",
+  "statut": "Active Under Contract",
+  "statutTexte": "Promesse d'achat acceptée",
+  "prix": 1250000,
+  "type": "Immeuble à revenus",
+  "sousType": "Quintuplex",
+  "adresse": "7 boulevard Fictif",
+  "ville": "La Prairie",
+  "logements": 5,
+  "anneeConstruction": 1988,
+  "description": "Description d'exemple.",
+  "photos": [
+   {
+    "url": "exemple/p2.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p6.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p7.svg",
+    "legende": ""
+   }
+  ],
+  "modifie": "2026-10-10"
+ },
+ {
+  "id": "10000004",
+  "statut": "Active",
+  "statutTexte": "À vendre",
+  "prix": 419000,
+  "type": "Résidentiel",
+  "sousType": "Condo",
+  "adresse": "302-88 rue Démo",
+  "ville": "Candiac",
+  "chambres": 2,
+  "sallesDeBain": 1,
+  "superficie": "1 050 pi²",
+  "anneeConstruction": 2012,
+  "description": "Description d'exemple.",
+  "photos": [
+   {
+    "url": "exemple/p3.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p8.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p9.svg",
+    "legende": ""
+   }
+  ],
+  "modifie": "2026-10-27"
+ }
+]

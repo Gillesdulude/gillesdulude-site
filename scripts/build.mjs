@@ -10,6 +10,7 @@
 
 import { readFile, writeFile, mkdir, cp } from "node:fs/promises";
 import { renderSite } from "./site.mjs";
+import { details, valeursInconnues, setLookups } from "./details.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -56,14 +57,14 @@ async function api(url, { lang = "fr" } = {}) {
   throw new Error(`Échec répété sur ${full.split("?")[0]}`);
 }
 
-async function getAll(firstUrl) {
+async function getAll(firstUrl, max = MAX_RECORDS) {
   const out = [];
   let url = firstUrl;
   while (url) {
     const page = await api(url);
     out.push(...(page.value || []));
     url = page["@odata.nextLink"] || null;
-    if (out.length >= MAX_RECORDS) {
+    if (out.length >= max) {
       console.warn(`  Arrêt à ${out.length} fiches (garde-fou). Configurer memberKey pour filtrer.`);
       break;
     }
@@ -86,6 +87,7 @@ async function fetchProperties() {
 
   // On essaie d'abord la requête la plus précise, puis on simplifie si l'API refuse un filtre ou une expansion.
   const attempts = [
+    { $filter: [agentFilter && `(${agentFilter})`, `(${statusFilter})`].filter(Boolean).join(" and "), $expand: "Media,Rooms,Units,UnitTypes,Expenses,Renovations,Parkings,AdditionalSpaces,RentedEquipment" },
     { $filter: [agentFilter && `(${agentFilter})`, `(${statusFilter})`].filter(Boolean).join(" and "), $expand: "Media" },
     { $filter: agentFilter || "", $expand: "Media" },
     { $expand: "Media" },
@@ -112,7 +114,7 @@ async function fetchLookups(names) {
     try {
       const rows = await getAll(`Lookup?${q({ $filter: `LookupName eq '${name}'` })}`);
       for (const r of rows) {
-        const label = r.LookupValue || r.StandardLookupValue;
+        const label = r.DisplayName || r.LookupValue || r.StandardLookupValue;
         for (const k of [r.LookupKey, r.LegacyODataValue, r.StandardLookupValue, r.LookupValue]) {
           if (k != null && label) map[`${name}|${k}`] = label;
         }
@@ -260,6 +262,7 @@ function toPublic(p, lookups) {
     lien: lienAnnonce(p),
     vendu: p.StandardStatus === "Closed",
     dateStatut: p.StatusChangeTimestamp || p.CloseDate || "",
+    details: details(p),
   };
 }
 
@@ -297,10 +300,19 @@ async function main() {
   let listings, vendus = [];
   if (SAMPLE) {
     listings = JSON.parse(await readFile(path.join(ROOT, "sample", "listings.json"), "utf8"));
+    try {
+      const raws = JSON.parse(await readFile(path.join(ROOT, "sample", "details-bruts.json"), "utf8"));
+      listings.forEach((l, i) => { if (raws[i]) l.details = details(raws[i]); });
+    } catch {}
   } else {
     if (!KEY) throw new Error("CENTRIS_API_KEY manquante. Ajoute-la dans les secrets GitHub.");
     console.log("Lecture des valeurs de listes...");
     const lookups = await fetchLookups(["StandardStatus", "PropertyType", "PropertySubType"]);
+    try {
+      const tous = await getAll("Lookup", 50000);
+      setLookups(tous);
+      console.log(`  ${tous.length} libellés officiels Centris chargés.`);
+    } catch (e) { console.warn("  Libellés Centris indisponibles, on garde la traduction intégrée.", e.message.slice(0, 120)); }
     console.log("Lecture des inscriptions...");
     const rows = await fetchProperties();
 
@@ -326,6 +338,7 @@ async function main() {
         .slice(0, v.maximum || 12)
         .map((l) => (v.afficherPrix ? { ...l, statutTexte: "Vendu" } : { ...l, statutTexte: "Vendu", prix: null, loyer: null }));
     }
+    if (valeursInconnues().length) console.log("  Valeurs sans traduction :", valeursInconnues().join(" | "));
     console.log(`  ${listings.length} propriétés à vendre et ${vendus.length} vendues publiées.`);
   }
 

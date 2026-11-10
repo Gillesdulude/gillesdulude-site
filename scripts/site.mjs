@@ -341,6 +341,23 @@ dialog#dlg{overflow:auto}
 #dlg .thumbs img.on,#dlg .thumbs img:hover{opacity:1}
 #dlg .info{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;padding:28px 32px 32px;overflow:visible}
 #dlg .info .side .pcta:first-child{margin-top:0}
+.details{margin-top:24px}
+@media (min-width:801px){#dlg .side{position:sticky;top:16px;align-self:start}}
+.dsec{border-top:1px solid var(--line);padding:18px 0 6px}
+.dsec h4{margin:0 0 12px;font-size:17px;font-weight:600}
+.dsec dl{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin:0}
+.dsec dl div{display:flex;flex-direction:column}
+.dsec dt{font-size:12.5px;color:var(--ch);letter-spacing:.02em}
+.dsec dd{margin:0;font-size:15px}
+.dtxt{white-space:pre-line;font-size:15px;color:var(--ch);margin:0 0 12px}
+.dtab{overflow-x:auto;margin-bottom:12px}
+.dtab table{width:100%;border-collapse:collapse;font-size:14.5px}
+.dtab th{text-align:left;font-weight:500;font-size:12.5px;color:var(--ch);padding:6px 10px 6px 0;border-bottom:1px solid var(--line)}
+.dtab td{padding:7px 10px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.dtab tr.lv td{font-weight:600;padding-top:12px;border-bottom:0}
+.vac{display:inline-block;font-size:11px;background:#E7F2EA;border-radius:999px;padding:1px 8px;margin-left:4px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.tags span{background:var(--warm);border-radius:999px;padding:4px 12px;font-size:14px}
+@media (max-width:560px){.dsec dl{grid-template-columns:1fr}}
 .mlslink{display:inline-block;margin-top:16px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--nb);font-size:14px;transition:background .2s}
 .mlslink:hover{background:var(--warm)}
 #dlg .close{position:sticky;top:10px;float:right;margin:10px 12px -50px 0;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
@@ -906,6 +923,18 @@ function draw(){let rows=listings.filter(l=>filter==="Toutes"||kind(l)===filter)
  rows=rows.slice().sort((a,b)=>sort==="asc"?(a.prix||a.loyer||0)-(b.prix||b.loyer||0):sort==="new"?dateOf(b)-dateOf(a):(b.prix||b.loyer||0)-(a.prix||a.loyer||0));
  $("#grid").innerHTML=rows.length?rows.map(l=>card(l,"button")).join(""):'<div class="empty">Aucune propriété en ce moment. Revenez bientôt, ou contactez-moi pour être avisé des nouveautés.</div>'}
 const dlg=$("#dlg");let cur=null,pi=0;
+function det(d){if(!d)return"";let h="";
+ const grid=(t,l)=>l&&l.length?'<div class="dsec"><h4>'+t+'</h4><dl>'+l.map(([a,b])=>'<div><dt>'+esc(a)+'</dt><dd>'+esc(b)+'</dd></div>').join("")+'</dl></div>':"";
+ const txt=(t,v)=>v?'<div class="dsec"><h4>'+t+'</h4><p class="dtxt">'+esc(v)+'</p></div>':"";
+ (d.sections||[]).forEach(s=>h+=grid(s.titre,s.lignes));
+ if(d.logements){const L=d.logements;h+='<div class="dsec"><h4>Logements</h4>'+(L.resume?'<p class="dtxt" style="margin-bottom:10px">'+esc(L.resume)+'</p>':'')+(L.liste.length?'<div class="dtab"><table><thead><tr><th>Logement</th><th>Ch.</th><th>SdB</th><th>Inclus dans le loyer</th></tr></thead><tbody>'+L.liste.map((u,i)=>'<tr><td>'+(i+1)+'. '+esc(u.type)+(u.vacant?' <span class="vac">Vacant</span>':'')+'</td><td>'+esc(u.chambres)+'</td><td>'+esc(u.sdb)+'</td><td>'+esc(u.inclus||"–")+'</td></tr>').join("")+'</tbody></table></div>':'')+'</div>'}
+ if(d.pieces&&d.pieces.length){let lv="";h+='<div class="dsec"><h4>Pièces</h4><div class="dtab"><table><thead><tr><th>Pièce</th><th>Dimensions</th><th>Plancher</th></tr></thead><tbody>'+d.pieces.map(r=>{let x="";if(r.niveau&&r.niveau!==lv){lv=r.niveau;x='<tr class="lv"><td colspan="3">'+esc(lv)+'</td></tr>'}return x+'<tr><td>'+esc(r.piece)+'</td><td>'+esc(r.dim)+'</td><td>'+esc(r.sol)+'</td></tr>'}).join("")+'</tbody></table></div></div>'}
+ if(d.espaces&&d.espaces.length)h+='<div class="dsec"><h4>Espaces additionnels</h4><div class="dtab"><table><thead><tr><th>Espace</th><th>Dimensions</th><th>Usage</th></tr></thead><tbody>'+d.espaces.map(e=>'<tr><td>'+esc(e.type)+'</td><td>'+esc(e.dim)+'</td><td>'+esc(e.usage)+'</td></tr>').join("")+'</tbody></table></div></div>';
+ h+=grid("Revenus, évaluation et dépenses",d.finances);
+ if(d.renovations&&d.renovations.length)h+=grid("Rénovations",d.renovations.map(r=>[r.type,[r.annee,r.detail].filter(Boolean).join(", ")||"Oui"]));
+ if(d.proches&&d.proches.length)h+='<div class="dsec"><h4>À proximité</h4><div class="tags">'+d.proches.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div></div>';
+ h+=txt("Inclusions",d.inclusions)+txt("Exclusions",d.exclusions)+txt("Addenda",d.addenda);
+ return h?'<div class="details">'+h+'</div>':""}
 function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  const spec=(lab,v)=>v?'<div><span>'+lab+'</span>'+esc(v)+'</div>':'';
  const sujet=encodeURIComponent("Propriété "+cur.adresse+", "+cur.ville+" (MLS "+cur.id+")");
@@ -914,7 +943,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="idx" id="gidx"></div></div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
  '<div class="price">'+priceOf(cur)+'</div><div class="addr">'+esc(cur.adresse)+'</div><div class="city">'+esc([cur.ville,cur.codePostal].filter(Boolean).join(", "))+'</div>'+
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
- '<div class="desc">'+esc(cur.description)+'</div>'+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
+ '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
