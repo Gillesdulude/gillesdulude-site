@@ -10,8 +10,8 @@ const PAGES = [
   { file: "vendre.html", nav: "Vendre" },
   { file: "acheter.html", nav: "Acheter" },
   { file: "investir.html", nav: "Investir" },
-  { file: "proprietes.html", nav: "Propriétés" },
   { file: "marche.html", nav: "Marché" },
+  { file: "proprietes.html", nav: "Propriétés" },
   { file: "contact.html", nav: "Contact" },
 ];
 
