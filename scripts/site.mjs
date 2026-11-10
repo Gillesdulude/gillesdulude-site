@@ -6,7 +6,7 @@ const telHref = (t) => "tel:" + String(t || "").replace(/[^0-9+]/g, "");
 
 const PAGES = [
   { file: "index.html", nav: "Accueil" },
-  { file: "a-propos.html", nav: "À propos" },
+  { file: "a-propos.html", nav: "À propos", haut: false },
   { file: "vendre.html", nav: "Vendre" },
   { file: "acheter.html", nav: "Acheter" },
   { file: "investir.html", nav: "Investir" },
@@ -435,7 +435,7 @@ ${jsonLd(cfg)}${extra}
 }
 
 function header(cfg, current) {
-  const links = PAGES.filter((p) => p.file !== "contact.html")
+  const links = PAGES.filter((p) => p.file !== "contact.html" && p.haut !== false)
     .map((p) => `<a href="${p.file}"${p.file === current ? ' aria-current="page"' : ""}>${p.nav}</a>`)
     .join("");
   return `{{APERCU}}
@@ -525,7 +525,7 @@ const temoignages = () => `<section><div class="wrap">
   <div class="avis-top"><div><p class="over">Avis Google</p><h2>Ils m'ont fait <em>confiance.</em></h2></div>
   <div class="note-g"><b>5,0</b><span class="etoiles" aria-label="5 étoiles sur 5">★★★★★</span><span>${AVIS_GOOGLE.length} avis sur Google</span></div></div>
   <div class="cards3">${AVIS_GOOGLE.slice(0, 3).map(([q, n, d]) => `<figure class="quote" style="margin:0"><span class="etoiles" aria-hidden="true">★★★★★</span><p>« ${q} »</p><figcaption class="who">${n}<span>${d}</span></figcaption></figure>`).join("")}</div>
-  <p style="margin-top:24px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir tous les avis</a></p>
+  <div class="btns" style="margin-top:24px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir tous les avis</a><a class="btn ghost" href="a-propos.html">Qui est Gilles?</a></div>
 </div></section>`;
 
 const band = (titre, texte, bouton = "Réserver un appel", href = "contact.html", attrs = "") => `<section><div class="wrap"><div class="cta-warm">
