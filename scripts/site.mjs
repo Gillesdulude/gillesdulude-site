@@ -2,6 +2,10 @@
 // Les inscriptions viennent de build.mjs (déjà filtrées : seulement les fiches en vigueur).
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+// Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
+const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
+const adresseLignes = (c) => [...String(c.agence || "").split(/,\s*/), ...String(c.adresseAgence || "").replace(/^(\d+,\s*[^,]+),\s*/, "$1\n").split("\n")]
+  .filter(Boolean).map((l) => `<span class="al">${nb(l)}</span>`).join("");
 const telHref = (t) => "tel:" + String(t || "").replace(/[^0-9+]/g, "");
 
 const PAGES = [
@@ -196,7 +200,9 @@ dialog::backdrop{background:rgba(19,15,12,.75)}
 
 /* Pied */
 footer{background:var(--nb);color:#bdb7ad;padding:72px 0 28px;font-size:15px}
-footer .g{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px}
+footer .g{display:grid;grid-template-columns:1.25fr .8fr 1.25fr .8fr;gap:36px}
+.al{display:block;white-space:nowrap}
+.coord span.al{font:inherit;font-size:17px;color:var(--nb);font-style:normal}
 .socs{display:flex;flex-direction:column;gap:10px}
 .soc{display:inline-flex;align-items:center;gap:10px}
 .follow{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;background:var(--warm);border-radius:24px;padding:32px 36px}
@@ -378,13 +384,13 @@ function jsonLd(cfg) {
     "@type": "RealEstateAgent",
     name: "Gilles Jr. Dulude, courtier immobilier",
     alternateName: ["Gilles Dulude", "Gilles Jr Dulude", "Équipe Dulude Immobilier"],
-    description: "Courtier immobilier résidentiel et commercial sur la Rive-Sud de Montréal, spécialisé en maisons familiales et en immeubles à revenus (plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.",
+    description: "Courtier immobilier résidentiel et commercial sur la Rive-Sud de Montréal, spécialisé en propriétés résidentielles et en immeubles à revenus (plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.",
     url: site, image: site + "assets/gilles-apropos.jpg",
     telephone: c.telephone, email: c.courriel,
     address: { "@type": "PostalAddress", streetAddress: "559, rue Pierre-Caisse", addressLocality: "Saint-Jean-sur-Richelieu", addressRegion: "QC", postalCode: "J3A 1P1", addressCountry: "CA" },
     parentOrganization: { "@type": "RealEstateAgent", name: "Royal LePage Distinction" },
     areaServed: SECTEURS.map((v) => ({ "@type": "City", name: v })),
-    knowsAbout: ["Vente de maisons unifamiliales", "Achat de propriété", "Immeubles à revenus", "Duplex, triplex et plex", "Évaluation de propriété", "Construction et rénovation"],
+    knowsAbout: ["Vente de propriétés résidentielles", "Achat de propriété", "Immeubles à revenus", "Duplex, triplex et plex", "Évaluation de propriété", "Construction et rénovation"],
     award: PRIX.map(([n, y]) => `${n} Royal LePage ${y}`),
     knowsLanguage: ["fr", "en"],
     sameAs: [r.facebook, r.instagram, "https://www.royallepage.ca/fr/agent/quebec/st-jean-sur-richelieu/gilles-jr-dulude/53410/"].filter(Boolean),
@@ -487,7 +493,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
     <div><h4>Me joindre</h4><ul>
       ${c.telephone ? `<li><a href="${telHref(c.telephone)}">${esc(c.telephone)}</a></li>` : ""}
       ${c.courriel ? `<li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li>` : ""}
-      <li style="margin-top:10px">${esc(c.agence)}<br>${esc(c.adresseAgence || "")}</li>
+      <li style="margin-top:10px">${adresseLignes(c)}</li>
     </ul></div>
     ${cfg.reseaux ? `<div><h4>Suivez-moi</h4><div class="socs">${socialLinks(cfg)}</div></div>` : ""}
   </div>
@@ -576,10 +582,10 @@ const dataTag = (obj) => `<script id="data" type="application/json">${JSON.strin
 const delai = (cfg, t) => cfg.marche?.delais?.[t]?.[0];
 const FAQ = {
   vendre: (cfg) => [
-    ["Combien ça coûte de vendre ma maison?", "La rémunération du courtier, convenue avec vous et écrite au contrat de courtage. Prévoyez souvent un certificat de localisation à jour et, si vous remboursez votre prêt avant la fin du terme, une pénalité de votre banque. Les frais de notaire sont habituellement payés par l'acheteur."],
-    ["Combien de temps ça prend pour vendre?", delai(cfg, "Unifamiliale") ? `Sur la Rive-Sud, une maison unifamiliale se vend en moyenne en ${delai(cfg, "Unifamiliale")} jours, une copropriété en ${delai(cfg, "Copropriété")} jours (${(cfg.marche.mois || "").toLowerCase()}). Une maison bien préparée et affichée au bon prix part plus vite.` : "Ça dépend du secteur, du type de propriété et du prix demandé. Une maison bien préparée et affichée au bon prix part plus vite."],
+    ["Combien ça coûte de vendre ma propriété?", "La rémunération du courtier, convenue avec vous et écrite au contrat de courtage. Prévoyez souvent un certificat de localisation à jour et, si vous remboursez votre prêt avant la fin du terme, une pénalité de votre banque. Les frais de notaire sont habituellement payés par l'acheteur."],
+    ["Combien de temps ça prend pour vendre?", delai(cfg, "Unifamiliale") ? `Sur la Rive-Sud, une maison unifamiliale se vend en moyenne en ${delai(cfg, "Unifamiliale")} jours, une copropriété en ${delai(cfg, "Copropriété")} jours (${(cfg.marche.mois || "").toLowerCase()}). Une propriété bien préparée et affichée au bon prix part plus vite.` : "Ça dépend du secteur, du type de propriété et du prix demandé. Une propriété bien préparée et affichée au bon prix part plus vite."],
     ["Est-ce que je dois rénover avant de vendre?", "Pas forcément. Avec mes années en construction, je vous dis quels petits travaux rapportent et lesquels ne valent pas la dépense."],
-    ["Je dois vendre avant d'acheter?", "Les deux se font. On peut rendre votre offre d'achat conditionnelle à la vente de votre maison, ou planifier les dates pour éviter de payer deux hypothèques en même temps."],
+    ["Je dois vendre avant d'acheter?", "Les deux se font. On peut rendre votre offre d'achat conditionnelle à la vente de votre propriété, ou planifier les dates pour éviter de payer deux hypothèques en même temps."],
   ],
   acheter: () => [
     ["Combien de mise de fonds faut-il?", "Au minimum 5 % jusqu'à 500 000 $, puis 10 % sur la portion au-delà de 500 000 $, pour une propriété de moins de 1,5 M$. Sous 20 %, l'assurance prêt hypothécaire est obligatoire."],
@@ -624,7 +630,7 @@ function pageAccueil(cfg, listings) {
   <h2 style="margin-bottom:32px">Un projet, <em>un seul interlocuteur.</em></h2>
   <div class="tiles">
     <a class="tile" href="vendre.html"><span class="ic">${ICON.maison}</span><h3>Vendre</h3><p>Obtenir le meilleur prix, sans stress inutile.</p><span class="go">En savoir plus →</span></a>
-    <a class="tile" href="acheter.html"><span class="ic">${ICON.cle}</span><h3>Acheter</h3><p>Trouver la bonne maison et savoir exactement ce que vous achetez.</p><span class="go">En savoir plus →</span></a>
+    <a class="tile" href="acheter.html"><span class="ic">${ICON.cle}</span><h3>Acheter</h3><p>Trouver la bonne propriété et savoir exactement ce que vous achetez.</p><span class="go">En savoir plus →</span></a>
     <a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir</h3><p>Duplex, triplex et plex : on parle chiffres.</p><span class="go">En savoir plus →</span></a>
   </div>
 </div></section>
@@ -643,7 +649,7 @@ function pageAccueil(cfg, listings) {
   <div>
     <p class="over">Qui je suis</p>
     <h2>Un ancien constructeur <em>devenu courtier.</em></h2>
-    <p class="lead" style="margin:0">J'ai passé 10 ans sur les chantiers avant l'immobilier. Je vois ce qui fait la valeur d'une maison, et ce qui peut nuire à sa vente.</p>
+    <p class="lead" style="margin:0">J'ai passé 10 ans sur les chantiers avant l'immobilier. Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente.</p>
   </div>
   <div>
     <div class="stats" style="margin-top:0;border:0;padding:0"><div><b>10+</b><span>ans en construction</span></div><div><b>10+</b><span>ans en courtage</span></div></div>
@@ -681,9 +687,9 @@ function pageAPropos(cfg) {
   <div>
     <p class="over">Mon parcours</p>
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
-    <p>Avant l'immobilier, j'ai passé 10 ans sur les chantiers, jusqu'à devenir entrepreneur général. Aujourd'hui, ça me permet d'évaluer rapidement la vraie valeur d'une maison.</p>
+    <p>Avant l'immobilier, j'ai passé 10 ans sur les chantiers, jusqu'à devenir entrepreneur général. Aujourd'hui, ça me permet d'évaluer rapidement la vraie valeur d'une propriété.</p>
     <p>Je suis direct et transparent. Mon rôle est simple : protéger mes clients et les aider à prendre les bonnes décisions.</p>
-    <p>Courtier résidentiel et commercial, je me spécialise dans les maisons familiales et les immeubles à revenus (duplex, triplex et plex) sur la Rive-Sud, en français comme en anglais : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
+    <p>Courtier résidentiel et commercial, je me spécialise dans les propriétés résidentielles et les immeubles à revenus (duplex, triplex et plex) sur la Rive-Sud, en français comme en anglais : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
     <div class="stats"><div><b>10+</b><span>ans en construction</span></div><div><b>10+</b><span>ans en courtage</span></div></div>
   </div>
 </div></section>
@@ -706,14 +712,14 @@ ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver u
 
 function pageVendre(cfg) {
   const faq = FAQ.vendre(cfg);
-  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre maison au meilleur prix avec la Méthode V8. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
+  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre propriété au meilleur prix avec la Méthode V8. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
     header(cfg, "vendre.html") +
     pageHero("Vendre", "Vendre <em>autrement.</em>", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.") + `
 <section><div class="wrap cols">
   <div>
     <p class="over">La Méthode V8</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
-    <p class="lead">Huit étapes concrètes, adaptées à votre maison et à votre échéancier.</p>
+    <p class="lead">Huit étapes concrètes, adaptées à votre propriété et à votre échéancier.</p>
   </div>
   <div></div>
 </div>
@@ -725,7 +731,7 @@ function pageVendre(cfg) {
   <h2 style="margin-bottom:32px">Simple, <em>sans engagement.</em></h2>
   <div class="steps3">
     <div><h3>Un appel</h3><p>15 minutes pour comprendre votre projet.</p></div>
-    <div><h3>Une visite</h3><p>Je viens voir votre maison et je vous donne l'heure juste.</p></div>
+    <div><h3>Une visite</h3><p>Je viens voir votre propriété et je vous donne l'heure juste.</p></div>
     <div><h3>Votre plan</h3><p>Une stratégie sur mesure, avec mon guide du vendeur.</p></div>
   </div>
   <div class="btns" style="margin-top:32px"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a></div>
@@ -789,21 +795,21 @@ function pageAcheter(cfg) {
   <h2 style="margin-bottom:32px">De la recherche <em>jusqu'aux clés.</em></h2>
   <div class="steps3">
     <div><h3>On cible</h3><p>Vos besoins, votre budget, votre secteur. Je vous avise des nouveautés.</p></div>
-    <div><h3>On visite</h3><p>Je regarde la maison avec mon œil de constructeur : structure, travaux à prévoir, potentiel.</p></div>
+    <div><h3>On visite</h3><p>Je regarde la propriété avec mon œil de constructeur : structure, travaux à prévoir, potentiel.</p></div>
     <div><h3>On négocie</h3><p>Le bon prix, les bonnes conditions, puis je coordonne tout jusqu'au notaire.</p></div>
   </div>
 </div></section>
 
 <section id="premier" style="background:var(--warm)"><div class="wrap">
   <p class="over">Premier achat</p>
-  <h2>Votre première maison, <em>sans mauvaise surprise.</em></h2>
+  <h2>Votre première propriété, <em>sans mauvaise surprise.</em></h2>
   <p class="lead" style="max-width:680px">L'essentiel à savoir avant de commencer les visites.</p>
   <div class="prem">
     <div><h3>La mise de fonds</h3><p>5 % minimum jusqu'à 500 000 $, puis 10 % sur la portion au-delà. Sous 20 %, une assurance prêt hypothécaire s'ajoute au prêt.</p></div>
     <div><h3>Le CELIAPP</h3><p>Jusqu'à 8 000 $ par année, 40 000 $ au total. Déductible d'impôt, et retiré sans impôt pour votre premier achat.</p></div>
     <div><h3>Le RAP</h3><p>Jusqu'à 60 000 $ par personne retirés de vos REER pour la mise de fonds, à rembourser sur 15 ans.</p></div>
     <div><h3>La préapprobation</h3><p>À faire avant de visiter. Vous connaissez votre vrai budget, et votre offre est plus solide face aux autres acheteurs.</p></div>
-    <div><h3>La taxe de bienvenue</h3><p>Environ 5 600 $ pour une maison de 500 000 $ en 2026. Elle arrive après le notaire et ne s'ajoute pas au prêt.</p></div>
+    <div><h3>La taxe de bienvenue</h3><p>Environ 5 600 $ pour une propriété de 500 000 $ en 2026. Elle arrive après le notaire et ne s'ajoute pas au prêt.</p></div>
     <div><h3>Les autres frais</h3><p>Notaire, inspection, ajustement des taxes, déménagement. Comptez quelques milliers de dollars en plus de la mise de fonds.</p></div>
   </div>
   <p class="note" style="margin-top:20px">Montants à titre indicatif. Votre institution financière ou votre courtier hypothécaire confirme ce qui s'applique à votre situation.</p>
@@ -816,7 +822,7 @@ function pageAcheter(cfg) {
 
 ${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc(cfg.marche.mois.toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
-${band("Vous cherchez votre prochaine maison ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
@@ -1009,9 +1015,9 @@ function pageContact(cfg) {
     <div class="coord">
       ${c.telephone ? `<a href="${telHref(c.telephone)}"><span>Téléphone</span><b>${esc(c.telephone)}</b></a>` : ""}
       ${c.courriel ? `<a href="mailto:${esc(c.courriel)}"><span>Courriel</span><b>${esc(c.courriel)}</b></a>` : ""}
-      <div><span>Agence</span><b>${esc(c.agence)}</b><br>${esc(c.adresseAgence || "")}</div>
+      <div><span>Agence</span>${adresseLignes(c)}</div>
       ${cfg.reseaux ? `<div class="suivez"><span>Suivez-moi</span><p class="socrow">${socialLinks(cfg, "socx")}</p></div>` : ""}
-      <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>${SECTEURS.join(", ")}</div>
+      <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>${SECTEURS.map((v) => `<span style="display:inline;font:inherit;color:inherit;white-space:nowrap">${v}</span>`).join(", ")}</div>
       <div><span>Langues</span><b>Français et anglais</b></div>
     </div>
   </div>
@@ -1107,7 +1113,7 @@ function llmsTxt(cfg) {
   const c = cfg.courtier, r = cfg.reseaux || {};
   return `# Gilles Jr. Dulude, courtier immobilier
 
-> Courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud de Montréal (Québec). Spécialisé dans la vente et l'achat de maisons familiales et d'immeubles à revenus (duplex, triplex, plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.
+> Courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud de Montréal (Québec). Spécialisé dans la vente et l'achat de propriétés résidentielles et d'immeubles à revenus (duplex, triplex, plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.
 
 ## Secteurs desservis
 ${SECTEURS.map((v) => "- " + v).join("\n")}
