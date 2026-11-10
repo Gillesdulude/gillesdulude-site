@@ -906,7 +906,7 @@ function pageProprietes(cfg, listings) {
   const c = cfg.courtier;
   return head(cfg, "Propriétés à vendre | Gilles Jr. Dulude", "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.") +
     header(cfg, "proprietes.html") +
-    pageHero("Propriétés à vendre", "Mes inscriptions.", `${listings.length} propriété${listings.length > 1 ? "s" : ""} à vendre en ce moment. Mises à jour automatiquement plusieurs fois par jour.`) + `
+    pageHero("Propriétés à vendre", "Mes inscriptions.", `${listings.length} propriété${listings.length > 1 ? "s" : ""} à vendre en ce moment.`) + `
 <section style="padding-top:0"><div class="wrap">
   <div class="filters">
     <div class="chips" id="chips" role="group" aria-label="Filtrer par type"></div>

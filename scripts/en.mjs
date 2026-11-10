@@ -274,7 +274,7 @@ export const T = {
 export const R = [
   [/^Tout voir \((\d+)\)$/, "See all ($1)"],
   [/^(\d+) avis sur Google$/, "$1 Google reviews"],
-  [/^(\d+) propriétés? à vendre en ce moment\. Mises à jour automatiquement plusieurs fois par jour\.$/, (m, n) => `${n} propert${n > 1 ? "ies" : "y"} for sale right now. Updated automatically several times a day.`],
+  [/^(\d+) propriétés? à vendre en ce moment\.$/, (m, n) => `${n} propert${n > 1 ? "ies" : "y"} for sale right now.`],
   [/^Sur la Rive-Sud, une maison unifamiliale se vend en moyenne en (\d+) jours, une copropriété en (\d+) jours \((\S+) (\d{4})\)\. Une propriété bien préparée et affichée au bon prix part plus vite\.$/, (m, a, b, mo, y) => `On the South Shore, a single-family home sells in ${a} days on average, a condo in ${b} days (${mois(mo)} ${y}). A well-prepared property listed at the right price sells faster.`],
   [/^Le marché, (\S+) (\d{4})$/, (m, mo, y) => `The market, ${mois(mo)} ${y}`],
   [/^Rive-Sud de Montréal, (\S+) (\d{4})\. Pour savoir quand acheter, vendre ou investir\.$/, (m, mo, y) => `Montreal South Shore, ${mois(mo)} ${y}. To know when to buy, sell or invest.`],
