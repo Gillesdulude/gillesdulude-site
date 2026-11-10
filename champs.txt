@@ -1,0 +1,34 @@
+fiches : 7
+
+# Lot | PublicRemarks fr 520 car. | Addenda 1679 | Inclusions 0
+  en: NeighborhoodName(4), ZoningDescription(11), ListPriceShort(8), ListPriceFull(8), LotSizeDimensions(29), LotSizeDimensionsFeet(11), LotSizeDimensionsMeters(15), UnparsedAddress(9)
+  fr: Addenda(1679), NeighborhoodName(3), PublicRemarks(520), ZoningDescription(11), ListPriceShort(9), ListPriceFull(9), LotSizeDimensions(28), LotSizeDimensionsFeet(10), LotSizeDimensionsMeters(15), UnparsedAddress(9)
+
+# Condominium | PublicRemarks fr 612 car. | Addenda 462 | Inclusions 140
+  en: NeighborhoodName(6), ZoningDescription(11), ListPriceShort(8), ListPriceFull(8), UnparsedAddress(25)
+  fr: Addenda(462), Exclusions(24), Inclusions(140), NeighborhoodName(6), ParkingFeaturesOtherGarage(9), PublicRemarks(612), ZoningDescription(11), ListPriceShort(9), ListPriceFull(9), UnparsedAddress(25)
+
+# Triplex | PublicRemarks fr 572 car. | Addenda 2149 | Inclusions 0
+  en: Addenda(1940), Exclusions(24), NeighborhoodName(7), PublicRemarks(547), ZoningDescription(11), ListPriceShort(10), ListPriceFull(10), BuildingSizeDimensions(31), BuildingSizeDimensionsFeet(13), BuildingSizeDimensionsMeters(15), LotSizeDimensions(28), LotSizeDimensionsFeet(10), LotSizeDimensionsMeters(15), UnparsedAddress(11)
+  fr: Addenda(2149), Exclusions(25), NeighborhoodName(6), PublicRemarks(572), ZoningDescription(11), ListPriceShort(11), ListPriceFull(11), BuildingSizeDimensions(30), BuildingSizeDimensionsFeet(12), BuildingSizeDimensionsMeters(15), LotSizeDimensions(27), LotSizeDimensionsFeet(9), LotSizeDimensionsMeters(15), UnparsedAddress(11)
+
+# Quadruplex | PublicRemarks fr 327 car. | Addenda 1955 | Inclusions 17
+  en: Addenda(1744), Exclusions(19), Inclusions(22), PublicRemarks(294), ZoningDescription(11), ListPriceShort(10), ListPriceFull(10), BuildingSizeDimensions(33), BuildingSizeDimensionsFeet(15), BuildingSizeDimensionsMeters(15), LotSizeDimensions(30), LotSizeDimensionsFeet(12), LotSizeDimensionsMeters(15), UnparsedAddress(12)
+  fr: Addenda(1955), Exclusions(24), Inclusions(17), PublicRemarks(327), RoofOther(19), ZoningDescription(11), ListPriceShort(11), ListPriceFull(11), BuildingSizeDimensions(32), BuildingSizeDimensionsFeet(14), BuildingSizeDimensionsMeters(15), LotSizeDimensions(29), LotSizeDimensionsFeet(11), LotSizeDimensionsMeters(15), UnparsedAddress(12)
+
+# Condominium | PublicRemarks fr 610 car. | Addenda 1564 | Inclusions 141
+  en: Addenda(1515), Exclusions(15), Inclusions(125), NeighborhoodName(12), PublicRemarks(572), ZoningDescription(11), ListPriceShort(8), ListPriceFull(8), BuildingSizeDimensions(39), BuildingSizeDimensionsFeet(18), BuildingSizeDimensionsMeters(18), UnparsedAddress(22)
+  fr: Addenda(1564), Exclusions(20), Inclusions(141), NeighborhoodName(12), PublicRemarks(610), ZoningDescription(11), ListPriceShort(9), ListPriceFull(9), BuildingSizeDimensions(38), BuildingSizeDimensionsFeet(17), BuildingSizeDimensionsMeters(18), UnparsedAddress(22)
+
+# Triplex | PublicRemarks fr 476 car. | Addenda 1169 | Inclusions 0
+  en: Addenda(1061), BasementOther(13), PublicRemarks(416), ZoningDescription(11), ListPriceShort(8), ListPriceFull(8), BuildingSizeDimensions(39), BuildingSizeDimensionsFeet(18), BuildingSizeDimensionsMeters(18), LotSizeDimensions(32), LotSizeDimensionsFeet(14), LotSizeDimensionsMeters(15), UnparsedAddress(14)
+  fr: Addenda(1169), BasementOther(13), Exclusions(25), PublicRemarks(476), ZoningDescription(11), ListPriceShort(9), ListPriceFull(9), BuildingSizeDimensions(38), BuildingSizeDimensionsFeet(17), BuildingSizeDimensionsMeters(18), LotSizeDimensions(31), LotSizeDimensionsFeet(13), LotSizeDimensionsMeters(15), UnparsedAddress(14)
+
+# Single Family Residence | PublicRemarks fr 630 car. | Addenda 1935 | Inclusions 170
+  en: Addenda(1753), Inclusions(174), PublicRemarks(605), ZoningDescription(11), ListPriceShort(8), ListPriceFull(8), BuildingSizeDimensions(41), BuildingSizeDimensionsFeet(19), BuildingSizeDimensionsMeters(19), LotSizeDimensions(33), LotSizeDimensionsFeet(15), LotSizeDimensionsMeters(15), UnparsedAddress(12)
+  fr: Addenda(1935), Inclusions(170), PublicRemarks(630), ZoningDescription(11), ListPriceShort(9), ListPriceFull(9), BuildingSizeDimensions(40), BuildingSizeDimensionsFeet(18), BuildingSizeDimensionsMeters(19), LotSizeDimensions(32), LotSizeDimensionsFeet(14), LotSizeDimensionsMeters(15), UnparsedAddress(12)
+
+Avec Accept-Language en : ZoningDescription = Residential | PublicRemarks commence par : 
+Lookup en : Forced Air => Forced air
+Lookup en : Dual => Dual energy
+Lookup en : Wood => Wood
