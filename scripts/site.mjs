@@ -1,6 +1,7 @@
 // Génère toutes les pages du site de Gilles Jr. Dulude.
 // Les inscriptions viennent de build.mjs (déjà filtrées : seulement les fiches en vigueur).
 
+import { T, R, JS } from "./en.mjs";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 // Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
 const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
@@ -285,6 +286,9 @@ h1{text-transform:none;letter-spacing:-.02em;font-size:clamp(36px,5.4vw,60px)}
 h1 em,h2 em{font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-weight:400}
 .btn{border-radius:999px;letter-spacing:.06em;padding:14px 24px}
 .menu .cta{border-radius:999px}
+.menu a.lang{border:1px solid rgba(249,246,244,.35);border-radius:999px;padding:6px 10px;font-size:12px;letter-spacing:.1em}
+.menu a.lang:hover{border-color:var(--be)}
+@media (max-width:960px){.menu a.lang{align-self:flex-start;margin-top:12px;padding:6px 14px}}
 .hero.light{background:var(--warm);color:var(--nb)}
 .hero.light .lead{color:var(--ch)}
 .hero.light .over{color:var(--ch)}
@@ -449,7 +453,7 @@ function header(cfg, current) {
   <a class="logo" href="index.html" aria-label="Accueil"><img src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier" width="172" height="38"></a>
   <button class="burger" aria-label="Menu" aria-expanded="false" onclick="const m=document.querySelector('.menu');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
-  <nav class="menu">${links}<a class="cta" href="contact.html"${current === "contact.html" ? ' aria-current="page"' : ""}>Contact</a></nav>
+  <nav class="menu">${links}{{LANG}}<a class="cta" href="contact.html"${current === "contact.html" ? ' aria-current="page"' : ""}>Contact</a></nav>
 </div></header>`;
 }
 
@@ -1204,7 +1208,7 @@ ${band("Est-ce le bon moment pour vous ?", "Chaque situation est différente. Pa
 ` + footer(cfg) + end;
 }
 
-export function renderSite(cfg, listings, { apercu = "" } = {}) {
+function rendrePages(cfg, listings, banner) {
   const pages = {
     "index.html": pageAccueil(cfg, listings),
     "a-propos.html": pageAPropos(cfg),
@@ -1215,9 +1219,69 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
     "marche.html": pageMarche(cfg),
     "contact.html": pageContact(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
-    "llms.txt": llmsTxt(cfg),
   };
-  const banner = apercu ? `<div class="apercu">${esc(apercu)}</div>` : "";
-  for (const k of Object.keys(pages)) if (k.endsWith(".html")) pages[k] = pages[k].replace(/([A-Za-zÀ-ÿ0-9.»]) ([?!])(?=<|")/g, "$1&nbsp;$2").replace("{{APERCU}}", banner);
+  for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
   return pages;
+}
+
+// ---------- Version anglaise ----------
+const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
+function trTexte(raw) {
+  const t = norm(raw);
+  if (!t) return null;
+  if (T[t] != null) return T[t];
+  for (const [re, rep] of R) if (re.test(t)) return t.replace(re, rep);
+  return null;
+}
+const garderEspaces = (orig, rep) => (orig.match(/^\s*/)[0]) + rep + (orig.match(/\s*$/)[0]);
+const trNoeuds = (h) => h
+  .replace(/>([^<>]+)</g, (m, t) => { const r = trTexte(t); return r == null ? m : ">" + garderEspaces(t, r.replace(/&/g, "&amp;")) + "<"; })
+  .replace(/\b(placeholder|alt|aria-label|title|content)="([^"]*)"/g, (m, a, v) => { const r = trTexte(v); return r == null ? m : `${a}="${r.replace(/"/g, "&quot;")}"`; });
+export const textesNonTraduits = new Set();
+function traduire(html) {
+  return html.split(/(<script\b[\s\S]*?<\/script>|<style\b[\s\S]*?<\/style>)/).map((part) => {
+    if (part.startsWith("<style")) return part;
+    if (part.startsWith("<script")) {
+      const ouverture = part.slice(0, part.indexOf(">") + 1);
+      if (/application\/ld\+json/.test(ouverture)) return /FAQPage/.test(part) ? "" : part;
+      if (/\bsrc=/.test(ouverture)) return part;
+      let b = part;
+      for (const [f, e] of JS) b = b.split(f).join(e);
+      return trNoeuds(b);
+    }
+    return trNoeuds(part);
+  }).join("");
+}
+
+function versionAnglaise(l) {
+  const e = l.en || {};
+  const out = { ...l, description: e.description || l.description, details: e.details || l.details, type: e.type || l.type, sousType: e.sousType ?? l.sousType, statutTexte: e.statutTexte || ({ "À vendre": "For sale", "Promesse d'achat acceptée": "Accepted offer", "À louer": "For rent" }[l.statutTexte] ?? l.statutTexte) };
+  const pi = (v) => (v ? String(v).replace(/(\d)[\s\u00a0\u202f](?=\d{3})/g, "$1,").replace(" pi²", " sq. ft.") : v);
+  out.superficie = pi(out.superficie); out.terrain = pi(out.terrain);
+  delete out.en;
+  return out;
+}
+
+export function renderSite(cfg, listings, { apercu = "" } = {}) {
+  const fr = listings.map((l) => { const x = { ...l }; delete x.en; return x; });
+  const en = listings.map(versionAnglaise);
+  const pagesFr = rendrePages(cfg, fr, apercu ? `<div class="apercu">${esc(apercu)}</div>` : "");
+  const cfgEn = { ...cfg, marche: cfg.marche ? { ...cfg.marche, lecture: cfg.marche.lectureEn || cfg.marche.lecture } : cfg.marche };
+  const pagesEn = rendrePages(cfgEn, en, apercu ? `<div class="apercu">Preview with sample properties.</div>` : "");
+  const out = {};
+  const alt = (f, lang) => `<link rel="alternate" hreflang="fr-CA" href="${lang === "fr" ? "" : "../"}${f}"><link rel="alternate" hreflang="en-CA" href="${lang === "fr" ? "en/" : ""}${f}">`;
+  for (const [f, h] of Object.entries(pagesFr)) {
+    out[f] = h.replace(/([A-Za-zÀ-ÿ0-9.»]) ([?!])(?=<|")/g, "$1&nbsp;$2")
+      .replace("{{LANG}}", `<a class="lang" href="en/${f}" hreflang="en" lang="en" aria-label="English version">EN</a>`)
+      .replace("</head>", alt(f, "fr") + "</head>");
+  }
+  for (const [f, h] of Object.entries(pagesEn)) {
+    out["en/" + f] = traduire(h)
+      .replace('<html lang="fr-CA">', '<html lang="en-CA">')
+      .replace(/(["'(])assets\//g, "$1../assets/")
+      .replace("{{LANG}}", `<a class="lang" href="../${f}" hreflang="fr" lang="fr" aria-label="Version française">FR</a>`)
+      .replace("</head>", alt(f, "en") + "</head>");
+  }
+  out["llms.txt"] = llmsTxt(cfg);
+  return out;
 }

@@ -362,7 +362,7 @@ async function main() {
   }
 
   const pages = renderSite(config, listings, { apercu: SAMPLE ? "Aperçu avec des propriétés fictives." : "" });
-  for (const [f, html] of Object.entries(pages)) await writeFile(path.join(dist, f), html);
+  for (const [f, html] of Object.entries(pages)) { await mkdir(path.dirname(path.join(dist, f)), { recursive: true }); await writeFile(path.join(dist, f), html); }
   await cp(path.join(ROOT, "assets"), path.join(dist, "assets"), { recursive: true });
   if (config.page.domainePersonnalise && !SAMPLE) {
     await writeFile(path.join(dist, "CNAME"), config.page.domainePersonnalise + "\n");

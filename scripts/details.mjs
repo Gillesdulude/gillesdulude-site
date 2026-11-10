@@ -121,7 +121,7 @@ function fr(v, champ) {
 const liste = (a, champ) => (Array.isArray(a) ? a.filter((x) => x && x !== "Other").map((x) => fr(x, champ)).filter(Boolean) : []);
 const joindre = (a) => [...new Set(a)].join(", ");
 const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : null; };
-const argent = (v) => (n(v) ? Math.round(v).toLocaleString("fr-CA").replace(/ | /g, " ") + " $" : "");
+const argent = (v) => (!n(v) ? "" : LANG === "en" ? "$" + Math.round(v).toLocaleString("en-CA") : Math.round(v).toLocaleString("fr-CA").replace(/[\u202f\u00a0]/g, " ") + " $");
 const etage = (v) => { if (LANG === "en") return String(v || ""); const m = String(v || "").match(/^(\d+)(st|nd|rd|th)$/i); return m ? (m[1] === "1" ? "1er" : m[1] + "e") : fr(v); };
 const pieds = (s) => String(s || "").trim();
 
@@ -153,7 +153,9 @@ export function details(p, lang = "fr") {
   try { const d = detailsFr(p); if (!d || lang !== "en") return d;
     d.sections = d.sections.map((x) => ({ titre: en(x.titre), lignes: x.lignes.map(([a, b]) => [en(a), enVal(b)]) }));
     d.finances = d.finances.map(([a, b]) => [enLabel(a), b.replace(" / an", " / yr").replace(" / mois", " / mo").replace(/^Oui$/, "Yes")]);
-    d.renovations = d.renovations.map((r) => ({ ...r, annee: r.annee }));
+    const ft = (x) => String(x || "").replace(/(\d),(\d)/g, "$1.$2").replace(/ p\b/g, " ft");
+    d.pieces = d.pieces.map((r) => ({ ...r, dim: ft(r.dim) }));
+    d.espaces = d.espaces.map((e) => ({ ...e, dim: ft(e.dim) }));
     if (d.logements) d.logements.resume = d.logements.resume.replace(/(\d+) logements/, "$1 units").replace(/(\d+) vacants?/, "$1 vacant");
     return d;
   } finally { LANG = "fr"; }
