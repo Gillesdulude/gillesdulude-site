@@ -487,7 +487,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
     <div>
       <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier">
       <p>Courtier immobilier résidentiel et commercial, immeubles à revenus.<br>Rive-Sud de Montréal. Français et anglais.</p>
-      <img class="rlp" src="assets/rlp-blanc.png" alt="Royal LePage Distinction">
+      <a href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction" style="display:inline-block"><img class="rlp" src="assets/rlp-blanc.png" alt="Royal LePage Distinction"></a>
     </div>
     <div><h4>Navigation</h4><ul>${PAGES.map((p) => `<li><a href="${p.file}">${p.nav}</a></li>`).join("")}</ul></div>
     <div><h4>Me joindre</h4><ul>

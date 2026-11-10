@@ -95,12 +95,13 @@ const FR = {
 };
 
 // Libellés officiels de Centris (Lookup.DisplayName), chargés par build.mjs
-let LK = {}, LKV = {};
-export function setLookups(rows) {
-  LK = {}; LKV = {};
+let LANG = "fr";
+const LKS = { fr: {}, en: {} }, LKVS = { fr: {}, en: {} };
+export function setLookups(rows, lang = "fr") {
+  const A = (LKS[lang] = {}), B = (LKVS[lang] = {});
   for (const r of rows || []) {
     const lab = r.DisplayName; if (!lab) continue;
-    for (const k of [r.LookupValue, r.StandardLookupValue, r.LegacyODataValue]) if (k != null) { LK[`${r.LookupName}|${k}`] = lab; LKV[k] ??= lab; }
+    for (const k of [r.LookupValue, r.StandardLookupValue, r.LegacyODataValue]) if (k != null) { A[`${r.LookupName}|${k}`] = lab; B[k] ??= lab; }
   }
 }
 const inconnus = new Set();
@@ -109,7 +110,9 @@ export const valeursInconnues = () => [...inconnus];
 function fr(v, champ) {
   if (v == null || v === "") return "";
   const s = String(v);
+  const LK = LKS[LANG], LKV = LKVS[LANG];
   if (champ && LK[`${champ}|${s}`]) return LK[`${champ}|${s}`];
+  if (LANG === "en") return LKV[s] || s;
   if (FR[s]) return FR[s];
   if (LKV[s]) return LKV[s];
   if (/^[\x20-\x7E]+$/.test(s) && /^[A-Z][a-z]/.test(s)) inconnus.add(s);
@@ -119,10 +122,44 @@ const liste = (a, champ) => (Array.isArray(a) ? a.filter((x) => x && x !== "Othe
 const joindre = (a) => [...new Set(a)].join(", ");
 const n = (v) => { const x = Number(v); return Number.isFinite(x) && x > 0 ? x : null; };
 const argent = (v) => (n(v) ? Math.round(v).toLocaleString("fr-CA").replace(/ | /g, " ") + " $" : "");
-const etage = (v) => { const m = String(v || "").match(/^(\d+)(st|nd|rd|th)$/i); return m ? (m[1] === "1" ? "1er" : m[1] + "e") : fr(v); };
+const etage = (v) => { if (LANG === "en") return String(v || ""); const m = String(v || "").match(/^(\d+)(st|nd|rd|th)$/i); return m ? (m[1] === "1" ? "1er" : m[1] + "e") : fr(v); };
 const pieds = (s) => String(s || "").trim();
 
-export function details(p) {
+// Étiquettes de la fiche en anglais
+const EN = {
+  "Caractéristiques": "Features", "Bâtiment": "Building", "Extérieur et stationnement": "Exterior and parking",
+  "Année de construction": "Year built", "Pièces": "Rooms", "Chambres": "Bedrooms", "Salles de bain": "Bathrooms", "Salles d'eau": "Powder rooms",
+  "Étage": "Floor", "Nombre d'étages": "Number of floors", "Type de copropriété": "Type of co-ownership", "Dimensions du terrain": "Lot dimensions",
+  "Dimensions du bâtiment": "Building dimensions", "Mitoyenneté": "Common walls", "Zonage": "Zoning", "Quartier": "Neighbourhood",
+  "Délai d'occupation": "Occupancy delay", "Fondation": "Foundation", "Revêtement extérieur": "Siding", "Toiture": "Roof", "Fenêtres": "Windows",
+  "Sous-sol": "Basement", "Chauffage": "Heating", "Climatisation": "Cooling", "Foyer ou poêle": "Fireplace or stove", "Armoires de cuisine": "Kitchen cabinets",
+  "Revêtement de sol": "Flooring", "Équipements": "Equipment", "Sécurité": "Security", "Accessibilité": "Accessibility",
+  "Commodités de l'immeuble": "Building amenities", "Approvisionnement en eau": "Water supply", "Égout": "Sewage system",
+  "Stationnement": "Parking", "Caractéristiques du stationnement": "Parking features", "Piscine": "Pool", "Clôture": "Fence", "Terrain": "Lot",
+};
+const en = (t) => EN[t] || t;
+const enVal = (v) => String(v)
+  .replace(/(\d+) jours\b/, "$1 days").replace(/(\d+) places?\b/, (m, x) => `${x} space${x > 1 ? "s" : ""}`)
+  .replace(" : ", ": ").replace(/(\d+) hors-sol/, "$1 above ground").replace(/(\d+) au sous-sol/, "$1 in basement");
+function enLabel(l) {
+  return l.replace(/^Revenus bruts potentiels/, "Potential gross revenue").replace(/^Revenus commerciaux/, "Commercial revenue")
+    .replace(/^Revenus de stationnement/, "Parking revenue").replace(/^Évaluation municipale, terrain/, "Municipal assessment, lot")
+    .replace(/^Évaluation municipale, bâtiment/, "Municipal assessment, building").replace(/^Évaluation municipale, total/, "Municipal assessment, total")
+    .replace(/^Équipement loué : /, "Rented equipment: ");
+}
+
+export function details(p, lang = "fr") {
+  LANG = lang;
+  try { const d = detailsFr(p); if (!d || lang !== "en") return d;
+    d.sections = d.sections.map((x) => ({ titre: en(x.titre), lignes: x.lignes.map(([a, b]) => [en(a), enVal(b)]) }));
+    d.finances = d.finances.map(([a, b]) => [enLabel(a), b.replace(" / an", " / yr").replace(" / mois", " / mo").replace(/^Oui$/, "Yes")]);
+    d.renovations = d.renovations.map((r) => ({ ...r, annee: r.annee }));
+    if (d.logements) d.logements.resume = d.logements.resume.replace(/(\d+) logements/, "$1 units").replace(/(\d+) vacants?/, "$1 vacant");
+    return d;
+  } finally { LANG = "fr"; }
+}
+
+function detailsFr(p) {
   if (p.InternetEntireListingDisplayYN === false) return null;
   const sec = [];
   const add = (titre, lignes) => { const l = lignes.filter(([, v]) => v !== "" && v != null && v !== false); if (l.length) sec.push({ titre, lignes: l.map(([a, b]) => [a, String(b)]) }); };

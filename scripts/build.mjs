@@ -57,11 +57,11 @@ async function api(url, { lang = "fr" } = {}) {
   throw new Error(`Échec répété sur ${full.split("?")[0]}`);
 }
 
-async function getAll(firstUrl, max = MAX_RECORDS) {
+async function getAll(firstUrl, max = MAX_RECORDS, lang = "fr") {
   const out = [];
   let url = firstUrl;
   while (url) {
-    const page = await api(url);
+    const page = await api(url, { lang });
     out.push(...(page.value || []));
     url = page["@odata.nextLink"] || null;
     if (out.length >= max) {
@@ -87,6 +87,7 @@ async function fetchProperties() {
 
   // On essaie d'abord la requête la plus précise, puis on simplifie si l'API refuse un filtre ou une expansion.
   const attempts = [
+    { $filter: [agentFilter && `(${agentFilter})`, `(${statusFilter})`].filter(Boolean).join(" and "), $expand: "Media,Rooms,Units,UnitTypes,Expenses,Renovations,Parkings,AdditionalSpaces,RentedEquipment,Translations" },
     { $filter: [agentFilter && `(${agentFilter})`, `(${statusFilter})`].filter(Boolean).join(" and "), $expand: "Media,Rooms,Units,UnitTypes,Expenses,Renovations,Parkings,AdditionalSpaces,RentedEquipment" },
     { $filter: [agentFilter && `(${agentFilter})`, `(${statusFilter})`].filter(Boolean).join(" and "), $expand: "Media" },
     { $filter: agentFilter || "", $expand: "Media" },
@@ -263,6 +264,23 @@ function toPublic(p, lookups) {
     vendu: p.StandardStatus === "Closed",
     dateStatut: p.StatusChangeTimestamp || p.CloseDate || "",
     details: details(p),
+    en: versionAnglaise(p),
+  };
+}
+
+// Version anglaise : textes fournis par Centris (Translations) et libellés anglais officiels.
+const EN_TYPES = { Residential: "Residential", "Residential Income": "Income property", Land: "Land", "Single Family Residence": "Single-family home", Condominium: "Condo", Lot: "" };
+function versionAnglaise(p) {
+  const t = (p.Translations || []).find((x) => x.Locale === "en");
+  const vals = Object.fromEntries((t?.Values || []).map((v) => [v.FieldName, v.Value]));
+  const pe = { ...p, ...vals };
+  const st = p.PropertySubType === "Lot" ? "" : (EN_TYPES[p.PropertySubType] ?? p.PropertySubType ?? "");
+  return {
+    description: vals.PublicRemarks || "",
+    type: EN_TYPES[p.PropertyType] ?? p.PropertyType ?? "",
+    sousType: st,
+    statutTexte: p.StandardStatus === "Active" ? "For sale" : /Pending|Under Contract/.test(p.StandardStatus) ? "Accepted offer" : p.StandardStatus,
+    details: details(pe, "en"),
   };
 }
 
@@ -302,7 +320,7 @@ async function main() {
     listings = JSON.parse(await readFile(path.join(ROOT, "sample", "listings.json"), "utf8"));
     try {
       const raws = JSON.parse(await readFile(path.join(ROOT, "sample", "details-bruts.json"), "utf8"));
-      listings.forEach((l, i) => { if (raws[i]) l.details = details(raws[i]); });
+      listings.forEach((l, i) => { if (raws[i]) { l.details = details(raws[i]); l.en = { description: "Sample English description for the preview.", details: details(raws[i], "en") }; } });
     } catch {}
   } else {
     if (!KEY) throw new Error("CENTRIS_API_KEY manquante. Ajoute-la dans les secrets GitHub.");
@@ -310,7 +328,8 @@ async function main() {
     const lookups = await fetchLookups(["StandardStatus", "PropertyType", "PropertySubType"]);
     try {
       const tous = await getAll("Lookup", 50000);
-      setLookups(tous);
+      setLookups(tous, "fr");
+      try { setLookups(await getAll("Lookup", 50000, "en"), "en"); } catch {}
       console.log(`  ${tous.length} libellés officiels Centris chargés.`);
     } catch (e) { console.warn("  Libellés Centris indisponibles, on garde la traduction intégrée.", e.message.slice(0, 120)); }
     console.log("Lecture des inscriptions...");
