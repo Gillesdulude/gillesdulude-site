@@ -49,7 +49,7 @@ section{padding:96px 0}
 
 /* En-tête */
 .top{position:sticky;top:0;z-index:20;background:rgba(19,15,12,.97);color:var(--bc);border-bottom:1px solid rgba(249,246,244,.1)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;min-height:76px;padding-top:10px;padding-bottom:10px;gap:20px}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px}
 .top .logo img{height:38px;width:auto}
 .menu{display:flex;gap:28px;align-items:center}
 .menu a{text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#d9d4cb;padding:6px 0;border-bottom:1px solid transparent}
@@ -146,9 +146,8 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .badge{position:absolute;top:14px;left:14px;background:var(--bc);color:var(--nb);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px}
 .badge.pending{background:var(--nb);color:var(--bc)}
 .badge.sold{background:#C8102E;color:#fff}
-.brand{display:flex;flex-direction:column;align-items:center;gap:7px}
-.rlp-top{display:block}.rlp-top img{height:32px;width:auto;display:block}
-@media (max-width:560px){.rlp-top img{height:30px}}
+.rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
+@media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
 .nphotos{position:absolute;right:14px;bottom:14px;background:rgba(19,15,12,.7);color:var(--bc);font-size:12px;padding:4px 9px}
 .card .body{padding:20px 22px 22px}
@@ -455,7 +454,7 @@ function header(cfg, current) {
     .join("");
   return `{{APERCU}}
 <header class="top"><div class="wrap">
-  <div class="brand"><a class="logo" href="index.html" aria-label="Accueil"><img src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier" width="172" height="38"></a><a class="rlp-top" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction" width="77" height="36"></a></div>
+  <a class="logo" href="index.html" aria-label="Accueil"><img src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier" width="172" height="38"></a>
   <button class="burger" aria-label="Menu" aria-expanded="false" onclick="const m=document.querySelector('.menu');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
   <nav class="menu">${links}{{LANG}}<a class="cta" href="contact.html"${current === "contact.html" ? ' aria-current="page"' : ""}>Contact</a></nav>
@@ -626,6 +625,7 @@ function pageAccueil(cfg, listings) {
   <img class="motif" src="assets/motif-contour.png" alt="">
   <div class="wrap">
     <div class="txt">
+      <a class="rlp-hero" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
       <p class="over">Gilles Jr. Dulude, courtier immobilier</p>
       <h1 style="text-transform:uppercase;letter-spacing:.01em">Vendre, acheter ou investir sur la Rive-Sud.</h1>
       <p class="lead">Un ancien entrepreneur devenu courtier, qui connaît le bâtiment et les chiffres. Je m'adapte à vous, pas l'inverse.</p>
