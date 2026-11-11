@@ -303,6 +303,44 @@ async function render(listings, { apercu = false, vendus = [] } = {}) {
     .replace("{{DATA}}", data);
 }
 
+// ---------- Propriétés vendues : gardées 14 jours avec l'étiquette « Vendu » ----------
+// Le site garde en ligne un fichier etat.json. À chaque mise à jour, on compare avec la version précédente :
+// une inscription disparue de Centris est vérifiée. Si Centris confirme qu'elle est vendue (Closed),
+// elle reste 14 jours à la fin de la liste, sans prix. Expirée ou retirée : elle disparaît tout de suite.
+const JOURS_VENDU = 14;
+async function etatPrecedent() {
+  const urls = [config.page?.domainePersonnalise && `https://${config.page.domainePersonnalise}/etat.json`, "https://gillesdulude.github.io/gillesdulude-site/etat.json"].filter(Boolean);
+  for (const u of urls) {
+    try { const r = await fetch(u + "?t=" + Date.now()); if (r.ok) return await r.json(); } catch {}
+  }
+  return null;
+}
+async function statutCentris(id) {
+  try {
+    const r = await api(`Property?$filter=${encodeURIComponent(`ListingId eq '${id}' or ListingKey eq '${id}'`)}&$select=ListingKey,StandardStatus,StatusChangeTimestamp`);
+    return (r.value || [])[0] || null;
+  } catch { return null; }
+}
+async function suivreVendus(actives) {
+  const prev = await etatPrecedent();
+  if (!prev) { console.log("  Aucun état précédent, on commence le suivi des ventes."); return []; }
+  const ids = new Set(actives.map((l) => l.id));
+  const maintenant = Date.now();
+  const garde = (prev.vendus || []).filter((v) => !ids.has(v.id) && maintenant - Date.parse(v.venduLe) < JOURS_VENDU * 864e5);
+  const dejaVendus = new Set(garde.map((v) => v.id));
+  for (const l of prev.actives || []) {
+    if (ids.has(l.id) || dejaVendus.has(l.id)) continue;
+    const st = await statutCentris(l.id);
+    console.log(`  Inscription ${l.id} retirée de Centris : ${st?.StandardStatus || "statut inconnu"}`);
+    if (st?.StandardStatus === "Closed") {
+      const v = { ...l, vendu: true, statut: "Closed", statutTexte: "Vendu", prix: null, loyer: null, venduLe: new Date().toISOString() };
+      if (v.en) v.en = { ...v.en, statutTexte: "Sold" };
+      garde.push(v);
+    }
+  }
+  return garde;
+}
+
 // ---------- Main ----------
 
 async function main() {
@@ -357,11 +395,13 @@ async function main() {
         .slice(0, v.maximum || 12)
         .map((l) => (v.afficherPrix ? { ...l, statutTexte: "Vendu" } : { ...l, statutTexte: "Vendu", prix: null, loyer: null }));
     }
+    vendus = await suivreVendus(listings);
     if (valeursInconnues().length) console.log("  Valeurs sans traduction :", valeursInconnues().join(" | "));
     console.log(`  ${listings.length} propriétés à vendre et ${vendus.length} vendues publiées.`);
   }
 
-  const pages = renderSite(config, listings, { apercu: SAMPLE ? "Aperçu avec des propriétés fictives." : "" });
+  const pages = renderSite(config, [...listings, ...vendus], { apercu: SAMPLE ? "Aperçu avec des propriétés fictives." : "" });
+  if (!SAMPLE) await writeFile(path.join(dist, "etat.json"), JSON.stringify({ genere: new Date().toISOString(), actives: listings, vendus }));
   for (const [f, html] of Object.entries(pages)) { await mkdir(path.dirname(path.join(dist, f)), { recursive: true }); await writeFile(path.join(dist, f), html); }
   await cp(path.join(ROOT, "assets"), path.join(dist, "assets"), { recursive: true });
   if (config.page.domainePersonnalise && !SAMPLE) {

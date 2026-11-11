@@ -268,6 +268,8 @@ export const T = {
   "Demander une visite": "Request a visit", "Visite virtuelle": "Virtual tour", "Photo précédente": "Previous photo", "Photo suivante": "Next photo",
   "Toutes": "All", "Nouveauté": "New", "Nouveau": "New",
   "Courtier immobilier": "Real estate broker",
+  "Cette propriété est vendue.": "This property is sold.", "Vendu": "Sold",
+  "Vous pensez vendre une propriété semblable? Je vous dis combien elle vaut, sans engagement.": "Thinking of selling a similar property? I’ll tell you what it’s worth, no commitment.",
 };
 
 // Textes avec des chiffres ou des dates qui changent.
@@ -281,6 +283,7 @@ export const R = [
   [/^Variations par rapport au même mois l'an dernier\. Source : APCIQ par le système Centris, statistiques mensuelles de (\S+) (\d{4})\. Rive-Sud de Montréal\.$/, (m, mo, y) => `Change compared with the same month last year. Source: QPAREB through the Centris system, monthly statistics for ${mois(mo)} ${y}. Montreal South Shore.`],
   [/^Statistiques du marché immobilier de la Rive-Sud de Montréal \((\S+) (\d{4})\) et calculateur de rendement pour plex\.$/, (m, mo, y) => `Montreal South Shore real estate market statistics (${mois(mo)} ${y}) and plex return calculator.`],
   [/^(\d+) jours$/, "$1 days"],
+  [/^Dernière mise à jour : (\d+)(?:er)? (\S+) (\d{4})$/, (m, d, mo, y) => `Last updated: ${mois(mo)} ${d}, ${y}`],
   [/^ou appelez au (.+)\.$/, "or call $1."],
   [/^© (\d{4}) Gilles Jr\. Dulude, courtier immobilier\. Royal LePage Distinction, agence immobilière\.$/, "© $1 Gilles Jr. Dulude, real estate broker. Royal LePage Distinction, Real Estate Agency."],
   [/^En vigueur depuis le (\d+) (\S+) (\d{4})\. Dernière mise à jour : (\d+) (\S+) (\d{4})\.$/, (m, d, mo, y, d2, mo2, y2) => `In effect since ${mois(mo)} ${d}, ${y}. Last updated: ${mois(mo2)} ${d2}, ${y2}.`],
@@ -321,6 +324,7 @@ export const JS = [
   ['"Inclusions"', '"Inclusions"'], ['"Exclusions"', '"Exclusions"'], ['"Addenda"', '"Addendum"'], ['"Toutes"', '"All"'],
   ['"Propriété "+', '"Property "+'],
   ["esc(courtier.titre)", '"Real estate broker"'],
+  ['l.vendu?"Vendu":', 'l.vendu?"Sold":'],
   ["'</b> ch.</span>'", "'</b> bd.</span>'"], ["'</b> logements</span>'", "'</b> units</span>'"], ["'</b> s.d.b.</span>'", "'</b> bath</span>'"],
   ["' aria-label=\"Voir '", "' aria-label=\"See '"], [">Nouveauté<", ">New<"], ['"Nouveauté"', '"New"'], ['" (MLS "', '" (MLS "'], ['"Oui"', '"Yes"'],
 ];

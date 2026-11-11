@@ -120,5 +120,38 @@
    }
   ],
   "modifie": "2026-10-27"
+ },
+ {
+  "id": "99999999",
+  "statut": "Closed",
+  "statutTexte": "Vendu",
+  "prix": null,
+  "type": "Résidentiel",
+  "sousType": "Maison unifamiliale",
+  "adresse": "12 rue Vendue",
+  "ville": "Chambly",
+  "chambres": 3,
+  "sallesDeBain": 2,
+  "superficie": "1 450 pi²",
+  "terrain": "6 200 pi²",
+  "anneeConstruction": 1995,
+  "description": "Description d'exemple.",
+  "photos": [
+   {
+    "url": "exemple/p1.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p4.svg",
+    "legende": ""
+   },
+   {
+    "url": "exemple/p5.svg",
+    "legende": ""
+   }
+  ],
+  "modifie": "2026-10-25",
+  "vendu": true,
+  "venduLe": "2026-11-05T12:00:00Z"
  }
 ]

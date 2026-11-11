@@ -7,6 +7,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
 const adresseLignes = (c) => [...String(c.agence || "").split(/,\s*/), ...String(c.adresseAgence || "").replace(/^(\d+,\s*[^,]+),\s*/, "$1\n").split("\n")]
   .filter(Boolean).map((l) => `<span class="al">${nb(l)}</span>`).join("");
+const dateFr = (iso) => { const d = new Date(iso + "T12:00:00"); return isNaN(d) ? "" : `${d.getDate() === 1 ? "1er" : d.getDate()} ${["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][d.getMonth()]} ${d.getFullYear()}`; };
 const telHref = (t) => "tel:" + String(t || "").replace(/[^0-9+]/g, "");
 
 const PAGES = [
@@ -144,6 +145,9 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .card:hover .ph img{transform:scale(1.03)}
 .badge{position:absolute;top:14px;left:14px;background:var(--bc);color:var(--nb);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px}
 .badge.pending{background:var(--nb);color:var(--bc)}
+.badge.sold{background:#C8102E;color:#fff}
+.rlp-hero{display:inline-block;margin-bottom:26px}.rlp-hero img{height:46px;width:auto;display:block}
+@media (max-width:860px){.rlp-hero img{height:38px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
 .nphotos{position:absolute;right:14px;bottom:14px;background:rgba(19,15,12,.7);color:var(--bc);font-size:12px;padding:4px 9px}
 .card .body{padding:20px 22px 22px}
@@ -560,9 +564,9 @@ const pageHero = (over, titre, texte) => `<section class="hero small light">
 const CARDS_JS = `
 const esc=(s)=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money=(n)=>n?n.toLocaleString("fr-CA",{maximumFractionDigits:0})+" $":"";
-const priceOf=(l)=>l.prix?money(l.prix):l.loyer?money(l.loyer)+" / mois":"Prix sur demande";
+const priceOf=(l)=>l.vendu?"Vendu":l.prix?money(l.prix):l.loyer?money(l.loyer)+" / mois":"Prix sur demande";
 const kind=(l)=>l.sousType||l.type||"Propriété";
-const isNew=(l)=>{const t=Date.parse(l.enVigueurDepuis||"");return t&&Date.now()-t<30*864e5};
+const isNew=(l)=>{if(l.vendu)return false;const t=Date.parse(l.enVigueurDepuis||"");return t&&Date.now()-t<30*864e5};
 const dateOf=(l)=>Date.parse(l.enVigueurDepuis||"")||0;
 function facts(l){const f=[];
  if(l.logements)f.push('<span><b>'+l.logements+'</b> logements</span>');
@@ -572,7 +576,7 @@ function facts(l){const f=[];
  return f.join("")}
 function card(l,tag){return '<'+tag+' class="card" '+(tag==="a"?'href="proprietes.html#'+esc(l.id)+'"':'data-id="'+esc(l.id)+'"')+' aria-label="Voir '+esc(l.adresse)+'">'+
  '<div class="ph">'+(l.photos[0]?'<img loading="lazy" src="'+esc(l.photos[0].url)+'" alt="'+esc(l.adresse)+'">':'')+
- '<span class="badge '+(l.statut!=="Active"?"pending":"")+'">'+esc(l.statutTexte)+'</span>'+(isNew(l)?'<span class="badge new">Nouveauté</span>':'')+
+ '<span class="badge '+(l.vendu?"sold":l.statut!=="Active"?"pending":"")+'">'+esc(l.statutTexte)+'</span>'+(isNew(l)?'<span class="badge new">Nouveauté</span>':'')+
  (l.photos.length>1?'<span class="nphotos">'+l.photos.length+' photos</span>':'')+'</div>'+
  '<div class="body"><div class="price">'+priceOf(l)+'</div><div class="addr">'+esc(l.adresse)+'</div><div class="city">'+esc(l.ville)+'</div>'+
  (facts(l)?'<div class="facts">'+facts(l)+'</div>':'')+'<div class="ptype">'+esc(kind(l))+'</div></div></'+tag+'>'}
@@ -613,13 +617,15 @@ const faqLd = (items) => `<script type="application/ld+json">${JSON.stringify({ 
 
 function pageAccueil(cfg, listings) {
   const c = cfg.courtier;
-  const vedette = listings.slice(0, 3);
+  const aVendre = listings.filter((l) => !l.vendu);
+  const vedette = aVendre.slice(0, 3);
   return head(cfg, `${c.nom} | Courtier immobilier, Rive-Sud de Montréal`, "Gilles Jr. Dulude, courtier immobilier Royal LePage Distinction sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.") +
     header(cfg, "index.html") + `
 <section class="hero dark">
   <img class="motif" src="assets/motif-contour.png" alt="">
   <div class="wrap">
     <div class="txt">
+      <a class="rlp-hero" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-blanc.png" alt="Royal LePage Distinction"></a>
       <p class="over">Gilles Jr. Dulude, courtier immobilier</p>
       <h1 style="text-transform:uppercase;letter-spacing:.01em">Vendre, acheter ou investir sur la Rive-Sud.</h1>
       <p class="lead">Un ancien entrepreneur devenu courtier, qui connaît le bâtiment et les chiffres. Je m'adapte à vous, pas l'inverse.</p>
@@ -664,7 +670,7 @@ function pageAccueil(cfg, listings) {
 ${vedette.length ? `<section class="beige" style="background:var(--warm)"><div class="wrap">
   <div class="cols" style="align-items:end;margin-bottom:32px">
     <div><p class="over">À vendre</p><h2 style="margin:0">Mes propriétés <em>en ce moment</em></h2></div>
-    <div style="text-align:right"><a class="btn ghost" href="proprietes.html">Tout voir (${listings.length})</a></div>
+    <div style="text-align:right"><a class="btn ghost" href="proprietes.html">Tout voir (${aVendre.length})</a></div>
   </div>
   <div class="grid" id="vedette"></div>
 </div></section>
@@ -903,10 +909,11 @@ ${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde
 }
 
 function pageProprietes(cfg, listings) {
+  const nbActives = listings.filter((l) => !l.vendu).length;
   const c = cfg.courtier;
   return head(cfg, "Propriétés à vendre | Gilles Jr. Dulude", "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.") +
     header(cfg, "proprietes.html") +
-    pageHero("Propriétés à vendre", "Mes inscriptions.", `${listings.length} propriété${listings.length > 1 ? "s" : ""} à vendre en ce moment.`) + `
+    pageHero("Propriétés à vendre", "Mes inscriptions.", `${nbActives} propriété${nbActives > 1 ? "s" : ""} à vendre en ce moment.`) + `
 <section style="padding-top:0"><div class="wrap">
   <div class="filters">
     <div class="chips" id="chips" role="group" aria-label="Filtrer par type"></div>
@@ -930,6 +937,7 @@ if(types.length>2){chips.innerHTML=types.map(t=>'<button class="chip" aria-press
 $("#sort").addEventListener("change",e=>{sort=e.target.value;draw()});
 function draw(){let rows=listings.filter(l=>filter==="Toutes"||kind(l)===filter);
  rows=rows.slice().sort((a,b)=>sort==="asc"?(a.prix||a.loyer||0)-(b.prix||b.loyer||0):sort==="new"?dateOf(b)-dateOf(a):(b.prix||b.loyer||0)-(a.prix||a.loyer||0));
+ rows=[...rows.filter(l=>!l.vendu),...rows.filter(l=>l.vendu)];
  $("#grid").innerHTML=rows.length?rows.map(l=>card(l,"button")).join(""):'<div class="empty">Aucune propriété en ce moment. Revenez bientôt, ou contactez-moi pour être avisé des nouveautés.</div>'}
 const dlg=$("#dlg");let cur=null,pi=0;
 function det(d){if(!d)return"";let h="";
@@ -952,7 +960,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="idx" id="gidx"></div></div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
  '<div class="price">'+priceOf(cur)+'</div><div class="addr">'+esc(cur.adresse)+'</div><div class="city">'+esc([cur.ville,cur.codePostal].filter(Boolean).join(", "))+'</div>'+
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
- '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+
+ '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+(cur.vendu?'<div class="pcta"><strong>Cette propriété est vendue.</strong><span class="note">Vous pensez vendre une propriété semblable? Je vous dis combien elle vaut, sans engagement.</span><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="vendre.html#evaluation">Évaluation gratuite</a><a class="btn ghost" href="contact.html">Me joindre</a></div></div>':'')+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
@@ -963,7 +971,8 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  (cur.visiteVirtuelle?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(cur.visiteVirtuelle)+'">Visite virtuelle</a>':'')+
  '</div></div></div></div></div>';
  showPhoto();dlg.querySelector(".close").onclick=()=>dlg.close();
- dlg.querySelector("#docs").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
+ if(cur.vendu){const x=dlg.querySelector("#docs");if(x){x.remove();const y=dlg.querySelector(".side .pcta[style]");if(y)y.remove()}}
+ dlg.querySelector("#docs")&&dlg.querySelector("#docs").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   const payload={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone||"",mls:cur.id,tag:"mls: "+cur.id,adresse:cur.adresse+", "+cur.ville,source:"site web gillesdulude.com",demande:"documents",consentement:true};
   const ok=f.querySelector("#docsok");
   if(ava){try{await fetch(ava+(ava.includes("?")?"&":"?")+new URLSearchParams(payload),{mode:"no-cors"});
@@ -1166,7 +1175,7 @@ function marcheStats(cfg) {
   <div class="lecture"><p class="over" style="margin:0 0 6px">Ce que ça veut dire</p><p style="margin:0">${esc(m.lecture)}</p></div>
   <h3 style="margin:40px 0 14px">Délai moyen pour vendre</h3>
   <div class="prix delais">${delais}</div>
-  <p class="note" style="margin-top:18px">Variations par rapport au même mois l'an dernier. Source : ${esc(m.source)}. ${esc(m.region)}.</p>`;
+  <p class="note" style="margin-top:18px">Variations par rapport au même mois l'an dernier. Source : ${esc(m.source)}. ${esc(m.region)}.</p>${m.majLe ? `<p class="note" style="margin-top:4px">Dernière mise à jour : ${dateFr(m.majLe)}</p>` : ""}`;
 }
 
 function pageMarche(cfg) {
@@ -1254,7 +1263,7 @@ function traduire(html) {
 
 function versionAnglaise(l) {
   const e = l.en || {};
-  const out = { ...l, description: e.description || l.description, details: e.details || l.details, type: e.type || l.type, sousType: e.sousType ?? l.sousType, statutTexte: e.statutTexte || ({ "À vendre": "For sale", "Promesse d'achat acceptée": "Accepted offer", "À louer": "For rent" }[l.statutTexte] ?? l.statutTexte) };
+  const out = { ...l, description: e.description || l.description, details: e.details || l.details, type: e.type || l.type, sousType: e.sousType ?? l.sousType, statutTexte: e.statutTexte || ({ "À vendre": "For sale", "Promesse d'achat acceptée": "Accepted offer", "À louer": "For rent", "Vendu": "Sold" }[l.statutTexte] ?? l.statutTexte) };
   const pi = (v) => (v ? String(v).replace(/(\d)[\s\u00a0\u202f](?=\d{3})/g, "$1,").replace(" pi²", " sq. ft.") : v);
   out.superficie = pi(out.superficie); out.terrain = pi(out.terrain);
   delete out.en;
