@@ -2,6 +2,7 @@
 // Les inscriptions viennent de build.mjs (déjà filtrées : seulement les fiches en vigueur).
 
 import { T, R, JS } from "./en.mjs";
+import { pageEssai } from "./essai.mjs";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 // Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
 const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
@@ -1290,6 +1291,7 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
       .replace("{{LANG}}", `<a class="lang" href="../${f}" hreflang="fr" lang="fr" aria-label="Version française">FR</a>`)
       .replace("</head>", alt(f, "en") + "</head>");
   }
+  out["essai/index.html"] = pageEssai(cfg, fr, { avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) });
   out["llms.txt"] = llmsTxt(cfg);
   return out;
 }
