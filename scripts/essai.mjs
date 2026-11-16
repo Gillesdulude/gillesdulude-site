@@ -275,7 +275,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 </div>
   <div class="props">
     ${actives.map((l) => `<a class="prop" href="../proprietes.html#${esc(l.id)}">
-      ${l.photos?.[0] ? `<img src="${esc(l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}
+      ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}
       <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span></div></a>`).join("")}
   </div>
   <div class="wrap"><div class="tout"><a href="../proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
