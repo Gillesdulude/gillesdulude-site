@@ -194,7 +194,7 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
 
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">
-    <div><p class="tag">Fiche technique</p><h2 class="cap">Le marché,<br>${esc((m.mois || "").toLowerCase())}.</h2></div>
+    <div><p class="tag">Fiche technique</p><h2 class="cap">Le marché,<br>${esc((m.moisTitre || m.mois || "").toLowerCase())}.</h2></div>
     <p>Les chiffres de la Rive-Sud, sans détour. Pour savoir quand acheter, vendre ou investir.</p>
   </div>
   <div class="table">
