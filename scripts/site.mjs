@@ -1316,7 +1316,7 @@ ${jsonLd(cfg)}
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
   const haut = acc.slice(i0, i1);
-  const opts = { avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
+  const opts = { avisUrl: AVIS_URL, avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
   if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}" });
   return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + ".hero .btn{border-radius:0}" });
 }
