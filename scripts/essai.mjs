@@ -188,7 +188,7 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
   <div class="services">
     <a href="${P}vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>La Méthode 8V : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.</p><span class="voir">Voir <span class="mono">→</span></span></a>
     <a href="${P}acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>Je visite avec vous en ancien entrepreneur : structure, travaux à prévoir, vrai potentiel.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="${P}investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Duplex, triplex, plex : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Multilogements de 5 logements et plus : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
   </div>
 </div></section>
 
