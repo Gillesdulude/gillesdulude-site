@@ -723,12 +723,12 @@ ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver u
 
 function pageVendre(cfg) {
   const faq = FAQ.vendre(cfg);
-  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre propriété au meilleur prix avec la Méthode V8. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
+  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre propriété au meilleur prix avec la Méthode 8V. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
     header(cfg, "vendre.html") +
     pageHero("Vendre", "Vendre <em>autrement.</em>", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.") + `
 <section><div class="wrap">
   <div>
-    <p class="over">La Méthode V8</p>
+    <p class="over">La Méthode 8V</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
     <p class="lead">Huit étapes concrètes, adaptées à votre propriété et à votre échéancier.</p>
   </div>
@@ -967,7 +967,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
  '<button class="btn" type="submit">Recevoir les documents</button><div class="ok" id="docsok"></div></div></form>'+
  '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong>'+esc(courtier.nom)+', '+esc(courtier.titre)+'<div>'+
- '<a class="btn" href="contact.html?sujet=visite&mls='+encodeURIComponent(cur.id)+'">Demander une visite</a>'+
+ '<a class="btn" href="contact.html?sujet=visite&mls='+encodeURIComponent(cur.id)+'&adresse='+encodeURIComponent(cur.adresse+(cur.ville?", "+cur.ville:""))+'">Demander une visite</a>'+
  (courtier.telephone?'<a class="btn ghost" href="tel:'+courtier.telephone.replace(/[^0-9+]/g,"")+'">'+esc(courtier.telephone)+'</a>':'')+
  (cur.visiteVirtuelle?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(cur.visiteVirtuelle)+'">Visite virtuelle</a>':'')+
  '</div></div></div></div></div>';
@@ -1037,7 +1037,7 @@ function pageContact(cfg) {
 </div></section>
 <script>
 (()=>{const p=new URLSearchParams(location.search);const s=p.get("sujet");if(s&&document.querySelector('#sujet option[value="'+s+'"]'))document.getElementById("sujet").value=s;
-const mls=p.get("mls");if(mls)document.getElementById("message").value="Bonjour, j'aimerais visiter la propriété No MLS "+mls+".\\n\\n";
+const mls=p.get("mls"),adr=p.get("adresse");if(adr||mls)document.getElementById("message").value=(adr?"Bonjour, j'aimerais visiter la propriété au "+adr:"Bonjour, j'aimerais visiter la propriété No MLS "+mls)+".\\n\\n";
 const f=document.getElementById("form");
 f.addEventListener("submit",e=>{
   if(f.getAttribute("action"))return;
