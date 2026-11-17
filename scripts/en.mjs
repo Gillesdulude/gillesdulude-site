@@ -69,7 +69,7 @@ export const T = {
   "Vendre votre propriété au meilleur prix avec la Méthode 8V. Réservez un appel avec Gilles Jr. Dulude.": "Sell your property for the best price with the 8V Method. Book a call with Gilles Jr. Dulude.",
   "autrement.": "differently.", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.": "Selling isn’t complicated. Selling for top dollar is hard.",
   "La Méthode 8V": "The 8V Method", "8 leviers pour vendre": "8 levers to sell", "au meilleur prix.": "for the best price.",
-  "Chaque levier compte. Ensemble, ils font la différence sur le prix final.": "Every lever counts. Together, they make the difference on the final price.",
+  "Vendre, c'est simple. Vendre au maximum, ça prend une méthode.": "Selling is simple. Selling for top dollar takes a method.",
   "Vérité brute": "Raw truth", "On part avec le vrai, sans filtre. Forces, défauts, ce qui peut nuire à la vente.": "We start with the facts, unfiltered. Strengths, flaws, what could hurt the sale.",
   "Vision marché": "Market vision", "Votre rue, votre quartier, vos comparables et les acheteurs actifs en ce moment.": "Your street, your neighbourhood, your comparables and the buyers active right now.",
   "Valeur stratégique": "Strategic value", "Le bon prix, celui qui crée de la demande plutôt que de la faire fuir.": "The right price, one that creates demand instead of scaring it away.",
