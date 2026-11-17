@@ -41,7 +41,7 @@ export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", r
 <style>
 ${cssAncien}
 .e .btn{border-radius:0}
-:root{--ink:#111111;--ink2:#1C1C1C;--paper:#FFFFFF;--stone:#F4F4F2;--bronze:#111111;--bronze2:#000000;--mut:#6B6B6B;--line:rgba(17,17,17,.12);--lineD:rgba(255,255,255,.14);--wrap:1240px}
+:root{--ink:#111111;--ink2:#1C1C1C;--paper:#FFFFFF;--stone:#FFFFFF;--bronze:#111111;--bronze2:#000000;--mut:#6B6B6B;--line:rgba(17,17,17,.12);--lineD:rgba(255,255,255,.14);--wrap:1240px}
 .e *{box-sizing:border-box;margin:0;padding:0}
 .e{background:var(--paper);color:var(--ink);font-family:Gantari,system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 .e a{color:inherit;text-decoration:none}
@@ -112,9 +112,9 @@ section{position:relative}
 .e .tout a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:6px}
 .e /* Gilles */
 .gilles{background:var(--stone)}
-.e .gilles{padding:0;overflow:hidden}
+.e .gilles{padding:0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .e .gilles .photo{position:absolute;left:0;top:0;bottom:0;width:48%}
-.e .gilles .photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
+.e .gilles .photo img{width:100%;height:100%;object-fit:cover;object-position:center top;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
 .e .gilles .wrap{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:60px;min-height:760px;align-items:center;padding-top:120px;padding-bottom:120px}
 .e .gilles .wrap>div:last-child{grid-column:2}
 .e .gilles blockquote{font-size:clamp(26px,2.8vw,38px);font-weight:500;line-height:1.25;margin:26px 0 34px}
@@ -213,7 +213,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="wrap"><div class="tout"><a href="../proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
-<section class="sec gilles"><div class="photo"><img src="../assets/gilles-apropos.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
+<section class="sec gilles"><div class="photo"><img src="../assets/gilles-buste.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
