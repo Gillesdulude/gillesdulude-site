@@ -742,7 +742,7 @@ function pageVendre(cfg) {
   <div>
     <p class="over">La Méthode 8V</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
-    <p class="lead">Huit étapes concrètes, adaptées à votre propriété et à votre échéancier.</p>
+    <p class="lead">Chaque levier compte. Ensemble, ils font la différence sur le prix final.</p>
   </div>
 </div>
 <div class="wrap"><div class="v8list">${V8.map(([n, t, d]) => `<div><b>${n}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
