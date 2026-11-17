@@ -113,6 +113,24 @@ section[style*="warm"] .faq,section[style*="warm"] .faq details{border-color:rgb
 section[style*="warm"] .faq details p{color:#2A2622}
 /* Bandes d'appel en charcoal pour varier avec le noir brun */
 section:has(> .wrap > .cta-warm),.cta-warm{background:#444444}
+
+/* Note clavardage sous les FAQ */
+.faq-chat{margin-top:26px;font-size:16px;color:var(--ch)}.faq-chat a{color:var(--nb);font-weight:600;white-space:nowrap}
+/* Fenêtre de rendez-vous au style du site */
+dialog{background:#F9F6F4}
+dialog#rdv .rdv-tete{padding:34px 32px 10px}
+dialog .over{font:500 12px/1.4 Gantari,system-ui,sans-serif;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--ch);display:flex;align-items:center;gap:14px;margin:0 0 14px}
+dialog .over::after{content:"";height:1px;width:56px;background:currentColor;opacity:.6}
+dialog#rdv h3{font-size:clamp(22px,2.6vw,32px);line-height:1.05;margin:0 0 16px}
+dialog .close{border-radius:0}
+
+/* Équipe */
+.equipe{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--nb)}
+.equipe div{padding:36px 24px 12px;border-right:1px solid var(--line)}
+.equipe div:first-child{padding-left:0}.equipe div:last-child{border-right:0;padding-right:0}
+.equipe h3{font-size:18px;margin:0 0 10px}.equipe p{font-size:15px;color:var(--ch);margin:0}
+@media (max-width:1000px){.equipe{grid-template-columns:1fr 1fr}.equipe div,.equipe div:first-child,.equipe div:last-child{padding:28px 20px 20px 0;border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:560px){.equipe{grid-template-columns:1fr}}
 `;
 const CSS = `
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--be:#E3DDCF;--bc:#F9F6F4;--line:rgba(19,15,12,.14);--r:4px}
@@ -575,7 +593,7 @@ function suivezMoi(cfg) {
 
 function footer(cfg) {
   const c = cfg.courtier;
-  const modal = cfg.rendezVous ? `<dialog id="rdv" aria-label="Prendre rendez-vous" style="width:min(760px,96vw)"><button class="close" aria-label="Fermer" onclick="this.closest('dialog').close()">×</button><div style="padding:28px 20px 8px"><p class="over" style="margin:0 0 4px">Prendre rendez-vous</p><h3 style="margin:0 0 12px">Choisissez le moment qui vous convient</h3><div id="rdvbox"></div></div></dialog>
+  const modal = cfg.rendezVous ? `<dialog id="rdv" aria-label="Prendre rendez-vous" style="width:min(760px,96vw)"><button class="close" aria-label="Fermer" onclick="this.closest('dialog').close()">×</button><div class="rdv-tete"><p class="over">Prendre rendez-vous</p><h3>Choisissez le moment qui vous convient</h3><div id="rdvbox"></div></div></dialog>
 <script>(()=>{const d=document.getElementById("rdv"),box=document.getElementById("rdvbox");
 document.addEventListener("click",e=>{const a=e.target.closest("a[data-rdv]");if(!a||!d.showModal)return;e.preventDefault();
 if(!box.firstChild)box.innerHTML=${JSON.stringify(rdvFrame(cfg.rendezVous, 700))};d.showModal()});
@@ -620,7 +638,7 @@ const V8 = [
 const v8Grid = () => `<div class="v8">${V8.map(([n, t]) => `<div><b>${n}</b><h3 style="margin:0">${t}</h3></div>`).join("")}</div>`;
 const RDV = (cfg) => cfg.rendezVous || "contact.html?sujet=evaluation";
 const rdvAttrs = (cfg) => (cfg.rendezVous ? ' target="_blank" rel="noopener" data-rdv' : "");
-const rdvFrame = (url, h = 760) => `<iframe src="${esc(url)}" title="Prendre rendez-vous avec Gilles Jr. Dulude" style="width:100%;min-height:${h}px;border:0;overflow:hidden;background:#fff" scrolling="no" loading="lazy"></iframe>`;
+const rdvFrame = (url, h = 760) => `<iframe src="${esc(url)}" title="Prendre rendez-vous avec Gilles Jr. Dulude" style="width:100%;min-height:${h}px;border:0;overflow:hidden;background:#F9F6F4" scrolling="no" loading="lazy"></iframe>`;
 
 const TEMOIGNAGES = [
   ["Une aventure que nous trouvions intimidante a été grandement simplifiée. Notre maison s'est vendue en 12 jours au prix demandé.", "Patricia D.", "Vendue en 12 jours"],
@@ -683,16 +701,16 @@ const dataTag = (obj) => `<script id="data" type="application/json">${JSON.strin
 const delai = (cfg, t) => cfg.marche?.delais?.[t]?.[0];
 const FAQ = {
   vendre: (cfg) => [
-    ["Combien ça coûte de vendre ma propriété?", "La rémunération du courtier, convenue avec vous et écrite au contrat de courtage. Prévoyez souvent un certificat de localisation à jour et, si vous remboursez votre prêt avant la fin du terme, une pénalité de votre banque. Les frais de notaire sont habituellement payés par l'acheteur."],
+    ["Quels sont les frais à prévoir quand je vends?", "Les principaux frais sont : la rémunération du courtier immobilier, convenue avec vous et écrite au contrat de courtage; la pénalité hypothécaire, si vous remboursez votre prêt avant la fin du terme; un nouveau certificat de localisation, s'il faut le refaire; la préparation de la propriété, comme de menus travaux; et, au besoin, des tests ou des expertises. Les frais de notaire sont habituellement payés par l'acheteur. On fait le calcul ensemble dès le départ, pour que vous sachiez exactement ce qui vous restera."],
     ["Combien de temps ça prend pour vendre?", delai(cfg, "Unifamiliale") ? `Sur la Rive-Sud, une maison unifamiliale se vend en moyenne en ${delai(cfg, "Unifamiliale")} jours, une copropriété en ${delai(cfg, "Copropriété")} jours (${(cfg.marche.mois || "").toLowerCase()}). Une propriété bien préparée et affichée au bon prix part plus vite.` : "Ça dépend du secteur, du type de propriété et du prix demandé. Une propriété bien préparée et affichée au bon prix part plus vite."],
-    ["Est-ce que je dois rénover avant de vendre?", "Pas forcément. Avec mes années en construction, je vous dis quels petits travaux rapportent et lesquels ne valent pas la dépense."],
-    ["Je dois vendre avant d'acheter?", "Les deux se font. On peut rendre votre offre d'achat conditionnelle à la vente de votre propriété, ou planifier les dates pour éviter de payer deux hypothèques en même temps."],
+    ["Est-ce que je dois rénover avant de vendre?", "Pas forcément. Avec mes années en construction, je vous dis quels travaux rapportent et lesquels ne valent pas la dépense."],
+    ["Je dois vendre avant d'acheter?", "Les deux se font. Selon votre situation, votre capacité financière et vos objectifs, je vous propose plusieurs stratégies et je vous explique les avantages et les inconvénients de chacune. Par exemple, on peut rendre votre offre d'achat conditionnelle à la vente de votre propriété, ou planifier les dates pour éviter de payer deux hypothèques en même temps."],
   ],
   acheter: () => [
     ["Combien de mise de fonds faut-il?", "Au minimum 5 % jusqu'à 500 000 $, puis 10 % sur la portion au-delà de 500 000 $, pour une propriété de moins de 1,5 M$. Sous 20 %, l'assurance prêt hypothécaire est obligatoire."],
-    ["C'est quoi la taxe de bienvenue?", "Ce sont les droits de mutation, payés une fois à la ville après l'achat. En 2026, comptez environ 5 600 $ pour une propriété de 500 000 $. La facture arrive quelques semaines après le notaire : gardez cette somme de côté."],
+    ["C'est quoi la taxe de bienvenue?", "Ce sont les droits de mutation, payés une fois à la ville après l'achat. Sur la Rive-Sud, ils se calculent par tranches sur le prix (ou l'évaluation municipale, si elle est plus élevée). En 2026 : 0,5 % sur les premiers 62 900 $, 1 % de 62 900 $ à 315 000 $, puis 1,5 % au-delà de 315 000 $. Exemple pour 500 000 $ : 314,50 $ + 2 521 $ + 2 775 $ = environ 5 611 $. Les tranches sont indexées chaque année, et certaines villes appliquent un taux plus élevé au-delà de 500 000 $. Note : le calcul pour la ville de Montréal est différent. La facture arrive quelques semaines après le notaire, alors gardez cette somme de côté."],
     ["Ça coûte combien d'avoir un courtier quand j'achète?", "Dans la plupart des cas, rien de votre poche : ma rémunération est habituellement payée à même la vente. On en parle clairement avant de commencer, et c'est écrit au contrat."],
-    ["L'inspection est-elle obligatoire?", "Non, mais je la recommande toujours. Je visite avec vous en ancien entrepreneur, et l'inspecteur confirme ce qu'on voit et ce qu'on ne voit pas."],
+    ["L'inspection est-elle obligatoire?", "Non, mais je la recommande toujours. Pendant les visites, mon expérience en construction m'aide à remarquer des points qui méritent votre attention. Je reste toutefois votre courtier, pas un inspecteur : c'est l'inspecteur en bâtiment qui examine la propriété en détail et vous fait un rapport complet."],
   ],
   investir: () => [
     ["Combien de mise de fonds pour un plex?", "Si vous habitez un des logements : 5 % pour un duplex (10 % sur la portion au-delà de 500 000 $), 10 % pour un triplex ou un quadruplex. Si vous n'y habitez pas : 20 %. À partir de 5 logements, c'est un financement commercial, avec d'autres règles."],
@@ -705,6 +723,7 @@ const faqSection = (items, titre = "Questions fréquentes", bg = "") => `<sectio
   <p class="over">FAQ</p>
   <h2 style="margin-bottom:28px">${titre}</h2>
   <div class="faq">${items.map(([q, r]) => `<details><summary>${esc(q)}</summary><p>${esc(r)}</p></details>`).join("")}</div>
+  <p class="faq-chat">Pour toute autre question, posez-la dans le clavardage, la bulle en bas à droite de l'écran. <a href="contact.html" onclick="try{if(window.leadConnector&&leadConnector.chatWidget){leadConnector.chatWidget.openWidget();return false}}catch(e){}">Poser ma question →</a></p>
 </div></section>`;
 const faqLd = (items) => `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map(([q, r]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: r } })) }).replace(/</g, "\\u003c")}</script>`;
 
@@ -734,7 +753,7 @@ function pageAccueil(cfg, listings) {
   <div class="tiles">
     <a class="tile" href="vendre.html"><span class="ic">${ICON.maison}</span><h3>Vendre</h3><p>Obtenir le meilleur prix, sans stress inutile.</p><span class="go">En savoir plus →</span></a>
     <a class="tile" href="acheter.html"><span class="ic">${ICON.cle}</span><h3>Acheter</h3><p>Trouver la bonne propriété et savoir exactement ce que vous achetez.</p><span class="go">En savoir plus →</span></a>
-    <a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir</h3><p>Duplex, triplex et plex : on parle chiffres.</p><span class="go">En savoir plus →</span></a>
+    <a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir</h3><p>Duplex, triplex et multilogements.</p><span class="go">En savoir plus →</span></a>
   </div>
 </div></section>
 
@@ -807,6 +826,20 @@ function pageAPropos(cfg) {
   </div>
 </div></section>
 
+<section id="equipe"><div class="wrap">
+  <p class="over">Mon équipe</p>
+  <h2>Quand vous m'engagez, <em>c'est toute une équipe.</em></h2>
+  <p class="lead" style="margin-bottom:40px">Une équipe rodée, mise à l'épreuve au cours des dix dernières années, qui réunit tous les intervenants dont vous avez besoin.</p>
+  <div class="equipe">
+    <div><h3>Maintenance Solutions</h3><p>Les réparations et l'entretien, réglés rapidement et bien faits.</p></div>
+    <div><h3>Service administratif</h3><p>Un service hors pair : vos documents et votre dossier suivis de près, à chaque étape.</p></div>
+    <div><h3>Représentants hypothécaires</h3><p>Des représentants d'expérience, pour le bon financement aux meilleures conditions.</p></div>
+    <div><h3>Inspecteurs en bâtiment</h3><p>Parmi les meilleurs, pour savoir exactement ce que vous achetez.</p></div>
+    <div><h3>Notaires</h3><p>Ils mènent et sécurisent les transactions, et voient à tous les aspects légaux.</p></div>
+  </div>
+  <p class="lead" style="margin-top:36px">En bref, tout le monde est là pour que votre transaction soit menée de façon professionnelle et paisible.</p>
+</div></section>
+
 ${prixSection()}
 ${avisGoogle()}
 ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
@@ -832,9 +865,9 @@ function pageVendre(cfg) {
   <p class="over">Comment ça commence</p>
   <h2 style="margin-bottom:32px">Simple, <em>sans engagement.</em></h2>
   <div class="steps3">
-    <div><h3>Un appel</h3><p>15 minutes pour comprendre votre projet.</p></div>
-    <div><h3>Une visite</h3><p>Je viens voir votre propriété et je vous donne l'heure juste.</p></div>
-    <div><h3>Votre plan</h3><p>Une stratégie sur mesure, avec mon guide du vendeur.</p></div>
+    <div><h3>Un appel</h3><p>15 minutes pour parler de votre projet.</p></div>
+    <div><h3>Une visite</h3><p>On évalue votre propriété et on discute de la stratégie, en vous donnant l'heure juste.</p></div>
+    <div><h3>Le plan</h3><p>Une mise en marché haut de gamme, pour aller chercher le meilleur résultat possible.</p></div>
   </div>
   <div class="btns" style="margin-top:32px"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a></div>
 </div></section>
@@ -896,9 +929,9 @@ function pageAcheter(cfg) {
   <p class="over">Comment je vous aide</p>
   <h2 style="margin-bottom:32px">De la recherche <em>jusqu'aux clés.</em></h2>
   <div class="steps3">
-    <div><h3>On cible</h3><p>Vos besoins, votre budget, votre secteur. Je vous avise des nouveautés.</p></div>
-    <div><h3>On visite</h3><p>Je regarde la propriété avec mon œil de constructeur : structure, travaux à prévoir, potentiel.</p></div>
-    <div><h3>On négocie</h3><p>Le bon prix, les bonnes conditions, puis je coordonne tout jusqu'au notaire.</p></div>
+    <div><h3>On cible</h3><p>Vos réels besoins, votre budget et votre secteur. Je vous avise dès qu'une nouveauté correspond.</p></div>
+    <div><h3>On visite</h3><p>Je vous fais profiter de mon expérience terrain en construction : je repère ce qui mérite votre attention, les travaux à prévoir et le potentiel de la propriété.</p></div>
+    <div><h3>On négocie</h3><p>Le meilleur prix et les meilleures conditions possibles, puis je coordonne tout jusqu'au notaire.</p></div>
   </div>
 </div></section>
 
@@ -910,7 +943,7 @@ function pageAcheter(cfg) {
     <div><h3>La mise de fonds</h3><p>5 % minimum jusqu'à 500 000 $, puis 10 % sur la portion au-delà. Sous 20 %, une assurance prêt hypothécaire s'ajoute au prêt.</p></div>
     <div><h3>Le CELIAPP</h3><p>Jusqu'à 8 000 $ par année, 40 000 $ au total. Déductible d'impôt, et retiré sans impôt pour votre premier achat.</p></div>
     <div><h3>Le RAP</h3><p>Jusqu'à 60 000 $ par personne retirés de vos REER pour la mise de fonds, à rembourser sur 15 ans.</p></div>
-    <div><h3>La préapprobation</h3><p>À faire avant de visiter. Vous connaissez votre vrai budget, et votre offre est plus solide face aux autres acheteurs.</p></div>
+    <div><h3>La préapprobation</h3><p>À faire avant de visiter. Vous connaissez votre vrai budget, et votre offre est plus solide face aux autres acheteurs.</p><p style="margin-top:10px"><a href="contact.html?sujet=achat" style="font-weight:600">Je travaille avec d'excellents courtiers hypothécaires. Contactez-moi pour une référence →</a></p></div>
     <div><h3>La taxe de bienvenue</h3><p>Environ 5 600 $ pour une propriété de 500 000 $ en 2026. Elle arrive après le notaire et ne s'ajoute pas au prêt.</p></div>
     <div><h3>Les autres frais</h3><p>Notaire, inspection, ajustement des taxes, déménagement. Comptez quelques milliers de dollars en plus de la mise de fonds.</p></div>
   </div>
@@ -918,11 +951,11 @@ function pageAcheter(cfg) {
 </div></section>
 
 <section id="investir"><div class="wrap cols">
-  <div><p class="over">Investisseurs</p><h2>Duplex, triplex, plex : <em>on parle chiffres.</em></h2><p class="lead">Revenus, dépenses, baux, état de l'immeuble. Un bon investissement se juge sur du concret.</p></div>
+  <div><p class="over">Investisseurs</p><h2>Duplex, triplex <em>et multilogements.</em></h2><p class="lead">Revenus, dépenses, baux, état de l'immeuble. Un bon investissement se juge sur du concret.</p></div>
   <div><a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir avec moi</h3><p>Ce que j'analyse avant chaque offre, les chiffres que je regarde et le calculateur de rendement.</p><span class="go">Voir la page Investir →</span></a></div>
 </div></section>
 
-${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc(cfg.marche.mois.toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
+${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
@@ -1275,7 +1308,7 @@ function pageMarche(cfg) {
   const m = cfg.marche || {};
   return head(cfg, "Marché immobilier Rive-Sud | Gilles Jr. Dulude", `Statistiques du marché immobilier de la ${m.region || "Rive-Sud"} (${m.mois || ""}) et calculateur de rendement pour plex.`) +
     header(cfg, "marche.html") +
-    pageHero("Marché", "Le marché <em>en chiffres.</em>", `${m.region || "Rive-Sud de Montréal"}, ${(m.mois || "").toLowerCase()}. Pour savoir quand acheter, vendre ou investir.`) + `
+    pageHero("Marché", "Le marché <em>en chiffres.</em>", `${m.region || "Rive-Sud de Montréal"}, ${(m.moisTitre || m.mois || "").toLowerCase()}. Pour savoir quand acheter, vendre ou investir.`) + `
 <section><div class="wrap">
   ${marcheStats(cfg)}
 </div></section>
@@ -1384,6 +1417,8 @@ function versionAnglaise(l) {
 }
 
 export function renderSite(cfg, listings, { apercu = "" } = {}) {
+  // Le mois affiché dans les titres suit la date de la dernière mise à jour des chiffres
+  if (cfg.marche) { const d = new Date((cfg.marche.majLe || "") + "T12:00:00"); cfg = { ...cfg, marche: { ...cfg.marche, moisTitre: isNaN(d) ? cfg.marche.mois : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"][d.getMonth()] + " " + d.getFullYear() } }; }
   const fr = listings.map((l) => { const x = { ...l }; delete x.en; return x; });
   const en = listings.map(versionAnglaise);
   const pagesFr = rendrePages(cfg, fr, apercu ? `<div class="apercu">${esc(apercu)}</div>` : "");
