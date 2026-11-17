@@ -9,7 +9,7 @@ export const T = {
   "Aperçu avec des propriétés fictives.": "Preview with sample properties.",
   "Accueil": "Home", "Vendre": "Sell", "Acheter": "Buy", "Investir": "Invest", "Marché": "Market", "Propriétés": "Properties", "Contact": "Contact",
   "À propos": "About", "Menu": "Menu", "Fermer": "Close", "Navigation": "Navigation", "Me joindre": "Get in touch", "Suivez-moi": "Follow me",
-  "Gilles Jr. Dulude, courtier immobilier": "Gilles Jr. Dulude, real estate broker",
+  "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial": "Gilles Jr. Dulude, residential and commercial real estate broker",
   "Courtier immobilier résidentiel et commercial, immeubles à revenus.": "Residential and commercial real estate broker, income properties.",
   "Rive-Sud de Montréal. Français et anglais.": "Montreal South Shore. French and English.",
   "agence immobilière": "Real Estate Agency",
@@ -24,8 +24,8 @@ export const T = {
   "Gilles Jr. Dulude": "Gilles Jr. Dulude", "5 étoiles sur 5": "5 out of 5 stars", "Confidentialité": "Privacy",
 
   // Accueil
-  "Gilles Dulude | Courtier immobilier, Rive-Sud de Montréal": "Gilles Dulude | Real estate broker, Montreal South Shore",
-  "Gilles Jr. Dulude, courtier immobilier Royal LePage Distinction sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.": "Gilles Jr. Dulude, Royal LePage Distinction real estate broker on the South Shore. Sell, buy or invest with a former construction contractor by your side.",
+  "Gilles Dulude | Courtier immobilier résidentiel et commercial, Rive-Sud de Montréal": "Gilles Dulude | Residential and commercial real estate broker, Montreal South Shore",
+  "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.": "Gilles Jr. Dulude, residential and commercial real estate broker at Royal LePage Distinction, on the South Shore. Sell, buy or invest with a former construction contractor by your side.",
   "Vendre, acheter ou investir sur la Rive-Sud.": "Sell, buy or invest on the South Shore.",
   "Un ancien entrepreneur devenu courtier, qui connaît le bâtiment et les chiffres. Je m'adapte à vous, pas l'inverse.": "A former contractor turned broker, who knows buildings and numbers. I adapt to you, not the other way around.",
   "Comment je peux vous aider": "How I can help", "Un projet,": "One project,", "un seul interlocuteur.": "one person to deal with.",
@@ -47,8 +47,8 @@ export const T = {
   "Janvier 2025": "January 2025", "Décembre 2023": "December 2023", "Janvier 2023": "January 2023",
 
   // À propos
-  "À propos | Gilles Jr. Dulude, courtier immobilier": "About | Gilles Jr. Dulude, real estate broker",
-  "Ancien entrepreneur en construction devenu courtier immobilier, Gilles Jr. Dulude accompagne les familles et les investisseurs de la Rive-Sud.": "A former construction contractor turned real estate broker, Gilles Jr. Dulude helps South Shore families and investors.",
+  "À propos | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial": "About | Gilles Jr. Dulude, residential and commercial real estate broker",
+  "Ancien entrepreneur en construction devenu courtier immobilier résidentiel et commercial, Gilles Jr. Dulude accompagne les familles et les investisseurs de la Rive-Sud.": "A former construction contractor turned residential and commercial real estate broker, Gilles Jr. Dulude helps South Shore families and investors.",
   "Le terrain": "The field", "et le marché.": "and the market.",
   "Plus de 20 ans d'expérience combinée en construction et en immobilier.": "Over 20 years of combined experience in construction and real estate.",
   "Mon parcours": "My background", "Je vois ce que": "I see what", "les autres ne voient pas.": "others don’t.",
@@ -65,7 +65,7 @@ export const T = {
   "Ce que mes clients": "What my clients", "en disent.": "say.", "Voir les avis sur Google": "See the reviews on Google", "On se parle ?": "Shall we talk?",
 
   // Vendre
-  "Vendre | Gilles Jr. Dulude, courtier immobilier": "Sell | Gilles Jr. Dulude, real estate broker",
+  "Vendre | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial": "Sell | Gilles Jr. Dulude, residential and commercial real estate broker",
   "Vendre votre propriété au meilleur prix avec la Méthode 8V. Réservez un appel avec Gilles Jr. Dulude.": "Sell your property for the best price with the 8V Method. Book a call with Gilles Jr. Dulude.",
   "autrement.": "differently.", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.": "Selling isn’t complicated. Selling for top dollar is hard.",
   "La Méthode 8V": "The 8V Method", "8 leviers pour vendre": "8 levers to sell", "au meilleur prix.": "for the best price.",
@@ -114,7 +114,7 @@ export const T = {
   "Entrez votre nom": "Enter your last name", "Ex. : votrenom@domaine.com": "E.g. yourname@domain.com",
 
   // Acheter
-  "Acheter | Gilles Jr. Dulude, courtier immobilier": "Buy | Gilles Jr. Dulude, real estate broker",
+  "Acheter | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial": "Buy | Gilles Jr. Dulude, residential and commercial real estate broker",
   "Acheter une maison, un condo ou un plex sur la Rive-Sud avec un courtier qui comprend le bâtiment. Mise de fonds, CELIAPP, taxe de bienvenue : l'essentiel du premier achat.": "Buy a house, a condo or a plex on the South Shore with a broker who understands buildings. Down payment, FHSA, welcome tax: the first-purchase essentials.",
   "Achetez": "Buy", "l'esprit tranquille.": "with peace of mind.", "Avec un ancien entrepreneur à vos côtés pendant les visites.": "With a former contractor by your side during visits.",
   "Comment je vous aide": "How I help you", "De la recherche": "From the search", "jusqu'aux clés.": "to the keys.",
@@ -202,12 +202,12 @@ export const T = {
   "Vous ne trouvez pas ce que vous cherchez ?": "Can’t find what you’re looking for?",
   "Je peux vous aviser dès qu'une propriété correspondant à vos critères arrive sur le marché.": "I can let you know as soon as a property matching your criteria comes on the market.",
   "Avisez-moi": "Notify me",
-  "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.": "Current listings from Gilles Jr. Dulude, real estate broker: houses, condos, plexes and land on Montreal’s South Shore.",
+  "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier résidentiel et commercial : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.": "Current listings from Gilles Jr. Dulude, residential and commercial real estate broker: houses, condos, plexes and land on Montreal’s South Shore.",
   "Filtrer par type": "Filter by type", "Trier": "Sort", "Fiche de la propriété": "Property details",
 
   // Contact
-  "Contact | Gilles Jr. Dulude, courtier immobilier": "Contact | Gilles Jr. Dulude, real estate broker",
-  "Joindre Gilles Jr. Dulude, courtier immobilier : évaluation gratuite, projet de vente ou d'achat, visite d'une propriété.": "Reach Gilles Jr. Dulude, real estate broker: free evaluation, selling or buying project, property visit.",
+  "Contact | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial": "Contact | Gilles Jr. Dulude, residential and commercial real estate broker",
+  "Joindre Gilles Jr. Dulude, courtier immobilier résidentiel et commercial : évaluation gratuite, projet de vente ou d'achat, visite d'une propriété.": "Reach Gilles Jr. Dulude, residential and commercial real estate broker: free evaluation, selling or buying project, property visit.",
   "Première rencontre sans engagement. Écrivez-moi ou appelez-moi, je vous réponds rapidement.": "First meeting with no commitment. Write or call me, I’ll get back to you quickly.",
   "Écrivez-moi": "Write to me", "Téléphone": "Phone", "Votre projet": "Your project", "Évaluation gratuite de ma propriété": "Free evaluation of my property",
   "Vendre ma propriété": "Sell my property", "Acheter une propriété": "Buy a property", "Visiter une propriété": "Visit a property", "Autre question": "Other question",
@@ -220,11 +220,11 @@ export const T = {
 
   // Confidentialité
   "Politique de confidentialité | Gilles Jr. Dulude": "Privacy policy | Gilles Jr. Dulude",
-  "Comment Gilles Jr. Dulude, courtier immobilier, recueille, utilise et protège vos renseignements personnels.": "How Gilles Jr. Dulude, real estate broker, collects, uses and protects your personal information.",
+  "Comment Gilles Jr. Dulude, courtier immobilier résidentiel et commercial, recueille, utilise et protège vos renseignements personnels.": "How Gilles Jr. Dulude, residential and commercial real estate broker, collects, uses and protects your personal information.",
   "Vos renseignements,": "Your information,", "protégés.": "protected.",
   "Comment je recueille, j'utilise et je protège vos renseignements personnels.": "How I collect, use and protect your personal information.",
   "Qui est responsable": "Who is responsible",
-  "Gilles Jr. Dulude, courtier immobilier, est responsable de la protection des renseignements personnels recueillis sur ce site.": "Gilles Jr. Dulude, real estate broker, is responsible for protecting the personal information collected on this site.",
+  "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial, est responsable de la protection des renseignements personnels recueillis sur ce site.": "Gilles Jr. Dulude, residential and commercial real estate broker, is responsible for protecting the personal information collected on this site.",
   "Pour toute question ou demande :": "For any question or request:",
   "Ce que je recueille": "What I collect",
   "Seulement ce que vous me donnez vous-même, quand vous remplissez un formulaire, écrivez au clavardage ou réservez un rendez-vous :": "Only what you give me yourself, when you fill out a form, use the chat or book an appointment:",
@@ -285,7 +285,7 @@ export const R = [
   [/^(\d+) jours$/, "$1 days"],
   [/^Dernière mise à jour : (\d+)(?:er)? (\S+) (\d{4})$/, (m, d, mo, y) => `Last updated: ${mois(mo)} ${d}, ${y}`],
   [/^ou appelez au (.+)\.$/, "or call $1."],
-  [/^© (\d{4}) Gilles Jr\. Dulude, courtier immobilier\. Royal LePage Distinction, agence immobilière\.$/, "© $1 Gilles Jr. Dulude, real estate broker. Royal LePage Distinction, Real Estate Agency."],
+  [/^© (\d{4}) Gilles Jr\. Dulude, courtier immobilier résidentiel et commercial\. Royal LePage Distinction, agence immobilière\.$/, "© $1 Gilles Jr. Dulude, residential and commercial real estate broker. Royal LePage Distinction, Real Estate Agency."],
   [/^En vigueur depuis le (\d+) (\S+) (\d{4})\. Dernière mise à jour : (\d+) (\S+) (\d{4})\.$/, (m, d, mo, y, d2, mo2, y2) => `In effect since ${mois(mo)} ${d}, ${y}. Last updated: ${mois(mo2)} ${d2}, ${y2}.`],
   [/^(\d{1,3}(?:[   ]\d{3})*) \$$/, (m, x) => "$" + x.replace(/[   ]/g, ",")],
   [/^Rive-Sud$/, "South Shore"],
@@ -324,7 +324,7 @@ export const JS = [
   ['"Revenus, évaluation et dépenses"', '"Revenue, assessment and expenses"'], ['"Rénovations"', '"Renovations"'],
   ['"Inclusions"', '"Inclusions"'], ['"Exclusions"', '"Exclusions"'], ['"Addenda"', '"Addendum"'], ['"Toutes"', '"All"'],
   ['"Propriété "+', '"Property "+'],
-  ["esc(courtier.titre)", '"Real estate broker"'],
+  ["esc(courtier.titre)", '"Residential and commercial real estate broker"'],
   ['l.vendu?"Vendu":', 'l.vendu?"Sold":'],
   ["'</b> ch.</span>'", "'</b> bd.</span>'"], ["'</b> logements</span>'", "'</b> units</span>'"], ["'</b> s.d.b.</span>'", "'</b> bath</span>'"],
   ["' aria-label=\"Voir '", "' aria-label=\"See '"], [">Nouveauté<", ">New<"], ['"Nouveauté"', '"New"'], ['" (MLS "', '" (MLS "'], ['"Oui"', '"Yes"'],
@@ -367,7 +367,7 @@ R.push(
   [/^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})\.$/, (m, a, b) => `${MOIS_EN[a]} ${b}.`],
   [/^Source : APCIQ par le système Centris, statistiques mensuelles de (\S+) (\d{4})\. Rive-Sud de Montréal\.$/, (m, a, b) => `Source: QPAREB through the Centris system, monthly statistics for ${MOIS_EN[a] || a} ${b}. Montreal South Shore.`],
   [/^(\d+) propriétés? inscrites? par Gilles sur la Rive-Sud et ailleurs au Québec\.$/, (m, n) => `${n} ${n > 1 ? "properties" : "property"} listed by Gilles on the South Shore and elsewhere in Quebec.`],
-  [/^© (\d{4}) Gilles Jr\. Dulude, courtier immobilier$/, (m, y) => `© ${y} Gilles Jr. Dulude, real estate broker`],
+  [/^© (\d{4}) Gilles Jr\. Dulude, courtier immobilier résidentiel et commercial$/, (m, y) => `© ${y} Gilles Jr. Dulude, residential and commercial real estate broker`],
   [/^([+-]?\d+) % \/ an$/, (m, a) => `${a}% / yr`],
   [/^([+-]?\d+) j \/ an$/, (m, a) => `${a} days / yr`],
 );
@@ -400,4 +400,13 @@ Object.assign(T, {
   "Notaires": "Notaries", "Ils mènent et sécurisent les transactions, et voient à tous les aspects légaux.": "They carry out and secure transactions, and handle every legal aspect.",
   "En bref, tout le monde est là pour que votre transaction soit menée de façon professionnelle et paisible.": "In short, everyone is there so your transaction is handled professionally and peacefully.",
   "Prendre rendez-vous": "Book an appointment", "Choisissez le moment qui vous convient": "Choose a time that works for you",
+});
+
+// ---------- Investir (nov. 2026) ----------
+Object.assign(T, {
+  "Duplex, triplex et multilogements : on vérifie que les chiffres tiennent avant que vous signiez.": "Duplex, triplex and multi-unit buildings: we check that the numbers hold up before you sign.",
+  "Toiture, fondation, électricité, plomberie, fenêtres. Grâce à mon expérience en construction, je repère les points à faire examiner par l'inspecteur et les experts, pour que vous sachiez à quoi vous attendre avant de vous engager.": "Roof, foundation, electrical, plumbing, windows. Thanks to my construction experience, I spot the points to have the inspector and experts examine, so you know what to expect before you commit.",
+  "Le financement varie selon le type d'investissement. Pour un duplex ou un triplex, que vous l'habitiez ou non, le calcul n'est pas le même que pour un immeuble de 5 logements et plus, financé selon sa rentabilité et la valeur économique établie par le prêteur. Je vérifie que votre projet tient la route, et mon équipe hypothécaire vous accompagne pour le montage du prêt.": "Financing varies with the type of investment. For a duplex or triplex, whether you live in it or not, the calculation differs from a building of 5 units or more, which is financed based on its profitability and the economic value set by the lender. I check that your project holds up, and my mortgage team guides you through setting up the loan.",
+  "courtier immobilier résidentiel et commercial, courtier immobilier Rive-Sud, immeubles à revenus, plex, Saint-Jean-sur-Richelieu, Chambly, Carignan, La Prairie, Royal LePage Distinction": "residential and commercial real estate broker, South Shore real estate broker, income properties, plex, Saint-Jean-sur-Richelieu, Chambly, Carignan, La Prairie, Royal LePage Distinction",
+  "Courtier immobilier résidentiel et commercial": "Residential and commercial real estate broker",
 });
