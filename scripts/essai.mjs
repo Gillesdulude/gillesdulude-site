@@ -213,7 +213,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="wrap"><div class="tout"><a href="${P}proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
-<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-buste.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
+<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-coude.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
