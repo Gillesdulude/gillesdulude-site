@@ -22,6 +22,20 @@ const PAGES = [
   { file: "contact.html", nav: "Contact" },
 ];
 
+const CSS_EPURE = `
+/* Style épuré (comme la page d'essai) : coins carrés, blanc seulement, lignes fines */
+:root{--r:0;--warm:#EFEFEF;--be:#EFEFEF;--bc:#FFFFFF}
+*,*::before,*::after{border-radius:0!important}
+.btn{padding:17px 28px;font-size:13px;letter-spacing:.14em}
+section.beige,section[style*="warm"]{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.beige+section,section[style*=warm]+section{border-top:0}
+.prix div,.quote,.follow,.lecture,.cta-warm,.pcta,.ok,.tags span,.tile .ic{border:1px solid var(--line)}
+.hero.light .photo .arch{background:#F2F2F2;box-shadow:none}
+.mlslink:hover{background:#F2F2F2}
+.tile:hover{transform:none;box-shadow:none;border-color:var(--nb)}
+.apercu{border-bottom:1px solid var(--line)}
+
+`;
 const CSS = `
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--be:#E3DDCF;--bc:#F9F6F4;--line:rgba(19,15,12,.14);--r:4px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -377,18 +391,6 @@ dialog#dlg{overflow:auto}
 .mlslink:hover{background:var(--warm)}
 #dlg .close{position:sticky;top:10px;float:right;margin:10px 12px -50px 0;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 @media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:1fr;padding:22px 20px}}
-
-/* Style épuré (comme la page d'essai) : coins carrés, blanc seulement, lignes fines */
-:root{--r:0;--warm:#FFFFFF;--be:#FFFFFF;--bc:#FFFFFF}
-*,*::before,*::after{border-radius:0!important}
-.btn{padding:17px 28px;font-size:13px;letter-spacing:.14em}
-section.beige,section[style*="warm"]{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.beige+section,section[style*=warm]+section{border-top:0}
-.prix div,.quote,.follow,.lecture,.cta-warm,.pcta,.ok,.tags span,.tile .ic{border:1px solid var(--line)}
-.hero.light .photo .arch{background:#F2F2F2;box-shadow:none}
-.mlslink:hover{background:#F2F2F2}
-.tile:hover{transform:none;box-shadow:none;border-color:var(--nb)}
-.apercu{border-bottom:1px solid var(--line)}
 `;
 
 
@@ -456,7 +458,7 @@ ${jsonLd(cfg)}${extra}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gantari:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
-<style>${CSS}</style>
+<style>${CSS}${CSS_EPURE}</style>
 </head>
 <body>`;
 }
@@ -742,7 +744,7 @@ function pageVendre(cfg) {
   <div>
     <p class="over">La Méthode 8V</p>
     <h2>8 leviers pour vendre <em>au meilleur prix.</em></h2>
-    <p class="lead">Chaque levier compte. Ensemble, ils font la différence sur le prix final.</p>
+    <p class="lead">Vendre, c'est simple. Vendre au maximum, ça prend une méthode.</p>
   </div>
 </div>
 <div class="wrap"><div class="v8list">${V8.map(([n, t, d]) => `<div><b>${n}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
@@ -1306,7 +1308,7 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
   const acc = pageAccueil(cfg, fr), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark">')) + 10;
   const versParent = (h) => h.replace(/(href|src)="(?!https?:|#|mailto:|tel:|\.\.\/)([^"]+)"/g, '$1="../$2"').replace(/url\((["']?)assets\//g, "url($1../assets/");
   const haut = versParent(acc.slice(i0, i1).replace("{{LANG}}", ""));
-  out["essai/index.html"] = pageEssai(cfg, fr, { haut, cssAncien: versParent(CSS), avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) });
+  out["essai/index.html"] = pageEssai(cfg, fr, { haut, cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}", avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) });
   out["llms.txt"] = llmsTxt(cfg);
   return out;
 }
