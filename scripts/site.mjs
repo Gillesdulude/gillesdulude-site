@@ -131,6 +131,9 @@ dialog .close{border-radius:0}
 .equipe h3{font-size:18px;margin:0 0 10px}.equipe p{font-size:15px;color:var(--ch);margin:0}
 @media (max-width:1000px){.equipe{grid-template-columns:1fr 1fr}.equipe div,.equipe div:first-child,.equipe div:last-child{padding:28px 20px 20px 0;border-right:0;border-bottom:1px solid var(--line)}}
 @media (max-width:560px){.equipe{grid-template-columns:1fr}}
+
+.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}
+@media (max-width:860px){.hero .over{font-size:20px}}
 `;
 const CSS = `
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--be:#E3DDCF;--bc:#F9F6F4;--line:rgba(19,15,12,.14);--r:4px}
@@ -501,7 +504,7 @@ function jsonLd(cfg) {
   const data = {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    name: "Gilles Jr. Dulude, courtier immobilier",
+    name: "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial",
     alternateName: ["Gilles Dulude", "Gilles Jr Dulude", "Équipe Dulude Immobilier"],
     description: "Courtier immobilier résidentiel et commercial sur la Rive-Sud de Montréal, spécialisé en propriétés résidentielles et en immeubles à revenus (plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.",
     url: site, image: site + "assets/gilles-apropos.jpg",
@@ -512,6 +515,8 @@ function jsonLd(cfg) {
     knowsAbout: ["Vente de propriétés résidentielles", "Achat de propriété", "Immeubles à revenus", "Duplex, triplex et plex", "Évaluation de propriété", "Construction et rénovation"],
     award: PRIX.map(([n, y]) => `${n} Royal LePage ${y}`),
     knowsLanguage: ["fr", "en"],
+    slogan: "Courtier immobilier résidentiel et commercial sur la Rive-Sud de Montréal",
+    employee: { "@type": "Person", name: "Gilles Jr. Dulude", jobTitle: "Courtier immobilier résidentiel et commercial", worksFor: { "@type": "RealEstateAgent", name: "Royal LePage Distinction" }, knowsLanguage: ["fr", "en"] },
     sameAs: [r.facebook, r.instagram, "https://www.royallepage.ca/fr/agent/quebec/st-jean-sur-richelieu/gilles-jr-dulude/53410/"].filter(Boolean),
   };
   return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
@@ -545,6 +550,8 @@ function head(cfg, title, desc, extra = "") {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
+<meta name="keywords" content="courtier immobilier résidentiel et commercial, courtier immobilier Rive-Sud, immeubles à revenus, plex, Saint-Jean-sur-Richelieu, Chambly, Carignan, La Prairie, Royal LePage Distinction">
+<meta property="og:site_name" content="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="assets/gilles-apropos.jpg">
@@ -565,7 +572,7 @@ function header(cfg, current) {
     .join("");
   return `{{APERCU}}
 <header class="top"><div class="wrap">
-  <a class="logo" href="index.html" aria-label="Accueil"><img src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier" width="172" height="38"></a>
+  <a class="logo" href="index.html" aria-label="Accueil"><img src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial" width="172" height="38"></a>
   <button class="burger" aria-label="Menu" aria-expanded="false" onclick="const m=document.querySelector('.menu');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
   <nav class="menu">${links}{{LANG}}<a class="cta" href="contact.html"${current === "contact.html" ? ' aria-current="page"' : ""}>Contact</a></nav>
@@ -604,7 +611,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
   return modal + chat + `<footer><div class="wrap">
   <div class="g">
     <div>
-      <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier">
+      <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
       <p>Courtier immobilier résidentiel et commercial, immeubles à revenus.<br>Rive-Sud de Montréal. Français et anglais.</p>
       <a href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction" style="display:inline-block"><img class="rlp" src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
     </div>
@@ -616,7 +623,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
     </ul></div>
     ${cfg.reseaux ? `<div><h4>Suivez-moi</h4><div class="socs">${socialLinks(cfg)}</div></div>` : ""}
   </div>
-  <div class="legal"><span>© ${y} Gilles Jr. Dulude, courtier immobilier. ${esc(c.agence)}.</span><span>Les renseignements sur les propriétés sont fournis à titre indicatif et ne sont pas garantis. <a href="confidentialite.html" style="text-decoration:underline">Politique de confidentialité</a></span></div>
+  <div class="legal"><span>© ${y} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial. ${esc(c.agence)}.</span><span>Les renseignements sur les propriétés sont fournis à titre indicatif et ne sont pas garantis. <a href="confidentialite.html" style="text-decoration:underline">Politique de confidentialité</a></span></div>
 </div></footer>`;
 }
 
@@ -731,14 +738,14 @@ function pageAccueil(cfg, listings) {
   const c = cfg.courtier;
   const aVendre = listings.filter((l) => !l.vendu);
   const vedette = aVendre.slice(0, 3);
-  return head(cfg, `${c.nom} | Courtier immobilier, Rive-Sud de Montréal`, "Gilles Jr. Dulude, courtier immobilier Royal LePage Distinction sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.") +
+  return head(cfg, `${c.nom} | Courtier immobilier résidentiel et commercial, Rive-Sud de Montréal`, "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.") +
     header(cfg, "index.html") + `
 <section class="hero dark">
   <img class="motif" src="assets/motif-contour.png" alt="">
   <div class="wrap">
     <div class="txt">
       <a class="rlp-hero" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
-      <p class="over">Gilles Jr. Dulude, courtier immobilier</p>
+      <p class="over">Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</p>
       <h1 style="text-transform:uppercase;letter-spacing:.01em">Vendre, acheter ou investir sur la Rive-Sud.</h1>
       <p class="lead">Un ancien entrepreneur devenu courtier, qui connaît le bâtiment et les chiffres. Je m'adapte à vous, pas l'inverse.</p>
       <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="vendre.html#evaluation">Évaluation gratuite</a></div>
@@ -801,7 +808,7 @@ ${band("Parlons de votre projet.", "Un appel de 15 minutes, sans engagement.", "
 }
 
 function pageAPropos(cfg) {
-  return head(cfg, "À propos | Gilles Jr. Dulude, courtier immobilier", "Ancien entrepreneur en construction devenu courtier immobilier, Gilles Jr. Dulude accompagne les familles et les investisseurs de la Rive-Sud.") +
+  return head(cfg, "À propos | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Ancien entrepreneur en construction devenu courtier immobilier résidentiel et commercial, Gilles Jr. Dulude accompagne les familles et les investisseurs de la Rive-Sud.") +
     header(cfg, "a-propos.html") +
     pageHero("À propos", "Le terrain <em>et le marché.</em>", "Plus de 20 ans d'expérience combinée en construction et en immobilier.") + `
 <section><div class="wrap cols">
@@ -848,7 +855,7 @@ ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver u
 
 function pageVendre(cfg) {
   const faq = FAQ.vendre(cfg);
-  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier", "Vendre votre propriété au meilleur prix avec la Méthode 8V. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
+  return head(cfg, "Vendre | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Vendre votre propriété au meilleur prix avec la Méthode 8V. Réservez un appel avec Gilles Jr. Dulude.", faqLd(faq)) +
     header(cfg, "vendre.html") +
     pageHero("Vendre", "Vendre <em>autrement.</em>", "Ce n'est pas compliqué de vendre. C'est difficile de vendre au maximum.") + `
 <section><div class="wrap">
@@ -922,7 +929,7 @@ ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)"
 
 function pageAcheter(cfg) {
   const faq = FAQ.acheter(cfg);
-  return head(cfg, "Acheter | Gilles Jr. Dulude, courtier immobilier", "Acheter une maison, un condo ou un plex sur la Rive-Sud avec un courtier qui comprend le bâtiment. Mise de fonds, CELIAPP, taxe de bienvenue : l'essentiel du premier achat.", faqLd(faq)) +
+  return head(cfg, "Acheter | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Acheter une maison, un condo ou un plex sur la Rive-Sud avec un courtier qui comprend le bâtiment. Mise de fonds, CELIAPP, taxe de bienvenue : l'essentiel du premier achat.", faqLd(faq)) +
     header(cfg, "acheter.html") +
     pageHero("Acheter", "Achetez <em>l'esprit tranquille.</em>", "Avec un ancien entrepreneur à vos côtés pendant les visites.") + `
 <section><div class="wrap">
@@ -965,15 +972,15 @@ function pageInvestir(cfg) {
   const faq = FAQ.investir(cfg);
   return head(cfg, "Investir dans un plex sur la Rive-Sud | Gilles Jr. Dulude", "Acheter ou vendre un duplex, triplex ou plex sur la Rive-Sud. Analyse des revenus, des baux et de l'état de l'immeuble par un courtier ancien entrepreneur.", faqLd(faq)) +
     header(cfg, "investir.html") +
-    pageHero("Investir", "Un plex, <em>ça se calcule.</em>", "Duplex, triplex, quintuplex : on vérifie que les chiffres tiennent avant que vous signiez.") + `
+    pageHero("Investir", "Un plex, <em>ça se calcule.</em>", "Duplex, triplex et multilogements : on vérifie que les chiffres tiennent avant que vous signiez.") + `
 <section><div class="wrap">
   <p class="over">Avant chaque offre</p>
   <h2 style="margin-bottom:8px">Ce que je vérifie <em>pour vous.</em></h2>
   <div class="v8list">
     <div><b>01</b><h3>Les revenus</h3><p>Je compare chaque loyer au bail signé et aux loyers du secteur. Un loyer bas, c'est du potentiel. Un loyer gonflé, c'est un risque.</p></div>
     <div><b>02</b><h3>Les dépenses</h3><p>Taxes, assurances, chauffage, entretien, logements vacants. Toutes les dépenses, pas seulement celles qu'on vous montre.</p></div>
-    <div><b>03</b><h3>Le bâtiment</h3><p>Toiture, fondation, électricité, plomberie, fenêtres. Avec mon œil d'entrepreneur, j'estime les travaux à prévoir. En plus de l'inspection, pas à la place.</p></div>
-    <div><b>04</b><h3>Le financement</h3><p>La mise de fonds change selon le nombre de logements et si vous habitez l'immeuble. On monte un plan qui tient avec votre prêteur.</p></div>
+    <div><b>03</b><h3>Le bâtiment</h3><p>Toiture, fondation, électricité, plomberie, fenêtres. Grâce à mon expérience en construction, je repère les points à faire examiner par l'inspecteur et les experts, pour que vous sachiez à quoi vous attendre avant de vous engager.</p></div>
+    <div><b>04</b><h3>Le financement</h3><p>Le financement varie selon le type d'investissement. Pour un duplex ou un triplex, que vous l'habitiez ou non, le calcul n'est pas le même que pour un immeuble de 5 logements et plus, financé selon sa rentabilité et la valeur économique établie par le prêteur. Je vérifie que votre projet tient la route, et mon équipe hypothécaire vous accompagne pour le montage du prêt.</p></div>
   </div>
 </div></section>
 
@@ -1037,7 +1044,7 @@ ${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde
 function pageProprietes(cfg, listings) {
   const nbActives = listings.filter((l) => !l.vendu).length;
   const c = cfg.courtier;
-  return head(cfg, "Propriétés à vendre | Gilles Jr. Dulude", "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.") +
+  return head(cfg, "Propriétés à vendre | Gilles Jr. Dulude", "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier résidentiel et commercial : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.") +
     header(cfg, "proprietes.html") +
     pageHero("Propriétés à vendre", "Mes inscriptions.", `${nbActives} propriété${nbActives > 1 ? "s" : ""} à vendre en ce moment.`) + `
 <section style="padding-top:0"><div class="wrap">
@@ -1125,7 +1132,7 @@ draw();if(location.hash.length>1)open(decodeURIComponent(location.hash.slice(1))
 function pageContact(cfg) {
   const c = cfg.courtier;
   const action = cfg.formulaire?.action || "";
-  return head(cfg, "Contact | Gilles Jr. Dulude, courtier immobilier", "Joindre Gilles Jr. Dulude, courtier immobilier : évaluation gratuite, projet de vente ou d'achat, visite d'une propriété.") +
+  return head(cfg, "Contact | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Joindre Gilles Jr. Dulude, courtier immobilier résidentiel et commercial : évaluation gratuite, projet de vente ou d'achat, visite d'une propriété.") +
     header(cfg, "contact.html") +
     pageHero("Contact", "Parlons de votre projet.", "Première rencontre sans engagement. Écrivez-moi ou appelez-moi, je vous réponds rapidement.") + `
 <section><div class="wrap cols top-al">
@@ -1182,14 +1189,14 @@ f.addEventListener("submit",e=>{
 function pageConfidentialite(cfg) {
   const c = cfg.courtier;
   const courriel = esc(c.courriel), tel = esc(c.telephone);
-  return head(cfg, "Politique de confidentialité | Gilles Jr. Dulude", "Comment Gilles Jr. Dulude, courtier immobilier, recueille, utilise et protège vos renseignements personnels.") +
+  return head(cfg, "Politique de confidentialité | Gilles Jr. Dulude", "Comment Gilles Jr. Dulude, courtier immobilier résidentiel et commercial, recueille, utilise et protège vos renseignements personnels.") +
     header(cfg, "confidentialite.html") +
     pageHero("Confidentialité", "Vos renseignements, <em>protégés.</em>", "Comment je recueille, j'utilise et je protège vos renseignements personnels.") + `
 <section><div class="wrap prose">
   <p class="note">En vigueur depuis le 6 novembre 2026. Dernière mise à jour : 6 novembre 2026.</p>
 
   <h2>Qui est responsable</h2>
-  <p>Gilles Jr. Dulude, courtier immobilier, est responsable de la protection des renseignements personnels recueillis sur ce site.</p>
+  <p>Gilles Jr. Dulude, courtier immobilier résidentiel et commercial, est responsable de la protection des renseignements personnels recueillis sur ce site.</p>
   <p>Pour toute question ou demande : <a href="mailto:${courriel}">${courriel}</a>, ${tel}.<br>${esc(c.agence)}, ${esc(c.adresseAgence || "")}</p>
 
   <h2>Ce que je recueille</h2>
@@ -1249,7 +1256,7 @@ function pageConfidentialite(cfg) {
 
 function llmsTxt(cfg) {
   const c = cfg.courtier, r = cfg.reseaux || {};
-  return `# Gilles Jr. Dulude, courtier immobilier
+  return `# Gilles Jr. Dulude, courtier immobilier résidentiel et commercial
 
 > Courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud de Montréal (Québec). Spécialisé dans la vente et l'achat de propriétés résidentielles et d'immeubles à revenus (duplex, triplex, plex). Ancien entrepreneur général avec 10 ans d'expérience en construction et rénovation.
 
@@ -1347,9 +1354,11 @@ function accueilEssai(cfg, listings, essai = false) {
   const acc = pageAccueil(cfg, listings), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark">')) + 10;
   const versParent = (h) => h.replace(/(href|src)="(?!https?:|#|mailto:|tel:|\.\.\/)([^"]+)"/g, '$1="../$2"').replace(/url\((["']?)assets\//g, "url($1../assets/");
   const c = cfg.courtier;
-  const titre = `${c.nom} | Courtier immobilier, Rive-Sud de Montréal`, desc = "Gilles Jr. Dulude, courtier immobilier Royal LePage Distinction sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.";
+  const titre = `${c.nom} | Courtier immobilier résidentiel et commercial, Rive-Sud de Montréal`, desc = "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.";
   const tete = `<title>${esc(titre)}</title>
 <meta name="description" content="${esc(desc)}">
+<meta name="keywords" content="courtier immobilier résidentiel et commercial, courtier immobilier Rive-Sud, immeubles à revenus, plex, Saint-Jean-sur-Richelieu, Chambly, Carignan, La Prairie, Royal LePage Distinction">
+<meta property="og:site_name" content="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
 <meta property="og:title" content="${esc(titre)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="assets/gilles-apropos.jpg">
@@ -1358,8 +1367,8 @@ ${jsonLd(cfg)}
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
   const haut = acc.slice(i0, i1);
   const opts = { avisUrl: AVIS_URL, avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
-  if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}" });
-  return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + ".hero .btn{border-radius:0}" });
+  if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
+  return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + ".hero .btn{border-radius:0}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
 }
 
 function rendrePages(cfg, listings, banner) {
