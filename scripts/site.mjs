@@ -134,6 +134,18 @@ dialog .close{border-radius:0}
 
 .hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}
 @media (max-width:860px){.hero .over{font-size:20px}}
+
+/* À propos : portrait fondu dans le gris, comme sur l'accueil */
+section.portrait{position:relative;overflow:hidden;background:var(--warm);padding:0}
+section.portrait .photo{position:absolute;left:0;top:0;bottom:0;width:48%}
+section.portrait .photo img{width:100%;height:100%;object-fit:cover;object-position:center top;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
+section.portrait .wrap{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:60px;min-height:760px;align-items:center;padding-top:120px;padding-bottom:120px}
+section.portrait .wrap>div{grid-column:2}
+section.portrait p{color:#2A2622}
+@media (max-width:860px){section.portrait .photo{position:relative;width:100%;height:440px}section.portrait .photo img{-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent);mask-image:linear-gradient(to bottom,#000 60%,transparent)}section.portrait .wrap{grid-template-columns:1fr;min-height:0;padding-top:10px;padding-bottom:80px}section.portrait .wrap>div{grid-column:1}}
+
+.dark .equipe{border-top-color:rgba(249,246,244,.6)}.dark .equipe div{border-color:rgba(249,246,244,.18)}.dark .equipe p{color:rgba(249,246,244,.72)}.dark .equipe h3{color:#F9F6F4}
+.hero.light.small+section.portrait{padding-top:0!important}
 `;
 const CSS = `
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--be:#E3DDCF;--bc:#F9F6F4;--line:rgba(19,15,12,.14);--r:4px}
@@ -811,19 +823,19 @@ function pageAPropos(cfg) {
   return head(cfg, "À propos | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Ancien entrepreneur en construction devenu courtier immobilier résidentiel et commercial, Gilles Jr. Dulude accompagne les familles et les investisseurs de la Rive-Sud.") +
     header(cfg, "a-propos.html") +
     pageHero("À propos", "Le terrain <em>et le marché.</em>", "Plus de 20 ans d'expérience combinée en construction et en immobilier.") + `
-<section><div class="wrap cols">
-  <div style="background:var(--warm);border-radius:24px;display:flex;justify-content:center;align-items:flex-end;padding:32px 24px 0;overflow:hidden"><img src="assets/gilles-apropos-detoure.webp" alt="Gilles Jr. Dulude" loading="lazy" style="max-height:520px;width:auto"></div>
+<section class="portrait"><div class="photo"><img src="assets/gilles-coude.jpg" alt="Gilles Jr. Dulude" loading="lazy"></div><div class="wrap">
   <div>
     <p class="over">Mon parcours</p>
     <h2>Je vois ce que <em>les autres ne voient pas.</em></h2>
-    <p>Avant l'immobilier, j'ai passé 10 ans sur les chantiers, jusqu'à devenir entrepreneur général. Aujourd'hui, ça me permet d'évaluer rapidement la vraie valeur d'une propriété.</p>
-    <p>Je suis direct et transparent. Mon rôle est simple : protéger mes clients et les aider à prendre les bonnes décisions.</p>
-    <p>Courtier résidentiel et commercial, je me spécialise dans les propriétés résidentielles et les immeubles à revenus (duplex, triplex et plex) sur la Rive-Sud, en français comme en anglais : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
+    <p>Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente. Je suis direct et transparent : mon rôle, c'est de protéger mes clients et de les aider à prendre les bonnes décisions.</p>
+    <p>Avant de devenir courtier, j'ai été menuisier, puis entrepreneur général en construction neuve et en rénovation. J'ai aussi mené plusieurs projets d'optimisation et de flip de propriétés.</p>
+    <p>Je suis moi-même investisseur immobilier : je connais la réalité des propriétaires et des investisseurs de l'intérieur.</p>
+    <p>Courtier résidentiel et commercial chez Royal LePage Distinction, je me spécialise dans les propriétés résidentielles et les immeubles à revenus sur la Rive-Sud, en français comme en anglais : ${SECTEURS.slice(0,-1).join(", ")} et ${SECTEURS.at(-1)}.</p>
     <div class="stats"><div><b>10+</b><span>ans en construction</span></div><div><b>10+</b><span>ans en courtage</span></div></div>
   </div>
 </div></section>
 
-<section style="background:var(--warm)"><div class="wrap">
+<section><div class="wrap">
   <p class="over">Mes engagements</p>
   <h2 style="margin-bottom:32px">Ce que vous pouvez <em>attendre de moi.</em></h2>
   <div class="steps3">
@@ -833,7 +845,7 @@ function pageAPropos(cfg) {
   </div>
 </div></section>
 
-<section id="equipe"><div class="wrap">
+<section id="equipe" class="dark"><div class="wrap">
   <p class="over">Mon équipe</p>
   <h2>Quand vous m'engagez, <em>c'est toute une équipe.</em></h2>
   <p class="lead" style="margin-bottom:40px">Une équipe rodée, mise à l'épreuve au cours des dix dernières années, qui réunit tous les intervenants dont vous avez besoin.</p>
