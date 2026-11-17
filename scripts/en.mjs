@@ -410,3 +410,17 @@ Object.assign(T, {
   "courtier immobilier résidentiel et commercial, courtier immobilier Rive-Sud, immeubles à revenus, plex, Saint-Jean-sur-Richelieu, Chambly, Carignan, La Prairie, Royal LePage Distinction": "residential and commercial real estate broker, South Shore real estate broker, income properties, plex, Saint-Jean-sur-Richelieu, Chambly, Carignan, La Prairie, Royal LePage Distinction",
   "Courtier immobilier résidentiel et commercial": "Residential and commercial real estate broker",
 });
+
+// ---------- Investir : multilogements 5+ ----------
+Object.assign(T, {
+  "Investir en multilogement sur la Rive-Sud | Gilles Jr. Dulude": "Investing in multi-unit buildings on the South Shore | Gilles Jr. Dulude",
+  "Acheter ou vendre un immeuble de 5 logements et plus sur la Rive-Sud. Analyse des revenus, des dépenses, des baux et de l'état de l'immeuble avec un courtier immobilier résidentiel et commercial.": "Buy or sell a building of 5 units or more on the South Shore. Analysis of income, expenses, leases and building condition with a residential and commercial real estate broker.",
+  "Un multilogement,": "A multi-unit building,", "ça se calcule.": "is a numbers game.",
+  "Immeubles de 5 logements et plus : on vérifie que les chiffres tiennent avant que vous signiez.": "Buildings of 5 units or more: we check that the numbers hold up before you sign.",
+  "Un immeuble de 5 logements et plus se finance selon sa rentabilité et la valeur économique établie par le prêteur, pas seulement selon votre revenu. Je vérifie que les chiffres tiennent, et mon équipe hypothécaire vous accompagne pour le montage du prêt.": "A building of 5 units or more is financed based on its profitability and the economic value set by the lender, not just your income. I check that the numbers hold up, and my mortgage team guides you through setting up the loan.",
+  "Calculer le rendement d'un multilogement": "Calculate a multi-unit building’s return",
+  "Calculez le rendement": "Calculate the return", "d'un multilogement.": "of a multi-unit building.",
+  "Combien de mise de fonds pour un multilogement?": "How much down payment for a multi-unit building?",
+  "À partir de 5 logements, c'est un financement commercial : le prêteur regarde surtout la rentabilité de l'immeuble et sa valeur économique. La mise de fonds varie selon le prêteur et le type de prêt. Mon équipe hypothécaire peut vous donner l'heure juste pour votre projet.": "From 5 units up, it’s commercial financing: the lender looks mainly at the building’s profitability and economic value. The down payment varies by lender and type of loan. My mortgage team can give you a straight answer for your project.",
+  "Multilogements de 5 logements et plus : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.": "Multi-unit buildings of 5 units or more: income, leases, expenses and building condition, checked before the offer.",
+});
