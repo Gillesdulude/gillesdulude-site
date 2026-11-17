@@ -15,7 +15,7 @@ const FACADE = {
 // Ligne d'horizon de plex et de maisons, pour le bas de page.
 const HORIZON = `<svg class="horizon" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 119 H40 V70 H130 V119 H150 L195 78 L240 119 H260 V52 H360 V119 H380 V84 H450 V60 L490 32 L530 60 V119 H560 V44 H650 V119 H670 L720 74 L770 119 H790 V66 H880 V119 H900 V58 L950 26 L1000 58 V119 H1020 V48 H1110 V119 H1130 L1165 88 L1200 119"/><path d="M285 64 h14 v14 h-14z M321 64 h14 v14 h-14z M285 92 h14 v14 h-14z M321 92 h14 v14 h-14z M585 56 h14 v14 h-14z M611 56 h14 v14 h-14z M585 86 h14 v14 h-14z M611 86 h14 v14 h-14z M1045 60 h14 v14 h-14z M1071 60 h14 v14 h-14z M1045 90 h14 v14 h-14z M1071 90 h14 v14 h-14z"/></svg>`;
 
-export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "" } = {}) {
+export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", P = "../", tete = "", essai = true } = {}) {
   const c = cfg.courtier, m = cfg.marche || {};
   const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
   const actives = listings.filter((l) => !l.vendu).slice(0, 3);
@@ -33,9 +33,9 @@ export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", r
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
+${tete || `<meta name="robots" content="noindex, nofollow">
 <title>Essai | Gilles Jr. Dulude, courtier immobilier</title>
-<link rel="icon" href="../assets/favicon.png">
+<link rel="icon" href="${P}assets/favicon.png">`}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gantari:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
 <style>
@@ -173,7 +173,7 @@ section{position:relative}
 
 ${haut}
 <div class="e">
-<div class="essai">Version d'essai</div>
+${essai ? `<div class="essai">Version d'essai</div>` : ""}
 
 <section class="sec"><div class="wrap">
   <div class="entete">
@@ -181,9 +181,9 @@ ${haut}
     <p>Une propriété familiale, un premier achat ou un immeuble à revenus : la même rigueur, adaptée à votre projet.</p>
   </div>
   <div class="services">
-    <a href="../vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>La Méthode 8V : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="../acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>Je visite avec vous en ancien entrepreneur : structure, travaux à prévoir, vrai potentiel.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="../investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Duplex, triplex, plex : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>La Méthode 8V : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>Je visite avec vous en ancien entrepreneur : structure, travaux à prévoir, vrai potentiel.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Duplex, triplex, plex : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
   </div>
 </div></section>
 
@@ -206,14 +206,14 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   </div>
 </div>
   <div class="props">
-    ${actives.map((l) => `<a class="prop" href="../proprietes.html#${esc(l.id)}">
+    ${actives.map((l) => `<a class="prop" href="${P}proprietes.html#${esc(l.id)}">
       ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}
       <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span></div></a>`).join("")}
   </div>
-  <div class="wrap"><div class="tout"><a href="../proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
+  <div class="wrap"><div class="tout"><a href="${P}proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
-<section class="sec gilles"><div class="photo"><img src="../assets/gilles-buste.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
+<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-buste.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
@@ -239,12 +239,12 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
 
 <footer>
   <div class="wrap">
-    <div><div class="logos" style="margin-bottom:22px"><img src="../assets/logo-h-light.png" alt="Gilles Jr. Dulude" style="height:26px;width:auto"><span class="sep" style="height:26px;width:auto"></span><img src="../assets/rlp-mono.png" alt="Royal LePage Distinction" style="height:26px;width:auto"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
-    <div><h4>Navigation</h4><ul><li><a href="../vendre.html">Vendre</a></li><li><a href="../acheter.html">Acheter</a></li><li><a href="../investir.html">Investir</a></li><li><a href="../proprietes.html">Propriétés</a></li><li><a href="../a-propos.html">À propos</a></li></ul></div>
+    <div><div class="logos" style="margin-bottom:22px"><img src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude" style="height:26px;width:auto"><span class="sep" style="height:26px;width:auto"></span><img src="${P}assets/rlp-mono.png" alt="Royal LePage Distinction" style="height:26px;width:auto"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
+    <div><h4>Navigation</h4><ul><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
     <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul></div>
     <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>Agence immobilière</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
   </div>
-  <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier</span><a href="../confidentialite.html">Politique de confidentialité</a></div></div>
+  <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
 </footer>
 </div>
 
