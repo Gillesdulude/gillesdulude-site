@@ -424,3 +424,11 @@ Object.assign(T, {
   "À partir de 5 logements, c'est un financement commercial : le prêteur regarde surtout la rentabilité de l'immeuble et sa valeur économique. La mise de fonds varie selon le prêteur et le type de prêt. Mon équipe hypothécaire peut vous donner l'heure juste pour votre projet.": "From 5 units up, it’s commercial financing: the lender looks mainly at the building’s profitability and economic value. The down payment varies by lender and type of loan. My mortgage team can give you a straight answer for your project.",
   "Multilogements de 5 logements et plus : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.": "Multi-unit buildings of 5 units or more: income, leases, expenses and building condition, checked before the offer.",
 });
+
+// ---------- Parcours (accueil et À propos) ----------
+Object.assign(T, {
+  "Je suis moi-même investisseur immobilier : je connais la réalité des propriétaires et des investisseurs de l'intérieur.": "I am a real estate investor myself: I know the reality of owners and investors from the inside.",
+  "Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente. Je suis direct et transparent : mon rôle, c'est de protéger mes clients et de les aider à prendre les bonnes décisions.": "I see what gives a property its value, and what can hurt its sale. I am direct and transparent: my role is to protect my clients and help them make the right decisions.",
+  "Avant de devenir courtier, j'ai été menuisier, puis entrepreneur général en construction neuve et en rénovation. J'ai aussi mené plusieurs projets d'optimisation et de flip de propriétés.": "Before becoming a broker, I was a carpenter, then a general contractor in new construction and renovation. I have also led several property optimization and flip projects.",
+});
+R.push([/^Courtier résidentiel et commercial chez Royal LePage Distinction, je me spécialise dans les propriétés résidentielles et les immeubles à revenus sur la Rive-Sud, en français comme en anglais : (.+)\.$/, (m, v) => `A residential and commercial broker at Royal LePage Distinction, I specialize in residential properties and income properties on the South Shore, in French and in English: ${v.replace(/ et /, " and ")}.`]);
