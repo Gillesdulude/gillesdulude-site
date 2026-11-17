@@ -23,18 +23,88 @@ const PAGES = [
 ];
 
 const CSS_EPURE = `
-/* Style épuré (comme la page d'essai) : coins carrés, blanc seulement, lignes fines */
-:root{--r:0;--warm:#EFEFEF;--be:#EFEFEF;--bc:#FFFFFF}
+/* ===== Style de la page d'essai appliqué à tout le site ===== */
+:root{--nb:#111111;--ch:#6B6B6B;--gr:#B5B5B5;--r:0;--warm:#F4F4F2;--be:#F4F4F2;--bc:#FFFFFF;--line:rgba(17,17,17,.12)}
 *,*::before,*::after{border-radius:0!important}
-.btn{padding:17px 28px;font-size:13px;letter-spacing:.14em}
-section.beige,section[style*="warm"]{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.beige+section,section[style*=warm]+section{border-top:0}
-.prix div,.quote,.follow,.lecture,.cta-warm,.pcta,.ok,.tags span,.tile .ic{border:1px solid var(--line)}
-.hero.light .photo .arch{background:#F2F2F2;box-shadow:none}
-.mlslink:hover{background:#F2F2F2}
-.tile:hover{transform:none;box-shadow:none;border-color:var(--nb)}
+body{background:#fff}
+.wrap{max-width:1240px;padding:0 40px}
+section{padding:130px 0}
+@media (max-width:860px){.wrap{padding:0 24px}section{padding:84px 0}}
+/* Petits titres : majuscules grises avec trait */
+section:not(.hero) .over{font:500 12px/1.4 Gantari,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ch);display:flex;align-items:center;gap:14px;margin:0 0 22px}
+section:not(.hero) .over::after{content:"";height:1px;width:56px;background:currentColor;opacity:.6}
+.dark .over,section.dark .over{color:rgba(255,255,255,.6)!important}
+/* Grands titres */
+h2{font-size:clamp(34px,4.4vw,62px);font-weight:600;text-transform:uppercase;line-height:.98;letter-spacing:.01em;margin:0 0 26px}
+h1 em,h2 em{font-family:inherit;font-style:normal;font-weight:inherit}
+h3{text-transform:uppercase;letter-spacing:.02em;font-weight:600}
+.lead{font-size:18px;color:var(--ch)}
+.dark .lead{color:rgba(255,255,255,.7)}
+/* Boutons carrés */
+.btn{padding:18px 28px;font-size:13px;letter-spacing:.16em;font-weight:600}
+/* Sections grises */
+section.beige,section[style*="warm"]{background:var(--warm)}
+/* Tuiles en colonnes séparées par des traits */
+.tiles{gap:0;border-top:1px solid var(--nb)}
+.tile{background:transparent;border:0;border-right:1px solid var(--line);padding:44px 36px 48px;gap:16px}
+.tile:first-child{padding-left:0}.tile:last-child{border-right:0;padding-right:0}
+.tile:hover{transform:none;box-shadow:none}
+.tile:hover .go{text-decoration:underline}
+.tile .ic{background:transparent;border:0;width:auto;height:auto;place-items:start;margin:0}
+.tile .ic svg{width:44px;height:44px}
+.tile h3{font-size:26px}
+.tile p{font-size:16px}
+.tile .go{font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+@media (max-width:860px){.tile,.tile:first-child,.tile:last-child{border-right:0;border-bottom:1px solid var(--line);padding:34px 0}}
+/* Avis : colonnes avec traits, sans boîtes */
+.cards3,.avis-grid{gap:0;border-top:1px solid var(--nb)}
+.quote{background:transparent;border:0;border-right:1px solid var(--line);padding:40px 36px 24px}
+.cards3 .quote:first-child{padding-left:0}.cards3 .quote:last-child{border-right:0}
+.avis-grid .quote{border-bottom:1px solid var(--line)}.avis-grid .quote:nth-child(2n+1){padding-left:0}.avis-grid .quote:nth-child(2n){border-right:0}
+.quote p{font:400 18px/1.6 Gantari,system-ui,sans-serif}
+@media (max-width:900px){.quote,.cards3 .quote:first-child,.avis-grid .quote{border-right:0;border-bottom:1px solid var(--line);padding:30px 0}}
+/* Propriétés : photos en bande, infos par-dessus */
+.grid{gap:0;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.card{position:relative;border:0;background:#111;color:#fff;aspect-ratio:3/4;overflow:hidden}
+.card:hover{transform:none;box-shadow:none}
+.card .ph{position:absolute;inset:0;aspect-ratio:auto;background:#111}
+.card .ph img{opacity:.92;transition:transform 1.2s ease,opacity .6s}
+.card:hover .ph img{transform:scale(1.035);opacity:1}
+.card .ph::after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(to top,rgba(0,0,0,.88),transparent)}
+.card .nphotos{display:none}
+.card .body{position:absolute;left:30px;right:30px;bottom:26px;padding:0;z-index:2}
+.card .price{font-size:26px;font-weight:500;color:#fff}
+.card .addr{color:rgba(255,255,255,.88);font-weight:400;font-size:15px}
+.card .city{color:rgba(255,255,255,.7);font-size:13px}
+.card .facts{border-top-color:rgba(255,255,255,.22);color:rgba(255,255,255,.75)}
+.card .facts b{color:#fff}
+.card .ptype{font:500 11px/1.4 Gantari,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+/* Bandes d'appel : noires, comme le bas de la page d'essai */
+.cta-warm{background:var(--nb);color:#fff;border:0;padding:80px 60px;text-align:left}
+.cta-warm h2{color:#fff}.cta-warm p,.cta-warm .lead{color:rgba(255,255,255,.72);margin-left:0}
+.cta-warm .btns{justify-content:flex-start}
+.cta-warm .btn{background:#fff;color:#111;border-color:#fff}.cta-warm .btn:hover{background:#e6e6e6;border-color:#e6e6e6}
+.cta-warm .btn.ghost{background:transparent;color:#fff;border-color:#fff}
+.cta-warm .over{color:rgba(255,255,255,.6)!important}
+@media (max-width:860px){.cta-warm{padding:56px 28px}}
+/* En-têtes des pages : noirs comme l'accueil */
+.hero.light,.hero.light.small{background:var(--nb);color:#fff}
+.hero.light .lead,.hero.light .over{color:rgba(255,255,255,.72)}
+.hero.light .motif{filter:none;opacity:.13}
+.hero.light.small .wrap{padding:110px 40px 90px}
+.hero.light.small h1{font-size:clamp(40px,6vw,84px);line-height:.98}
+.hero.light.small+section{padding-top:130px}
+.hero.light .photo .arch{background:#2a2a2a;box-shadow:none}
+@media (max-width:860px){.hero.light.small .wrap{padding:84px 24px 64px}.hero.light.small+section{padding-top:84px}}
+/* Boîtes restantes : carrées, traits fins */
+.prix div,.follow,.lecture,.pcta,.ok,.tags span,.kpi,.v8list div,.prem div,.steps3>div,.evalform{border:1px solid var(--line);box-shadow:none}
+.mlslink:hover{background:var(--warm)}
+.faq summary{font-size:19px}
 .apercu{border-bottom:1px solid var(--line)}
-
+.hero h1{text-transform:uppercase;letter-spacing:.01em}
+section:has(> .wrap > .cta-warm){background:var(--nb);border:0}
+section:has(> .wrap > .cta-warm) .cta-warm{padding:0}
+@media (max-width:860px){section:has(> .wrap > .cta-warm) .cta-warm{padding:0}}
 `;
 const CSS = `
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--be:#E3DDCF;--bc:#F9F6F4;--line:rgba(19,15,12,.14);--r:4px}
@@ -938,7 +1008,7 @@ function pageProprietes(cfg, listings) {
   <p class="note" id="maj" style="margin-top:40px"></p>
 </div></section>
 <dialog id="dlg" aria-label="Fiche de la propriété"></dialog>
-${band("Vous ne trouvez pas ce que vous cherchez ?", "Je peux vous aviser dès qu'une propriété correspondant à vos critères arrive sur le marché.", "Me faire aviser", "contact.html?sujet=achat")}
+${band("Vous ne trouvez pas ce que vous cherchez ?", "Je peux vous aviser dès qu'une propriété correspondant à vos critères arrive sur le marché.", "Avisez-moi", "contact.html?sujet=achat")}
 ${dataTag({ listings, courtier: { nom: c.nom, titre: c.titre, telephone: c.telephone, courriel: c.courriel }, ava: cfg.ava?.webhook || "", majLe: new Date().toISOString() })}
 <script>${CARDS_JS}
 (()=>{
@@ -1231,9 +1301,29 @@ ${band("Est-ce le bon moment pour vous ?", "Chaque situation est différente. Pa
 ` + footer(cfg) + end;
 }
 
+// Page d'accueil au style de la page d'essai (entête et haut de page du site, reste au nouveau style)
+function accueilEssai(cfg, listings, essai = false) {
+  const acc = pageAccueil(cfg, listings), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark">')) + 10;
+  const versParent = (h) => h.replace(/(href|src)="(?!https?:|#|mailto:|tel:|\.\.\/)([^"]+)"/g, '$1="../$2"').replace(/url\((["']?)assets\//g, "url($1../assets/");
+  const c = cfg.courtier;
+  const titre = `${c.nom} | Courtier immobilier, Rive-Sud de Montréal`, desc = "Gilles Jr. Dulude, courtier immobilier Royal LePage Distinction sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.";
+  const tete = `<title>${esc(titre)}</title>
+<meta name="description" content="${esc(desc)}">
+<meta property="og:title" content="${esc(titre)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:image" content="assets/gilles-apropos.jpg">
+${jsonLd(cfg)}
+<link rel="icon" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
+  const haut = acc.slice(i0, i1);
+  const opts = { avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
+  if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}" });
+  return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + ".hero .btn{border-radius:0}" });
+}
+
 function rendrePages(cfg, listings, banner) {
   const pages = {
-    "index.html": pageAccueil(cfg, listings),
+    "index.html": accueilEssai(cfg, listings),
     "a-propos.html": pageAPropos(cfg),
     "vendre.html": pageVendre(cfg),
     "acheter.html": pageAcheter(cfg),
@@ -1305,10 +1395,7 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
       .replace("{{LANG}}", `<a class="lang" href="../${f}" hreflang="fr" lang="fr" aria-label="Version française">FR</a>`)
       .replace("</head>", alt(f, "en") + "</head>");
   }
-  const acc = pageAccueil(cfg, fr), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark">')) + 10;
-  const versParent = (h) => h.replace(/(href|src)="(?!https?:|#|mailto:|tel:|\.\.\/)([^"]+)"/g, '$1="../$2"').replace(/url\((["']?)assets\//g, "url($1../assets/");
-  const haut = versParent(acc.slice(i0, i1).replace("{{LANG}}", ""));
-  out["essai/index.html"] = pageEssai(cfg, fr, { haut, cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}", avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) });
+  out["essai/index.html"] = accueilEssai(cfg, fr, true);
   out["llms.txt"] = llmsTxt(cfg);
   return out;
 }
