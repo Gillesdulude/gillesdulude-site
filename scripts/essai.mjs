@@ -181,7 +181,7 @@ ${haut}
     <p>Une propriété familiale, un premier achat ou un immeuble à revenus : la même rigueur, adaptée à votre projet.</p>
   </div>
   <div class="services">
-    <a href="../vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>La Méthode V8 : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="../vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>La Méthode 8V : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.</p><span class="voir">Voir <span class="mono">→</span></span></a>
     <a href="../acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>Je visite avec vous en ancien entrepreneur : structure, travaux à prévoir, vrai potentiel.</p><span class="voir">Voir <span class="mono">→</span></span></a>
     <a href="../investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Duplex, triplex, plex : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
   </div>
