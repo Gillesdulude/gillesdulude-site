@@ -793,9 +793,9 @@ function pageAPropos(cfg) {
   <p class="over">Mes engagements</p>
   <h2 style="margin-bottom:32px">Ce que vous pouvez <em>attendre de moi.</em></h2>
   <div class="steps3">
-    <div><h3>La vérité</h3><p>Même quand elle est moins agréable à entendre.</p></div>
-    <div><h3>La disponibilité</h3><p>Une vraie disponibilité, 7 jours sur 7.</p></div>
-    <div><h3>L'implication</h3><p>C'est moi qui m'occupe de votre dossier, du début à la fin.</p></div>
+    <div><h3>L'honnêteté</h3><p>Je vous dis la vérité, même quand elle est moins agréable à entendre.</p></div>
+    <div><h3>L'intégrité</h3><p>Vos intérêts passent en premier. Je fais ce que je dis, et je dis ce que je fais.</p></div>
+    <div><h3>La performance</h3><p>Je livre la marchandise, coûte que coûte. Votre résultat, c'est ma priorité.</p></div>
   </div>
 </div></section>
 
