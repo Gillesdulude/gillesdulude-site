@@ -720,7 +720,7 @@ const FAQ = {
     ["L'inspection est-elle obligatoire?", "Non, mais je la recommande toujours. Pendant les visites, mon expérience en construction m'aide à remarquer des points qui méritent votre attention. Je reste toutefois votre courtier, pas un inspecteur : c'est l'inspecteur en bâtiment qui examine la propriété en détail et vous fait un rapport complet."],
   ],
   investir: () => [
-    ["Combien de mise de fonds pour un plex?", "Si vous habitez un des logements : 5 % pour un duplex (10 % sur la portion au-delà de 500 000 $), 10 % pour un triplex ou un quadruplex. Si vous n'y habitez pas : 20 %. À partir de 5 logements, c'est un financement commercial, avec d'autres règles."],
+    ["Combien de mise de fonds pour un multilogement?", "À partir de 5 logements, c'est un financement commercial : le prêteur regarde surtout la rentabilité de l'immeuble et sa valeur économique. La mise de fonds varie selon le prêteur et le type de prêt. Mon équipe hypothécaire peut vous donner l'heure juste pour votre projet."],
     ["Qu'est-ce qu'un bon MRB?", "Il n'y a pas de chiffre magique. Un MRB se compare à celui des immeubles semblables vendus dans le même secteur, en tenant compte de l'état de l'immeuble et des loyers par rapport au marché."],
     ["Les locataires restent-ils quand j'achète?", "Oui. Les baux suivent l'immeuble : les locataires restent, aux mêmes conditions. C'est pourquoi on lit chaque bail avant de faire une offre."],
     ["Est-ce le bon moment pour investir?", "Ça dépend moins du marché que de l'immeuble et de votre plan. Les chiffres du mois sont sur la page Marché, et on peut analyser un immeuble précis ensemble."],
@@ -962,7 +962,7 @@ function pageAcheter(cfg) {
   <div><a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir avec moi</h3><p>Ce que j'analyse avant chaque offre, les chiffres que je regarde et le calculateur de rendement.</p><span class="go">Voir la page Investir →</span></a></div>
 </div></section>
 
-${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un plex</a></div></div></section>` : ""}
+${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un multilogement</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
@@ -970,9 +970,9 @@ ${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous che
 
 function pageInvestir(cfg) {
   const faq = FAQ.investir(cfg);
-  return head(cfg, "Investir dans un plex sur la Rive-Sud | Gilles Jr. Dulude", "Acheter ou vendre un duplex, triplex ou plex sur la Rive-Sud. Analyse des revenus, des baux et de l'état de l'immeuble par un courtier ancien entrepreneur.", faqLd(faq)) +
+  return head(cfg, "Investir en multilogement sur la Rive-Sud | Gilles Jr. Dulude", "Acheter ou vendre un immeuble de 5 logements et plus sur la Rive-Sud. Analyse des revenus, des dépenses, des baux et de l'état de l'immeuble avec un courtier immobilier résidentiel et commercial.", faqLd(faq)) +
     header(cfg, "investir.html") +
-    pageHero("Investir", "Un plex, <em>ça se calcule.</em>", "Duplex, triplex et multilogements : on vérifie que les chiffres tiennent avant que vous signiez.") + `
+    pageHero("Investir", "Un multilogement, <em>ça se calcule.</em>", "Immeubles de 5 logements et plus : on vérifie que les chiffres tiennent avant que vous signiez.") + `
 <section><div class="wrap">
   <p class="over">Avant chaque offre</p>
   <h2 style="margin-bottom:8px">Ce que je vérifie <em>pour vous.</em></h2>
@@ -980,7 +980,7 @@ function pageInvestir(cfg) {
     <div><b>01</b><h3>Les revenus</h3><p>Je compare chaque loyer au bail signé et aux loyers du secteur. Un loyer bas, c'est du potentiel. Un loyer gonflé, c'est un risque.</p></div>
     <div><b>02</b><h3>Les dépenses</h3><p>Taxes, assurances, chauffage, entretien, logements vacants. Toutes les dépenses, pas seulement celles qu'on vous montre.</p></div>
     <div><b>03</b><h3>Le bâtiment</h3><p>Toiture, fondation, électricité, plomberie, fenêtres. Grâce à mon expérience en construction, je repère les points à faire examiner par l'inspecteur et les experts, pour que vous sachiez à quoi vous attendre avant de vous engager.</p></div>
-    <div><b>04</b><h3>Le financement</h3><p>Le financement varie selon le type d'investissement. Pour un duplex ou un triplex, que vous l'habitiez ou non, le calcul n'est pas le même que pour un immeuble de 5 logements et plus, financé selon sa rentabilité et la valeur économique établie par le prêteur. Je vérifie que votre projet tient la route, et mon équipe hypothécaire vous accompagne pour le montage du prêt.</p></div>
+    <div><b>04</b><h3>Le financement</h3><p>Un immeuble de 5 logements et plus se finance selon sa rentabilité et la valeur économique établie par le prêteur, pas seulement selon votre revenu. Je vérifie que les chiffres tiennent, et mon équipe hypothécaire vous accompagne pour le montage du prêt.</p></div>
   </div>
 </div></section>
 
@@ -993,19 +993,19 @@ function pageInvestir(cfg) {
     <div><b>Cashflow</b><span>Ce qui reste chaque mois une fois les dépenses et l'hypothèque payées. Positif, l'immeuble se paie seul.</span></div>
     <div><b>Prix par porte</b><span>Le prix divisé par le nombre de logements. Utile pour comparer rapidement des immeubles du même secteur.</span></div>
   </div>
-  <div class="btns" style="margin-top:28px"><a class="btn" href="#calculateur">Calculer le rendement d'un plex</a><a class="btn ghost" href="marche.html">Voir les chiffres du mois</a></div>
+  <div class="btns" style="margin-top:28px"><a class="btn" href="#calculateur">Calculer le rendement d'un multilogement</a><a class="btn ghost" href="marche.html">Voir les chiffres du mois</a></div>
 </div></section>
 
 <section id="calculateur"><div class="wrap">
   <p class="over">Calculateur</p>
-  <h2>Calculez le rendement <em>d'un plex.</em></h2>
+  <h2>Calculez le rendement <em>d'un multilogement.</em></h2>
   <p class="lead">Entrez les chiffres de l'immeuble. Le calcul est fait sur votre écran, rien n'est envoyé.</p>
   <div class="calc">
     <form class="form" id="calc" onsubmit="return false">
-      <div class="row"><label>Prix de l'immeuble ($)<input name="prix" type="number" inputmode="numeric" value="775000" min="0" step="1000"></label>
-      <label>Loyers par mois, tous les logements ($)<input name="loyers" type="number" inputmode="numeric" value="4200" min="0" step="50"></label></div>
-      <div class="row"><label>Dépenses par année ($)<input name="depenses" type="number" inputmode="numeric" value="12000" min="0" step="100"></label>
-      <label>Mise de fonds (%)<input name="mdf" type="number" inputmode="decimal" value="20" min="0" max="100" step="1"></label></div>
+      <div class="row"><label>Prix de l'immeuble ($)<input name="prix" type="number" inputmode="numeric" value="1450000" min="0" step="1000"></label>
+      <label>Loyers par mois, tous les logements ($)<input name="loyers" type="number" inputmode="numeric" value="10500" min="0" step="50"></label></div>
+      <div class="row"><label>Dépenses par année ($)<input name="depenses" type="number" inputmode="numeric" value="40000" min="0" step="100"></label>
+      <label>Mise de fonds (%)<input name="mdf" type="number" inputmode="decimal" value="25" min="0" max="100" step="1"></label></div>
       <div class="row"><label>Taux hypothécaire (%)<input name="taux" type="number" inputmode="decimal" value="4.5" min="0" step="0.05"></label>
       <label>Amortissement (années)<select name="amort"><option>25</option><option selected>30</option><option>40</option></select></label></div>
       <p class="note" style="margin:0">Dépenses : taxes municipales et scolaires, assurances, électricité et chauffage payés par le propriétaire, entretien, vacance.</p>
@@ -1281,7 +1281,7 @@ ${PRIX.map(([n, y]) => `- ${n} (${y})`).join("\n")}
 - [À propos](a-propos.html)
 - [Vendre](vendre.html)
 - [Acheter](acheter.html)
-- [Investir dans un plex](investir.html)
+- [Investir en multilogement](investir.html)
 - [Marché immobilier de la Rive-Sud](marche.html)
 - [Propriétés à vendre](proprietes.html)
 - [Contact](contact.html)
@@ -1313,7 +1313,7 @@ function marcheStats(cfg) {
 
 function pageMarche(cfg) {
   const m = cfg.marche || {};
-  return head(cfg, "Marché immobilier Rive-Sud | Gilles Jr. Dulude", `Statistiques du marché immobilier de la ${m.region || "Rive-Sud"} (${m.mois || ""}) et calculateur de rendement pour plex.`) +
+  return head(cfg, "Marché immobilier Rive-Sud | Gilles Jr. Dulude", `Statistiques du marché immobilier de la ${m.region || "Rive-Sud"} (${m.mois || ""}) et calculateur de rendement pour multilogement.`) +
     header(cfg, "marche.html") +
     pageHero("Marché", "Le marché <em>en chiffres.</em>", `${m.region || "Rive-Sud de Montréal"}, ${(m.moisTitre || m.mois || "").toLowerCase()}. Pour savoir quand acheter, vendre ou investir.`) + `
 <section><div class="wrap">
