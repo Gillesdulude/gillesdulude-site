@@ -1291,7 +1291,10 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
       .replace("{{LANG}}", `<a class="lang" href="../${f}" hreflang="fr" lang="fr" aria-label="Version française">FR</a>`)
       .replace("</head>", alt(f, "en") + "</head>");
   }
-  out["essai/index.html"] = pageEssai(cfg, fr, { avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) });
+  const acc = pageAccueil(cfg, fr), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark">')) + 10;
+  const versParent = (h) => h.replace(/(href|src)="(?!https?:|#|mailto:|tel:|\.\.\/)([^"]+)"/g, '$1="../$2"').replace(/url\((["']?)assets\//g, "url($1../assets/");
+  const haut = versParent(acc.slice(i0, i1).replace("{{LANG}}", ""));
+  out["essai/index.html"] = pageEssai(cfg, fr, { haut, cssAncien: versParent(CSS), avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) });
   out["llms.txt"] = llmsTxt(cfg);
   return out;
 }
