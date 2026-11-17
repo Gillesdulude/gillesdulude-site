@@ -201,7 +201,7 @@ export const T = {
   "Plus récentes": "Newest", "Prix décroissant": "Price, high to low", "Prix croissant": "Price, low to high",
   "Vous ne trouvez pas ce que vous cherchez ?": "Can’t find what you’re looking for?",
   "Je peux vous aviser dès qu'une propriété correspondant à vos critères arrive sur le marché.": "I can let you know as soon as a property matching your criteria comes on the market.",
-  "Me faire aviser": "Notify me",
+  "Avisez-moi": "Notify me",
   "Les inscriptions en vigueur de Gilles Jr. Dulude, courtier immobilier : maisons, condos, plex et terrains sur la Rive-Sud de Montréal.": "Current listings from Gilles Jr. Dulude, real estate broker: houses, condos, plexes and land on Montreal’s South Shore.",
   "Filtrer par type": "Filter by type", "Trier": "Sort", "Fiche de la propriété": "Property details",
 
@@ -334,3 +334,39 @@ export function traduireMarche(m) {
   if (!m) return m;
   return { ...m, lecture: m.lectureEn || m.lecture, mois: m.mois, source: m.source };
 }
+
+// ---------- Page d'accueil (nouveau style) ----------
+Object.assign(T, {
+  "Services": "Services", "Trois façons": "Three ways", "de bâtir.": "to build.",
+  "Une propriété familiale, un premier achat ou un immeuble à revenus : la même rigueur, adaptée à votre projet.": "A family home, a first purchase or an income property: the same rigour, adapted to your project.",
+  "La Méthode 8V : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.": "The 8V Method: the right price, smart staging and tight negotiation all the way to the notary.",
+  "Voir": "See",
+  "Je visite avec vous en ancien entrepreneur : structure, travaux à prévoir, vrai potentiel.": "I visit with you as a former contractor: structure, upcoming work, real potential.",
+  "Duplex, triplex, plex : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.": "Duplex, triplex, plex: income, leases, expenses and building condition, checked before the offer.",
+  "Fiche technique": "Spec sheet", "Le marché,": "The market,",
+  "Les chiffres de la Rive-Sud, sans détour. Pour savoir quand acheter, vendre ou investir.": "South Shore numbers, straight up. To know when to buy, sell or invest.",
+  "Prix médian · unifamiliale": "Median price · single-family", "Prix médian · copropriété": "Median price · condo", "Prix médian · plex 2 à 5 logements": "Median price · 2 to 5 unit plex",
+  "Délai de vente · unifamiliale": "Time to sell · single-family", "Délai de vente · copropriété": "Time to sell · condo", "Délai de vente · plex": "Time to sell · plex",
+  "Inscriptions": "Listings", "À vendre": "For sale", "en ce moment.": "right now.",
+  "Toutes les propriétés": "All properties", "Le courtier": "The broker",
+  "J'ai passé dix ans sur les chantiers avant l'immobilier.": "I spent ten years on construction sites before real estate.",
+  "Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente. Je suis direct et transparent : mon rôle, c'est de protéger mes clients et de les aider à prendre les bonnes décisions.": "I see what gives a property its value, and what can hurt its sale. I am direct and transparent: my role is to protect my clients and help them make the right decisions.",
+  "Courtier résidentiel et commercial chez Royal LePage Distinction, en français comme en anglais.": "Residential and commercial broker at Royal LePage Distinction, in French and in English.",
+  "Rubis Royal LePage": "Royal LePage Ruby", "Top 5 % national Royal LePage": "Royal LePage National Top 5%", "Prix Diamant rouge Royal LePage": "Royal LePage Red Diamond Award",
+  "Attestation Diamant Royal LePage": "Royal LePage Diamond Certificate", "Attestation Platine de directeur Royal LePage": "Royal LePage Director's Platinum Certificate", "Palme d'or du président Royal LePage": "Royal LePage President's Gold Award",
+  "Ce qu'en disent": "What clients", "les clients.": "are saying.",
+  "Des avis vérifiés, laissés par de vrais clients sur Google.": "Verified reviews, left by real clients on Google.",
+  "Prochaine étape": "Next step", "Parlons de": "Let’s talk about", "votre projet.": "your project.",
+  "Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.": "Residential and commercial real estate broker. Montreal South Shore.",
+  "Navigation": "Navigation", "Me joindre": "Reach me", "Agence": "Agency", "Agence immobilière": "Real estate agency",
+  "Téléphone": "Phone", "Courriel": "Email", "Politique de confidentialité": "Privacy policy",
+});
+const MOIS_EN = { janvier: "January", février: "February", mars: "March", avril: "April", mai: "May", juin: "June", juillet: "July", août: "August", septembre: "September", octobre: "October", novembre: "November", décembre: "December" };
+R.push(
+  [/^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})\.$/, (m, a, b) => `${MOIS_EN[a]} ${b}.`],
+  [/^Source : APCIQ par le système Centris, statistiques mensuelles de (\S+) (\d{4})\. Rive-Sud de Montréal\.$/, (m, a, b) => `Source: QPAREB through the Centris system, monthly statistics for ${MOIS_EN[a] || a} ${b}. Montreal South Shore.`],
+  [/^(\d+) propriétés? inscrites? par Gilles sur la Rive-Sud et ailleurs au Québec\.$/, (m, n) => `${n} ${n > 1 ? "properties" : "property"} listed by Gilles on the South Shore and elsewhere in Quebec.`],
+  [/^© (\d{4}) Gilles Jr\. Dulude, courtier immobilier$/, (m, y) => `© ${y} Gilles Jr. Dulude, real estate broker`],
+  [/^([+-]?\d+) % \/ an$/, (m, a) => `${a}% / yr`],
+  [/^([+-]?\d+) j \/ an$/, (m, a) => `${a} days / yr`],
+);
