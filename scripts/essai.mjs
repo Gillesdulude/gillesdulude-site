@@ -224,6 +224,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
     <p>Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente. Je suis direct et transparent : mon rôle, c'est de protéger mes clients et de les aider à prendre les bonnes décisions.</p>
     <p>Avant de devenir courtier, j'ai été menuisier, puis entrepreneur général en construction neuve et en rénovation. J'ai aussi mené plusieurs projets d'optimisation et de flip de propriétés.</p>
+    <p>Je suis moi-même investisseur immobilier : je connais la réalité des propriétaires et des investisseurs de l'intérieur.</p>
     <p>Courtier résidentiel et commercial chez Royal LePage Distinction, en français comme en anglais.</p>
     <div class="distinctions">${prixRLP.map(([n, a]) => `<div><span>${esc(n)}</span><span class="mono">${esc(a)}</span></div>`).join("")}</div>
   </div>
