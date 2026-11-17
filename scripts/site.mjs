@@ -226,7 +226,7 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .prose ul{padding-left:20px}
 .prose li{margin:6px 0}
 .prose a{color:inherit}
-.etoiles{color:#E3A33B;letter-spacing:2px}
+.etoiles{color:var(--nb);letter-spacing:2px}
 .avis-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
 .note-g{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.note-g b{font-size:34px;line-height:1}.note-g span:last-child{color:var(--ch);font-size:14px}
 .avis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
@@ -377,6 +377,18 @@ dialog#dlg{overflow:auto}
 .mlslink:hover{background:var(--warm)}
 #dlg .close{position:sticky;top:10px;float:right;margin:10px 12px -50px 0;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 @media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:1fr;padding:22px 20px}}
+
+/* Style épuré (comme la page d'essai) : coins carrés, blanc seulement, lignes fines */
+:root{--r:0;--warm:#FFFFFF;--be:#FFFFFF;--bc:#FFFFFF}
+*,*::before,*::after{border-radius:0!important}
+.btn{padding:17px 28px;font-size:13px;letter-spacing:.14em}
+section.beige,section[style*="warm"]{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.beige+section,section[style*=warm]+section{border-top:0}
+.prix div,.quote,.follow,.lecture,.cta-warm,.pcta,.ok,.tags span,.tile .ic{border:1px solid var(--line)}
+.hero.light .photo .arch{background:#F2F2F2;box-shadow:none}
+.mlslink:hover{background:#F2F2F2}
+.tile:hover{transform:none;box-shadow:none;border-color:var(--nb)}
+.apercu{border-bottom:1px solid var(--line)}
 `;
 
 
