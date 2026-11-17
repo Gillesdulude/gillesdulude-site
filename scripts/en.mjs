@@ -356,6 +356,7 @@ Object.assign(T, {
   "Attestation Diamant Royal LePage": "Royal LePage Diamond Certificate", "Attestation Platine de directeur Royal LePage": "Royal LePage Director's Platinum Certificate", "Palme d'or du président Royal LePage": "Royal LePage President's Gold Award",
   "Ce qu'en disent": "What clients", "les clients.": "are saying.",
   "Des avis vérifiés, laissés par de vrais clients sur Google.": "Verified reviews, left by real clients on Google.",
+  "Avant de devenir courtier, j'ai été menuisier, puis entrepreneur général en construction neuve et en rénovation. J'ai aussi mené plusieurs projets d'optimisation et de flip de propriétés.": "Before becoming a broker, I was a carpenter, then a general contractor in new construction and renovation. I have also led several property optimization and flip projects.",
   "Prochaine étape": "Next step", "Parlons de": "Let’s talk about", "votre projet.": "your project.",
   "Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.": "Residential and commercial real estate broker. Montreal South Shore.",
   "Navigation": "Navigation", "Me joindre": "Reach me", "Agence": "Agency", "Agence immobilière": "Real estate agency",
