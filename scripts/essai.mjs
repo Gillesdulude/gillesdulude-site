@@ -34,7 +34,7 @@ export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", r
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ${tete || `<meta name="robots" content="noindex, nofollow">
-<title>Essai | Gilles Jr. Dulude, courtier immobilier</title>
+<title>Essai | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</title>
 <link rel="icon" href="${P}assets/favicon.png">`}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gantari:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
@@ -251,7 +251,7 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
     <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul></div>
     <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>Agence immobilière</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
   </div>
-  <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
+  <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
 </footer>
 </div>
 
