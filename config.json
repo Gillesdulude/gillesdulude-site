@@ -88,5 +88,17 @@
     "lectureEn": "Good news for buyers: there are 32% more properties for sale than a year ago, which means more choice and more time to negotiate well. For sellers, a well-prepared, well-priced property stands out even more. And plexes remain in high demand: their sales jumped 26%.",
     "majLe": "2026-11-06"
   },
-  "evaluationForm": "E73HlqxdKjS9aeU3KkQC"
+  "evaluationForm": "E73HlqxdKjS9aeU3KkQC",
+  "videos": {
+    "16781318": {
+      "video": "/assets/videos/bonnier.mp4",
+      "boucle": "/assets/videos/bonnier-boucle.mp4",
+      "affiche": "/assets/videos/bonnier.jpg"
+    },
+    "14567290": {
+      "video": "/assets/videos/compton.mp4",
+      "boucle": "/assets/videos/compton-boucle.mp4",
+      "affiche": "/assets/videos/compton.jpg"
+    }
+  }
 }
