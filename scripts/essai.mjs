@@ -15,7 +15,7 @@ const FACADE = {
 // Ligne d'horizon de plex et de maisons, pour le bas de page.
 const HORIZON = `<svg class="horizon" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 119 H40 V70 H130 V119 H150 L195 78 L240 119 H260 V52 H360 V119 H380 V84 H450 V60 L490 32 L530 60 V119 H560 V44 H650 V119 H670 L720 74 L770 119 H790 V66 H880 V119 H900 V58 L950 26 L1000 58 V119 H1020 V48 H1110 V119 H1130 L1165 88 L1200 119"/><path d="M285 64 h14 v14 h-14z M321 64 h14 v14 h-14z M285 92 h14 v14 h-14z M321 92 h14 v14 h-14z M585 56 h14 v14 h-14z M611 56 h14 v14 h-14z M585 86 h14 v14 h-14z M611 86 h14 v14 h-14z M1045 60 h14 v14 h-14z M1071 60 h14 v14 h-14z M1045 90 h14 v14 h-14z M1071 90 h14 v14 h-14z"/></svg>`;
 
-export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", P = "../", tete = "", essai = true } = {}) {
+export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", boucles = "", P = "../", tete = "", essai = true } = {}) {
   const c = cfg.courtier, m = cfg.marche || {};
   const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
   const actives = listings.filter((l) => !l.vendu).slice(0, 3);
@@ -172,6 +172,8 @@ section{position:relative}
 .e .gilles .distinctions div{border-color:rgba(19,15,12,.22)}
 .e .gilles .distinctions .mono{color:#2A2622}
 .e .fiche .ligne{border-color:rgba(249,246,244,.18)}
+
+.e .prop video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;z-index:0}.e .prop video.boucle.joue{opacity:1}.e .prop .vidtag{position:absolute;top:18px;right:18px;z-index:2;background:rgba(19,15,12,.8);color:#F9F6F4;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 10px}
 </style>
 </head>
 <body>
@@ -212,7 +214,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 </div>
   <div class="props">
     ${actives.map((l) => `<a class="prop" href="${P}proprietes.html#${esc(l.id)}">
-      ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}
+      ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}${l.boucle ? `<video class="boucle" muted loop playsinline preload="none" src="${esc(l.boucle)}"></video><span class="vidtag">▶ Vidéo</span>` : ""}
       <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span></div></a>`).join("")}
   </div>
   <div class="wrap"><div class="tout"><a href="${P}proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
@@ -254,6 +256,7 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
   </div>
   <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
 </footer>
+${boucles}
 </div>
 
 
