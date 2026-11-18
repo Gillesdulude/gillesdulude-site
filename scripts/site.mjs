@@ -146,6 +146,15 @@ section.portrait p{color:#2A2622}
 
 .dark .equipe{border-top-color:rgba(249,246,244,.6)}.dark .equipe div{border-color:rgba(249,246,244,.18)}.dark .equipe p{color:rgba(249,246,244,.72)}.dark .equipe h3{color:#F9F6F4}
 .hero.light.small+section.portrait{padding-top:0!important}
+
+/* Fenêtre de propriété : ne jamais dépasser l'écran visible (cellulaire) */
+dialog{max-height:94vh;max-height:calc(100dvh - 24px)}
+/* Vidéos des propriétés */
+.ph video.boucle,.prop video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;z-index:1;pointer-events:none}
+.ph video.boucle.joue,.prop video.boucle.joue{opacity:1}
+.badge.vid{left:auto;right:14px;top:14px;background:rgba(19,15,12,.8);color:#F9F6F4;z-index:2}
+#dlg .gal video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#130F0C;z-index:3}
+#dlg .voirvid{position:absolute;left:16px;bottom:16px;z-index:2;background:#130F0C;color:#F9F6F4;border:0;padding:12px 18px;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 `;
 const CSS = `
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--be:#E3DDCF;--bc:#F9F6F4;--line:rgba(19,15,12,.14);--r:4px}
@@ -620,7 +629,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
 <script src="https://link.avaclient.com/js/form_embed.js" async></script>` : "";
   const y = new Date().getFullYear();
   const chat = cfg.clavardage ? `<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="${esc(cfg.clavardage)}"></script>` : "";
-  return modal + chat + `<footer><div class="wrap">
+  return modal + chat + BOUCLES_JS + `<footer><div class="wrap">
   <div class="g">
     <div>
       <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
@@ -691,6 +700,7 @@ const pageHero = (over, titre, texte) => `<section class="hero small light">
 
 // ---------- Cartes de propriétés ----------
 
+export const BOUCLES_JS = "<script>(()=>{const play=v=>{v.play().then(()=>v.classList.add(\"joue\")).catch(()=>{})},stop=v=>{v.pause();v.classList.remove(\"joue\")};\nconst box=e=>e.target.closest&&e.target.closest(\".card,.prop\");\nif(matchMedia(\"(hover:hover)\").matches){document.addEventListener(\"mouseover\",e=>{const b=box(e),v=b&&b.querySelector(\"video.boucle\");if(v&&!v.classList.contains(\"joue\"))play(v)});\ndocument.addEventListener(\"mouseout\",e=>{const b=box(e),v=b&&b.querySelector(\"video.boucle\");if(v&&!b.contains(e.relatedTarget))stop(v)})}\nelse if(\"IntersectionObserver\"in window){const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.intersectionRatio>.6?play(x.target):stop(x.target)),{threshold:[0,.6]});\nconst scan=()=>document.querySelectorAll(\"video.boucle:not([data-o])\").forEach(v=>{v.dataset.o=1;io.observe(v)});scan();new MutationObserver(scan).observe(document.body,{childList:true,subtree:true})}})();</script>";
 const CARDS_JS = `
 const esc=(s)=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const money=(n)=>n?n.toLocaleString("fr-CA",{maximumFractionDigits:0})+" $":"";
@@ -707,7 +717,7 @@ function facts(l){const f=[];
 function card(l,tag){return '<'+tag+' class="card" '+(tag==="a"?'href="proprietes.html#'+esc(l.id)+'"':'data-id="'+esc(l.id)+'"')+' aria-label="Voir '+esc(l.adresse)+'">'+
  '<div class="ph">'+(l.photos[0]?'<img loading="lazy" src="'+esc(l.photos[0].url)+'" alt="'+esc(l.adresse)+'">':'')+
  '<span class="badge '+(l.vendu?"sold":l.statut!=="Active"?"pending":"")+'">'+esc(l.statutTexte)+'</span>'+(isNew(l)?'<span class="badge new">Nouveauté</span>':'')+
- (l.photos.length>1?'<span class="nphotos">'+l.photos.length+' photos</span>':'')+'</div>'+
+ (l.photos.length>1?'<span class="nphotos">'+l.photos.length+' photos</span>':'')+(l.boucle?'<video class="boucle" muted loop playsinline preload="none" src="'+esc(l.boucle)+'"></video><span class="badge vid">▶ Vidéo</span>':'')+'</div>'+
  '<div class="body"><div class="price">'+priceOf(l)+'</div><div class="addr">'+esc(l.adresse)+'</div><div class="city">'+esc(l.ville)+'</div>'+
  (facts(l)?'<div class="facts">'+facts(l)+'</div>':'')+'<div class="ptype">'+esc(kind(l))+'</div></div></'+tag+'>'}
 `;
@@ -1102,7 +1112,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  const sujet=encodeURIComponent("Propriété "+cur.adresse+", "+cur.ville+" (MLS "+cur.id+")");
  dlg.innerHTML='<button class="close" aria-label="Fermer">×</button><div class="dlg"><div class="gal"><img id="gimg" alt="">'+
  (cur.photos.length>1?'<button class="nav prev" aria-label="Photo précédente">‹</button><button class="nav next" aria-label="Photo suivante">›</button>':'')+
- '<div class="idx" id="gidx"></div></div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
+ '<div class="idx" id="gidx"></div>'+(cur.video?'<button class="voirvid" type="button">▶ Voir la vidéo</button>':'')+'</div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
  '<div class="price">'+priceOf(cur)+'</div><div class="addr">'+esc(cur.adresse)+'</div><div class="city">'+esc([cur.ville,cur.codePostal].filter(Boolean).join(", "))+'</div>'+
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
  '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+(cur.vendu?'<div class="pcta"><strong>Cette propriété est vendue.</strong><span class="note">Vous pensez vendre une propriété semblable? Je vous dis combien elle vaut, sans engagement.</span><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="vendre.html#evaluation">Évaluation gratuite</a><a class="btn ghost" href="contact.html">Me joindre</a></div></div>':'')+
@@ -1115,7 +1125,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  (courtier.telephone?'<a class="btn ghost" href="tel:'+courtier.telephone.replace(/[^0-9+]/g,"")+'">'+esc(courtier.telephone)+'</a>':'')+
  (cur.visiteVirtuelle?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(cur.visiteVirtuelle)+'">Visite virtuelle</a>':'')+
  '</div></div></div></div></div>';
- showPhoto();dlg.querySelector(".close").onclick=()=>dlg.close();
+ showPhoto();dlg.querySelector(".close").onclick=()=>{stopVid();dlg.close()};dlg.querySelector(".voirvid")?.addEventListener("click",playVid);
  if(cur.vendu){const x=dlg.querySelector("#docs");if(x){x.remove();const y=dlg.querySelector(".side .pcta[style]");if(y)y.remove()}}
  dlg.querySelector("#docs")&&dlg.querySelector("#docs").addEventListener("submit",async e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
   const payload={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone||"",mls:cur.id,tag:"mls: "+cur.id,adresse:cur.adresse+", "+cur.ville,source:"site web gillesdulude.com",demande:"documents",consentement:true};
@@ -1127,7 +1137,9 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  dlg.querySelector(".prev")?.addEventListener("click",()=>step(-1));
  document.getElementById("thumbs")?.addEventListener("click",e=>{const t=e.target.closest("img[data-i]");if(t){pi=+t.dataset.i;showPhoto()}});dlg.querySelector(".next")?.addEventListener("click",()=>step(1));
  if(!dlg.open)dlg.showModal();history.replaceState(null,"","#"+encodeURIComponent(cur.id))}
-function showPhoto(){const p=cur.photos[pi],img=$("#gimg");if(p){img.src=p.url;img.alt=p.legende||cur.adresse}
+function stopVid(){const v=dlg.querySelector(".gal video");if(v){v.pause();v.remove()}}
+function playVid(){stopVid();const g=dlg.querySelector(".gal"),v=document.createElement("video");v.src=cur.video;v.controls=true;v.autoplay=true;v.playsInline=true;if(cur.affiche)v.poster=cur.affiche;g.appendChild(v);v.play().catch(()=>{})}
+function showPhoto(){stopVid();const p=cur.photos[pi],img=$("#gimg");if(p){img.src=p.url;img.alt=p.legende||cur.adresse}
  const th=document.getElementById("thumbs");if(th){th.querySelectorAll("img").forEach((t,i)=>t.classList.toggle("on",i===pi));const a=th.children[pi];if(a)a.scrollIntoView({block:"nearest",inline:"center"})}$("#gidx").textContent=cur.photos.length?(pi+1)+" / "+cur.photos.length:""}
 function step(d){if(!cur.photos.length)return;pi=(pi+d+cur.photos.length)%cur.photos.length;showPhoto()}
 $("#grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(c)open(c.dataset.id)});
@@ -1378,7 +1390,7 @@ ${jsonLd(cfg)}
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
   const haut = acc.slice(i0, i1);
-  const opts = { avisUrl: AVIS_URL, avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
+  const opts = { boucles: BOUCLES_JS, avisUrl: AVIS_URL, avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
   if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
   return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + ".hero .btn{border-radius:0}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
 }
@@ -1438,6 +1450,8 @@ function versionAnglaise(l) {
 }
 
 export function renderSite(cfg, listings, { apercu = "" } = {}) {
+  // Vidéos ajoutées à la main pour certaines propriétés (config.videos, par numéro MLS)
+  listings = listings.map((l) => (cfg.videos && cfg.videos[l.id] ? { ...l, ...cfg.videos[l.id] } : l));
   // Le mois affiché dans les titres suit la date de la dernière mise à jour des chiffres
   if (cfg.marche) { const d = new Date((cfg.marche.majLe || "") + "T12:00:00"); cfg = { ...cfg, marche: { ...cfg.marche, moisTitre: isNaN(d) ? cfg.marche.mois : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"][d.getMonth()] + " " + d.getFullYear() } }; }
   const fr = listings.map((l) => { const x = { ...l }; delete x.en; return x; });
