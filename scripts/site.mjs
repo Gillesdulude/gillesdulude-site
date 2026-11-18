@@ -575,7 +575,11 @@ function head(cfg, title, desc, extra = "") {
 <meta property="og:site_name" content="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="assets/gilles-apropos.jpg">
+<meta property="og:image" content="https://gillesdulude.com/assets/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gillesdulude.com/assets/partage.jpg">
 ${jsonLd(cfg)}${extra}
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -1385,7 +1389,11 @@ function accueilEssai(cfg, listings, essai = false) {
 <meta property="og:site_name" content="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
 <meta property="og:title" content="${esc(titre)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="assets/gilles-apropos.jpg">
+<meta property="og:image" content="https://gillesdulude.com/assets/partage.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gillesdulude.com/assets/partage.jpg">
 ${jsonLd(cfg)}
 <link rel="icon" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
