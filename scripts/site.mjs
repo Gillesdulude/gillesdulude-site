@@ -2,7 +2,7 @@
 // Les inscriptions viennent de build.mjs (déjà filtrées : seulement les fiches en vigueur).
 
 import { T, R, JS } from "./en.mjs";
-import { pageEssai } from "./essai.mjs";
+import { pageEssai, piedDePage, PIED_CSS } from "./essai.mjs";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 // Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
 const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
@@ -23,6 +23,7 @@ const PAGES = [
 ];
 
 const CSS_EPURE = `
+${PIED_CSS}
 /* ===== Style de la page d'essai appliqué à tout le site ===== */
 :root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--r:0;--warm:#B0ADA6;--be:#B0ADA6;--bc:#F9F6F4;--line:rgba(19,15,12,.16)}
 *,*::before,*::after{border-radius:0!important}
@@ -635,23 +636,7 @@ d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
 <script src="https://link.avaclient.com/js/form_embed.js" async></script>` : "";
   const y = new Date().getFullYear();
   const chat = cfg.clavardage ? `<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="${esc(cfg.clavardage)}"></script>` : "";
-  return modal + chat + BOUCLES_JS + ANTI_ROBOT_JS + `<footer><div class="wrap">
-  <div class="g">
-    <div>
-      <img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier résidentiel et commercial">
-      <p>Courtier immobilier résidentiel et commercial, immeubles à revenus.<br>Rive-Sud de Montréal. Français et anglais.</p>
-      <a href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction" style="display:inline-block"><img class="rlp" src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
-    </div>
-    <div><h4>Navigation</h4><ul>${PAGES.map((p) => `<li><a href="${p.file}">${p.nav}</a></li>`).join("")}</ul></div>
-    <div><h4>Me joindre</h4><ul>
-      ${c.telephone ? `<li><a href="${telHref(c.telephone)}">${esc(c.telephone)}</a></li>` : ""}
-      ${c.courriel ? `<li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li>` : ""}
-      <li style="margin-top:10px">${adresseLignes(c)}</li>
-    </ul></div>
-    ${cfg.reseaux ? `<div><h4>Suivez-moi</h4><div class="socs">${socialLinks(cfg)}</div></div>` : ""}
-  </div>
-  <div class="legal"><span>© ${y} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial. ${esc(c.agence)}.</span><span>Les renseignements sur les propriétés sont fournis à titre indicatif et ne sont pas garantis. <a href="confidentialite.html" style="text-decoration:underline">Politique de confidentialité</a></span></div>
-</div></footer>`;
+  return modal + chat + BOUCLES_JS + ANTI_ROBOT_JS + piedDePage(cfg, "", { horizon: true });
 }
 
 const end = `</body></html>`;
