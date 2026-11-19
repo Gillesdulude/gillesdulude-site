@@ -148,11 +148,11 @@ section{position:relative}
 .gilles{background:var(--stone)}
 .e .gilles{padding:0;overflow:hidden}
 .e .gilles .photo{position:absolute;left:0;top:0;bottom:0;width:48%}
-.e .gilles .photo img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
+.e .gilles .photo img{position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;height:auto;max-height:100%;object-fit:cover;object-position:50% 20%;-webkit-mask-image:linear-gradient(to right,#000 70%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 80%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,#000 70%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 80%,transparent);mask-composite:intersect}
 .e .gilles .wrap{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:60px;min-height:760px;align-items:center;padding-top:120px;padding-bottom:120px}
 .e .gilles .wrap>div:last-child{grid-column:2}
 .e .gilles blockquote{font-size:clamp(26px,2.8vw,38px);font-weight:500;line-height:1.25;margin:26px 0 34px}
-.e .gilles p{color:#2A2622;margin-bottom:16px;max-width:560px}
+.e .gilles p{color:rgba(249,246,244,.78);margin-bottom:16px;max-width:560px}
 .e .distinctions{margin-top:36px;border-top:1px solid var(--ink)}
 .e .distinctions div{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
 .e .distinctions .mono{color:var(--mut)}
@@ -185,7 +185,7 @@ section{position:relative}
 .e .entete,.e .gilles .wrap{grid-template-columns:1fr;gap:30px}
 .e .services,.e .props,.e .avis{grid-template-columns:1fr}
 .e .gilles .photo{position:relative;width:100%;height:440px}
-.e .gilles .photo img{position:static;height:100%;-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent);-webkit-mask-composite:source-over;mask-image:linear-gradient(to bottom,#000 60%,transparent);mask-composite:add}
+.e .gilles .photo img{position:static;transform:none;max-height:none;width:100%;height:100%;object-fit:cover;object-position:50% 15%;-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent);-webkit-mask-composite:source-over;mask-image:linear-gradient(to bottom,#000 60%,transparent);mask-composite:add}
 .e .gilles .wrap{min-height:0;padding-top:10px;padding-bottom:80px}
 .e .gilles .wrap>div:last-child{grid-column:1}
 .e .services a,.e .services a:first-child{padding:36px 0;margin-left:0;border-right:0;border-bottom:1px solid var(--line)}
@@ -202,9 +202,10 @@ section{position:relative}
 .e footer .bas .wrap{flex-direction:column;gap:6px}
 }
 
-.e .gilles .tag{color:#2A2622}
-.e .gilles .distinctions div{border-color:rgba(19,15,12,.22)}
-.e .gilles .distinctions .mono{color:#2A2622}
+.e .gilles .tag{color:rgba(249,246,244,.6)}
+.e .gilles .distinctions div{border-color:rgba(249,246,244,.16)}
+.e .gilles .distinctions .mono{color:rgba(249,246,244,.6)}
+.e section.gilles{background:#131313;color:#F9F6F4}.e .gilles h2,.e .gilles blockquote{color:#F9F6F4}.e .gilles .distinctions{border-color:rgba(249,246,244,.5)}.e .gilles .over{color:rgba(249,246,244,.6)}.e .gilles .over::after{background:rgba(249,246,244,.4)}
 .e .fiche .ligne{border-color:rgba(249,246,244,.18)}
 
 .e .prop video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;z-index:0}.e .prop video.boucle.joue{opacity:1}.e .prop video.boucle.joue~.vidtag{opacity:0}.e .prop .vidtag{transition:opacity .4s;position:absolute;top:18px;right:18px;z-index:2;background:rgba(19,15,12,.8);color:#F9F6F4;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 10px}
@@ -255,7 +256,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="wrap"><div class="tout"><a href="${P}proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
-<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-portrait.webp" alt="Gilles Jr. Dulude"></div><div class="wrap">
+<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-sourire.webp" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
