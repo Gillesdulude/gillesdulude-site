@@ -26,7 +26,7 @@ export function piedDePage(cfg, P = "", { horizon = false } = {}) {
   return `<footer class="pied">${horizon ? HORIZON : ""}
   <div class="wrap">
     <div><div class="logos"><img src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude"><span class="sep"></span><img src="${P}assets/rlp-mono.png" alt="Royal LePage Distinction"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
-    <div><h4>Navigation</h4><ul><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
+    <div><h4>Navigation</h4><ul><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}blogue.html">Blogue</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
     <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul>${socs ? `<h4 style="margin-top:28px">Suivez-moi</h4><ul>${socs}</ul>` : ""}</div>
     <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
   </div>
