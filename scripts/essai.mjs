@@ -15,7 +15,7 @@ const FACADE = {
 // Ligne d'horizon de plex et de maisons, pour le bas de page.
 const HORIZON = `<svg class="horizon" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 119 H40 V70 H130 V119 H150 L195 78 L240 119 H260 V52 H360 V119 H380 V84 H450 V60 L490 32 L530 60 V119 H560 V44 H650 V119 H670 L720 74 L770 119 H790 V66 H880 V119 H900 V58 L950 26 L1000 58 V119 H1020 V48 H1110 V119 H1130 L1165 88 L1200 119"/><path d="M285 64 h14 v14 h-14z M321 64 h14 v14 h-14z M285 92 h14 v14 h-14z M321 92 h14 v14 h-14z M585 56 h14 v14 h-14z M611 56 h14 v14 h-14z M585 86 h14 v14 h-14z M611 86 h14 v14 h-14z M1045 60 h14 v14 h-14z M1071 60 h14 v14 h-14z M1045 90 h14 v14 h-14z M1071 90 h14 v14 h-14z"/></svg>`;
 
-export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", boucles = "", P = "../", tete = "", essai = true } = {}) {
+export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", boucles = "", chat = "", P = "../", tete = "", essai = true } = {}) {
   const c = cfg.courtier, m = cfg.marche || {};
   const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
   const actives = listings.filter((l) => !l.vendu).slice(0, 3);
@@ -159,7 +159,7 @@ section{position:relative}
 .e .ligne{grid-template-columns:1fr auto;}
 .e .ligne .lab{grid-column:1/-1}
 .e footer .wrap{grid-template-columns:1fr 1fr}
-.e .sec{padding:90px 0}
+.e .sec{padding:90px 0}.e .sec.gilles{padding:0}
 }
 @media (max-width:560px){
 .e .logos .g img{height:24px}
@@ -257,6 +257,7 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
   <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
 </footer>
 ${boucles}
+${chat}
 </div>
 
 
