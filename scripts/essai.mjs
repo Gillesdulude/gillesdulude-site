@@ -114,7 +114,7 @@ section{position:relative}
 .gilles{background:var(--stone)}
 .e .gilles{padding:0;overflow:hidden}
 .e .gilles .photo{position:absolute;left:0;top:0;bottom:0;width:48%}
-.e .gilles .photo img{width:100%;height:100%;object-fit:cover;object-position:center top;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
+.e .gilles .photo img{position:absolute;left:0;bottom:0;width:100%;height:82%;object-fit:cover;object-position:center top;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent),linear-gradient(to bottom,transparent,#000 18%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,#000 55%,transparent),linear-gradient(to bottom,transparent,#000 18%);mask-composite:intersect}
 .e .gilles .wrap{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:60px;min-height:760px;align-items:center;padding-top:120px;padding-bottom:120px}
 .e .gilles .wrap>div:last-child{grid-column:2}
 .e .gilles blockquote{font-size:clamp(26px,2.8vw,38px);font-weight:500;line-height:1.25;margin:26px 0 34px}
@@ -151,7 +151,7 @@ section{position:relative}
 .e .entete,.e .gilles .wrap{grid-template-columns:1fr;gap:30px}
 .e .services,.e .props,.e .avis{grid-template-columns:1fr}
 .e .gilles .photo{position:relative;width:100%;height:440px}
-.e .gilles .photo img{-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent);mask-image:linear-gradient(to bottom,#000 60%,transparent)}
+.e .gilles .photo img{position:static;height:100%;-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent);-webkit-mask-composite:source-over;mask-image:linear-gradient(to bottom,#000 60%,transparent);mask-composite:add}
 .e .gilles .wrap{min-height:0;padding-top:10px;padding-bottom:80px}
 .e .gilles .wrap>div:last-child{grid-column:1}
 .e .services a,.e .services a:first-child{padding:36px 0;border-right:0;border-bottom:1px solid var(--line)}
@@ -220,7 +220,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="wrap"><div class="tout"><a href="${P}proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
-<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-coude.jpg" alt="Gilles Jr. Dulude"></div><div class="wrap">
+<section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-recul.webp" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
