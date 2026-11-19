@@ -15,6 +15,40 @@ const FACADE = {
 // Ligne d'horizon de plex et de maisons, pour le bas de page.
 const HORIZON = `<svg class="horizon" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 119 H40 V70 H130 V119 H150 L195 78 L240 119 H260 V52 H360 V119 H380 V84 H450 V60 L490 32 L530 60 V119 H560 V44 H650 V119 H670 L720 74 L770 119 H790 V66 H880 V119 H900 V58 L950 26 L1000 58 V119 H1020 V48 H1110 V119 H1130 L1165 88 L1200 119"/><path d="M285 64 h14 v14 h-14z M321 64 h14 v14 h-14z M285 92 h14 v14 h-14z M321 92 h14 v14 h-14z M585 56 h14 v14 h-14z M611 56 h14 v14 h-14z M585 86 h14 v14 h-14z M611 86 h14 v14 h-14z M1045 60 h14 v14 h-14z M1071 60 h14 v14 h-14z M1045 90 h14 v14 h-14z M1071 90 h14 v14 h-14z"/></svg>`;
 
+
+const ICO_FB = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5H16l.4-3H13.5V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21h3z"/></svg>';
+const ICO_IG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg>';
+// Pied de page commun à toutes les pages (même look que l'accueil).
+export function piedDePage(cfg, P = "", { horizon = false } = {}) {
+  const c = cfg.courtier, r = cfg.reseaux || {};
+  const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
+  const socs = [r.facebook ? `<li><a class="soc" href="${esc(r.facebook)}" target="_blank" rel="noopener">${ICO_FB}Facebook</a></li>` : "", r.instagram ? `<li><a class="soc" href="${esc(r.instagram)}" target="_blank" rel="noopener">${ICO_IG}Instagram</a></li>` : ""].join("");
+  return `<footer class="pied">${horizon ? HORIZON : ""}
+  <div class="wrap">
+    <div><div class="logos"><img src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude"><span class="sep"></span><img src="${P}assets/rlp-mono.png" alt="Royal LePage Distinction"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
+    <div><h4>Navigation</h4><ul><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
+    <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul>${socs ? `<h4 style="margin-top:28px">Suivez-moi</h4><ul>${socs}</ul>` : ""}</div>
+    <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>Agence immobilière</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
+  </div>
+  <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
+</footer>`;
+}
+export const PIED_CSS = `footer.pied{background:#130F0C;color:rgba(249,246,244,.7);font-size:14px;padding:0}
+footer.pied .horizon{display:block;width:100%;height:120px}
+footer.pied .horizon path{fill:none;stroke:rgba(249,246,244,.3);stroke-width:1.2;vector-effect:non-scaling-stroke}
+footer.pied>.wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-top:60px;padding-bottom:40px;border-top:1px solid rgba(249,246,244,.14)}
+footer.pied a{color:rgba(249,246,244,.7);text-decoration:none}footer.pied a:hover{color:#F9F6F4}
+footer.pied h4{font-family:Gantari,system-ui,sans-serif;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,244,.5);margin:0 0 16px}
+footer.pied ul{margin:0;padding:0}footer.pied li{list-style:none;margin-bottom:8px;padding:0}
+footer.pied .horizon+.wrap{border-top:0}
+footer.pied .logos{display:flex;align-items:center;gap:18px;margin-bottom:22px}footer.pied .logos img{height:26px;width:auto;margin:0}
+footer.pied .logos .sep{width:1px;height:26px;background:rgba(249,246,244,.25)}
+footer.pied .soc{display:inline-flex;align-items:center;gap:10px}
+footer.pied .bas{border-top:1px solid rgba(249,246,244,.14);padding:22px 0;font-size:12px}
+footer.pied .bas .wrap{display:flex;justify-content:space-between;gap:20px}
+@media (max-width:980px){footer.pied>.wrap{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){footer.pied>.wrap{grid-template-columns:1fr}footer.pied .bas .wrap{flex-direction:column;gap:6px}}`;
+
 export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", boucles = "", chat = "", P = "../", tete = "", essai = true } = {}) {
   const c = cfg.courtier, m = cfg.marche || {};
   const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
@@ -174,6 +208,7 @@ section{position:relative}
 .e .fiche .ligne{border-color:rgba(249,246,244,.18)}
 
 .e .prop video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;z-index:0}.e .prop video.boucle.joue{opacity:1}.e .prop video.boucle.joue~.vidtag{opacity:0}.e .prop .vidtag{transition:opacity .4s;position:absolute;top:18px;right:18px;z-index:2;background:rgba(19,15,12,.8);color:#F9F6F4;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 10px}
+${PIED_CSS}
 </style>
 </head>
 <body>
@@ -247,15 +282,7 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
   <div class="btns"><a class="btn plein" href="${esc(rdv)}"${rdvAttrs}>Réserver un appel <span class="fl">→</span></a><a class="btn trait" href="${telHref}">${esc(tel)}</a></div>
 </div>${HORIZON}</section>
 
-<footer>
-  <div class="wrap">
-    <div><div class="logos" style="margin-bottom:22px"><img src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude" style="height:26px;width:auto"><span class="sep" style="height:26px;width:auto"></span><img src="${P}assets/rlp-mono.png" alt="Royal LePage Distinction" style="height:26px;width:auto"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
-    <div><h4>Navigation</h4><ul><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
-    <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul></div>
-    <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>Agence immobilière</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
-  </div>
-  <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
-</footer>
+${piedDePage(cfg, P)}
 ${boucles}
 ${chat}
 </div>
