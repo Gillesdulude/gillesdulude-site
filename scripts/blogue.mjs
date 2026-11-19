@@ -118,3 +118,37 @@ export const TEXTES = [
   ["Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Blog | Gilles Jr. Dulude, residential and commercial real estate broker"],
   ["Conseils immobiliers de Gilles Jr. Dulude, courtier sur la Rive-Sud : vendre, acheter et investir avec l'œil d'un ancien entrepreneur.", "Real estate advice from Gilles Jr. Dulude, South Shore broker: selling, buying and investing with a former contractor’s eye."],
 ];
+
+// Articles du blogue de Royal LePage présentés sur le site : titre, auteur, date et un court résumé
+// écrit par nous. On renvoie toujours vers l'article original, on ne copie pas leur texte.
+// [catégorie fr, en], [titre fr, en], auteur, date, [résumé fr, en], lien
+export const ARTICLES_RLP = [
+  [["Tendances immobilières", "Market trends"], ["Le marché immobilier canadien demeure stable en octobre, alors que les ventes et les inscriptions progressent légèrement", "Canada’s housing market holds steady in October as sales and listings edge up"], "Michelle McNally", "2026-11-17",
+    ["Les ventes et les nouvelles inscriptions ont un peu augmenté au pays en octobre, et les prix ont très peu bougé. L'offre et la demande restent en équilibre à l'approche de l'hiver.", "Sales and new listings rose slightly across Canada in October, and prices barely moved. Supply and demand remain balanced heading into winter."],
+    "https://blogue.royallepage.ca/rapport-aci-mensuel-marche-de-lhabitation-octobre-2026/"],
+  [["Rénovations", "Renovations"], ["Des moyens simples de réduire votre facture de chauffage cet hiver", "Simple ways to lower your heating bill this winter"], "Michelle McNally", "2026-11-13",
+    ["Baisser le thermostat la nuit, bloquer les courants d'air et changer le filtre de la fournaise : de petits gestes qui font économiser sans gros travaux.", "Lowering the thermostat at night, blocking drafts and changing the furnace filter: small habits that save money without major work."],
+    "https://blogue.royallepage.ca/des-moyens-simples-de-reduire-votre-facture-de-chauffage-cet-hiver/"],
+  [["Propriétés récréatives", "Recreational properties"], ["Conseils de sécurité pour le chalet en hiver : ce que tout propriétaire devrait savoir", "Winter cottage safety tips every owner should know"], "Michelle McNally", "2026-11-10",
+    ["Route, chauffage, monoxyde de carbone, glace sur le lac et pannes de courant : les précautions à prendre avant de profiter du chalet l'hiver.", "Roads, heating, carbon monoxide, lake ice and power outages: the precautions to take before enjoying the cottage in winter."],
+    "https://blogue.royallepage.ca/conseils-de-securite-pour-le-chalet-en-hiver-ce-que-tout-proprietaire-devrait-savoir/"],
+  [["Acheter et vendre", "Buying and selling"], ["Acheter un condo au Québec : ce qu'il faut savoir sur le syndicat et le fonds de prévoyance", "Buying a condo in Quebec: what to know about the syndicate and the contingency fund"], "Valérie Coveney", "2026-11-03",
+    ["Avant d'acheter un condo, il faut regarder comment l'immeuble est géré et si le fonds de prévoyance peut couvrir les gros travaux. L'article explique les documents à consulter, dont l'étude du fonds de prévoyance et le carnet d'entretien.", "Before buying a condo, look at how the building is managed and whether the contingency fund can cover major work. The article explains which documents to review, including the contingency fund study and the maintenance log."],
+    "https://blogue.royallepage.ca/acheter-un-condo-au-quebec-ce-quil-faut-savoir-sur-le-syndicat-et-le-fonds-de-prevoyance/"],
+  [["Entretien", "Maintenance"], ["Préparer votre maison pour la première vague de froid", "Getting your home ready for the first cold snap"], "Michelle McNally", "2026-10-30",
+    ["Protéger les tuyaux, faire entretenir la fournaise, vérifier la toiture et les gouttières : la plupart des préparatifs se font en quelques fins de semaine.", "Protecting pipes, servicing the furnace, checking the roof and gutters: most of the preparation can be done in a few weekends."],
+    "https://blogue.royallepage.ca/preparer-votre-maison-pour-la-premiere-vague-de-froid/"],
+  [["Tendances immobilières", "Market trends"], ["La Banque du Canada relève son taux directeur de 25 points de base alors que les pressions inflationnistes persistent", "The Bank of Canada raises its key rate by 25 basis points as inflation pressures persist"], "Michelle McNally", "2026-10-28",
+    ["Première hausse du taux directeur en plus de trois ans, qui passe à 2,50 %. Les détenteurs d'un prêt hypothécaire à taux variable verront leurs coûts augmenter.", "The first increase of the key rate in more than three years, now at 2.50%. Variable-rate mortgage holders will see their costs go up."],
+    "https://blogue.royallepage.ca/mise-a-jour-de-la-banque-du-canada-octobre-2026/"],
+];
+
+export const TEXTES_RLP = [
+  ["Le blogue <em>immobilier.</em>", "The real estate <em>blog.</em>"],
+  ["Le blogue immobilier.", "The real estate blog."],
+  ["Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété.", "Articles selected from the Royal LePage blog to help you sell, buy and take care of your property."],
+  ["Lire l'article sur Royal LePage", "Read the article on Royal LePage (in French)"],
+  ["Blogue Royal LePage", "Royal LePage blog"],
+  ["Tous les articles sur le blogue de Royal LePage", "All articles on the Royal LePage blog"],
+  ["Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété, présentés par Gilles Jr. Dulude, courtier sur la Rive-Sud.", "Articles selected from the Royal LePage blog to help you sell, buy and take care of your property, presented by Gilles Jr. Dulude, South Shore broker."],
+];
