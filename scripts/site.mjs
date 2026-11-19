@@ -1401,8 +1401,8 @@ ${jsonLd(cfg)}
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
   const haut = acc.slice(i0, i1);
   const opts = { chat: cfg.clavardage ? `<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="${esc(cfg.clavardage)}"></script>` : "", boucles: BOUCLES_JS, avisUrl: AVIS_URL, avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
-  if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + ".hero .btn{border-radius:0}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
-  return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + ".hero .btn{border-radius:0}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
+  if (essai) return pageEssai(cfg, listings, { ...opts, haut: versParent(haut.replace("{{LANG}}", "")), cssAncien: versParent(CSS) + "header.top *,header.top *::before,header.top *::after,.hero .btn{border-radius:0!important}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
+  return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + "header.top *,header.top *::before,header.top *::after,.hero .btn{border-radius:0!important}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
 }
 
 function rendrePages(cfg, listings, banner) {
