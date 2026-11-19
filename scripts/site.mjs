@@ -6,7 +6,7 @@ import { pageEssai } from "./essai.mjs";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 // Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
 const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
-const adresseLignes = (c) => [...String(c.agence || "").split(/,\s*/), ...String(c.adresseAgence || "").replace(/^(\d+,\s*[^,]+),\s*/, "$1\n").split("\n")]
+const adresseLignes = (c, sansDesignation) => [...String(c.agence || "").split(/,\s*/).filter((l) => !(sansDesignation && /^agence immobili/i.test(l))), ...String(c.adresseAgence || "").replace(/^(\d+,\s*[^,]+),\s*/, "$1\n").split("\n")]
   .filter(Boolean).map((l) => `<span class="al">${nb(l)}</span>`).join("");
 const dateFr = (iso) => { const d = new Date(iso + "T12:00:00"); return isNaN(d) ? "" : `${d.getDate() === 1 ? "1er" : d.getDate()} ${["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][d.getMonth()]} ${d.getFullYear()}`; };
 const telHref = (t) => "tel:" + String(t || "").replace(/[^0-9+]/g, "");
@@ -1189,7 +1189,7 @@ function pageContact(cfg) {
     <div class="coord">
       ${c.telephone ? `<a href="${telHref(c.telephone)}"><span>Téléphone</span><b>${esc(c.telephone)}</b></a>` : ""}
       ${c.courriel ? `<a href="mailto:${esc(c.courriel)}"><span>Courriel</span><b>${esc(c.courriel)}</b></a>` : ""}
-      <div><span>Agence</span>${adresseLignes(c)}</div>
+      <div><span>Agence</span>${adresseLignes(c, true)}</div>
       ${cfg.reseaux ? `<div class="suivez"><span>Suivez-moi</span><p class="socrow">${socialLinks(cfg, "socx")}</p></div>` : ""}
       <div><span>Secteurs desservis</span><b>Rive-Sud de Montréal</b><br>${SECTEURS.map((v) => `<span style="display:inline;font:inherit;color:inherit;white-space:nowrap">${v}</span>`).join(", ")}</div>
       <div><span>Langues</span><b>Français et anglais</b></div>
