@@ -1,0 +1,120 @@
+// Blogue de Gilles : articles originaux, en français et en anglais.
+// Chaque bloc : [type, texte français, texte anglais]. Types : h2, p, li (puce), lien (texte, page).
+// Les apostrophes anglaises sont typographiques (’) pour ne jamais briser le code.
+
+export const ARTICLES = [
+  {
+    slug: "blogue-visite-oeil-entrepreneur.html",
+    date: "2026-11-19",
+    lecture: 5,
+    cat: ["Acheter", "Buying"],
+    titre: ["Ce que je regarde en premier quand je visite une maison", "What I look at first when I visit a house"],
+    resume: [
+      "Dix ans sur les chantiers, ça change la façon de visiter. Voici les points que je vérifie toujours avant de parler de prix.",
+      "Ten years on job sites changes the way you visit a house. Here are the things I always check before we talk about price.",
+    ],
+    blocs: [
+      ["p", "Avant d'être courtier, j'ai été menuisier, puis entrepreneur général. Quand j'entre dans une maison, je ne regarde pas la déco. Je regarde ce qui coûte cher à réparer.", "Before becoming a broker, I was a carpenter, then a general contractor. When I walk into a house, I don’t look at the decor. I look at what costs a lot to fix."],
+      ["p", "Voici ce que je vérifie à chaque visite avec mes clients acheteurs. Ça ne remplace pas une inspection, mais ça aide à savoir si la maison vaut la peine d'aller plus loin.", "Here is what I check on every visit with my buyer clients. It doesn’t replace an inspection, but it helps you know if the house is worth going further."],
+      ["h2", "La toiture", "The roof"],
+      ["p", "Je regarde l'état des bardeaux de loin, puis l'entretoit si j'y ai accès. Des bardeaux qui gondolent, des taches au plafond du dernier étage ou un entretoit humide, c'est un signal à noter. Je demande toujours l'année de la dernière réfection.", "I look at the shingles from a distance, then the attic if I can get to it. Curling shingles, stains on the top floor ceiling or a damp attic are signs worth noting. I always ask what year the roof was last redone."],
+      ["h2", "La fondation et le drainage", "The foundation and drainage"],
+      ["p", "Je fais le tour de la maison. Je regarde les fissures, la pente du terrain et les gouttières. L'eau doit s'éloigner de la maison, pas couler vers elle. Au sous-sol, je cherche les traces d'eau au bas des murs et les odeurs d'humidité.", "I walk around the house. I look at cracks, the slope of the land and the gutters. Water should flow away from the house, not toward it. In the basement, I look for water marks at the bottom of the walls and any damp smell."],
+      ["h2", "Les fenêtres et les portes", "Windows and doors"],
+      ["p", "De la buée entre deux vitres, des cadres pourris ou des portes qui frottent, ça se remarque vite. Une porte qui ferme mal peut aussi indiquer que la maison a bougé.", "Fog between two panes, rotten frames or doors that rub are easy to spot. A door that doesn’t close well can also mean the house has moved."],
+      ["h2", "La plomberie et l'électricité", "Plumbing and electrical"],
+      ["p", "J'ouvre les robinets, je regarde sous les éviers et autour du chauffe-eau. Je jette un œil au panneau électrique. Je ne fais pas le travail d'un électricien, mais je sais reconnaître ce qui mérite une deuxième opinion.", "I turn on the taps and look under the sinks and around the water heater. I take a look at the electrical panel. I don’t do an electrician’s job, but I know what deserves a second opinion."],
+      ["h2", "Les rénovations maison", "DIY renovations"],
+      ["p", "Une rénovation peut être belle en photo et mal faite en dessous. Je regarde les finitions, les joints et les raccords. Je demande s'il y a des factures et si les travaux ont été faits par des entrepreneurs.", "A renovation can look great in photos and be poorly done underneath. I look at the finishing, the joints and the connections. I ask if there are invoices and if the work was done by contractors."],
+      ["h2", "Et ensuite?", "And then?"],
+      ["p", "Si la maison passe ce premier tri, on peut parler d'offre. Je recommande toujours une inspection préachat par un inspecteur en bâtiment. Mon rôle, c'est de vous aider à savoir exactement ce que vous achetez, et à négocier en conséquence.", "If the house passes this first check, we can talk about an offer. I always recommend a pre-purchase inspection by a building inspector. My job is to help you know exactly what you are buying, and to negotiate accordingly."],
+      ["lien", "Voir comment je vous accompagne à l'achat", "acheter.html"],
+    ],
+  },
+  {
+    slug: "blogue-plex-chiffres.html",
+    date: "2026-11-19",
+    lecture: 6,
+    cat: ["Investir", "Investing"],
+    titre: ["Acheter un plex : les chiffres à calculer avant de faire une offre", "Buying a plex: the numbers to run before making an offer"],
+    resume: [
+      "Un beau plex n'est pas toujours un bon placement. Voici les calculs simples que je fais avec mes clients investisseurs.",
+      "A nice plex is not always a good investment. Here are the simple calculations I do with my investor clients.",
+    ],
+    blocs: [
+      ["p", "Je suis moi-même investisseur. Quand on regarde un duplex, un triplex ou un plus gros immeuble, la première question n'est pas « est-ce qu'il est beau? ». C'est « est-ce que les chiffres tiennent? ».", "I am an investor myself. When we look at a duplex, a triplex or a bigger building, the first question isn’t “is it nice?”. It’s “do the numbers work?”."],
+      ["h2", "1. Les revenus bruts", "1. Gross income"],
+      ["p", "On additionne tous les loyers sur un an, plus les autres revenus s'il y en a, comme les stationnements ou la buanderie. On se fie aux baux en vigueur, pas aux loyers espérés.", "We add up all the rents for one year, plus any other income, such as parking or laundry. We rely on the current leases, not the rents we hope to get."],
+      ["h2", "2. Les dépenses", "2. Expenses"],
+      ["p", "Les taxes municipales et scolaires, l'assurance, l'énergie si elle est payée par le propriétaire, le déneigement, l'entretien et une réserve pour les logements vides. Beaucoup d'acheteurs oublient l'entretien. Un immeuble vieillit, et il faut le prévoir.", "Municipal and school taxes, insurance, energy if the owner pays for it, snow removal, maintenance and a reserve for vacant units. Many buyers forget maintenance. A building ages, and you have to plan for it."],
+      ["h2", "3. Le revenu net", "3. Net operating income"],
+      ["p", "C'est simplement les revenus bruts moins les dépenses, avant l'hypothèque. C'est le vrai portrait de ce que l'immeuble rapporte.", "It is simply gross income minus expenses, before the mortgage. It is the real picture of what the building brings in."],
+      ["h2", "4. Le multiplicateur et le taux de rendement", "4. The multiplier and the cap rate"],
+      ["p", "Le multiplicateur du revenu brut, c'est le prix divisé par les revenus bruts. Le taux de rendement, c'est le revenu net divisé par le prix. Ces deux chiffres permettent de comparer des immeubles entre eux, dans le même secteur.", "The gross rent multiplier is the price divided by gross income. The cap rate is net income divided by the price. These two numbers let you compare buildings with each other, in the same area."],
+      ["h2", "5. Ce qui reste après l'hypothèque", "5. What is left after the mortgage"],
+      ["p", "On soustrait les paiements hypothécaires du revenu net. Si le résultat est positif, l'immeuble se paie seul. La mise de fonds minimale dépend du nombre de logements et du fait que vous habitiez l'immeuble ou non. Votre représentant hypothécaire vous donnera le chiffre exact.", "We subtract the mortgage payments from net income. If the result is positive, the building pays for itself. The minimum down payment depends on the number of units and on whether you live in the building. Your mortgage representative will give you the exact figure."],
+      ["h2", "À garder en tête au Québec", "Things to keep in mind in Quebec"],
+      ["li", "Les baux en place suivent l'immeuble. Vous achetez les locataires et leurs loyers actuels.", "Existing leases stay with the building. You buy the tenants and their current rents."],
+      ["li", "Les hausses de loyer sont encadrées par le Tribunal administratif du logement.", "Rent increases are regulated by the Tribunal administratif du logement."],
+      ["li", "L'état du bâtiment compte autant que les chiffres. Des travaux majeurs peuvent changer tout le calcul.", "The condition of the building matters as much as the numbers. Major work can change the whole calculation."],
+      ["p", "Avant chaque offre, je fais ces calculs avec mes clients, et je regarde le bâtiment avec mon œil d'ancien entrepreneur. C'est ce qui permet d'acheter au bon prix.", "Before every offer, I run these numbers with my clients, and I look at the building with my former contractor’s eye. That is what lets you buy at the right price."],
+      ["lien", "Voir comment je vous accompagne en investissement", "investir.html"],
+    ],
+  },
+  {
+    slug: "blogue-vendre-petits-travaux.html",
+    date: "2026-11-19",
+    lecture: 5,
+    cat: ["Vendre", "Selling"],
+    titre: ["Vendre sa maison : 7 petits travaux qui font une grande différence", "Selling your home: 7 small jobs that make a big difference"],
+    resume: [
+      "Pas besoin de tout rénover avant de vendre. Voici les petits travaux qui rapportent le plus, selon un ancien entrepreneur.",
+      "No need to renovate everything before selling. Here are the small jobs that pay off the most, from a former contractor.",
+    ],
+    blocs: [
+      ["p", "Quand on prépare une vente, on pense souvent qu'il faut refaire la cuisine ou la salle de bain. Dans la plupart des cas, ce n'est pas nécessaire. Ce sont les petits détails qui donnent une bonne première impression.", "When preparing a sale, people often think they need to redo the kitchen or the bathroom. In most cases, it isn’t necessary. It is the small details that make a good first impression."],
+      ["h2", "1. Désencombrer", "1. Declutter"],
+      ["p", "Moins d'objets, c'est des pièces qui paraissent plus grandes. On range les comptoirs, on vide un peu les garde-robes et on enlève les photos de famille.", "Fewer things means rooms that look bigger. Clear the counters, empty the closets a bit and take down family photos."],
+      ["h2", "2. Une couche de peinture", "2. A coat of paint"],
+      ["p", "Une couleur neutre et des murs propres, c'est l'investissement le plus rentable. Les acheteurs s'imaginent plus facilement chez eux.", "A neutral color and clean walls are the most profitable investment. Buyers can picture themselves at home more easily."],
+      ["h2", "3. Réparer les petites choses", "3. Fix the small things"],
+      ["p", "Une poignée brisée, un robinet qui coule ou une moulure décollée. Chaque petit défaut fait croire à l'acheteur que la maison a été négligée.", "A broken handle, a leaky faucet or a loose trim. Every small flaw makes the buyer think the house has been neglected."],
+      ["h2", "4. L'éclairage", "4. Lighting"],
+      ["p", "On remplace les ampoules brûlées, on choisit une lumière chaude et on ouvre les rideaux pour les visites. Une maison lumineuse paraît plus grande et plus accueillante.", "Replace burnt-out bulbs, choose a warm light and open the curtains for visits. A bright house looks bigger and more welcoming."],
+      ["h2", "5. L'entrée et la façade", "5. The entrance and the front"],
+      ["p", "C'est la première chose que l'acheteur voit, en photo comme en personne. Une porte propre, un balcon dégagé et un terrain entretenu font toute la différence.", "It is the first thing buyers see, in photos and in person. A clean door, a clear balcony and a well-kept yard make all the difference."],
+      ["h2", "6. Le grand ménage", "6. A deep clean"],
+      ["p", "Les fenêtres, les joints de céramique, les électroménagers. Une maison propre donne confiance.", "Windows, tile grout, appliances. A clean house builds trust."],
+      ["h2", "7. Les documents prêts", "7. Documents ready"],
+      ["p", "Un certificat de localisation à jour, les factures des travaux faits, les comptes de taxes et la déclaration du vendeur, qu'on remplit ensemble. Un dossier complet rassure l'acheteur et évite des délais.", "An up-to-date certificate of location, invoices for the work done, tax bills and the seller’s declaration, which we fill out together. A complete file reassures the buyer and avoids delays."],
+      ["p", "Avant chaque mise en vente, je fais le tour de la maison avec mes clients pour cibler ce qui vaut la peine d'être fait, et ce qui ne l'est pas.", "Before every listing, I walk through the house with my clients to target what is worth doing, and what isn’t."],
+      ["lien", "Obtenir une évaluation gratuite de ma propriété", "vendre.html"],
+    ],
+  },
+];
+
+// Liens vers le blogue de Royal LePage (on ne copie pas leurs textes, on y renvoie)
+export const LIENS_RLP = [
+  ["Acheter un condo au Québec : ce qu'il faut savoir sur le syndicat et le fonds de prévoyance", "Buying a condo in Quebec: what to know about the syndicate and the contingency fund", "https://blogue.royallepage.ca/acheter-un-condo-au-quebec-ce-quil-faut-savoir-sur-le-syndicat-et-le-fonds-de-prevoyance/"],
+  ["Préparer votre maison pour la première vague de froid", "Getting your home ready for the first cold snap", "https://blogue.royallepage.ca/preparer-votre-maison-pour-la-premiere-vague-de-froid/"],
+  ["Des moyens simples de réduire votre facture de chauffage cet hiver", "Simple ways to lower your heating bill this winter", "https://blogue.royallepage.ca/des-moyens-simples-de-reduire-votre-facture-de-chauffage-cet-hiver/"],
+  ["Le marché immobilier canadien en octobre 2026", "The Canadian real estate market in October 2026", "https://blogue.royallepage.ca/rapport-aci-mensuel-marche-de-lhabitation-octobre-2026/"],
+];
+
+// Textes fixes de la page Blogue
+export const TEXTES = [
+  ["Blogue", "Blog"],
+  ["Conseils <em>de terrain.</em>", "Advice <em>from the field.</em>"],
+  ["Conseils de terrain.", "Advice from the field."],
+  ["Mes conseils pour vendre, acheter et investir sur la Rive-Sud, avec l'œil d'un ancien entrepreneur.", "My advice for selling, buying and investing on the South Shore, with a former contractor’s eye."],
+  ["Lire l'article", "Read the article"],
+  ["À lire aussi", "Also worth reading"],
+  ["Sur le blogue de Royal LePage", "On the Royal LePage blog"],
+  ["Retour au blogue", "Back to the blog"],
+  ["Par Gilles Jr. Dulude", "By Gilles Jr. Dulude"],
+  ["Une question sur votre projet?", "A question about your project?"],
+  ["Un appel de 15 minutes, sans engagement.", "A 15-minute call, no commitment."],
+  ["Réserver un appel", "Book a call"],
+  ["Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Blog | Gilles Jr. Dulude, residential and commercial real estate broker"],
+  ["Conseils immobiliers de Gilles Jr. Dulude, courtier sur la Rive-Sud : vendre, acheter et investir avec l'œil d'un ancien entrepreneur.", "Real estate advice from Gilles Jr. Dulude, South Shore broker: selling, buying and investing with a former contractor’s eye."],
+];
