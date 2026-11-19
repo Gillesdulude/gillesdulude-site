@@ -91,14 +91,14 @@
   "evaluationForm": "E73HlqxdKjS9aeU3KkQC",
   "videos": {
     "16781318": {
-      "video": "/assets/videos/bonnier.mp4",
-      "boucle": "/assets/videos/bonnier-boucle.mp4",
-      "affiche": "/assets/videos/bonnier.jpg"
+      "video": "/assets/videos/bonnier-hd.mp4",
+      "boucle": "/assets/videos/bonnier-boucle-hd.mp4",
+      "affiche": "/assets/videos/bonnier-hd.jpg"
     },
     "14567290": {
-      "video": "/assets/videos/compton.mp4",
-      "boucle": "/assets/videos/compton-boucle.mp4",
-      "affiche": "/assets/videos/compton.jpg"
+      "video": "/assets/videos/compton-hd.mp4",
+      "boucle": "/assets/videos/compton-boucle-hd.mp4",
+      "affiche": "/assets/videos/compton-hd.jpg"
     }
   }
 }
