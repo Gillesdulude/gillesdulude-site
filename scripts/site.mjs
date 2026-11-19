@@ -3,6 +3,8 @@
 
 import { T, R, JS } from "./en.mjs";
 import { pageEssai, piedDePage, PIED_CSS } from "./essai.mjs";
+import { ARTICLES, LIENS_RLP, TEXTES as TEXTES_BLOGUE } from "./blogue.mjs";
+const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 // Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
 const nb = (t) => esc(t).replace(/ (?=\S+$)/, "&nbsp;").replace(/\(Québec\) /, "(Québec)&nbsp;");
@@ -18,6 +20,7 @@ const PAGES = [
   { file: "acheter.html", nav: "Acheter" },
   { file: "investir.html", nav: "Investir" },
   { file: "marche.html", nav: "Marché" },
+  { file: "blogue.html", nav: "Blogue" },
   { file: "proprietes.html", nav: "Propriétés" },
   { file: "contact.html", nav: "Contact" },
 ];
@@ -1296,6 +1299,7 @@ ${PRIX.map(([n, y]) => `- ${n} (${y})`).join("\n")}
 - [Accueil](index.html)
 - [À propos](a-propos.html)
 - [Vendre](vendre.html)
+- [Blogue](blogue.html)
 - [Acheter](acheter.html)
 - [Investir en multilogement](investir.html)
 - [Marché immobilier de la Rive-Sud](marche.html)
@@ -1391,6 +1395,88 @@ ${jsonLd(cfg)}
   return pageEssai(cfg, listings, { ...opts, P: "", essai: false, tete, haut: "{{APERCU}}" + haut, cssAncien: CSS + "header.top *,header.top *::before,header.top *::after,.hero .btn{border-radius:0!important}.hero .over{font-size:23px;line-height:1.3;margin-bottom:14px}@media (max-width:860px){.hero .over{font-size:20px}}" });
 }
 
+
+// ---------- Blogue ----------
+const lectureFr = (a) => `${dateFr(a.date)} · ${a.lecture} min de lecture`;
+const lectureEn = (a) => { const d = new Date(a.date + "T12:00:00"); return `${["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} · ${a.lecture} min read`; };
+// Traductions anglaises du blogue, ajoutées au dictionnaire du site
+for (const [f, e] of TEXTES_BLOGUE) T[norm(f)] = e;
+for (const a of ARTICLES) {
+  for (const k of ["cat", "titre", "resume"]) T[norm(a[k][0])] = a[k][1];
+  T[norm(a.titre[0] + " | Gilles Jr. Dulude")] = a.titre[1] + " | Gilles Jr. Dulude";
+  T[norm(lectureFr(a))] = lectureEn(a);
+  for (const [t, f, e] of a.blocs) if (t !== "lien") T[norm(f)] = e;
+}
+const LIENS_EN = { "Voir comment je vous accompagne à l'achat": "See how I guide you when buying", "Voir comment je vous accompagne en investissement": "See how I guide you when investing", "Obtenir une évaluation gratuite de ma propriété": "Get a free evaluation of my property" };
+for (const [f, e] of Object.entries(LIENS_EN)) T[norm(f)] = e;
+for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
+
+const CSS_BLOGUE = `<style>
+.blogue-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.blogue-carte{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);padding:34px 30px;color:inherit;text-decoration:none;transition:border-color .3s,transform .3s}
+.blogue-carte:hover{border-color:#130F0C;transform:translateY(-3px)}
+.blogue-carte .cat{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8a857d;margin:0 0 18px}
+.blogue-carte h3{font-size:21px;line-height:1.3;text-transform:none;letter-spacing:0;font-weight:500;margin:0 0 14px}
+.blogue-carte p{margin:0 0 22px;color:#444}
+.blogue-carte .plus{margin-top:auto;font-size:13px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid currentColor;align-self:flex-start;padding-bottom:3px}
+.blogue-carte .meta{font-size:13px;color:#8a857d;margin:0 0 10px}
+.ailleurs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.ailleurs li{border-bottom:1px solid var(--line);margin:0;padding:0}
+.ailleurs a{display:flex;justify-content:space-between;gap:20px;padding:18px 0;color:inherit;text-decoration:none}
+.ailleurs a:hover{opacity:.7}.ailleurs a span:last-child{white-space:nowrap}
+.article{max-width:720px;margin:0 auto}
+.article .meta{font-size:14px;color:#8a857d;margin:0 0 34px}
+.article h2{font-size:28px;margin:44px 0 14px}
+.article p,.article li{font-size:18px;line-height:1.7}
+.article ul{padding-left:22px;margin:0 0 20px}
+.article .suite{display:inline-block;margin-top:26px}
+.article .retour{display:inline-block;margin-bottom:26px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:inherit}
+@media (max-width:980px){.blogue-grille{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.blogue-grille{grid-template-columns:1fr}.article h2{font-size:24px}.article p,.article li{font-size:17px}}
+</style>`;
+const escG = (t) => esc(t).replace(/« /g, "«&nbsp;").replace(/ »/g, "&nbsp;»");
+const carteArticle = (a) => `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
+
+function pageBlogue(cfg) {
+  return head(cfg, "Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Conseils immobiliers de Gilles Jr. Dulude, courtier sur la Rive-Sud : vendre, acheter et investir avec l'œil d'un ancien entrepreneur.", CSS_BLOGUE) +
+    header(cfg, "blogue.html") +
+    pageHero("Blogue", "Conseils <em>de terrain.</em>", "Mes conseils pour vendre, acheter et investir sur la Rive-Sud, avec l'œil d'un ancien entrepreneur.") + `
+<section><div class="wrap"><div class="blogue-grille">${[...ARTICLES].sort((a, b) => b.date.localeCompare(a.date)).map(carteArticle).join("")}</div></div></section>
+<section><div class="wrap">
+  <p class="over">À lire aussi</p>
+  <h2 style="margin-bottom:24px">Sur le blogue de Royal LePage</h2>
+  <ul class="ailleurs">${LIENS_RLP.map(([f, , u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener"><span>${esc(f)}</span><span aria-hidden="true">↗</span></a></li>`).join("")}</ul>
+</div></section>
+${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+` + footer(cfg) + end;
+}
+
+function pageArticle(cfg, a) {
+  let corps = "", liste = [];
+  const fermer = () => { if (liste.length) { corps += `<ul>${liste.join("")}</ul>`; liste = []; } };
+  for (const [t, f, x] of a.blocs) {
+    if (t === "li") { liste.push(`<li>${escG(f)}</li>`); continue; }
+    fermer();
+    if (t === "h2") corps += `<h2>${esc(f)}</h2>`;
+    else if (t === "p") corps += `<p>${escG(f)}</p>`;
+    else if (t === "lien") corps += `<p><a class="btn suite" href="${x}">${esc(f)}</a></p>`;
+  }
+  fermer();
+  const autres = ARTICLES.filter((b) => b !== a);
+  const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", author: { "@type": "Person", name: "Gilles Jr. Dulude" }, publisher: { "@type": "Organization", name: "Gilles Jr. Dulude, courtier immobilier" } }).replace(/</g, "\\u003c")}</script>`;
+  return head(cfg, a.titre[0] + " | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
+    header(cfg, "blogue.html") + `
+<section class="hero small light"><img class="motif" src="assets/motif-contour.png" alt=""><div class="wrap"><div class="txt"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1><p class="lead">${esc(a.resume[0])}</p></div></div></section>
+<section><div class="wrap"><article class="article">
+  <a class="retour" href="blogue.html">Retour au blogue</a>
+  <p class="meta"><span>Par Gilles Jr. Dulude</span> · <span>${lectureFr(a)}</span></p>
+  ${corps}
+</article></div></section>
+${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteArticle).join("")}</div></div></section>` : ""}
+${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+` + footer(cfg) + end;
+}
+
 function rendrePages(cfg, listings, banner) {
   const pages = {
     "index.html": accueilEssai(cfg, listings),
@@ -1402,13 +1488,14 @@ function rendrePages(cfg, listings, banner) {
     "marche.html": pageMarche(cfg),
     "contact.html": pageContact(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
+    "blogue.html": pageBlogue(cfg),
+    ...Object.fromEntries(ARTICLES.map((a) => [a.slug, pageArticle(cfg, a)])),
   };
   for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
   return pages;
 }
 
 // ---------- Version anglaise ----------
-const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 function trTexte(raw) {
   const t = norm(raw);
   if (!t) return null;
