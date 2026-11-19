@@ -153,6 +153,7 @@ dialog{max-height:94vh;max-height:calc(100dvh - 24px)}
 .ph video.boucle,.prop video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;z-index:1;pointer-events:none}
 .ph video.boucle.joue,.prop video.boucle.joue{opacity:1}
 .badge.vid{left:auto;right:14px;top:14px;background:rgba(19,15,12,.8);color:#F9F6F4;z-index:2}
+.badge.new~.badge.vid{top:calc(14px + 3em)}
 #dlg .gal video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#130F0C;z-index:3}
 #dlg .voirvid{position:absolute;left:16px;bottom:16px;z-index:2;background:#130F0C;color:#F9F6F4;border:0;padding:12px 18px;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 `;
