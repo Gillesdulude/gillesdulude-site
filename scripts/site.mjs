@@ -3,7 +3,7 @@
 
 import { T, R, JS } from "./en.mjs";
 import { pageEssai, piedDePage, PIED_CSS } from "./essai.mjs";
-import { ARTICLES, LIENS_RLP, TEXTES as TEXTES_BLOGUE } from "./blogue.mjs";
+import { ARTICLES, LIENS_RLP, TEXTES as TEXTES_BLOGUE, ARTICLES_RLP, TEXTES_RLP } from "./blogue.mjs";
 const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 // Adresse de l'agence sur des lignes séparées, pour ne jamais couper une ligne au mauvais endroit.
@@ -105,7 +105,7 @@ section.beige,section[style*="warm"]{background:var(--warm)}
 .mlslink:hover{background:var(--warm)}
 .faq summary{font-size:19px}
 .apercu{border-bottom:1px solid var(--line)}
-.hero h1{text-transform:uppercase;letter-spacing:.01em}
+.hero h1{text-transform:uppercase;letter-spacing:.01em;overflow-wrap:break-word}.hero .txt{min-width:0;max-width:100%}@media (max-width:480px){.hero.small h1{font-size:min(11vw,44px)}}
 section:has(> .wrap > .cta-warm){background:var(--nb);border:0}
 section:has(> .wrap > .cta-warm) .cta-warm{padding:0}
 @media (max-width:860px){section:has(> .wrap > .cta-warm) .cta-warm{padding:0}}
@@ -325,13 +325,13 @@ dialog::backdrop{background:rgba(19,15,12,.75)}
 @media (max-width:800px){.dlg{grid-template-columns:1fr;overflow:auto}.gal{min-height:0;aspect-ratio:4/3}}
 
 /* Contact */
-.form{display:grid;gap:16px}
+.form{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}.form input,.form select,.form textarea{min-width:0;width:100%;box-sizing:border-box}
 .form label{display:grid;gap:6px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
 .form input,.form select,.form textarea{padding:14px;border:1px solid var(--line);background:#fff;font-size:16px;letter-spacing:0;text-transform:none;font-weight:400;border-radius:var(--r)}
 .form textarea{min-height:140px;resize:vertical}
 .form select{appearance:none;-webkit-appearance:none;padding-right:48px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23130F0C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 18px center}
-.form .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media (max-width:600px){.form .row{grid-template-columns:1fr}}
+.form .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:600px){.form .row{grid-template-columns:minmax(0,1fr)}}
 .note{font-size:14px;color:var(--ch)}
 .coord{display:grid;gap:0}
 .coord a,.coord div{display:block;padding:18px 0;border-top:1px solid var(--line);text-decoration:none}
@@ -487,11 +487,11 @@ section+section{border-top:1px solid var(--line)}
 section{padding:80px 0}
 
 /* Fiche : photo en haut, texte en bas */
-dialog#dlg{overflow:auto}
+dialog#dlg{overflow-y:auto;overflow-x:hidden;max-width:100vw}dialog#dlg .info{overflow-wrap:break-word}
 #dlg .dlg{display:block;max-height:none}
 #dlg .gal{min-height:0;aspect-ratio:16/9;background:var(--nb)}
 #dlg .gal img{object-fit:cover}
-#dlg .thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px;background:var(--nb);scrollbar-width:thin}
+#dlg .thumbs{position:relative;display:flex;gap:6px;overflow-x:auto;padding:8px;background:var(--nb);scrollbar-width:thin}
 #dlg .thumbs img{width:84px;height:56px;object-fit:cover;border-radius:6px;opacity:.55;cursor:pointer;flex:none;transition:opacity .2s}
 #dlg .thumbs img.on,#dlg .thumbs img:hover{opacity:1}
 #dlg .info{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;padding:28px 32px 32px;overflow:visible}
@@ -516,7 +516,7 @@ dialog#dlg{overflow:auto}
 .mlslink{display:inline-block;margin-top:16px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--nb);font-size:14px;transition:background .2s}
 .mlslink:hover{background:var(--warm)}
 #dlg .close{position:sticky;top:10px;float:right;margin:10px 12px -50px 0;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
-@media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:1fr;padding:22px 20px}}
+@media (max-width:800px){#dlg .gal{aspect-ratio:4/3}#dlg .info{grid-template-columns:minmax(0,1fr);padding:22px 20px}#dlg .info>*{min-width:0}}
 `;
 
 
@@ -1112,7 +1112,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
  '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+(cur.vendu?'<div class="pcta"><strong>Cette propriété est vendue.</strong><span class="note">Vous pensez vendre une propriété semblable? Je vous dis combien elle vaut, sans engagement.</span><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="vendre.html#evaluation">Évaluation gratuite</a><a class="btn ghost" href="contact.html">Me joindre</a></div></div>':'')+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
- '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
+ '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
  '<button class="btn" type="submit">Recevoir les documents</button><div class="ok" id="docsok"></div></div></form>'+
  '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong>'+esc(courtier.nom)+', '+esc(courtier.titre)+'<div>'+
@@ -1135,7 +1135,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
 function stopVid(){const v=dlg.querySelector(".gal video");if(v){v.pause();v.remove()}}
 function playVid(){stopVid();const g=dlg.querySelector(".gal"),v=document.createElement("video");v.src=cur.video;v.controls=true;v.autoplay=true;v.playsInline=true;if(cur.affiche)v.poster=cur.affiche;g.appendChild(v);v.play().catch(()=>{})}
 function showPhoto(){stopVid();const p=cur.photos[pi],img=$("#gimg");if(p){img.src=p.url;img.alt=p.legende||cur.adresse}
- const th=document.getElementById("thumbs");if(th){th.querySelectorAll("img").forEach((t,i)=>t.classList.toggle("on",i===pi));const a=th.children[pi];if(a)a.scrollIntoView({block:"nearest",inline:"center"})}$("#gidx").textContent=cur.photos.length?(pi+1)+" / "+cur.photos.length:""}
+ const th=document.getElementById("thumbs");if(th){th.querySelectorAll("img").forEach((t,i)=>t.classList.toggle("on",i===pi));const a=th.children[pi];if(a)th.scrollTo({left:a.offsetLeft-(th.clientWidth-a.offsetWidth)/2,behavior:"smooth"})}$("#gidx").textContent=cur.photos.length?(pi+1)+" / "+cur.photos.length:""}
 function step(d){if(!cur.photos.length)return;pi=(pi+d+cur.photos.length)%cur.photos.length;showPhoto()}
 $("#grid").addEventListener("click",e=>{const c=e.target.closest(".card");if(c)open(c.dataset.id)});
 dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
@@ -1410,6 +1410,9 @@ for (const a of ARTICLES) {
 const LIENS_EN = { "Voir comment je vous accompagne à l'achat": "See how I guide you when buying", "Voir comment je vous accompagne en investissement": "See how I guide you when investing", "Obtenir une évaluation gratuite de ma propriété": "Get a free evaluation of my property" };
 for (const [f, e] of Object.entries(LIENS_EN)) T[norm(f)] = e;
 for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
+for (const [f, e] of TEXTES_RLP) T[norm(f)] = e;
+const dateEn = (iso) => { const d = new Date(iso + "T12:00:00"); return `${["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`; };
+for (const [c, t, au, d, r] of ARTICLES_RLP) { T[norm(c[0])] = c[1]; T[norm(t[0])] = t[1]; T[norm(r[0])] = r[1]; T[norm(`Par ${au} · ${dateFr(d)}`)] = `By ${au} · ${dateEn(d)}`; }
 
 const CSS_BLOGUE = `<style>
 .blogue-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
@@ -1419,7 +1422,7 @@ const CSS_BLOGUE = `<style>
 .blogue-carte h3{font-size:21px;line-height:1.3;text-transform:none;letter-spacing:0;font-weight:500;margin:0 0 14px}
 .blogue-carte p{margin:0 0 22px;color:#444}
 .blogue-carte .plus{margin-top:auto;font-size:13px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid currentColor;align-self:flex-start;padding-bottom:3px}
-.blogue-carte .meta{font-size:13px;color:#8a857d;margin:0 0 10px}
+.blogue-carte .meta{font-size:13px;color:#8a857d;margin:0 0 4px}.blogue-carte .meta.src{margin-bottom:16px}
 .ailleurs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .ailleurs li{border-bottom:1px solid var(--line);margin:0;padding:0}
 .ailleurs a{display:flex;justify-content:space-between;gap:20px;padding:18px 0;color:inherit;text-decoration:none}
@@ -1438,15 +1441,12 @@ const escG = (t) => esc(t).replace(/« /g, "«&nbsp;").replace(/ »/g, "&nbsp;»
 const carteArticle = (a) => `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
 
 function pageBlogue(cfg) {
-  return head(cfg, "Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Conseils immobiliers de Gilles Jr. Dulude, courtier sur la Rive-Sud : vendre, acheter et investir avec l'œil d'un ancien entrepreneur.", CSS_BLOGUE) +
+  const cartes = [...ARTICLES_RLP].sort((a, b) => b[3].localeCompare(a[3])).map(([c, t, au, d, r, u]) => `<a class="blogue-carte" href="${esc(u)}" target="_blank" rel="noopener"><p class="cat">${esc(c[0])}</p><h3>${esc(t[0])}</h3><p class="meta">Par ${esc(au)} · ${dateFr(d)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(r[0])}</p><span class="plus">Lire l'article sur Royal LePage</span></a>`).join("");
+  return head(cfg, "Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété, présentés par Gilles Jr. Dulude, courtier sur la Rive-Sud.", CSS_BLOGUE) +
     header(cfg, "blogue.html") +
-    pageHero("Blogue", "Conseils <em>de terrain.</em>", "Mes conseils pour vendre, acheter et investir sur la Rive-Sud, avec l'œil d'un ancien entrepreneur.") + `
-<section><div class="wrap"><div class="blogue-grille">${[...ARTICLES].sort((a, b) => b.date.localeCompare(a.date)).map(carteArticle).join("")}</div></div></section>
-<section><div class="wrap">
-  <p class="over">À lire aussi</p>
-  <h2 style="margin-bottom:24px">Sur le blogue de Royal LePage</h2>
-  <ul class="ailleurs">${LIENS_RLP.map(([f, , u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener"><span>${esc(f)}</span><span aria-hidden="true">↗</span></a></li>`).join("")}</ul>
-</div></section>
+    pageHero("Blogue", "Le blogue <em>immobilier.</em>", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété.") + `
+<section><div class="wrap"><div class="blogue-grille">${cartes}</div>
+<p style="margin-top:36px"><a class="btn ghost" href="https://blogue.royallepage.ca/" target="_blank" rel="noopener">Tous les articles sur le blogue de Royal LePage</a></p></div></section>
 ${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
@@ -1489,7 +1489,6 @@ function rendrePages(cfg, listings, banner) {
     "contact.html": pageContact(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
     "blogue.html": pageBlogue(cfg),
-    ...Object.fromEntries(ARTICLES.map((a) => [a.slug, pageArticle(cfg, a)])),
   };
   for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
   return pages;
@@ -1545,7 +1544,7 @@ export function renderSite(cfg, listings, { apercu = "" } = {}) {
   const out = {};
   const alt = (f, lang) => `<link rel="alternate" hreflang="fr-CA" href="${lang === "fr" ? "" : "../"}${f}"><link rel="alternate" hreflang="en-CA" href="${lang === "fr" ? "en/" : ""}${f}">`;
   for (const [f, h] of Object.entries(pagesFr)) {
-    out[f] = h.replace(/([A-Za-zÀ-ÿ0-9.»]) ([?!])(?=<|")/g, "$1&nbsp;$2")
+    out[f] = h.split(/(<script\b[\s\S]*?<\/script>)/).map((x) => x.startsWith("<script") ? x : x.replace(/([A-Za-zÀ-ÿ0-9.»]) ([?!])(?=<|")/g, "$1&nbsp;$2")).join("")
       .replace("{{LANG}}", `<a class="lang" href="en/${f}" hreflang="en" lang="en" aria-label="English version">EN</a>`)
       .replace("</head>", alt(f, "fr") + "</head>");
   }
