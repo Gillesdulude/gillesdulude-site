@@ -52,7 +52,9 @@ footer.pied .bas .wrap{display:flex;justify-content:space-between;gap:20px}
 export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", boucles = "", chat = "", P = "../", tete = "", essai = true } = {}) {
   const c = cfg.courtier, m = cfg.marche || {};
   const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
-  const actives = listings.filter((l) => !l.vendu).slice(0, 3);
+  // Accueil : d'abord les propriétés avec vidéo, puis les autres; dans chaque groupe, la plus récente en premier
+  const dateDe = (l) => Date.parse(l.enVigueurDepuis || "") || 0;
+  const actives = listings.filter((l) => !l.vendu).sort((a, b) => (b.video ? 1 : 0) - (a.video ? 1 : 0) || dateDe(b) - dateDe(a)).slice(0, 3);
   const nb = listings.filter((l) => !l.vendu).length;
   const rangs = [
     ["Prix médian · unifamiliale", m.prix?.Unifamiliale],
