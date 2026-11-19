@@ -99,6 +99,11 @@
       "video": "/assets/videos/compton-hd.mp4",
       "boucle": "/assets/videos/compton-boucle-hd.mp4",
       "affiche": "/assets/videos/compton-hd.jpg"
+    },
+    "14641225": {
+      "video": "/assets/videos/patriotes-hd.mp4",
+      "boucle": "/assets/videos/patriotes-boucle-hd.mp4",
+      "affiche": "/assets/videos/patriotes-hd.jpg"
     }
   }
 }
