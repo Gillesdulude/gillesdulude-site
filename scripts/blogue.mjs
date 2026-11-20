@@ -119,28 +119,107 @@ export const TEXTES = [
   ["Conseils immobiliers de Gilles Jr. Dulude, courtier sur la Rive-Sud : vendre, acheter et investir avec l'œil d'un ancien entrepreneur.", "Real estate advice from Gilles Jr. Dulude, South Shore broker: selling, buying and investing with a former contractor’s eye."],
 ];
 
-// Articles du blogue de Royal LePage présentés sur le site : titre, auteur, date et un court résumé
-// écrit par nous. On renvoie toujours vers l'article original, on ne copie pas leur texte.
-// [catégorie fr, en], [titre fr, en], auteur, date, [résumé fr, en], lien
+// Articles du blogue de Royal LePage présentés sur le site. Chaque article a sa page chez nous :
+// la photo de l'article (affichée depuis le site de Royal LePage), le vrai auteur, un résumé écrit par nous
+// et un lien vers l'article original. On ne copie jamais leur texte.
+const IMG = "https://blogue.royallepage.ca/wp-content/uploads/";
 export const ARTICLES_RLP = [
-  [["Tendances immobilières", "Market trends"], ["Le marché immobilier canadien demeure stable en octobre, alors que les ventes et les inscriptions progressent légèrement", "Canada’s housing market holds steady in October as sales and listings edge up"], "Michelle McNally", "2026-11-17",
-    ["Les ventes et les nouvelles inscriptions ont un peu augmenté au pays en octobre, et les prix ont très peu bougé. L'offre et la demande restent en équilibre à l'approche de l'hiver.", "Sales and new listings rose slightly across Canada in October, and prices barely moved. Supply and demand remain balanced heading into winter."],
-    "https://blogue.royallepage.ca/rapport-aci-mensuel-marche-de-lhabitation-octobre-2026/"],
-  [["Rénovations", "Renovations"], ["Des moyens simples de réduire votre facture de chauffage cet hiver", "Simple ways to lower your heating bill this winter"], "Michelle McNally", "2026-11-13",
-    ["Baisser le thermostat la nuit, bloquer les courants d'air et changer le filtre de la fournaise : de petits gestes qui font économiser sans gros travaux.", "Lowering the thermostat at night, blocking drafts and changing the furnace filter: small habits that save money without major work."],
-    "https://blogue.royallepage.ca/des-moyens-simples-de-reduire-votre-facture-de-chauffage-cet-hiver/"],
-  [["Propriétés récréatives", "Recreational properties"], ["Conseils de sécurité pour le chalet en hiver : ce que tout propriétaire devrait savoir", "Winter cottage safety tips every owner should know"], "Michelle McNally", "2026-11-10",
-    ["Route, chauffage, monoxyde de carbone, glace sur le lac et pannes de courant : les précautions à prendre avant de profiter du chalet l'hiver.", "Roads, heating, carbon monoxide, lake ice and power outages: the precautions to take before enjoying the cottage in winter."],
-    "https://blogue.royallepage.ca/conseils-de-securite-pour-le-chalet-en-hiver-ce-que-tout-proprietaire-devrait-savoir/"],
-  [["Acheter et vendre", "Buying and selling"], ["Acheter un condo au Québec : ce qu'il faut savoir sur le syndicat et le fonds de prévoyance", "Buying a condo in Quebec: what to know about the syndicate and the contingency fund"], "Valérie Coveney", "2026-11-03",
-    ["Avant d'acheter un condo, il faut regarder comment l'immeuble est géré et si le fonds de prévoyance peut couvrir les gros travaux. L'article explique les documents à consulter, dont l'étude du fonds de prévoyance et le carnet d'entretien.", "Before buying a condo, look at how the building is managed and whether the contingency fund can cover major work. The article explains which documents to review, including the contingency fund study and the maintenance log."],
-    "https://blogue.royallepage.ca/acheter-un-condo-au-quebec-ce-quil-faut-savoir-sur-le-syndicat-et-le-fonds-de-prevoyance/"],
-  [["Entretien", "Maintenance"], ["Préparer votre maison pour la première vague de froid", "Getting your home ready for the first cold snap"], "Michelle McNally", "2026-10-30",
-    ["Protéger les tuyaux, faire entretenir la fournaise, vérifier la toiture et les gouttières : la plupart des préparatifs se font en quelques fins de semaine.", "Protecting pipes, servicing the furnace, checking the roof and gutters: most of the preparation can be done in a few weekends."],
-    "https://blogue.royallepage.ca/preparer-votre-maison-pour-la-premiere-vague-de-froid/"],
-  [["Tendances immobilières", "Market trends"], ["La Banque du Canada relève son taux directeur de 25 points de base alors que les pressions inflationnistes persistent", "The Bank of Canada raises its key rate by 25 basis points as inflation pressures persist"], "Michelle McNally", "2026-10-28",
-    ["Première hausse du taux directeur en plus de trois ans, qui passe à 2,50 %. Les détenteurs d'un prêt hypothécaire à taux variable verront leurs coûts augmenter.", "The first increase of the key rate in more than three years, now at 2.50%. Variable-rate mortgage holders will see their costs go up."],
-    "https://blogue.royallepage.ca/mise-a-jour-de-la-banque-du-canada-octobre-2026/"],
+  {
+    slug: "blogue-marche-canadien-octobre-2026.html",
+    cat: ["Tendances immobilières", "Market trends"],
+    titre: ["Le marché immobilier canadien demeure stable en octobre, alors que les ventes et les inscriptions progressent légèrement", "Canada’s housing market holds steady in October as sales and listings edge up"],
+    auteur: "Michelle McNally", date: "2026-11-17",
+    image: IMG + "2026/09/crea-fall.jpg", vignette: IMG + "2026/09/crea-fall-1013x675.jpg",
+    resume: ["Les ventes et les nouvelles inscriptions ont un peu augmenté au pays en octobre, et les prix ont très peu bougé. L'offre et la demande restent en équilibre à l'approche de l'hiver.", "Sales and new listings rose slightly across Canada in October, and prices barely moved. Supply and demand remain balanced heading into winter."],
+    intro: ["Chaque mois, Royal LePage fait le point sur les chiffres de l'Association canadienne de l'immeuble. En octobre, le marché canadien est resté calme et équilibré.", "Every month, Royal LePage reviews the numbers from the Canadian Real Estate Association. In October, the Canadian market stayed calm and balanced."],
+    points: [
+      ["Les ventes ont légèrement monté par rapport à septembre, et les nouvelles inscriptions un peu plus.", "Sales rose slightly compared to September, and new listings a little more."],
+      ["Le marché ne favorise ni les acheteurs ni les vendeurs : il est équilibré.", "The market favours neither buyers nor sellers: it is balanced."],
+      ["Il y a environ cinq mois d'inventaire, près de la moyenne à long terme.", "There are about five months of inventory, close to the long-term average."],
+      ["Les prix sont presque stables sur un mois et un peu plus bas qu'il y a un an.", "Prices are almost flat over one month and slightly lower than a year ago."],
+    ],
+    url: "https://blogue.royallepage.ca/rapport-aci-mensuel-marche-de-lhabitation-octobre-2026/",
+  },
+  {
+    slug: "blogue-reduire-facture-chauffage.html",
+    cat: ["Rénovations", "Renovations"],
+    titre: ["Des moyens simples de réduire votre facture de chauffage cet hiver", "Simple ways to lower your heating bill this winter"],
+    auteur: "Michelle McNally", date: "2026-11-13",
+    image: IMG + "2026/11/lower-heating-bill-hero-image-1013x675.jpg", vignette: IMG + "2026/11/lower-heating-bill-hero-image-1013x675.jpg",
+    resume: ["Baisser le thermostat la nuit, bloquer les courants d'air et changer le filtre de la fournaise : de petits gestes qui font économiser sans gros travaux.", "Lowering the thermostat at night, blocking drafts and changing the furnace filter: small habits that save money without major work."],
+    intro: ["Pas besoin de grosses rénovations pour payer moins cher de chauffage. L'article propose des gestes simples, puis quelques travaux à envisager à plus long terme.", "You don’t need major renovations to pay less for heating. The article suggests simple habits, then a few projects to consider in the longer term."],
+    points: [
+      ["Un thermostat programmable permet de baisser la température la nuit et quand personne n'est à la maison.", "A programmable thermostat lets you lower the temperature at night and when nobody is home."],
+      ["Calfeutrer autour des fenêtres, des portes et de la trappe de l'entretoit coûte peu et aide beaucoup.", "Sealing around windows, doors and the attic hatch costs little and helps a lot."],
+      ["Le filtre de la fournaise se vérifie chaque mois, et un entretien professionnel se fait chaque automne.", "Check the furnace filter every month and have a professional service it every fall."],
+      ["Pour aller plus loin, une évaluation énergétique aide à choisir les bons travaux et les programmes d'aide.", "To go further, an energy audit helps you choose the right work and the available assistance programs."],
+    ],
+    url: "https://blogue.royallepage.ca/des-moyens-simples-de-reduire-votre-facture-de-chauffage-cet-hiver/",
+  },
+  {
+    slug: "blogue-securite-chalet-hiver.html",
+    cat: ["Propriétés récréatives", "Recreational properties"],
+    titre: ["Conseils de sécurité pour le chalet en hiver : ce que tout propriétaire devrait savoir", "Winter cottage safety tips every owner should know"],
+    auteur: "Michelle McNally", date: "2026-11-10",
+    image: IMG + "2026/11/winter-cottage-safety-hero-image.jpg", vignette: IMG + "2026/11/winter-cottage-safety-hero-image.jpg",
+    resume: ["Route, chauffage, monoxyde de carbone, glace sur le lac et pannes de courant : les précautions à prendre avant de profiter du chalet l'hiver.", "Roads, heating, carbon monoxide, lake ice and power outages: the precautions to take before enjoying the cottage in winter."],
+    intro: ["Le chalet en hiver, c'est magnifique, mais ça demande un peu de préparation. L'article fait le tour des précautions à prendre, du trajet jusqu'à la surveillance à distance.", "The cottage in winter is beautiful, but it takes a bit of preparation. The article covers the precautions to take, from the drive to remote monitoring."],
+    points: [
+      ["Avant de partir : vérifier la route, avoir des pneus d'hiver et une trousse d'urgence, et aviser quelqu'un.", "Before leaving: check the roads, have winter tires and an emergency kit, and let someone know."],
+      ["À l'arrivée : faire le tour du chalet pour repérer la neige lourde sur le toit, les évents bloqués et les fuites.", "On arrival: walk around the cottage to spot heavy snow on the roof, blocked vents and leaks."],
+      ["Foyer et poêle : conduits ramonés, bois sec, et des avertisseurs de fumée et de monoxyde de carbone qui fonctionnent.", "Fireplace and stove: swept chimneys, dry wood, and working smoke and carbon monoxide alarms."],
+      ["Sur la glace et pendant les pannes, la prudence avant tout. Des capteurs et un voisin aident à surveiller le chalet.", "On the ice and during outages, safety first. Sensors and a neighbour help keep an eye on the cottage."],
+    ],
+    url: "https://blogue.royallepage.ca/conseils-de-securite-pour-le-chalet-en-hiver-ce-que-tout-proprietaire-devrait-savoir/",
+  },
+  {
+    slug: "blogue-acheter-condo-quebec.html",
+    cat: ["Acheter et vendre", "Buying and selling"],
+    titre: ["Acheter un condo au Québec : ce qu'il faut savoir sur le syndicat et le fonds de prévoyance", "Buying a condo in Quebec: what to know about the syndicate and the contingency fund"],
+    auteur: "Valérie Coveney", date: "2026-11-03",
+    image: IMG + "2026/11/buying-a-quebec-condo-hero-image.jpg", vignette: IMG + "2026/11/buying-a-quebec-condo-hero-image.jpg",
+    resume: ["Avant d'acheter un condo, il faut regarder comment l'immeuble est géré et si le fonds de prévoyance peut couvrir les gros travaux. L'article explique les documents à consulter, dont l'étude du fonds de prévoyance et le carnet d'entretien.", "Before buying a condo, look at how the building is managed and whether the contingency fund can cover major work. The article explains which documents to review, including the contingency fund study and the maintenance log."],
+    intro: ["Au Québec, acheter un condo, c'est aussi devenir membre d'un syndicat de copropriété. L'article explique son rôle et pourquoi la santé du fonds de prévoyance est si importante.", "In Quebec, buying a condo also means becoming a member of a condominium syndicate. The article explains its role and why the health of the contingency fund matters so much."],
+    points: [
+      ["Le syndicat, géré par un conseil élu, s'occupe des parties communes et des finances de l'immeuble.", "The syndicate, run by an elected board, looks after the common areas and the building’s finances."],
+      ["Le fonds de prévoyance sert aux gros travaux. Il est payé par les frais de condo de chaque propriétaire.", "The contingency fund pays for major work. It is funded by each owner’s condo fees."],
+      ["La loi exige maintenant une étude du fonds de prévoyance et un carnet d'entretien.", "The law now requires a contingency fund study and a maintenance log."],
+      ["Avant d'acheter, on consulte l'étude, les procès-verbaux, les budgets et la déclaration de copropriété.", "Before buying, review the study, the meeting minutes, the budgets and the declaration of co-ownership."],
+    ],
+    url: "https://blogue.royallepage.ca/acheter-un-condo-au-quebec-ce-quil-faut-savoir-sur-le-syndicat-et-le-fonds-de-prevoyance/",
+  },
+  {
+    slug: "blogue-premiere-vague-de-froid.html",
+    cat: ["Entretien", "Maintenance"],
+    titre: ["Préparer votre maison pour la première vague de froid", "Getting your home ready for the first cold snap"],
+    auteur: "Michelle McNally", date: "2026-10-30",
+    image: IMG + "2026/10/cold-snap-hero-image.jpg", vignette: IMG + "2026/10/cold-snap-hero-image-1013x675.jpg",
+    resume: ["Protéger les tuyaux, faire entretenir la fournaise, vérifier la toiture et les gouttières : la plupart des préparatifs se font en quelques fins de semaine.", "Protecting pipes, servicing the furnace, checking the roof and gutters: most of the preparation can be done in a few weekends."],
+    intro: ["Le premier gros froid arrive toujours plus vite qu'on pense. L'article propose une liste simple pour que la propriété soit prête avant l'hiver.", "The first big cold snap always comes sooner than we think. The article offers a simple list so your property is ready before winter."],
+    points: [
+      ["Vidanger les boyaux d'arrosage et isoler les tuyaux dans les endroits froids.", "Drain garden hoses and insulate pipes in cold areas."],
+      ["Faire inspecter la fournaise et changer le filtre.", "Have the furnace inspected and change the filter."],
+      ["Changer les coupe-froid usés et nettoyer les gouttières.", "Replace worn weatherstripping and clean the gutters."],
+      ["Vérifier les avertisseurs, préparer une trousse d'urgence et prévoir les pneus d'hiver, obligatoires au Québec dès le 1er décembre.", "Check the alarms, prepare an emergency kit and book winter tires, mandatory in Quebec from December 1."],
+    ],
+    url: "https://blogue.royallepage.ca/preparer-votre-maison-pour-la-premiere-vague-de-froid/",
+  },
+  {
+    slug: "blogue-banque-du-canada-octobre-2026.html",
+    cat: ["Tendances immobilières", "Market trends"],
+    titre: ["La Banque du Canada relève son taux directeur de 25 points de base alors que les pressions inflationnistes persistent", "The Bank of Canada raises its key rate by 25 basis points as inflation pressures persist"],
+    auteur: "Michelle McNally", date: "2026-10-28",
+    image: IMG + "2024/03/bank-of-canada-hero-image-1019x675.jpg", vignette: IMG + "2024/03/bank-of-canada-hero-image-1019x675.jpg",
+    resume: ["Première hausse du taux directeur en plus de trois ans, qui passe à 2,50 %. Les détenteurs d'un prêt hypothécaire à taux variable verront leurs coûts augmenter.", "The first increase of the key rate in more than three years, now at 2.50%. Variable-rate mortgage holders will see their costs go up."],
+    intro: ["La Banque du Canada a monté son taux directeur pour la première fois depuis plus de trois ans. L'article explique pourquoi et ce que ça change pour les propriétaires.", "The Bank of Canada raised its key rate for the first time in more than three years. The article explains why and what it means for homeowners."],
+    points: [
+      ["Le taux directeur passe à 2,50 %.", "The key rate is now 2.50%."],
+      ["La Banque veut empêcher la hausse des prix de l'énergie de se répandre dans toute l'économie.", "The Bank wants to keep rising energy prices from spreading through the whole economy."],
+      ["Les prêts à taux variable coûtent plus cher, et les taux fixes ont aussi un peu monté.", "Variable-rate loans cost more, and fixed rates have also risen a bit."],
+      ["La prochaine annonce est prévue le 9 décembre 2026.", "The next announcement is scheduled for December 9, 2026."],
+    ],
+    url: "https://blogue.royallepage.ca/mise-a-jour-de-la-banque-du-canada-octobre-2026/",
+  },
 ];
 
 export const TEXTES_RLP = [
@@ -150,5 +229,11 @@ export const TEXTES_RLP = [
   ["Lire l'article sur Royal LePage", "Read the article on Royal LePage (in French)"],
   ["Blogue Royal LePage", "Royal LePage blog"],
   ["Tous les articles sur le blogue de Royal LePage", "All articles on the Royal LePage blog"],
+  ["Lire l'article complet sur Royal LePage", "Read the full article on Royal LePage (in French)"],
+  ["Ce qu'il faut retenir", "Key takeaways"],
+  ["Photo : Royal LePage", "Photo: Royal LePage"],
+  ["Lire le résumé", "Read the summary"],
+  ["Un article du blogue de Royal LePage", "An article from the Royal LePage blog"],
+  ["Ce texte est un court résumé. L'article complet, avec tous les détails et les chiffres, est sur le blogue de Royal LePage.", "This is a short summary. The full article, with all the details and figures, is on the Royal LePage blog."],
   ["Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété, présentés par Gilles Jr. Dulude, courtier sur la Rive-Sud.", "Articles selected from the Royal LePage blog to help you sell, buy and take care of your property, presented by Gilles Jr. Dulude, South Shore broker."],
 ];
