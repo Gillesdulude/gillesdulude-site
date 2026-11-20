@@ -1416,6 +1416,8 @@ for (const a of ARTICLES_RLP) {
   for (const k of ["cat", "titre", "resume", "intro"]) T[norm(a[k][0])] = a[k][1];
   for (const [f, e] of a.points) T[norm(f)] = e;
   T[norm(`Par ${a.auteur} · ${dateFr(a.date)}`)] = `By ${a.auteur} · ${dateEn(a.date)}`;
+  T[norm(`Par ${a.auteur}`)] = `By ${a.auteur}`;
+  T[norm(`· ${dateFr(a.date)} · Blogue Royal LePage`)] = `· ${dateEn(a.date)} · Royal LePage blog`;
   T[norm(a.titre[0] + " | Blogue | Gilles Jr. Dulude")] = a.titre[1] + " | Blog | Gilles Jr. Dulude";
 }
 
@@ -1433,7 +1435,7 @@ const CSS_BLOGUE = `<style>
 .ailleurs a{display:flex;justify-content:space-between;gap:20px;padding:18px 0;color:inherit;text-decoration:none}
 .ailleurs a:hover{opacity:.7}.ailleurs a span:last-child{white-space:nowrap}
 .article{max-width:720px;margin:0 auto}
-.article .meta{font-size:14px;color:#8a857d;margin:0 0 34px}
+.article .meta{font-size:15px;color:#6f6a63;margin:0 0 28px}.article .meta strong{color:#130F0C;font-weight:600}
 .article h2{font-size:28px;margin:44px 0 14px}
 .article p,.article li{font-size:18px;line-height:1.7}
 .article ul{padding-left:22px;margin:0 0 20px}
@@ -1445,9 +1447,9 @@ const CSS_BLOGUE = `<style>
 section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 .rlp-hero{position:relative;background:#130F0C;color:#F9F6F4;min-height:min(78vh,720px);display:flex;align-items:flex-end;overflow:hidden}
 .rlp-hero>img{position:absolute!important;inset:0;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover}
-.rlp-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,.15) 0%,rgba(19,15,12,.35) 45%,rgba(19,15,12,.88) 100%)}
+.rlp-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,.2) 0%,rgba(19,15,12,.45) 40%,rgba(19,15,12,.92) 100%)}
 .rlp-hero .wrap{position:relative;z-index:1;padding:160px 40px 70px;width:100%;box-sizing:border-box}
-.rlp-hero .over{color:rgba(249,246,244,.8);margin:0 0 18px}
+.rlp-hero .over{color:#fff;margin:0 0 18px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.6)}.rlp-hero .over:after{background:#fff}.rlp-hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
 .rlp-hero h1{font-size:clamp(32px,4.6vw,62px);line-height:1.06;max-width:1000px;margin:0 0 22px;text-transform:none;letter-spacing:0;overflow-wrap:break-word}
 .rlp-hero .meta{font-size:15px;color:rgba(249,246,244,.85);margin:0}
 .rlp-hero .credit{position:absolute;right:16px;bottom:12px;z-index:1;font-size:11px;color:rgba(249,246,244,.6);margin:0}
@@ -1474,9 +1476,10 @@ function pageArticleRLP(cfg, a) {
   const bouton = `<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Lire l'article complet sur Royal LePage</a>`;
   return head(cfg, a.titre[0] + " | Blogue | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
     header(cfg, "blogue.html") + `
-<section class="rlp-hero"><img src="${esc(a.image)}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p></div><p class="credit">Photo : Royal LePage</p></section>
+<section class="rlp-hero"><img src="${esc(a.image)}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1></div><p class="credit">Photo : Royal LePage</p></section>
 <section><div class="wrap"><article class="article">
   <a class="retour" href="blogue.html">Retour au blogue</a>
+  <p class="meta"><strong>Par ${esc(a.auteur)}</strong> · ${dateFr(a.date)} · Blogue Royal LePage</p>
   <div class="source"><p><strong>Un article du blogue de Royal LePage</strong></p><p>Ce texte est un court résumé. L'article complet, avec tous les détails et les chiffres, est sur le blogue de Royal LePage.</p>${bouton}</div>
   <p>${escG(a.intro[0])}</p>
   <h2>Ce qu'il faut retenir</h2>
