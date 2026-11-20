@@ -198,7 +198,9 @@ section{padding:96px 0}
 .menu .cta{border:1px solid var(--be);padding:10px 16px;color:var(--bc);border-radius:var(--r)}
 .menu .cta:hover{background:var(--be);color:var(--nb)}
 .burger{display:none;background:none;border:0;color:var(--bc);padding:8px;cursor:pointer}
+.menu a.mobile-seul{display:none}
 @media (max-width:960px){
+  .menu a.mobile-seul{display:block}
   .burger{display:block}
   .menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--nb);flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 24px;border-bottom:1px solid rgba(249,246,244,.1)}
   .menu.open{display:flex}
@@ -599,7 +601,7 @@ ${jsonLd(cfg)}${extra}
 
 function header(cfg, current) {
   const links = PAGES.filter((p) => p.file !== "contact.html" && p.haut !== false)
-    .map((p) => `<a href="${p.file}"${p.file === current ? ' aria-current="page"' : ""}>${p.nav}</a>`)
+    .map((p) => `<a href="${p.file}"${p.file === "index.html" ? ' class="mobile-seul"' : ""}${p.file === current ? ' aria-current="page"' : ""}>${p.nav}</a>`)
     .join("");
   return `{{APERCU}}
 <header class="top"><div class="wrap">
@@ -1412,6 +1414,7 @@ for (const [f, e] of Object.entries(LIENS_EN)) T[norm(f)] = e;
 for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
 for (const [f, e] of TEXTES_RLP) T[norm(f)] = e;
 const dateEn = (iso) => { const d = new Date(iso + "T12:00:00"); return `${["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`; };
+T[norm("À propos de moi")] = "About me";
 for (const a of ARTICLES_RLP) {
   for (const k of ["cat", "titre", "resume", "intro"]) T[norm(a[k][0])] = a[k][1];
   for (const [f, e] of a.points) T[norm(f)] = e;
