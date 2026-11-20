@@ -1412,7 +1412,12 @@ for (const [f, e] of Object.entries(LIENS_EN)) T[norm(f)] = e;
 for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
 for (const [f, e] of TEXTES_RLP) T[norm(f)] = e;
 const dateEn = (iso) => { const d = new Date(iso + "T12:00:00"); return `${["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`; };
-for (const [c, t, au, d, r] of ARTICLES_RLP) { T[norm(c[0])] = c[1]; T[norm(t[0])] = t[1]; T[norm(r[0])] = r[1]; T[norm(`Par ${au} · ${dateFr(d)}`)] = `By ${au} · ${dateEn(d)}`; }
+for (const a of ARTICLES_RLP) {
+  for (const k of ["cat", "titre", "resume", "intro"]) T[norm(a[k][0])] = a[k][1];
+  for (const [f, e] of a.points) T[norm(f)] = e;
+  T[norm(`Par ${a.auteur} · ${dateFr(a.date)}`)] = `By ${a.auteur} · ${dateEn(a.date)}`;
+  T[norm(a.titre[0] + " | Blogue | Gilles Jr. Dulude")] = a.titre[1] + " | Blog | Gilles Jr. Dulude";
+}
 
 const CSS_BLOGUE = `<style>
 .blogue-grille{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
@@ -1434,14 +1439,57 @@ const CSS_BLOGUE = `<style>
 .article ul{padding-left:22px;margin:0 0 20px}
 .article .suite{display:inline-block;margin-top:26px}
 .article .retour{display:inline-block;margin-bottom:26px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:inherit}
+.blogue-carte.img{padding:0}.blogue-carte.img .ph{aspect-ratio:3/2;overflow:hidden;background:#2b2724}
+.blogue-carte.img .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.blogue-carte.img:hover .ph img{transform:scale(1.04)}.blogue-carte.img .in{display:flex;flex-direction:column;flex:1;padding:28px 28px 32px}
+section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
+.rlp-hero{position:relative;background:#130F0C;color:#F9F6F4;min-height:min(78vh,720px);display:flex;align-items:flex-end;overflow:hidden}
+.rlp-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rlp-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,.15) 0%,rgba(19,15,12,.35) 45%,rgba(19,15,12,.88) 100%)}
+.rlp-hero .wrap{position:relative;z-index:1;padding:160px 40px 70px;width:100%;box-sizing:border-box}
+.rlp-hero .over{color:rgba(249,246,244,.8);margin:0 0 18px}
+.rlp-hero h1{font-size:clamp(32px,4.6vw,62px);line-height:1.06;max-width:1000px;margin:0 0 22px;text-transform:none;letter-spacing:0;overflow-wrap:break-word}
+.rlp-hero .meta{font-size:15px;color:rgba(249,246,244,.85);margin:0}
+.rlp-hero .credit{position:absolute;right:16px;bottom:12px;z-index:1;font-size:11px;color:rgba(249,246,244,.6);margin:0}
+.rlp-hero+section{padding-top:90px}
+.source{border-left:3px solid #130F0C;background:#f3f2f0;padding:24px 28px;margin:0 0 40px}
+.source p{font-size:16px!important;margin:0 0 16px}.source .btn{margin:0}
+.article .points{list-style:none;padding:0;margin:0 0 40px;border-top:1px solid var(--line)}
+.article .points li{border-bottom:1px solid var(--line);padding:16px 0 16px 30px;position:relative}
+.article .points li:before{content:"";position:absolute;left:4px;top:28px;width:12px;height:2px;background:#130F0C}
+.article .fin{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:10px}
+@media (max-width:860px){.rlp-hero{min-height:62vh}.rlp-hero .wrap{padding:120px 24px 48px}.rlp-hero+section{padding-top:60px}}
 @media (max-width:980px){.blogue-grille{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.blogue-grille{grid-template-columns:1fr}.article h2{font-size:24px}.article p,.article li{font-size:17px}}
 </style>`;
 const escG = (t) => esc(t).replace(/« /g, "«&nbsp;").replace(/ »/g, "&nbsp;»");
 const carteArticle = (a) => `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
 
+const carteRLP = (a) => `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${esc(a.vignette)}" alt="${esc(a.titre[0])}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(a.resume[0])}</p><span class="plus">Lire le résumé</span></div></a>`;
+const triRLP = () => [...ARTICLES_RLP].sort((x, y) => y.date.localeCompare(x.date));
+
+function pageArticleRLP(cfg, a) {
+  const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", image: a.image, author: { "@type": "Person", name: a.auteur }, publisher: { "@type": "Organization", name: "Royal LePage" }, isBasedOn: a.url, url: a.url }).replace(/</g, "\\u003c")}</script>`;
+  const autres = triRLP().filter((b) => b !== a).slice(0, 3);
+  const bouton = `<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Lire l'article complet sur Royal LePage</a>`;
+  return head(cfg, a.titre[0] + " | Blogue | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
+    header(cfg, "blogue.html") + `
+<section class="rlp-hero"><img src="${esc(a.image)}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p></div><p class="credit">Photo : Royal LePage</p></section>
+<section><div class="wrap"><article class="article">
+  <a class="retour" href="blogue.html">Retour au blogue</a>
+  <div class="source"><p><strong>Un article du blogue de Royal LePage</strong></p><p>Ce texte est un court résumé. L'article complet, avec tous les détails et les chiffres, est sur le blogue de Royal LePage.</p>${bouton}</div>
+  <p>${escG(a.intro[0])}</p>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="points">${a.points.map(([f]) => `<li>${escG(f)}</li>`).join("")}</ul>
+  <div class="fin">${bouton}<a class="retour" style="margin:0" href="blogue.html">Retour au blogue</a></div>
+</article></div></section>
+${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteRLP).join("")}</div></div></section>` : ""}
+${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+` + footer(cfg) + end;
+}
+
 function pageBlogue(cfg) {
-  const cartes = [...ARTICLES_RLP].sort((a, b) => b[3].localeCompare(a[3])).map(([c, t, au, d, r, u]) => `<a class="blogue-carte" href="${esc(u)}" target="_blank" rel="noopener"><p class="cat">${esc(c[0])}</p><h3>${esc(t[0])}</h3><p class="meta">Par ${esc(au)} · ${dateFr(d)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(r[0])}</p><span class="plus">Lire l'article sur Royal LePage</span></a>`).join("");
+  const cartes = triRLP().map(carteRLP).join("");
   return head(cfg, "Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété, présentés par Gilles Jr. Dulude, courtier sur la Rive-Sud.", CSS_BLOGUE) +
     header(cfg, "blogue.html") +
     pageHero("Blogue", "Le blogue <em>immobilier.</em>", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété.") + `
@@ -1490,6 +1538,7 @@ function rendrePages(cfg, listings, banner) {
     "confidentialite.html": pageConfidentialite(cfg),
     "blogue.html": pageBlogue(cfg),
   };
+  for (const a of ARTICLES_RLP) pages[a.slug] = pageArticleRLP(cfg, a);
   for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
   return pages;
 }
