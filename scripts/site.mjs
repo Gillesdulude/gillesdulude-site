@@ -1449,7 +1449,7 @@ section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 .rlp-hero>img{position:absolute!important;inset:0;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover}
 .rlp-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,.2) 0%,rgba(19,15,12,.45) 40%,rgba(19,15,12,.92) 100%)}
 .rlp-hero .wrap{position:relative;z-index:1;padding:160px 40px 70px;width:100%;box-sizing:border-box}
-.rlp-hero .over{color:#fff;margin:0 0 18px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.6)}.rlp-hero .over:after{background:#fff}.rlp-hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
+.rlp-hero .over{color:#fff!important;opacity:1!important;font-size:13px;margin:0 0 18px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.6)}.rlp-hero .over:after{background:#fff}.rlp-hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
 .rlp-hero h1{font-size:clamp(32px,4.6vw,62px);line-height:1.06;max-width:1000px;margin:0 0 22px;text-transform:none;letter-spacing:0;overflow-wrap:break-word}
 .rlp-hero .meta{font-size:15px;color:rgba(249,246,244,.85);margin:0}
 .rlp-hero .credit{position:absolute;right:16px;bottom:12px;z-index:1;font-size:11px;color:rgba(249,246,244,.6);margin:0}
@@ -1459,6 +1459,7 @@ section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 .article .points{list-style:none;padding:0;margin:0 0 40px;border-top:1px solid var(--line)}
 .article .points li{border-bottom:1px solid var(--line);padding:16px 0 16px 30px;position:relative}
 .article .points li:before{content:"";position:absolute;left:4px;top:28px;width:12px;height:2px;background:#130F0C}
+.article .source-bas{font-size:14px!important;color:#8a857d;margin:10px 0 0}.lien-rlp{color:inherit;text-decoration:underline;text-underline-offset:3px}.lien-rlp:hover{color:#130F0C}
 .article .fin{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:10px}
 @media (max-width:860px){.rlp-hero{min-height:62vh}.rlp-hero .wrap{padding:120px 24px 48px}.rlp-hero+section{padding-top:60px}}
 @media (max-width:980px){.blogue-grille{grid-template-columns:1fr 1fr}}
@@ -1473,18 +1474,19 @@ const triRLP = () => [...ARTICLES_RLP].sort((x, y) => y.date.localeCompare(x.dat
 function pageArticleRLP(cfg, a) {
   const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", image: a.image, author: { "@type": "Person", name: a.auteur }, publisher: { "@type": "Organization", name: "Royal LePage" }, isBasedOn: a.url, url: a.url }).replace(/</g, "\\u003c")}</script>`;
   const autres = triRLP().filter((b) => b !== a).slice(0, 3);
-  const bouton = `<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Lire l'article complet sur Royal LePage</a>`;
+  const bouton = `<a class="lien-rlp" href="${esc(a.url)}" target="_blank" rel="noopener">Lire l'article complet sur Royal LePage</a>`;
   return head(cfg, a.titre[0] + " | Blogue | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
     header(cfg, "blogue.html") + `
 <section class="rlp-hero"><img src="${esc(a.image)}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1></div><p class="credit">Photo : Royal LePage</p></section>
 <section><div class="wrap"><article class="article">
   <a class="retour" href="blogue.html">Retour au blogue</a>
   <p class="meta"><strong>Par ${esc(a.auteur)}</strong> · ${dateFr(a.date)} · Blogue Royal LePage</p>
-  <div class="source"><p><strong>Un article du blogue de Royal LePage</strong></p><p>Ce texte est un court résumé. L'article complet, avec tous les détails et les chiffres, est sur le blogue de Royal LePage.</p>${bouton}</div>
+
   <p>${escG(a.intro[0])}</p>
   <h2>Ce qu'il faut retenir</h2>
   <ul class="points">${a.points.map(([f]) => `<li>${escG(f)}</li>`).join("")}</ul>
-  <div class="fin">${bouton}<a class="retour" style="margin:0" href="blogue.html">Retour au blogue</a></div>
+  <p class="source-bas">Résumé d'un article publié sur le blogue de Royal LePage. ${bouton}</p>
+  <a class="retour" style="margin-top:30px" href="blogue.html">Retour au blogue</a>
 </article></div></section>
 ${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteRLP).join("")}</div></div></section>` : ""}
 ${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
