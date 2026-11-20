@@ -230,6 +230,7 @@ export const TEXTES_RLP = [
   ["Blogue Royal LePage", "Royal LePage blog"],
   ["Tous les articles sur le blogue de Royal LePage", "All articles on the Royal LePage blog"],
   ["Lire l'article complet sur Royal LePage", "Read the full article on Royal LePage (in French)"],
+  ["Résumé d'un article publié sur le blogue de Royal LePage.", "Summary of an article published on the Royal LePage blog."],
   ["Ce qu'il faut retenir", "Key takeaways"],
   ["Photo : Royal LePage", "Photo: Royal LePage"],
   ["Lire le résumé", "Read the summary"],
