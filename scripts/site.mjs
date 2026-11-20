@@ -1444,7 +1444,7 @@ const CSS_BLOGUE = `<style>
 .blogue-carte.img:hover .ph img{transform:scale(1.04)}.blogue-carte.img .in{display:flex;flex-direction:column;flex:1;padding:28px 28px 32px}
 section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 .rlp-hero{position:relative;background:#130F0C;color:#F9F6F4;min-height:min(78vh,720px);display:flex;align-items:flex-end;overflow:hidden}
-.rlp-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rlp-hero>img{position:absolute!important;inset:0;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover}
 .rlp-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,.15) 0%,rgba(19,15,12,.35) 45%,rgba(19,15,12,.88) 100%)}
 .rlp-hero .wrap{position:relative;z-index:1;padding:160px 40px 70px;width:100%;box-sizing:border-box}
 .rlp-hero .over{color:rgba(249,246,244,.8);margin:0 0 18px}
