@@ -348,7 +348,7 @@ Object.assign(T, {
   "Prix médian · unifamiliale": "Median price · single-family", "Prix médian · copropriété": "Median price · condo", "Prix médian · plex 2 à 5 logements": "Median price · 2 to 5 unit plex",
   "Délai de vente · unifamiliale": "Time to sell · single-family", "Délai de vente · copropriété": "Time to sell · condo", "Délai de vente · plex": "Time to sell · plex",
   "Inscriptions": "Listings", "À vendre": "For sale", "en ce moment.": "right now.",
-  "Toutes les propriétés": "All properties", "Le courtier": "The broker",
+  "Toutes les propriétés": "All properties", "Voir toutes les propriétés": "See all properties", "Une sélection de propriétés inscrites par Gilles sur la Rive-Sud et ailleurs au Québec.": "A selection of properties listed by Gilles on the South Shore and elsewhere in Quebec.", "Inscriptions": "Featured", "vedettes.": "listings.", "À vendre": "For sale", "Le courtier": "The broker",
   "J'ai passé dix ans sur les chantiers avant l'immobilier.": "I spent ten years on construction sites before real estate.",
   "Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente. Je suis direct et transparent : mon rôle, c'est de protéger mes clients et de les aider à prendre les bonnes décisions.": "I see what gives a property its value, and what can hurt its sale. I am direct and transparent: my role is to protect my clients and help them make the right decisions.",
   "Courtier résidentiel et commercial chez Royal LePage Distinction, en français comme en anglais.": "Residential and commercial broker at Royal LePage Distinction, in French and in English.",
