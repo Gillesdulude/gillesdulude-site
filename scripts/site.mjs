@@ -122,7 +122,10 @@ section:has(> .wrap > .cta-warm),.cta-warm{background:#444444}
 .faq-chat{margin-top:26px;font-size:16px;color:var(--ch)}.faq-chat a{color:var(--nb);font-weight:600;white-space:nowrap}
 /* Fenêtre de rendez-vous au style du site */
 dialog{background:#F9F6F4}
+.rdv-tel{display:none}@media (max-width:760px){.rdv-ordi{display:none}.rdv-tel{display:block;margin:4px 0 0}}
+dialog#rdv{max-height:92dvh;overflow-y:auto;overflow-x:hidden}
 dialog#rdv .rdv-tete{padding:34px 32px 10px}
+@media (max-width:760px){dialog#rdv .rdv-tete{padding:28px 16px 10px}}
 dialog .over{font:500 12px/1.4 Gantari,system-ui,sans-serif;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--ch);display:flex;align-items:center;gap:14px;margin:0 0 14px}
 dialog .over::after{content:"";height:1px;width:56px;background:currentColor;opacity:.6}
 dialog#rdv h3{font-size:clamp(22px,2.6vw,32px);line-height:1.05;margin:0 0 16px}
@@ -321,7 +324,8 @@ dialog::backdrop{background:rgba(19,15,12,.75)}
 .specs span{display:block;color:var(--ch);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 .desc{white-space:pre-line;font-size:15.5px;color:var(--ch)}
 .pcta{background:var(--be);padding:20px;margin-top:22px}
-.pcta strong{display:block;margin-bottom:4px}
+.pcta strong{display:block;margin-bottom:14px}
+input[type=checkbox]{width:18px!important;height:18px;min-width:18px;flex:0 0 18px;margin-left:0;padding:0}
 .pcta .btn{margin:12px 8px 0 0;padding:12px 18px}
 .mls{margin-top:14px;font-size:13px;color:var(--ch)}
 @media (max-width:800px){.dlg{grid-template-columns:1fr;overflow:auto}.gal{min-height:0;aspect-ratio:4/3}}
@@ -635,7 +639,7 @@ function footer(cfg) {
   const c = cfg.courtier;
   const modal = cfg.rendezVous ? `<dialog id="rdv" aria-label="Prendre rendez-vous" style="width:min(760px,96vw)"><button class="close" aria-label="Fermer" onclick="this.closest('dialog').close()">×</button><div class="rdv-tete"><p class="over">Prendre rendez-vous</p><h3>Choisissez le moment qui vous convient</h3><div id="rdvbox"></div></div></dialog>
 <script>(()=>{const d=document.getElementById("rdv"),box=document.getElementById("rdvbox");
-document.addEventListener("click",e=>{const a=e.target.closest("a[data-rdv]");if(!a||!d.showModal)return;e.preventDefault();
+document.addEventListener("click",e=>{const a=e.target.closest("a[data-rdv]");if(!a||!d.showModal||matchMedia("(max-width:760px)").matches)return;e.preventDefault();
 if(!box.firstChild)box.innerHTML=${JSON.stringify(rdvFrame(cfg.rendezVous, 700))};d.showModal()});
 d.addEventListener("click",e=>{if(e.target===d)d.close()})})();</script>
 <script src="https://link.avaclient.com/js/form_embed.js" async></script>` : "";
@@ -662,7 +666,9 @@ const V8 = [
 const v8Grid = () => `<div class="v8">${V8.map(([n, t]) => `<div><b>${n}</b><h3 style="margin:0">${t}</h3></div>`).join("")}</div>`;
 const RDV = (cfg) => cfg.rendezVous || "contact.html?sujet=evaluation";
 const rdvAttrs = (cfg) => (cfg.rendezVous ? ' target="_blank" rel="noopener" data-rdv' : "");
-const rdvFrame = (url, h = 760) => `<iframe src="${esc(url)}" title="Prendre rendez-vous avec Gilles Jr. Dulude" style="width:100%;min-height:${h}px;border:0;overflow:hidden;background:#F9F6F4" scrolling="no" loading="lazy"></iframe>`;
+let rdvN = 0;
+// Le script d'Ava (form_embed.js) ajuste la hauteur seulement si l'iframe a un id « <id du calendrier>_<numéro> ».
+const rdvFrame = (url, h = 760) => `<iframe src="${esc(url)}" id="${esc(String(url).split("/").filter(Boolean).pop())}_${Date.now()}${++rdvN}" title="Prendre rendez-vous avec Gilles Jr. Dulude" style="width:100%;min-height:${h}px;border:0;background:#F9F6F4"></iframe>`;
 
 const TEMOIGNAGES = [
   ["Une aventure que nous trouvions intimidante a été grandement simplifiée. Notre maison s'est vendue en 12 jours au prix demandé.", "Patricia D.", "Vendue en 12 jours"],
@@ -1117,7 +1123,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
  '<button class="btn" type="submit">Recevoir les documents</button><div class="ok" id="docsok"></div></div></form>'+
- '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong>'+esc(courtier.nom)+', '+esc(courtier.titre)+'<div>'+
+ '<div class="pcta" style="background:transparent;border:1px solid var(--line)"><strong>Cette propriété vous intéresse ?</strong><div>'+
  '<a class="btn" href="contact.html?sujet=visite&mls='+encodeURIComponent(cur.id)+'&adresse='+encodeURIComponent(cur.adresse+(cur.ville?", "+cur.ville:""))+'">Demander une visite</a>'+
  (courtier.telephone?'<a class="btn ghost" href="tel:'+courtier.telephone.replace(/[^0-9+]/g,"")+'">'+esc(courtier.telephone)+'</a>':'')+
  (cur.visiteVirtuelle?'<a class="btn ghost" target="_blank" rel="noopener" href="'+esc(cur.visiteVirtuelle)+'">Visite virtuelle</a>':'')+
@@ -1176,7 +1182,7 @@ function pageContact(cfg) {
     </form>
   </div>
   <div>
-    ${cfg.rendezVous ? `<div style="margin-bottom:32px"><p class="over">Le plus simple</p><h3>Réservez un appel avec moi</h3>${rdvFrame(cfg.rendezVous, 700)}</div>` : ""}
+    ${cfg.rendezVous ? `<div style="margin-bottom:32px"><p class="over">Le plus simple</p><h3>Réservez un appel avec moi</h3><div class="rdv-ordi">${rdvFrame(cfg.rendezVous, 700)}</div><p class="rdv-tel"><a class="btn" href="${esc(cfg.rendezVous)}" target="_blank" rel="noopener">Choisir un moment</a></p></div>` : ""}
     <p class="over">Me joindre directement</p>
     <div class="coord">
       ${c.telephone ? `<a href="${telHref(c.telephone)}"><span>Téléphone</span><b>${esc(c.telephone)}</b></a>` : ""}
@@ -1415,6 +1421,7 @@ for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
 for (const [f, e] of TEXTES_RLP) T[norm(f)] = e;
 const dateEn = (iso) => { const d = new Date(iso + "T12:00:00"); return `${["January","February","March","April","May","June","July","August","September","October","November","December"][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`; };
 T[norm("À propos de moi")] = "About me";
+T[norm("Choisir un moment")] = "Pick a time";
 for (const a of ARTICLES_RLP) {
   for (const k of ["cat", "titre", "resume", "intro"]) T[norm(a[k][0])] = a[k][1];
   for (const [f, e] of a.points) T[norm(f)] = e;
