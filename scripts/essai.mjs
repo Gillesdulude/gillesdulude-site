@@ -145,6 +145,11 @@ section{position:relative}
 .e .prop .px{display:block;font-size:26px;font-weight:500;margin:8px 0 4px}
 .e .prop .ad{font-size:14px;color:rgba(249,246,244,.8)}
 .e .tout{margin-top:50px;display:flex;justify-content:flex-end}
+.e .tout-grand{margin-top:56px;display:flex;justify-content:center}
+.e .tout-grand a{display:inline-flex;align-items:center;gap:18px;background:#130F0C;color:#F9F6F4;padding:24px 48px;font-size:14px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;border:1px solid #130F0C;transition:background .25s,color .25s}
+.e .tout-grand a .mono{font-size:20px;transition:transform .25s}
+.e .tout-grand a:hover{background:transparent;color:#130F0C}.e .tout-grand a:hover .mono{transform:translateX(6px)}
+@media (max-width:600px){.e .tout-grand a{width:100%;justify-content:center;padding:22px 20px;box-sizing:border-box}}
 .e .tout a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--ink);padding-bottom:6px}
 .e /* Gilles */
 .gilles{background:var(--stone)}
@@ -246,8 +251,8 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 
 <section class="sec"><div class="wrap">
   <div class="entete">
-    <div><p class="tag">Inscriptions</p><h2 class="cap">À vendre<br>en ce moment.</h2></div>
-    <p>${nb} propriété${nb > 1 ? "s" : ""} inscrite${nb > 1 ? "s" : ""} par Gilles sur la Rive-Sud et ailleurs au Québec.</p>
+    <div><p class="tag">À vendre</p><h2 class="cap">Inscriptions<br>vedettes.</h2></div>
+    <p>Une sélection de propriétés inscrites par Gilles sur la Rive-Sud et ailleurs au Québec.</p>
   </div>
 </div>
   <div class="props">
@@ -255,7 +260,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
       ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}${l.boucle ? `<video class="boucle" muted loop playsinline preload="none" src="${esc(l.boucle)}"></video><span class="vidtag">▶ Vidéo</span>` : ""}
       <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span></div></a>`).join("")}
   </div>
-  <div class="wrap"><div class="tout"><a href="${P}proprietes.html">Toutes les propriétés <span class="mono">→</span></a></div></div>
+  <div class="wrap"><div class="tout-grand"><a href="${P}proprietes.html">Voir toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
 <section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-sourire.webp" alt="Gilles Jr. Dulude"></div><div class="wrap">
