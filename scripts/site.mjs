@@ -28,7 +28,7 @@ const PAGES = [
 const CSS_EPURE = `
 ${PIED_CSS}
 /* ===== Style de la page d'essai appliqué à tout le site ===== */
-:root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--r:0;--warm:#B0ADA6;--be:#B0ADA6;--bc:#F9F6F4;--line:rgba(19,15,12,.16)}
+:root{--nb:#130F0C;--ch:#444444;--gr:#B0ADA6;--r:0;--warm:#EDEDEB;--be:#EDEDEB;--bc:#F9F6F4;--line:rgba(19,15,12,.16)}
 *,*::before,*::after{border-radius:0!important}
 body{background:#F9F6F4}
 .wrap{max-width:1240px;padding:0 40px}
