@@ -1415,7 +1415,7 @@ for (const a of ARTICLES) {
   T[norm(lectureFr(a))] = lectureEn(a);
   for (const [t, f, e] of a.blocs) if (t !== "lien") T[norm(f)] = e;
 }
-const LIENS_EN = { "Voir comment je vous accompagne à l'achat": "See how I guide you when buying", "Voir comment je vous accompagne en investissement": "See how I guide you when investing", "Obtenir une évaluation gratuite de ma propriété": "Get a free evaluation of my property" };
+const LIENS_EN = { "Obtenir une évaluation gratuite": "Get a free evaluation", "Voir comment je vous accompagne à l'achat": "See how I guide you when buying", "Voir comment je vous accompagne en investissement": "See how I guide you when investing", "Obtenir une évaluation gratuite de ma propriété": "Get a free evaluation of my property" };
 for (const [f, e] of Object.entries(LIENS_EN)) T[norm(f)] = e;
 for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
 for (const [f, e] of TEXTES_RLP) T[norm(f)] = e;

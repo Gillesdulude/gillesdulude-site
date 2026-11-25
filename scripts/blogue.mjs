@@ -4,6 +4,38 @@
 
 export const ARTICLES = [
   {
+    slug: "blogue-vendre-en-hiver.html",
+    publie: true,
+    photo: "assets/photos/cuisine2.jpg",
+    date: "2026-11-25",
+    lecture: 4,
+    cat: ["Vendre", "Selling"],
+    titre: ["Vendre en hiver sur la Rive-Sud : pourquoi ne pas attendre le printemps", "Selling in winter on the South Shore: why you don’t have to wait for spring"],
+    resume: [
+      "Beaucoup de propriétaires pensent qu'il faut attendre le printemps pour vendre. Voici pourquoi l'hiver peut être un excellent moment.",
+      "Many owners think they need to wait until spring to sell. Here is why winter can be a great time.",
+    ],
+    blocs: [
+      ["p", "On me pose souvent la question à ce temps-ci de l'année : « Est-ce que je devrais attendre le printemps pour vendre? » La réponse n'est pas toujours oui. L'hiver a des avantages que bien des vendeurs ne voient pas.", "I get this question a lot at this time of year: “Should I wait until spring to sell?” The answer isn’t always yes. Winter has advantages that many sellers don’t see."],
+      ["h2", "Moins de maisons à vendre", "Fewer homes for sale"],
+      ["p", "Beaucoup de propriétaires attendent le printemps. Résultat : il y a souvent moins de propriétés sur le marché en hiver. Votre maison a moins de compétition, et elle ressort plus facilement dans les recherches des acheteurs.", "Many owners wait for spring. As a result, there are often fewer properties on the market in winter. Your home faces less competition, and it stands out more easily in buyers’ searches."],
+      ["h2", "Des acheteurs sérieux", "Serious buyers"],
+      ["p", "Personne ne visite une maison dans la neige par curiosité. Les acheteurs d'hiver sont souvent pressés : une mutation au travail, un bail qui se termine, une famille qui s'agrandit. Ils sont prêts à acheter, pas juste à magasiner.", "Nobody visits a house in the snow out of curiosity. Winter buyers are often in a hurry: a job transfer, a lease that’s ending, a growing family. They’re ready to buy, not just to shop around."],
+      ["h2", "Une maison chaleureuse se vend bien", "A warm home sells well"],
+      ["p", "En hiver, une maison bien éclairée, propre et chaude fait une forte impression. On allume les lumières, on dégage l'entrée et on crée une ambiance accueillante. Les acheteurs s'y voient tout de suite.", "In winter, a bright, clean and warm home makes a strong impression. Turn on the lights, clear the entrance and create a welcoming atmosphere. Buyers picture themselves there right away."],
+      ["h2", "Prouver que la maison tient le coup", "Proving the house holds up"],
+      ["p", "L'hiver, c'est le vrai test d'une maison. Pas de glace sur le toit, des fenêtres sans buée, un sous-sol sec et un chauffage efficace, ce sont des points forts que l'acheteur peut constater lui-même pendant la visite. Ayez vos factures d'énergie à portée de main : elles rassurent.", "Winter is the real test for a house. No ice on the roof, windows without fog, a dry basement and efficient heating are strengths buyers can see for themselves during the visit. Keep your energy bills on hand: they reassure buyers."],
+      ["h2", "Quelques conseils pour vendre en hiver", "A few tips for selling in winter"],
+      ["li", "Déneigez l'entrée, l'escalier et le balcon avant chaque visite.", "Clear the snow from the entrance, stairs and balcony before every visit."],
+      ["li", "Gardez la maison à une température confortable et allumez toutes les lumières.", "Keep the house at a comfortable temperature and turn on all the lights."],
+      ["li", "Prévoyez un endroit pour les bottes et les manteaux à l'entrée.", "Set up a spot for boots and coats at the entrance."],
+      ["li", "Gardez des photos de la cour en été pour montrer le terrain sous son meilleur jour.", "Keep summer photos of the yard to show the lot at its best."],
+      ["h2", "Et ensuite?", "What’s next?"],
+      ["p", "Chaque situation est différente. Le meilleur moment pour vendre dépend surtout de votre projet et de ce qui se passe dans votre secteur. Si vous vous posez la question, parlons-en. Je vous dirai franchement si c'est le bon moment pour vous.", "Every situation is different. The best time to sell depends mostly on your plans and what’s happening in your area. If you’re asking yourself the question, let’s talk. I’ll tell you honestly if it’s the right time for you."],
+      ["lien", "Obtenir une évaluation gratuite", "evaluation.html"],
+    ],
+  },
+  {
     slug: "blogue-visite-oeil-entrepreneur.html",
     date: "2026-11-19",
     lecture: 5,
