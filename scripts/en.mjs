@@ -5,7 +5,7 @@ const MOIS = { janvier: "January", février: "February", mars: "March", avril: "
 const mois = (m) => MOIS[String(m).toLowerCase()] || m;
 
 export const T = {
-  "Comment je peux vous aider.": "How I can help.", "Comment je": "How I", "peux vous aider.": "can help.",
+  "Mes services.": "My services.", "Accompagnement": "Guidance",
   "Le bon prix et une mise en valeur qui vend.": "The right price and staging that sells.",
   "L'œil d'un ancien entrepreneur à chaque visite.": "A former contractor's eye at every visit.",
   "Des immeubles à revenus analysés avant l'offre.": "Income properties analyzed before the offer.",
