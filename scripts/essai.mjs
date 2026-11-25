@@ -13,12 +13,34 @@ const FACADE = {
 };
 
 // Ligne d'horizon de plex et de maisons, pour le bas de page.
-const HORIZON = `<svg class="horizon" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 119 H40 V70 H130 V119 H150 L195 78 L240 119 H260 V52 H360 V119 H380 V84 H450 V60 L490 32 L530 60 V119 H560 V44 H650 V119 H670 L720 74 L770 119 H790 V66 H880 V119 H900 V58 L950 26 L1000 58 V119 H1020 V48 H1110 V119 H1130 L1165 88 L1200 119"/><path d="M285 64 h14 v14 h-14z M321 64 h14 v14 h-14z M285 92 h14 v14 h-14z M321 92 h14 v14 h-14z M585 56 h14 v14 h-14z M611 56 h14 v14 h-14z M585 86 h14 v14 h-14z M611 86 h14 v14 h-14z M1045 60 h14 v14 h-14z M1071 60 h14 v14 h-14z M1045 90 h14 v14 h-14z M1071 90 h14 v14 h-14z"/></svg>`;
+const HORIZON = `<svg class="horizon" viewBox="0 0 1240 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 88 H170 V58 L205 34 L240 58 V88 H262 V44 H342 V88 H360 V62 L392 44 L424 62 V88 H452 V30 H470 V22 H478 V30 H548 V88 H574 V54 L622 26 L670 54 V88 H692 V40 Q692 34 698 34 H770 Q776 34 776 40 V88 H800 V60 L830 46 L860 60 V88 H884 V36 L912 24 H962 L990 36 V88 H1014 V56 L1046 38 L1078 56 V88 H1240"/></svg>`;
 
 
 const ICO_FB = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5H16l.4-3H13.5V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21h3z"/></svg>';
 const ICO_IG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg>';
 // Pied de page commun à toutes les pages (même look que l'accueil).
+
+// Bande photo pleine largeur (logo sur photo assombrie) et trio de photos
+export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section class="bande-photo"><img class="bp-img" src="${P}assets/photos/${img}.jpg" srcset="${P}assets/photos/${img}-m.jpg 900w, ${P}assets/photos/${img}.jpg 2200w" sizes="100vw" alt="" loading="lazy">
+  <div class="bp-txt"><img class="bp-logo" src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude"><img class="bp-rlp" src="${P}assets/rlp-blanc.png" alt="Royal LePage Distinction">
+  <p class="bp-phrase">${phrase}</p>${lien ? `<a class="lien-b" href="${P}${href}">${lien}<span aria-hidden="true">→</span></a>` : ""}</div></section>`;
+export const trioPhotos = (P, imgs) => `<section class="trio-photos">${imgs.map((i) => `<figure><img src="${P}assets/photos/${i}-m.jpg" alt="" loading="lazy"></figure>`).join("")}</section>`;
+export const PHOTO_CSS = `
+.bande-photo{position:relative;min-height:min(78vh,720px);display:flex;align-items:center;justify-content:center;overflow:hidden;background:#130F0C;padding:0!important;color:#F9F6F4;text-align:center}
+.bande-photo .bp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.85) brightness(.42) contrast(1.05);transform:scale(1.04);transition:transform 6s ease}
+.bande-photo:hover .bp-img{transform:scale(1.1)}
+.bande-photo .bp-txt{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:26px;padding:80px 24px}
+.bande-photo .bp-logo{width:min(340px,70vw);height:auto}
+.bande-photo .bp-rlp{height:46px;width:auto;opacity:.9}
+.bande-photo .bp-phrase{font:400 clamp(22px,2.4vw,32px)/1.3 Gantari,system-ui,sans-serif;margin:14px 0 6px;max-width:640px}
+.bande-photo .lien-b{color:#F9F6F4}
+.trio-photos{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-auto-rows:clamp(220px,27vw,400px);gap:6px;padding:0!important;background:#F9F6F4}
+.trio-photos figure{margin:0;overflow:hidden}
+.trio-photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s ease}
+.trio-photos figure:hover img{transform:scale(1.06)}
+@media (max-width:860px){.bande-photo{min-height:520px}.trio-photos{grid-template-columns:1fr 1fr}.trio-photos figure:first-child{grid-column:1/-1}}
+`;
+
 export function piedDePage(cfg, P = "", { horizon = false } = {}) {
   const c = cfg.courtier, r = cfg.reseaux || {};
   const tel = c.telephone || "", telHref = "tel:" + tel.replace(/[^\d+]/g, "");
@@ -26,21 +48,23 @@ export function piedDePage(cfg, P = "", { horizon = false } = {}) {
   return `<footer class="pied">${horizon ? HORIZON : ""}
   <div class="wrap">
     <div><div class="logos"><img src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude"><span class="sep"></span><img src="${P}assets/rlp-mono.png" alt="Royal LePage Distinction"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
-    <div><h4>Navigation</h4><ul><li><a href="${P}index.html">Accueil</a></li><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}blogue.html">Blogue</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
+    <div><h4>Navigation</h4><ul><li><a href="${P}index.html">Accueil</a></li><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}evaluation.html">Évaluation gratuite</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}blogue.html">Blogue</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
     <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul>${socs ? `<h4 style="margin-top:28px">Suivez-moi</h4><ul>${socs}</ul>` : ""}</div>
     <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
   </div>
   <div class="bas"><div class="wrap"><span>© ${new Date().getFullYear()} Gilles Jr. Dulude, courtier immobilier résidentiel et commercial. Royal LePage Distinction, agence immobilière.</span><a href="${P}confidentialite.html">Politique de confidentialité</a></div></div>
 </footer>`;
 }
-export const PIED_CSS = `footer.pied{background:#130F0C;color:rgba(249,246,244,.7);font-size:14px;padding:0}
-footer.pied .horizon{display:block;width:100%;height:120px}
-footer.pied .horizon path{fill:none;stroke:rgba(249,246,244,.3);stroke-width:1.2;vector-effect:non-scaling-stroke}
+export const PIED_CSS = `${PHOTO_CSS}
+footer.pied{background:#130F0C;color:rgba(249,246,244,.7);font-size:14px;padding:0}
+footer.pied .horizon{display:block;width:min(1240px,100%);height:auto;margin:0 auto;padding:0 40px;box-sizing:border-box;overflow:visible}
+footer.pied .horizon path{fill:none;stroke:rgba(249,246,244,.28);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 footer.pied>.wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-top:60px;padding-bottom:40px;border-top:1px solid rgba(249,246,244,.14)}
 footer.pied a{color:rgba(249,246,244,.7);text-decoration:none}footer.pied a:hover{color:#F9F6F4}
 footer.pied h4{font-family:Gantari,system-ui,sans-serif;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,244,.5);margin:0 0 16px}
 footer.pied ul{margin:0;padding:0}footer.pied li{list-style:none;margin-bottom:8px;padding:0}
 footer.pied .horizon+.wrap{border-top:0}
+@media (max-width:860px){footer.pied .horizon,.e .horizon{height:64px;width:100%;padding:0}}
 footer.pied .logos{display:flex;align-items:center;gap:18px;margin-bottom:22px}footer.pied .logos img{height:26px;width:auto;margin:0}
 footer.pied .logos .sep{width:1px;height:26px;background:rgba(249,246,244,.25)}
 footer.pied .soc{display:inline-flex;align-items:center;gap:10px}
@@ -175,8 +199,8 @@ section{position:relative}
 .final{background:var(--ink);color:var(--paper);text-align:left;padding:120px 0 0}
 .e .final h2{font-size:clamp(32px,4vw,56px);max-width:900px}
 .e .final .btns{display:flex;gap:14px;flex-wrap:wrap;margin:44px 0 90px}
-.e .horizon{display:block;width:100%;height:120px}
-.e .horizon path{fill:none;stroke:rgba(249,246,244,.3);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.e .horizon{display:block;width:min(1240px,100%);height:auto;margin:0 auto;padding:0 40px;box-sizing:border-box}
+.e .horizon path{fill:none;stroke:rgba(249,246,244,.28);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .e footer{background:var(--ink);color:rgba(249,246,244,.7);font-size:14px;border-top:1px solid var(--lineD)}
 .e footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-top:60px;padding-bottom:40px}
 .e footer h4{font-family:Gantari,system-ui,sans-serif;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,244,.5);margin-bottom:16px}
@@ -236,6 +260,8 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
   </div>
 </div></section>
 
+${bandePhoto(P, "cuisine", "Votre prochain chapitre commence ici.", "Évaluation gratuite", "evaluation.html")}
+
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Fiche technique</p><h2 class="cap">Le marché,<br>${esc((m.moisTitre || m.mois || "").toLowerCase())}.</h2></div>
@@ -259,6 +285,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="wrap"><div class="tout-grand"><a href="${P}proprietes.html">Voir toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
+${trioPhotos(P, ["escalier", "salle-a-manger", "verriere"])}
 <section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-sourire.webp" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>

@@ -2,7 +2,7 @@
 // Les inscriptions viennent de build.mjs (déjà filtrées : seulement les fiches en vigueur).
 
 import { T, R, JS } from "./en.mjs";
-import { pageEssai, piedDePage, PIED_CSS } from "./essai.mjs";
+import { pageEssai, piedDePage, PIED_CSS, bandePhoto, trioPhotos } from "./essai.mjs";
 import { ARTICLES, LIENS_RLP, TEXTES as TEXTES_BLOGUE, ARTICLES_RLP, TEXTES_RLP } from "./blogue.mjs";
 const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -307,11 +307,23 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .hero.b h1 em{font-style:normal;font-family:inherit}
 .hero.b.page h1{margin-bottom:24px}
 .hero.b.page .lead{color:rgba(249,246,244,.72);font-size:19px;max-width:520px;margin:0}
-.hero.b.page .wrap{grid-template-columns:1fr!important;padding-top:120px!important;padding-bottom:110px}
+.hero.b.page .wrap{grid-template-columns:1fr!important;padding-top:76px!important;padding-bottom:72px}
 .hero.b.page .txt{max-width:760px}
-.hero.b.page .motif{width:400px;top:50%;transform:translateY(-50%);right:max(8px,calc((100vw - 1240px)/2 + 8px))}
-@media (max-width:860px){.hero.b.page .motif{width:240px;right:5px}}
-@media (max-width:860px){.hero.b.page .wrap{padding-top:72px!important;padding-bottom:64px}}
+.hero.b.page .motif{width:760px;top:-150px;transform:none;right:max(-120px,calc((100vw - 1240px)/2 - 120px));opacity:.16}
+@media (max-width:860px){.hero.b.page .motif{width:420px;top:-90px;right:-150px}}
+@media (max-width:860px){.hero.b.page .wrap{padding-top:52px!important;padding-bottom:48px}}
+.cta-eval{background:var(--bc);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cta-eval .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
+.cta-eval h2{margin:0 0 14px}.cta-eval .lead{margin:0}
+.cta-eval .lien-b{color:var(--nb)}
+.prix-ligne{padding:72px 0!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.prix-ligne .over{margin-bottom:30px}
+.prix-ligne ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;row-gap:22px}
+.prix-ligne li{display:flex;flex-direction:column;gap:6px;padding:0 30px;border-left:1px solid var(--line)}
+.prix-ligne li:first-child{padding-left:0;border-left:0}
+.prix-ligne .an{font:500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;color:var(--ch)}
+.prix-ligne .nm{font:500 17px/1.25 Gantari,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--nb)}
+@media (max-width:860px){.prix-ligne li{padding:0 18px}.prix-ligne .nm{font-size:14px}}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
@@ -589,10 +601,9 @@ const avisGoogle = () => `<section><div class="wrap">
   <p style="margin-top:28px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir les avis sur Google</a></p>
 </div></section>`;
 
-const prixSection = () => `<section style="background:var(--warm)"><div class="wrap">
+const prixSection = () => `<section class="prix-ligne"><div class="wrap">
   <p class="over">Distinctions Royal LePage</p>
-  <h2 style="margin-bottom:28px">Reconnu <em>année après année.</em></h2>
-  <div class="prix">${PRIX.map(([n, y]) => `<div><b>${y}</b><span>${n}</span></div>`).join("")}</div>
+  <ul>${PRIX.map(([n, y]) => `<li><span class="an">${y}</span><span class="nm">${n}</span></li>`).join("")}</ul>
 </div></section>`;
 
 function head(cfg, title, desc, extra = "") {
@@ -896,6 +907,7 @@ function pageAPropos(cfg) {
 ${prixSection()}
 ${avisGoogle()}
 ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+${bandePhoto("", "salle-de-bain", "Le souci du détail, du chantier jusqu'au notaire.", "Réserver un appel", "contact.html")}
 ` + footer(cfg) + end;
 }
 
@@ -925,49 +937,14 @@ function pageVendre(cfg) {
   <div class="btns" style="margin-top:32px"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a></div>
 </div></section>
 
+${bandePhoto("", "escalier", "Chaque propriété mérite d'être vue sous son meilleur jour.", "Obtenir mon évaluation", "evaluation.html")}
+
 ${temoignages()}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
-<section id="evaluation"><div class="wrap">
-  <div style="margin-bottom:28px"><p class="over">Évaluation gratuite</p><h2>Combien vaut <em>votre propriété?</em></h2>
-  <p class="lead">Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p>
-  <p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
-  <form class="form evalform" id="evalf">
-    <h3 class="evh">À propos de votre propriété</h3>
-    <div class="row3"><label>Année de construction *<input name="annee" type="number" inputmode="numeric" min="1800" max="2030" required></label>
-    <label>Superficie habitable (pc)<input name="superficie" type="number" inputmode="numeric" min="0" placeholder="pc"></label>
-    <label>Genre de propriété<select name="genre"><option>Inconnu</option><option>Maison à étage</option><option>Maison à un étage et demi</option><option>Copropriété</option><option>Maison mobile</option><option>Maison à paliers multiples</option><option>Maison de plain-pied</option><option>Duplex</option><option>Triplex</option><option>Quadruplex</option><option>Quintuplex</option><option>Commerciale</option><option>Industrielle</option><option>Entreprise (fonds de commerce)</option><option>Chalet</option><option>Ferme</option><option>Fermette</option><option>Appartement</option><option>Loft/Studio</option><option>Autre</option></select></label></div>
-    <label>Avez-vous amélioré ou rénové votre demeure depuis votre acquisition?<textarea name="renovations" style="min-height:90px"></textarea></label>
-    <div class="grp"><span class="glab">Caractéristiques qui s'appliquent à la propriété</span><div class="chks"><label class="chk"><input type="checkbox" name="caract" value="Sous-sol aménagé"> Sous-sol aménagé</label><label class="chk"><input type="checkbox" name="caract" value="Piscine hors terre"> Piscine hors terre</label><label class="chk"><input type="checkbox" name="caract" value="Piscine creusée"> Piscine creusée</label><label class="chk"><input type="checkbox" name="caract" value="Stationnement/garage"> Stationnement/garage</label><label class="chk"><input type="checkbox" name="caract" value="Foyer-Poêle"> Foyer-Poêle</label></div></div>
-    <div class="row4"><label class="span2">No civique et rue *<input name="adresse" required autocomplete="street-address"></label>
-    <label>Ville *<input name="ville" required autocomplete="address-level2" placeholder="Saisissez votre ville"></label>
-    <label>Code postal *<input name="codepostal" required autocomplete="postal-code"></label></div>
-    <h3 class="evh">Les pièces</h3>
-    <div class="row5"><label>Pièce(s) *<input name="pieces" type="number" min="0" required></label>
-    <label>Chambre(s) hors-sol *<input name="ch_hs" type="number" min="0" required></label>
-    <label>Chambre(s) sous-sol<input name="ch_ss" type="number" min="0"></label>
-    <label>Salle(s) de bain<input name="sdb" type="number" min="0"></label>
-    <label>Salle(s) d'eau<input name="sde" type="number" min="0"></label></div>
-    <h3 class="evh">Contact</h3>
-    <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
-    <label>Votre nom *<input name="nomfamille" required autocomplete="family-name" placeholder="Entrez votre nom"></label>
-    <label>Votre téléphone *<input name="telephone" type="tel" required autocomplete="tel" placeholder="Ex. : 555-000-0000"></label>
-    <label>Votre courriel *<input name="courriel" type="email" required autocomplete="email" placeholder="Ex. : votrenom@domaine.com"></label></div>
-    <div class="grp"><span class="glab">Disponibilité d'appel</span><div class="chks"><label class="chk"><input type="checkbox" name="dispo" value="AM"> AM</label><label class="chk"><input type="checkbox" name="dispo" value="PM"> PM</label><label class="chk"><input type="checkbox" name="dispo" value="Soirée"> Soirée</label></div></div>
-    <h3 class="evh">Message</h3>
-    <label>Avez-vous autre chose à mentionner?<textarea name="autre" style="min-height:90px"></textarea></label>
-    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour préparer mon évaluation et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
-    <div><button class="btn" type="submit">Recevoir mon évaluation</button></div>
-    <div class="ok" id="evalok"></div>
-  </form>
-  <script>(()=>{const f=document.getElementById("evalf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
-  f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
-   const car=fd.getAll("caract").join(", "),dis=fd.getAll("dispo").join(", ");
-   const resume="Évaluation gratuite : "+d.adresse+", "+d.ville+" "+d.codepostal+" | "+d.genre+" | Année "+d.annee+(d.superficie?" | "+d.superficie+" pc":"")+" | "+d.pieces+" pièces, "+d.ch_hs+" ch. hors-sol"+(d.ch_ss?", "+d.ch_ss+" ch. sous-sol":"")+(d.sdb?", "+d.sdb+" sdb":"")+(d.sde?", "+d.sde+" s. d'eau":"")+(car?" | "+car:"")+(d.renovations?" | Rénovations : "+d.renovations:"")+(dis?" | Rappel : "+dis:"")+(d.autre?" | "+d.autre:"");
-   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,adresse:d.adresse,ville:d.ville,codepostal:d.codepostal,province:"Québec",pays:"Canada",genre:d.genre,annee:d.annee,superficie:d.superficie||"",pieces:d.pieces,chambres_hors_sol:d.ch_hs,chambres_sous_sol:d.ch_ss||"",salles_de_bain:d.sdb||"",salles_eau:d.sde||"",caracteristiques:car,renovations:d.renovations||"",disponibilite:dis,autre:d.autre||"",message:resume,demande:"evaluation gratuite",tag:"évaluation gratuite - site web",source:"site web gillesdulude.com",consentement:true};
-   const k=document.getElementById("evalok");
-   if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Je prépare votre évaluation et je vous reviens rapidement.";k.style.display="block";f.reset()});return}
-   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Évaluation gratuite : "+d.adresse)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" "+d.courriel+" "+d.telephone+" | "+resume)});})();</script>
-</div>
+<section class="cta-eval"><div class="wrap">
+  <div><p class="over">Évaluation gratuite</p><h2>Combien vaut votre propriété ?</h2>
+  <p class="lead">Une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p></div>
+  <a class="lien-b" href="evaluation.html">Obtenir mon évaluation<span aria-hidden="true">→</span></a>
 </div></section>
 
 ` + footer(cfg) + end;
@@ -1011,6 +988,7 @@ function pageAcheter(cfg) {
 ${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un multilogement</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Réserver un appel", "contact.html")}
 ` + footer(cfg) + end;
 }
 
@@ -1079,11 +1057,12 @@ f.addEventListener("input",calc);calc();})();</script>
 <section><div class="wrap"><div class="cta-warm" style="text-align:left;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
   <div><p class="over">Vous vendez un immeuble?</p><h2>Un dossier clair <em>vend plus vite.</em></h2>
   <p class="lead" style="margin:0">Je prépare pour les acheteurs un dossier complet : revenus, dépenses, baux et état de l'immeuble. Un investisseur qui comprend les chiffres fait une offre plus vite.</p></div>
-  <div class="btns"><a class="btn" href="vendre.html#evaluation">Évaluer mon immeuble</a><a class="btn ghost" href="marche.html#stats">Recevoir les chiffres chaque mois</a></div>
+  <div class="btns"><a class="btn" href="evaluation.html">Évaluer mon immeuble</a><a class="btn ghost" href="marche.html#stats">Recevoir les chiffres chaque mois</a></div>
 </div></div></section>
 
 ${faqSection(faq, "Les questions <em>des investisseurs.</em>", "var(--warm)")}
 ${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde ensemble s'il tient la route, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+${bandePhoto("", "facade", "Des immeubles à revenus qui tiennent la route.", "Réserver un appel", "contact.html")}
 ` + footer(cfg) + end;
 }
 
@@ -1139,7 +1118,7 @@ function open(id){cur=listings.find(l=>l.id===id);if(!cur)return;pi=0;
  '<div class="idx" id="gidx"></div>'+(cur.video?'<button class="voirvid" type="button">▶ Voir la vidéo</button>':'')+'</div>'+(cur.photos.length>1?'<div class="thumbs" id="thumbs">'+cur.photos.map((p,i)=>'<img loading="lazy" data-i="'+i+'" src="'+esc(p.url)+'" alt="">').join("")+'</div>':'')+'<div class="info"><div class="main"><p class="over" style="margin:0 0 6px">'+esc(kind(cur))+' · '+esc(cur.statutTexte)+'</p>'+
  '<div class="price">'+priceOf(cur)+'</div><div class="addr">'+esc(cur.adresse)+'</div><div class="city">'+esc([cur.ville,cur.codePostal].filter(Boolean).join(", "))+'</div>'+
  '<div class="specs">'+spec("Logements",cur.logements)+spec("Chambres",cur.chambres)+spec("Salles de bain",cur.sallesDeBain)+spec("Salles d'eau",cur.sallesEau)+spec("Superficie habitable",cur.superficie)+spec("Terrain",cur.terrain)+spec("Année de construction",cur.anneeConstruction)+'</div>'+
- '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+(cur.vendu?'<div class="pcta"><strong>Cette propriété est vendue.</strong><span class="note">Vous pensez vendre une propriété semblable? Je vous dis combien elle vaut, sans engagement.</span><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="vendre.html#evaluation">Évaluation gratuite</a><a class="btn ghost" href="contact.html">Me joindre</a></div></div>':'')+
+ '<div class="desc">'+esc(cur.description)+'</div>'+det(cur.details)+(cur.lien?'<a class="mlslink" target="_blank" rel="noopener" href="'+esc(cur.lien)+'">No MLS '+esc(cur.id)+' · Voir l&#39;annonce complète ↗</a>':'<div class="mls">No MLS '+esc(cur.id)+'</div>')+'</div><div class="side">'+(cur.vendu?'<div class="pcta"><strong>Cette propriété est vendue.</strong><span class="note">Vous pensez vendre une propriété semblable? Je vous dis combien elle vaut, sans engagement.</span><div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn" href="evaluation.html">Évaluation gratuite</a><a class="btn ghost" href="contact.html">Me joindre</a></div></div>':'')+
  '<form class="pcta docs" id="docs"><strong>Recevez tous les documents de cette propriété</strong><span class="note">Fiche descriptive, déclaration du vendeur, certificat, taxes et plus, envoyés par courriel.</span>'+
  '<div class="form" style="margin-top:12px;gap:10px"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px"><input name="prenom" placeholder="Prénom" required autocomplete="given-name"><input name="nomfamille" placeholder="Nom" required autocomplete="family-name"></div><input name="courriel" type="email" placeholder="Courriel" required autocomplete="email"><input name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel">'+
  '<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:13px"><input type="checkbox" required style="margin-top:3px"><span> J&#39;accepte que Gilles Jr. Dulude utilise ces renseignements pour m&#39;envoyer les documents et faire un suivi au sujet de cette propriété. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>'+
@@ -1645,6 +1624,54 @@ ${ANTI_ROBOT_JS}
 </body></html>`;
 }
 
+function pageEvaluation(cfg) {
+  return head(cfg, "Évaluation gratuite | Gilles Jr. Dulude, courtier immobilier", "Combien vaut votre propriété ? Recevez une évaluation gratuite et sans engagement de Gilles Jr. Dulude, courtier immobilier sur la Rive-Sud.") +
+    header(cfg, "evaluation.html") +
+    pageHero("Évaluation gratuite", "Combien vaut votre propriété ?", "Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.") + `
+<section id="evaluation"><div class="wrap">
+  <div style="margin-bottom:28px"><p class="note">Vous préférez en parler? <a href="${RDV(cfg)}"${rdvAttrs(cfg)} style="text-decoration:underline">Réservez 15 minutes</a> ou appelez au ${esc(cfg.courtier.telephone)}.</p></div>
+  <form class="form evalform" id="evalf">
+    <h3 class="evh">À propos de votre propriété</h3>
+    <div class="row3"><label>Année de construction *<input name="annee" type="number" inputmode="numeric" min="1800" max="2030" required></label>
+    <label>Superficie habitable (pc)<input name="superficie" type="number" inputmode="numeric" min="0" placeholder="pc"></label>
+    <label>Genre de propriété<select name="genre"><option>Inconnu</option><option>Maison à étage</option><option>Maison à un étage et demi</option><option>Copropriété</option><option>Maison mobile</option><option>Maison à paliers multiples</option><option>Maison de plain-pied</option><option>Duplex</option><option>Triplex</option><option>Quadruplex</option><option>Quintuplex</option><option>Commerciale</option><option>Industrielle</option><option>Entreprise (fonds de commerce)</option><option>Chalet</option><option>Ferme</option><option>Fermette</option><option>Appartement</option><option>Loft/Studio</option><option>Autre</option></select></label></div>
+    <label>Avez-vous amélioré ou rénové votre demeure depuis votre acquisition?<textarea name="renovations" style="min-height:90px"></textarea></label>
+    <div class="grp"><span class="glab">Caractéristiques qui s'appliquent à la propriété</span><div class="chks"><label class="chk"><input type="checkbox" name="caract" value="Sous-sol aménagé"> Sous-sol aménagé</label><label class="chk"><input type="checkbox" name="caract" value="Piscine hors terre"> Piscine hors terre</label><label class="chk"><input type="checkbox" name="caract" value="Piscine creusée"> Piscine creusée</label><label class="chk"><input type="checkbox" name="caract" value="Stationnement/garage"> Stationnement/garage</label><label class="chk"><input type="checkbox" name="caract" value="Foyer-Poêle"> Foyer-Poêle</label></div></div>
+    <div class="row4"><label class="span2">No civique et rue *<input name="adresse" required autocomplete="street-address"></label>
+    <label>Ville *<input name="ville" required autocomplete="address-level2" placeholder="Saisissez votre ville"></label>
+    <label>Code postal *<input name="codepostal" required autocomplete="postal-code"></label></div>
+    <h3 class="evh">Les pièces</h3>
+    <div class="row5"><label>Pièce(s) *<input name="pieces" type="number" min="0" required></label>
+    <label>Chambre(s) hors-sol *<input name="ch_hs" type="number" min="0" required></label>
+    <label>Chambre(s) sous-sol<input name="ch_ss" type="number" min="0"></label>
+    <label>Salle(s) de bain<input name="sdb" type="number" min="0"></label>
+    <label>Salle(s) d'eau<input name="sde" type="number" min="0"></label></div>
+    <h3 class="evh">Contact</h3>
+    <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
+    <label>Votre nom *<input name="nomfamille" required autocomplete="family-name" placeholder="Entrez votre nom"></label>
+    <label>Votre téléphone *<input name="telephone" type="tel" required autocomplete="tel" placeholder="Ex. : 555-000-0000"></label>
+    <label>Votre courriel *<input name="courriel" type="email" required autocomplete="email" placeholder="Ex. : votrenom@domaine.com"></label></div>
+    <div class="grp"><span class="glab">Disponibilité d'appel</span><div class="chks"><label class="chk"><input type="checkbox" name="dispo" value="AM"> AM</label><label class="chk"><input type="checkbox" name="dispo" value="PM"> PM</label><label class="chk"><input type="checkbox" name="dispo" value="Soirée"> Soirée</label></div></div>
+    <h3 class="evh">Message</h3>
+    <label>Avez-vous autre chose à mentionner?<textarea name="autre" style="min-height:90px"></textarea></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour préparer mon évaluation et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
+    <div><button class="btn" type="submit">Recevoir mon évaluation</button></div>
+    <div class="ok" id="evalok"></div>
+  </form>
+  <script>(()=>{const f=document.getElementById("evalf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
+  f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
+   const car=fd.getAll("caract").join(", "),dis=fd.getAll("dispo").join(", ");
+   const resume="Évaluation gratuite : "+d.adresse+", "+d.ville+" "+d.codepostal+" | "+d.genre+" | Année "+d.annee+(d.superficie?" | "+d.superficie+" pc":"")+" | "+d.pieces+" pièces, "+d.ch_hs+" ch. hors-sol"+(d.ch_ss?", "+d.ch_ss+" ch. sous-sol":"")+(d.sdb?", "+d.sdb+" sdb":"")+(d.sde?", "+d.sde+" s. d'eau":"")+(car?" | "+car:"")+(d.renovations?" | Rénovations : "+d.renovations:"")+(dis?" | Rappel : "+dis:"")+(d.autre?" | "+d.autre:"");
+   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,adresse:d.adresse,ville:d.ville,codepostal:d.codepostal,province:"Québec",pays:"Canada",genre:d.genre,annee:d.annee,superficie:d.superficie||"",pieces:d.pieces,chambres_hors_sol:d.ch_hs,chambres_sous_sol:d.ch_ss||"",salles_de_bain:d.sdb||"",salles_eau:d.sde||"",caracteristiques:car,renovations:d.renovations||"",disponibilite:dis,autre:d.autre||"",message:resume,demande:"evaluation gratuite",tag:"évaluation gratuite - site web",source:"site web gillesdulude.com",consentement:true};
+   const k=document.getElementById("evalok");
+   if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Je prépare votre évaluation et je vous reviens rapidement.";k.style.display="block";f.reset()});return}
+   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Évaluation gratuite : "+d.adresse)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" "+d.courriel+" "+d.telephone+" | "+resume)});})();</script>
+</div>
+</div></section>
+
+` + footer(cfg) + end;
+}
+
 function rendrePages(cfg, listings, banner) {
   const pages = {
     "index.html": accueilEssai(cfg, listings),
@@ -1655,6 +1682,7 @@ function rendrePages(cfg, listings, banner) {
     "proprietes.html": pageProprietes(cfg, listings),
     "marche.html": pageMarche(cfg),
     "contact.html": pageContact(cfg),
+    "evaluation.html": pageEvaluation(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
     "blogue.html": pageBlogue(cfg),
     "liens.html": pageLiens(cfg),
