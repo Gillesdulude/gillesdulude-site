@@ -227,7 +227,7 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
 
 <section class="sec"><div class="wrap">
   <div class="entete">
-    <div><p class="tag">Services</p><h2 class="cap">Comment je<br>peux vous aider.</h2></div>
+    <div><p class="tag">Accompagnement</p><h2 class="cap">Mes services.</h2></div>
   </div>
   <div class="services">
     <a href="${P}vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>Le bon prix et une mise en valeur qui vend.</p><span class="voir">Voir <span class="mono">→</span></span></a>
