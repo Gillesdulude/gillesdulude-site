@@ -772,7 +772,6 @@ function pageAccueil(cfg, listings) {
       <a class="rlp-hero" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
       <p class="over">Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</p>
       <h1 style="text-transform:uppercase;letter-spacing:.01em">Vendre, acheter ou investir sur la Rive-Sud.</h1>
-      <p class="lead">Un ancien entrepreneur devenu courtier, qui connaît le bâtiment et les chiffres. Je m'adapte à vous, pas l'inverse.</p>
       <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="vendre.html#evaluation">Évaluation gratuite</a></div>
     </div>
     <div class="photo detoure"><img src="assets/gilles-hero-detoure.webp" alt="Gilles Jr. Dulude" width="870" height="1100"></div>
@@ -1550,7 +1549,7 @@ function pageLiens(cfg) {
     mail: '<svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.6L4.6 7H4v.5l8 6.1 8-6.1V7h-.6z"/></svg>',
     tel: '<svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>',
   };
-  const tuile = (cls, img, pos, lab, titre, attrs) => `<a class="t ${cls}" ${attrs}><img src="assets/liens/${img}" alt="" style="object-position:${pos}" loading="lazy"><span class="a" aria-hidden="true">↗</span><span class="x"><span class="l">${lab}</span><span class="h">${titre}</span></span></a>`;
+  const tuile = (cls, img, pos, lab, titre, attrs) => `<a class="t ${cls}" ${attrs}><img src="assets/liens/${img}" alt="" style="object-position:${pos}" loading="lazy"><span class="x"><span class="l">${lab}</span><span class="h">${titre}</span></span></a>`;
   return `<!DOCTYPE html>
 <html lang="fr-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gilles Jr. Dulude | Courtier immobilier</title>
@@ -1592,7 +1591,7 @@ dialog{border:0;padding:0;width:100%;max-width:480px;margin:auto auto 0;max-heig
 ${tuile("big", "vendre.jpg", "50% 45%", "Vendre", "Combien vaut ma propriété ?", 'href="#" data-f="vendre"')}
 ${tuile("", "acheter.jpg", "45% 50%", "Acheter", "Trouver ma propriété", 'href="#" data-f="acheter"')}
 ${tuile("", "investir.jpg", "50% 50%", "Investir", "Immeubles à revenus", 'href="#" data-f="investir"')}
-<a class="t app" href="${esc(RDV(cfg))}" target="_blank" rel="noopener"><img src="assets/gilles.jpg" alt="" loading="lazy"><span class="a" aria-hidden="true">↗</span><span class="x"><span class="l">Une question ?</span><span class="h">Réserver un appel avec Gilles</span></span></a>
+<a class="t app" href="${esc(RDV(cfg))}" target="_blank" rel="noopener"><img src="assets/gilles.jpg" alt="" loading="lazy"><span class="x"><span class="l">Une question ?</span><span class="h">Réserver un appel avec Gilles</span></span></a>
 </div>
 <div class="rlp"><img src="assets/liens/rlp-rouge.png" alt="Royal LePage Distinction"><small>Agence immobilière<br>Franchisé indépendant et autonome</small></div>
 </main>
