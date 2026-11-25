@@ -1540,6 +1540,90 @@ ${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagemen
 ` + footer(cfg) + end;
 }
 
+
+// ---------- Page de liens (bio Instagram / Facebook) ----------
+function pageLiens(cfg) {
+  const AVA = JSON.stringify(cfg.ava?.webhook || "");
+  const so = {
+    fb: '<svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.5V14h2.7v8z"/></svg>',
+    ig: '<svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.1"/></svg>',
+    mail: '<svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.6L4.6 7H4v.5l8 6.1 8-6.1V7h-.6z"/></svg>',
+    tel: '<svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>',
+  };
+  const tuile = (cls, img, pos, lab, titre, attrs) => `<a class="t ${cls}" ${attrs}><img src="assets/liens/${img}" alt="" style="object-position:${pos}" loading="lazy"><span class="a" aria-hidden="true">↗</span><span class="x"><span class="l">${lab}</span><span class="h">${titre}</span></span></a>`;
+  return `<!DOCTYPE html>
+<html lang="fr-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gilles Jr. Dulude | Courtier immobilier</title>
+<meta name="description" content="Vendre, acheter ou investir sur la Rive-Sud avec Gilles Jr. Dulude, courtier immobilier, Royal LePage Distinction.">
+<meta property="og:title" content="Gilles Jr. Dulude | Courtier immobilier"><meta property="og:image" content="https://gillesdulude.com/assets/partage.jpg">
+<link rel="icon" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gantari:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html{background:#fff}body{font-family:Gantari,Arial,sans-serif;color:#130F0C;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}.pg{max-width:480px;margin:0 auto;padding-bottom:34px}
+.top{position:relative;height:96vw;max-height:440px;overflow:hidden}.top .m{position:absolute;left:-15%;top:-6%;width:130%;opacity:.9}
+.top .p{position:absolute;left:50%;transform:translateX(-50%);bottom:0;height:97%;max-width:none}.top::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(rgba(255,255,255,0),#fff)}
+.logo{display:block;width:88%;max-width:400px;margin:6px auto 0}
+.so{display:flex;justify-content:center;gap:28px;margin:20px 0 22px}.so a{width:26px;height:26px;display:block}.so svg{width:100%;height:100%;fill:#130F0C;color:#130F0C}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px}
+.t{position:relative;aspect-ratio:1/1.15;overflow:hidden;background:#130F0C;display:block;cursor:pointer}
+.t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}.t:hover img{transform:scale(1.04)}
+.t::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(19,15,12,0) 35%,rgba(19,15,12,.85))}
+.x{position:absolute;left:14px;right:14px;bottom:14px;z-index:2;color:#F9F6F4;display:block}
+.l{display:block;font-weight:600;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;opacity:.85}
+.h{display:block;font-weight:800;font-size:19px;line-height:1.1;margin-top:5px}
+.a{position:absolute;top:12px;right:12px;z-index:2;width:30px;height:30px;border:1px solid rgba(249,246,244,.8);color:#F9F6F4;display:flex;align-items:center;justify-content:center;font-size:15px}
+.big{grid-column:1/-1;aspect-ratio:2/1}.app{grid-column:1/-1;aspect-ratio:2.4/1}.app img{left:auto;width:58%;object-position:50% 18%}
+.rlp{text-align:center;margin-top:30px}.rlp img{height:52px;display:block;margin:0 auto}.rlp small{display:block;font-size:10px;line-height:13px;color:#444;margin-top:6px}
+dialog{border:0;padding:0;width:100%;max-width:480px;margin:auto auto 0;max-height:92vh;background:#fff;color:#130F0C}dialog::backdrop{background:rgba(19,15,12,.6)}
+.f{padding:26px 22px 28px;position:relative}.f h2{font-weight:800;font-size:22px;line-height:1.15;margin:4px 30px 6px 0}.f .sl{font-weight:600;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:#444}
+.f p.i{font-size:14px;color:#444;margin-bottom:16px}.f label{display:block;font-weight:600;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;margin:12px 0 5px}
+.f input,.f select{width:100%;font:inherit;font-size:16px;padding:12px;border:1px solid #B0ADA6;border-radius:0;background:#fff;color:#130F0C}
+.f .ck{display:flex;gap:10px;align-items:flex-start;font-size:13px;text-transform:none;letter-spacing:0;font-weight:400;margin-top:16px}.f .ck input{width:18px;height:18px;flex:none;margin-top:1px}
+.f button[type=submit]{width:100%;margin-top:18px;background:#130F0C;color:#F9F6F4;border:0;padding:16px;font:inherit;font-weight:600;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+.f .fx{position:absolute;top:16px;right:14px;background:none;border:0;font-size:26px;line-height:1;cursor:pointer;color:#130F0C}.f .r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ok{display:none;padding:40px 22px;text-align:center}.ok h2{font-weight:800;font-size:22px;margin-bottom:8px}
+</style></head><body><main class="pg">
+<div class="top"><img class="m" src="assets/liens/motif.png" alt=""><img class="p" src="assets/liens/gilles.webp" alt="Gilles Jr. Dulude"></div>
+<a href="index.html"><img class="logo" src="assets/logo-h-dark.png" alt="Gilles Jr. Dulude, courtier immobilier"></a>
+<nav class="so"><a href="https://www.facebook.com/GillesJrDulude/" target="_blank" rel="noopener" aria-label="Facebook">${so.fb}</a><a href="https://www.instagram.com/gillesjrdulude" target="_blank" rel="noopener" aria-label="Instagram">${so.ig}</a><a href="mailto:info@gillesdulude.com" aria-label="Courriel">${so.mail}</a><a href="tel:+14507001533" aria-label="Téléphone">${so.tel}</a></nav>
+<div class="g">
+${tuile("big", "vendre.jpg", "50% 45%", "Vendre", "Combien vaut ma propriété ?", 'href="#" data-f="vendre"')}
+${tuile("", "acheter.jpg", "45% 50%", "Acheter", "Trouver ma propriété", 'href="#" data-f="acheter"')}
+${tuile("", "investir.jpg", "50% 50%", "Investir", "Immeubles à revenus", 'href="#" data-f="investir"')}
+<a class="t app" href="${esc(RDV(cfg))}" target="_blank" rel="noopener"><img src="assets/gilles.jpg" alt="" loading="lazy"><span class="a" aria-hidden="true">↗</span><span class="x"><span class="l">Une question ?</span><span class="h">Réserver un appel avec Gilles</span></span></a>
+</div>
+<div class="rlp"><img src="assets/liens/rlp-rouge.png" alt="Royal LePage Distinction"><small>Agence immobilière<br>Franchisé indépendant et autonome</small></div>
+</main>
+<dialog id="dlg"><form class="f" id="lf"><button type="button" class="fx" aria-label="Fermer">×</button>
+<div class="sl" id="lsl"></div><h2 id="lh"></h2><p class="i" id="li"></p>
+<div id="lx"></div>
+<div class="r2"><div><label>Prénom *</label><input name="prenom" required autocomplete="given-name"></div><div><label>Nom *</label><input name="nomfamille" required autocomplete="family-name"></div></div>
+<label>Téléphone *</label><input name="telephone" type="tel" required autocomplete="tel">
+<label>Courriel *</label><input name="courriel" type="email" required autocomplete="email">
+<label class="ck"><input type="checkbox" required><span>J'accepte que Gilles Jr. Dulude utilise ces renseignements pour me répondre et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
+<button type="submit">Envoyer</button></form>
+<div class="ok" id="lok"><h2>Merci !</h2><p>Gilles vous revient très rapidement.</p></div></dialog>
+<script>(()=>{const AVA=${AVA},d=document.getElementById("dlg"),f=document.getElementById("lf"),ok=document.getElementById("lok");
+const sel=(n,l,o)=>'<label>'+l+' *</label><select name="'+n+'" required><option value="">Choisir</option>'+o.map(x=>'<option>'+x+'</option>').join("")+'</select>';
+const F={
+vendre:{sl:"Vendre",h:"Combien vaut ma propriété ?",i:"Recevez une évaluation gratuite, sans engagement.",x:'<label>Adresse de la propriété *</label><input name="adresse" required autocomplete="street-address"><label>Ville *</label><input name="ville" required>'+sel("type","Type de propriété",["Maison","Condo","Duplex","Triplex","Quadruplex et plus","Terrain","Autre"]),tag:"lien instagram - vendre",dem:"evaluation gratuite"},
+acheter:{sl:"Acheter",h:"Trouver ma propriété",i:"Dites-moi ce que vous cherchez, je vous envoie les meilleures options.",x:sel("type","Type de propriété",["Maison","Condo","Plex","Terrain","Je ne sais pas encore"])+sel("budget","Budget",["Moins de 400 000 $","400 000 $ à 600 000 $","600 000 $ à 800 000 $","800 000 $ à 1 M$","Plus de 1 M$"])+'<label>Secteur recherché *</label><input name="secteur" required placeholder="Ex. : Chambly, Saint-Jean-sur-Richelieu">',tag:"lien instagram - acheter",dem:"recherche de propriete"},
+investir:{sl:"Investir",h:"Immeubles à revenus",i:"Recevez les plex qui correspondent à vos critères, avant tout le monde.",x:sel("logements","Nombre de logements",["2 à 3","4 à 6","7 et plus","Je ne sais pas encore"])+sel("budget","Budget",["Moins de 600 000 $","600 000 $ à 900 000 $","900 000 $ à 1,5 M$","Plus de 1,5 M$"])+'<label>Secteur recherché</label><input name="secteur" placeholder="Ex. : Rive-Sud">',tag:"lien instagram - investir",dem:"investissement plex"}};
+let cur;document.querySelectorAll("[data-f]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();cur=F[a.dataset.f];
+ lsl.textContent=cur.sl;lh.textContent=cur.h;li.textContent=cur.i;lx.innerHTML=cur.x;f.reset();f.style.display="";ok.style.display="none";d.showModal()}));
+d.querySelector(".fx").onclick=()=>d.close();d.addEventListener("click",e=>{if(e.target===d)d.close()});
+f.addEventListener("submit",e=>{e.preventDefault();const v=Object.fromEntries(new FormData(f));delete v._site;
+ const det=Object.entries(v).filter(([k])=>!["prenom","nomfamille","telephone","courriel"].includes(k)).map(([k,x])=>k+" : "+x).join(" | ");
+ const o={...v,nom:v.prenom+" "+v.nomfamille,province:"Québec",pays:"Canada",message:cur.sl+" (lien Instagram) | "+det,demande:cur.dem,tag:cur.tag,source:"lien bio instagram gillesdulude.com",consentement:true};
+ const fin=()=>{f.style.display="none";ok.style.display="block"};
+ if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(fin,fin);return}
+ location.href="mailto:info@gillesdulude.com?subject="+encodeURIComponent(cur.sl+" : "+o.nom)+"&body="+encodeURIComponent(o.nom+" "+o.courriel+" "+o.telephone+" | "+o.message)});})();</script>
+${ANTI_ROBOT_JS}
+</body></html>`;
+}
+
 function rendrePages(cfg, listings, banner) {
   const pages = {
     "index.html": accueilEssai(cfg, listings),
@@ -1552,6 +1636,7 @@ function rendrePages(cfg, listings, banner) {
     "contact.html": pageContact(cfg),
     "confidentialite.html": pageConfidentialite(cfg),
     "blogue.html": pageBlogue(cfg),
+    "liens.html": pageLiens(cfg),
   };
   for (const a of ARTICLES_RLP) pages[a.slug] = pageArticleRLP(cfg, a);
   for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
