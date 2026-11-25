@@ -106,7 +106,7 @@ ${cssAncien}
 .e /* Sections */
 section{position:relative}
 .e .sec{padding:150px 0}
-.e .sec h2{font-size:clamp(34px,4.4vw,62px);margin:22px 0 0}
+.e .sec h2{font-size:clamp(28px,3vw,42px);margin:22px 0 0}
 .e .entete{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:70px}.e .entete>div:only-child{grid-column:1/-1}
 .e .entete p{color:var(--mut);font-size:18px;max-width:480px}
 .e /* Services */
@@ -173,7 +173,7 @@ section{position:relative}
 .e .avis figcaption{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 .e /* Appel final */
 .final{background:var(--ink);color:var(--paper);text-align:left;padding:120px 0 0}
-.e .final h2{font-size:clamp(40px,6vw,88px);max-width:900px}
+.e .final h2{font-size:clamp(32px,4vw,56px);max-width:900px}
 .e .final .btns{display:flex;gap:14px;flex-wrap:wrap;margin:44px 0 90px}
 .e .horizon{display:block;width:100%;height:120px}
 .e .horizon path{fill:none;stroke:rgba(249,246,244,.3);stroke-width:1.2;vector-effect:non-scaling-stroke}
