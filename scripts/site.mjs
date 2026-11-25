@@ -303,7 +303,12 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .rlp-b img{height:60px;width:auto;display:block}
 .hero.b .photo.detoure img{max-height:680px}
 .hero.b .txt{padding-bottom:40px!important}
-@media (max-width:860px){.hero.b .wrap{min-height:0!important;padding-top:64px!important}.hero.b h1{margin-bottom:32px}.rlp-b{margin-top:40px}.rlp-b img{height:50px}}
+@media (max-width:860px){.hero.b .wrap{min-height:0!important;padding-top:56px!important;grid-template-columns:1fr!important;gap:8px}.hero.b .photo{max-width:380px;margin:0 auto;width:100%}.hero.b .txt{padding-bottom:0!important}.hero.b.page .lead{font-size:17px}.hero.b h1{margin-bottom:32px}.rlp-b{margin-top:40px}.rlp-b img{height:50px}}
+.hero.b h1 em{font-style:normal;font-family:inherit}
+.hero.b.page h1{margin-bottom:24px}
+.hero.b.page .lead{color:rgba(249,246,244,.72);font-size:19px;max-width:520px;margin:0}
+.hero.b.page .rlp-b{margin-top:52px}
+.hero.b.page .photo.detoure img{max-height:560px}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
@@ -707,9 +712,14 @@ const ICON = {
   plex: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg>',
 };
 
-const pageHero = (over, titre, texte) => `<section class="hero small light">
+const pageHero = (over, titre, texte) => `<section class="hero dark b page">
   <img class="motif" src="assets/motif-contour.png" alt="">
-  <div class="wrap"><div class="txt"><p class="over">${over}</p><h1>${titre}</h1><p class="lead">${texte}</p></div></div>
+  <div class="wrap">
+    <div class="txt"><p class="over">${over}</p><h1>${titre}</h1><p class="lead">${texte}</p>
+      <a class="rlp-b" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
+    </div>
+    <div class="photo detoure"><img src="assets/gilles-hero-detoure.webp" alt="Gilles Jr. Dulude" width="870" height="1100"></div>
+  </div>
 </section>`;
 
 // ---------- Cartes de propriétés ----------
