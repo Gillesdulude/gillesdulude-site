@@ -295,13 +295,15 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .hero.b h1{text-transform:none!important;letter-spacing:-.01em;font-weight:400;font-size:clamp(38px,4.1vw,58px);line-height:1.1;margin:0 0 44px}
 .hero.b .over{font:500 13px/1.4 Gantari,system-ui,sans-serif!important;letter-spacing:.28em;text-transform:uppercase;color:rgba(249,246,244,.6)!important;font-style:normal;margin:0 0 26px}
 .hero.b .txt{align-self:center;padding-bottom:0!important}
-.hero.b .wrap{align-items:center;min-height:min(80vh,700px)!important;padding-top:48px!important;grid-template-columns:1.2fr .8fr}
+.hero.b .wrap{align-items:center;min-height:0!important;padding-top:28px!important;grid-template-columns:1.2fr .8fr}
 .hero.b .photo{align-self:end}
 .lien-b{display:inline-flex;gap:16px;align-items:center;font:600 13px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:inherit;padding-bottom:10px;border-bottom:1px solid currentColor;text-decoration:none;transition:gap .25s}
 .lien-b:hover{gap:24px}
-.rlp-b{display:block;width:max-content;margin-top:80px;opacity:.7}
-.rlp-b img{height:36px;width:auto;display:block}
-@media (max-width:860px){.hero.b .wrap{min-height:0!important;padding-top:64px!important}.hero.b h1{margin-bottom:32px}.rlp-b{margin-top:40px}}
+.rlp-b{display:block;width:max-content;margin-top:64px}
+.rlp-b img{height:60px;width:auto;display:block}
+.hero.b .photo.detoure img{max-height:680px}
+.hero.b .txt{padding-bottom:40px!important}
+@media (max-width:860px){.hero.b .wrap{min-height:0!important;padding-top:64px!important}.hero.b h1{margin-bottom:32px}.rlp-b{margin-top:40px}.rlp-b img{height:50px}}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
@@ -776,6 +778,7 @@ function pageAccueil(cfg, listings) {
   return head(cfg, `${c.nom} | Courtier immobilier résidentiel et commercial, Rive-Sud de Montréal`, "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.") +
     header(cfg, "index.html") + `
 <section class="hero dark b">
+  <img class="motif" src="assets/motif-contour.png" alt="">
   <div class="wrap">
     <div class="txt">
       <p class="over">Courtier immobilier · Rive-Sud</p>
