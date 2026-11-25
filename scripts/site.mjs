@@ -309,7 +309,8 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .hero.b.page .lead{color:rgba(249,246,244,.72);font-size:19px;max-width:520px;margin:0}
 .hero.b.page .wrap{grid-template-columns:1fr!important;padding-top:120px!important;padding-bottom:110px}
 .hero.b.page .txt{max-width:760px}
-.hero.b.page .motif{width:440px;top:30px;right:40px}
+.hero.b.page .motif{width:400px;top:50%;transform:translateY(-50%);right:max(8px,calc((100vw - 1240px)/2 + 8px))}
+@media (max-width:860px){.hero.b.page .motif{width:240px;right:5px}}
 @media (max-width:860px){.hero.b.page .wrap{padding-top:72px!important;padding-bottom:64px}}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
