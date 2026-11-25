@@ -307,8 +307,10 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .hero.b h1 em{font-style:normal;font-family:inherit}
 .hero.b.page h1{margin-bottom:24px}
 .hero.b.page .lead{color:rgba(249,246,244,.72);font-size:19px;max-width:520px;margin:0}
-.hero.b.page .rlp-b{margin-top:52px}
-.hero.b.page .photo.detoure img{max-height:560px}
+.hero.b.page .wrap{grid-template-columns:1fr!important;padding-top:120px!important;padding-bottom:110px}
+.hero.b.page .txt{max-width:760px}
+.hero.b.page .motif{width:440px;top:30px;right:40px}
+@media (max-width:860px){.hero.b.page .wrap{padding-top:72px!important;padding-bottom:64px}}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
@@ -715,10 +717,7 @@ const ICON = {
 const pageHero = (over, titre, texte) => `<section class="hero dark b page">
   <img class="motif" src="assets/motif-contour.png" alt="">
   <div class="wrap">
-    <div class="txt"><p class="over">${over}</p><h1>${titre}</h1><p class="lead">${texte}</p>
-      <a class="rlp-b" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
-    </div>
-    <div class="photo detoure"><img src="assets/gilles-hero-detoure.webp" alt="Gilles Jr. Dulude" width="870" height="1100"></div>
+    <div class="txt"><p class="over">${over}</p><h1>${titre}</h1><p class="lead">${texte}</p></div>
   </div>
 </section>`;
 
