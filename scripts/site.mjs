@@ -292,6 +292,16 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .badge{position:absolute;top:14px;left:14px;background:var(--bc);color:var(--nb);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px}
 .badge.pending{background:var(--nb);color:var(--bc)}
 .badge.sold{background:#C8102E;color:#fff}
+.hero.b h1{text-transform:none!important;letter-spacing:-.01em;font-weight:400;font-size:clamp(38px,4.1vw,58px);line-height:1.1;margin:0 0 44px}
+.hero.b .over{font:500 13px/1.4 Gantari,system-ui,sans-serif!important;letter-spacing:.28em;text-transform:uppercase;color:rgba(249,246,244,.6)!important;font-style:normal;margin:0 0 26px}
+.hero.b .txt{align-self:center;padding-bottom:0!important}
+.hero.b .wrap{align-items:center;min-height:min(80vh,700px)!important;padding-top:48px!important;grid-template-columns:1.2fr .8fr}
+.hero.b .photo{align-self:end}
+.lien-b{display:inline-flex;gap:16px;align-items:center;font:600 13px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:inherit;padding-bottom:10px;border-bottom:1px solid currentColor;text-decoration:none;transition:gap .25s}
+.lien-b:hover{gap:24px}
+.rlp-b{display:block;width:max-content;margin-top:80px;opacity:.7}
+.rlp-b img{height:36px;width:auto;display:block}
+@media (max-width:860px){.hero.b .wrap{min-height:0!important;padding-top:64px!important}.hero.b h1{margin-bottom:32px}.rlp-b{margin-top:40px}}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
@@ -765,14 +775,13 @@ function pageAccueil(cfg, listings) {
   const vedette = aVendre.slice(0, 3);
   return head(cfg, `${c.nom} | Courtier immobilier résidentiel et commercial, Rive-Sud de Montréal`, "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.") +
     header(cfg, "index.html") + `
-<section class="hero dark">
-  <img class="motif" src="assets/motif-contour.png" alt="">
+<section class="hero dark b">
   <div class="wrap">
     <div class="txt">
-      <a class="rlp-hero" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
-      <p class="over">Gilles Jr. Dulude, courtier immobilier résidentiel et commercial</p>
-      <h1 style="text-transform:uppercase;letter-spacing:.01em">Vendre, acheter ou investir sur la Rive-Sud.</h1>
-      <div class="btns"><a class="btn" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel</a><a class="btn ghost" href="vendre.html#evaluation">Évaluation gratuite</a></div>
+      <p class="over">Courtier immobilier · Rive-Sud</p>
+      <h1>Votre prochain chapitre commence ici.</h1>
+      <a class="lien-b" href="${RDV(cfg)}"${rdvAttrs(cfg)}>Réserver un appel<span aria-hidden="true">→</span></a>
+      <a class="rlp-b" href="https://distinction.royallepage.ca/" target="_blank" rel="noopener" aria-label="Royal LePage Distinction"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"></a>
     </div>
     <div class="photo detoure"><img src="assets/gilles-hero-detoure.webp" alt="Gilles Jr. Dulude" width="870" height="1100"></div>
   </div>
@@ -1378,7 +1387,7 @@ ${band("Est-ce le bon moment pour vous ?", "Chaque situation est différente. Pa
 
 // Page d'accueil au style de la page d'essai (entête et haut de page du site, reste au nouveau style)
 function accueilEssai(cfg, listings, essai = false) {
-  const acc = pageAccueil(cfg, listings), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark">')) + 10;
+  const acc = pageAccueil(cfg, listings), i0 = acc.indexOf('<header class="top"'), i1 = acc.indexOf("</section>", acc.indexOf('<section class="hero dark')) + 10;
   const versParent = (h) => h.replace(/(href|src)="(?!https?:|#|mailto:|tel:|\.\.\/)([^"]+)"/g, '$1="../$2"').replace(/url\((["']?)assets\//g, "url($1../assets/");
   const c = cfg.courtier;
   const titre = `${c.nom} | Courtier immobilier résidentiel et commercial, Rive-Sud de Montréal`, desc = "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial chez Royal LePage Distinction, sur la Rive-Sud. Vendre, acheter ou investir, accompagné par un ancien entrepreneur en construction.";
