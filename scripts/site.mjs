@@ -1552,10 +1552,9 @@ function pageArticle(cfg, a) {
   const autres = ARTICLES_PUBLIES().filter((b) => b !== a).slice(0, 3);
   const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", author: { "@type": "Person", name: "Gilles Jr. Dulude" }, publisher: { "@type": "Organization", name: "Gilles Jr. Dulude, courtier immobilier" } }).replace(/</g, "\\u003c")}</script>`;
   return head(cfg, a.titre[0] + " | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
-    header(cfg, "blogue.html") + pageHero(esc(a.cat[0]), esc(a.titre[0]), esc(a.resume[0])) + `
+    header(cfg, "blogue.html") + (a.photo ? `<section class="rlp-hero"><img src="${a.photo}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1></div></section>` : pageHero(esc(a.cat[0]), esc(a.titre[0]), esc(a.resume[0]))) + `
 <section><div class="wrap"><article class="article">
   <a class="retour" href="blogue.html">Retour au blogue</a>
-  ${a.photo ? `<img class="art-photo" src="${a.photo}" alt="" style="width:100%;height:auto;display:block;margin:10px 0 26px">` : ""}
   <p class="meta"><span>Par Gilles Jr. Dulude</span> · <span>${lectureFr(a)}</span></p>
   ${corps}
 </article></div></section>
