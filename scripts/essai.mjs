@@ -107,7 +107,7 @@ ${cssAncien}
 section{position:relative}
 .e .sec{padding:150px 0}
 .e .sec h2{font-size:clamp(34px,4.4vw,62px);margin:22px 0 0}
-.e .entete{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:70px}
+.e .entete{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:70px}.e .entete>div:only-child{grid-column:1/-1}
 .e .entete p{color:var(--mut);font-size:18px;max-width:480px}
 .e /* Services */
 .services{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
@@ -227,24 +227,21 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
 
 <section class="sec"><div class="wrap">
   <div class="entete">
-    <div><p class="tag">Services</p><h2 class="cap">Trois façons<br>de bâtir.</h2></div>
-    <p>Une propriété familiale, un premier achat ou un immeuble à revenus : la même rigueur, adaptée à votre projet.</p>
+    <div><p class="tag">Services</p><h2 class="cap">Comment je<br>peux vous aider.</h2></div>
   </div>
   <div class="services">
-    <a href="${P}vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>La Méthode 8V : le bon prix, une mise en valeur intelligente et une négociation serrée jusqu'au notaire.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="${P}acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>Je visite avec vous en ancien entrepreneur : structure, travaux à prévoir, vrai potentiel.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="${P}investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Multilogements de 5 logements et plus : revenus, baux, dépenses et état de l'immeuble, vérifiés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>Le bon prix et une mise en valeur qui vend.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>L'œil d'un ancien entrepreneur à chaque visite.</p><span class="voir">Voir <span class="mono">→</span></span></a>
+    <a href="${P}investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Des immeubles à revenus analysés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
   </div>
 </div></section>
 
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Fiche technique</p><h2 class="cap">Le marché,<br>${esc((m.moisTitre || m.mois || "").toLowerCase())}.</h2></div>
-    <p>Les chiffres de la Rive-Sud, sans détour. Pour savoir quand acheter, vendre ou investir.</p>
   </div>
   <div class="table">
     ${rangs.map(([lab, v]) => `<div class="ligne"><span class="lab">${esc(lab)}</span><span class="val mono">${prix(v[0])}</span><span class="var mono ${v[1] > 0 ? "up" : v[1] < 0 ? "dn" : ""}">${signe(v[1])} % / an</span></div>`).join("")}
-    ${delais.map(([k, v]) => `<div class="ligne"><span class="lab">Délai de vente · ${esc(k.toLowerCase())}</span><span class="val mono">${v[0]} jours</span><span class="var mono ${v[1] > 0 ? "dn" : v[1] < 0 ? "up" : ""}">${signe(v[1])} j / an</span></div>`).join("")}
   </div>
   <p class="source mono">Source : ${esc(m.source || "")}. ${esc(m.region || "")}.</p>
 </div></section>` : ""}
@@ -252,7 +249,6 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 <section class="sec"><div class="wrap">
   <div class="entete">
     <div><p class="tag">À vendre</p><h2 class="cap">Inscriptions<br>vedettes.</h2></div>
-    <p>Une sélection de propriétés inscrites par Gilles sur la Rive-Sud et ailleurs au Québec.</p>
   </div>
 </div>
   <div class="props">
@@ -267,11 +263,8 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
     <blockquote class="cap">J'ai passé dix ans sur les chantiers avant l'immobilier.</blockquote>
-    <p>Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente. Je suis direct et transparent : mon rôle, c'est de protéger mes clients et de les aider à prendre les bonnes décisions.</p>
-    <p>Avant de devenir courtier, j'ai été menuisier, puis entrepreneur général en construction neuve et en rénovation. J'ai aussi mené plusieurs projets d'optimisation et de flip de propriétés.</p>
-    <p>Je suis moi-même investisseur immobilier : je connais la réalité des propriétaires et des investisseurs de l'intérieur.</p>
-    <p>Courtier résidentiel et commercial chez Royal LePage Distinction, en français comme en anglais.</p>
-    <div class="distinctions">${prixRLP.map(([n, a]) => `<div><span>${esc(n)}</span><span class="mono">${esc(a)}</span></div>`).join("")}</div>
+    <p>Je vois ce qui fait la valeur d'une propriété, et ce qui peut nuire à sa vente.</p>
+    <div class="distinctions">${prixRLP.slice(0, 3).map(([n, a]) => `<div><span>${esc(n)}</span><span class="mono">${esc(a)}</span></div>`).join("")}</div>
     <div class="tout" style="justify-content:flex-start;margin-top:28px"><a href="${P}a-propos.html">À propos de moi <span class="mono">→</span></a></div>
   </div>
 </div></section>
@@ -279,7 +272,6 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 ${avis1.length ? `<section class="sec"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Avis Google</p><h2 class="cap">Ce qu'en disent<br>les clients.</h2></div>
-    <p>Des avis vérifiés, laissés par de vrais clients sur Google.</p>
   </div>
   <div class="avis">${avis1.map((a) => `<figure><div class="et">★★★★★</div><blockquote>« ${esc(a[0])} »</blockquote><figcaption>${esc(a[1])}</figcaption></figure>`).join("")}</div>
   <div class="tout" style="justify-content:flex-start"><a href="${avisUrl}" target="_blank" rel="noopener">Voir les avis sur Google <span class="mono">→</span></a></div>
