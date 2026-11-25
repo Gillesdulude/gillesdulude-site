@@ -1476,7 +1476,7 @@ section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 @media (max-width:640px){.blogue-grille{grid-template-columns:1fr}.article h2{font-size:24px}.article p,.article li{font-size:17px}}
 </style>`;
 const escG = (t) => esc(t).replace(/« /g, "«&nbsp;").replace(/ »/g, "&nbsp;»");
-const carteArticle = (a) => `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
+const carteArticle = (a) => a.photo ? `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${a.photo.replace(/\.jpg$/, "-m.jpg")}" alt="" loading="lazy" decoding="async"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></div></a>` : `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
 
 const carteRLP = (a) => `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${esc(a.vignette)}" alt="${esc(a.titre[0])}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(a.resume[0])}</p><span class="plus">Lire le résumé</span></div></a>`;
 const triRLP = () => [...ARTICLES_RLP].sort((x, y) => y.date.localeCompare(x.date));
@@ -1503,8 +1503,9 @@ ${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagemen
 ` + footer(cfg) + end;
 }
 
+const ARTICLES_PUBLIES = () => ARTICLES.filter((a) => a.publie).sort((x, y) => y.date.localeCompare(x.date));
 function pageBlogue(cfg) {
-  const cartes = triRLP().map(carteRLP).join("");
+  const cartes = [...ARTICLES_PUBLIES().map(carteArticle), ...triRLP().map(carteRLP)].join("");
   return head(cfg, "Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété, présentés par Gilles Jr. Dulude, courtier sur la Rive-Sud.", CSS_BLOGUE) +
     header(cfg, "blogue.html") +
     pageHero("Blogue", "Le blogue <em>immobilier.</em>", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété.") + `
@@ -1525,13 +1526,13 @@ function pageArticle(cfg, a) {
     else if (t === "lien") corps += `<p><a class="btn suite" href="${x}">${esc(f)}</a></p>`;
   }
   fermer();
-  const autres = ARTICLES.filter((b) => b !== a);
+  const autres = ARTICLES_PUBLIES().filter((b) => b !== a).slice(0, 3);
   const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", author: { "@type": "Person", name: "Gilles Jr. Dulude" }, publisher: { "@type": "Organization", name: "Gilles Jr. Dulude, courtier immobilier" } }).replace(/</g, "\\u003c")}</script>`;
   return head(cfg, a.titre[0] + " | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
-    header(cfg, "blogue.html") + `
-<section class="hero small light"><img class="motif" src="assets/motif-contour.png" alt=""><div class="wrap"><div class="txt"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1><p class="lead">${esc(a.resume[0])}</p></div></div></section>
+    header(cfg, "blogue.html") + pageHero(esc(a.cat[0]), esc(a.titre[0]), esc(a.resume[0])) + `
 <section><div class="wrap"><article class="article">
   <a class="retour" href="blogue.html">Retour au blogue</a>
+  ${a.photo ? `<img class="art-photo" src="${a.photo}" alt="" style="width:100%;height:auto;display:block;margin:10px 0 26px">` : ""}
   <p class="meta"><span>Par Gilles Jr. Dulude</span> · <span>${lectureFr(a)}</span></p>
   ${corps}
 </article></div></section>
@@ -1688,6 +1689,7 @@ function rendrePages(cfg, listings, banner) {
     "liens.html": pageLiens(cfg),
   };
   for (const a of ARTICLES_RLP) pages[a.slug] = pageArticleRLP(cfg, a);
+  for (const a of ARTICLES_PUBLIES()) pages[a.slug] = pageArticle(cfg, a);
   for (const k of Object.keys(pages)) pages[k] = pages[k].replace("{{APERCU}}", banner);
   return pages;
 }
