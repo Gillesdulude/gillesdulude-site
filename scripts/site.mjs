@@ -39,7 +39,7 @@ section:not(.hero) .over{font:500 12px/1.4 Gantari,system-ui,sans-serif;letter-s
 section:not(.hero) .over::after{content:"";height:1px;width:56px;background:currentColor;opacity:.6}
 .dark .over,section.dark .over{color:rgba(249,246,244,.6)!important}
 /* Grands titres */
-h2{font-size:clamp(34px,4.4vw,62px);font-weight:600;text-transform:uppercase;line-height:.98;letter-spacing:.01em;margin:0 0 26px}
+h2{font-size:clamp(28px,3vw,42px);font-weight:600;text-transform:uppercase;line-height:1.05;letter-spacing:.01em;margin:0 0 26px}
 h1 em,h2 em{font-family:inherit;font-style:normal;font-weight:inherit}
 h3{text-transform:uppercase;letter-spacing:.02em;font-weight:600}
 .lead{font-size:18px;color:var(--ch)}
