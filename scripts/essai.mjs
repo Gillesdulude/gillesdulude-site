@@ -13,7 +13,7 @@ const FACADE = {
 };
 
 // Ligne d'horizon de plex et de maisons, pour le bas de page.
-const HORIZON = `<svg class="horizon" viewBox="0 0 1240 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0 88 H170 V58 L205 34 L240 58 V88 H262 V44 H342 V88 H360 V62 L392 44 L424 62 V88 H452 V30 H470 V22 H478 V30 H548 V88 H574 V54 L622 26 L670 54 V88 H692 V40 Q692 34 698 34 H770 Q776 34 776 40 V88 H800 V60 L830 46 L860 60 V88 H884 V36 L912 24 H962 L990 36 V88 H1014 V56 L1046 38 L1078 56 V88 H1240"/></svg>`;
+const HORIZON = `<div class="horizon"><svg viewBox="0 0 1200 134" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><linearGradient id="hz-sol" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0"><stop offset="0" stop-color="#F9F6F4" stop-opacity="0"/><stop offset=".5" stop-color="#F9F6F4" stop-opacity=".45"/><stop offset="1" stop-color="#F9F6F4" stop-opacity="0"/></linearGradient></defs><rect x="0" y="128" width="1200" height="1" fill="url(#hz-sol)"/><g class="plex"><rect x="520" y="22" width="160" height="106"/><rect x="514" y="14" width="172" height="8"/><rect x="517" y="8" width="166" height="6"/><rect x="582" y="3" width="36" height="5"/><line x1="522" y1="22" x2="522" y2="25"/><line x1="530" y1="22" x2="530" y2="25"/><line x1="538" y1="22" x2="538" y2="25"/><line x1="546" y1="22" x2="546" y2="25"/><line x1="554" y1="22" x2="554" y2="25"/><line x1="562" y1="22" x2="562" y2="25"/><line x1="570" y1="22" x2="570" y2="25"/><line x1="578" y1="22" x2="578" y2="25"/><line x1="586" y1="22" x2="586" y2="25"/><line x1="594" y1="22" x2="594" y2="25"/><line x1="602" y1="22" x2="602" y2="25"/><line x1="610" y1="22" x2="610" y2="25"/><line x1="618" y1="22" x2="618" y2="25"/><line x1="626" y1="22" x2="626" y2="25"/><line x1="634" y1="22" x2="634" y2="25"/><line x1="642" y1="22" x2="642" y2="25"/><line x1="650" y1="22" x2="650" y2="25"/><line x1="658" y1="22" x2="658" y2="25"/><line x1="666" y1="22" x2="666" y2="25"/><line x1="674" y1="22" x2="674" y2="25"/><line x1="520" y1="57" x2="680" y2="57"/><line x1="520" y1="92" x2="680" y2="92"/><rect x="598" y="28" width="26" height="24"/><line x1="611" y1="28" x2="611" y2="52"/><line x1="598" y1="37" x2="624" y2="37"/><rect x="595" y="24" width="32" height="3"/><line x1="596" y1="54" x2="626" y2="54"/><rect x="638" y="28" width="26" height="24"/><line x1="651" y1="28" x2="651" y2="52"/><line x1="638" y1="37" x2="664" y2="37"/><rect x="635" y="24" width="32" height="3"/><line x1="636" y1="54" x2="666" y2="54"/><rect x="536" y="28" width="20" height="29"/><line x1="536" y1="37" x2="556" y2="37"/><rect x="533" y="24" width="26" height="3"/><rect x="598" y="63" width="26" height="24"/><line x1="611" y1="63" x2="611" y2="87"/><line x1="598" y1="72" x2="624" y2="72"/><rect x="595" y="59" width="32" height="3"/><line x1="596" y1="89" x2="626" y2="89"/><rect x="638" y="63" width="26" height="24"/><line x1="651" y1="63" x2="651" y2="87"/><line x1="638" y1="72" x2="664" y2="72"/><rect x="635" y="59" width="32" height="3"/><line x1="636" y1="89" x2="666" y2="89"/><rect x="536" y="63" width="20" height="29"/><line x1="536" y1="72" x2="556" y2="72"/><rect x="533" y="59" width="26" height="3"/><rect x="598" y="99" width="26" height="24"/><line x1="611" y1="99" x2="611" y2="123"/><line x1="598" y1="108" x2="624" y2="108"/><rect x="595" y="95" width="32" height="3"/><line x1="596" y1="125" x2="626" y2="125"/><rect x="638" y="99" width="26" height="24"/><line x1="651" y1="99" x2="651" y2="123"/><line x1="638" y1="108" x2="664" y2="108"/><rect x="635" y="95" width="32" height="3"/><line x1="636" y1="125" x2="666" y2="125"/><rect x="536" y="99" width="20" height="29"/><line x1="536" y1="108" x2="556" y2="108"/><rect x="533" y="95" width="26" height="3"/><rect x="522" y="57" width="52" height="3"/><line x1="522" y1="46" x2="574" y2="46"/><line x1="525" y1="46" x2="525" y2="57"/><line x1="529" y1="46" x2="529" y2="57"/><line x1="533" y1="46" x2="533" y2="57"/><line x1="537" y1="46" x2="537" y2="57"/><line x1="541" y1="46" x2="541" y2="57"/><line x1="545" y1="46" x2="545" y2="57"/><line x1="549" y1="46" x2="549" y2="57"/><line x1="553" y1="46" x2="553" y2="57"/><line x1="557" y1="46" x2="557" y2="57"/><line x1="561" y1="46" x2="561" y2="57"/><line x1="565" y1="46" x2="565" y2="57"/><line x1="569" y1="46" x2="569" y2="57"/><line x1="573" y1="46" x2="573" y2="57"/><rect x="522" y="92" width="52" height="3"/><line x1="522" y1="81" x2="574" y2="81"/><line x1="525" y1="81" x2="525" y2="92"/><line x1="529" y1="81" x2="529" y2="92"/><line x1="533" y1="81" x2="533" y2="92"/><line x1="537" y1="81" x2="537" y2="92"/><line x1="541" y1="81" x2="541" y2="92"/><line x1="545" y1="81" x2="545" y2="92"/><line x1="549" y1="81" x2="549" y2="92"/><line x1="553" y1="81" x2="553" y2="92"/><line x1="557" y1="81" x2="557" y2="92"/><line x1="561" y1="81" x2="561" y2="92"/><line x1="565" y1="81" x2="565" y2="92"/><line x1="569" y1="81" x2="569" y2="92"/><line x1="573" y1="81" x2="573" y2="92"/><polyline points="522,92.0 522,96.5 516,96.5"/><polyline points="516,96.5 516,101.0 510,101.0"/><polyline points="510,101.0 510,105.5 504,105.5"/><polyline points="504,105.5 504,110.0 498,110.0"/><polyline points="498,110.0 498,114.5 492,114.5"/><polyline points="492,114.5 492,119.0 486,119.0"/><polyline points="486,119.0 486,123.5 480,123.5"/><polyline points="480,123.5 480,128.0 474,128.0"/><line x1="522" y1="82" x2="474" y2="118"/><line x1="474" y1="118" x2="474" y2="128"/></g></svg></div>`;
 
 
 const ICO_FB = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5H16l.4-3H13.5V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21h3z"/></svg>';
@@ -22,17 +22,18 @@ const ICO_IG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="tru
 
 // Bande photo pleine largeur (logo sur photo assombrie) et trio de photos
 export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section class="bande-photo"><img class="bp-img" src="${P}assets/photos/${img}.jpg" srcset="${P}assets/photos/${img}-m.jpg 900w, ${P}assets/photos/${img}.jpg 2200w" sizes="100vw" alt="" loading="lazy">
-  <div class="bp-txt"><img class="bp-logo" src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude"><img class="bp-rlp" src="${P}assets/rlp-blanc.png" alt="Royal LePage Distinction">
+  <div class="bp-voile"></div><div class="bp-txt">
   <p class="bp-phrase">${phrase}</p>${lien ? `<a class="lien-b" href="${P}${href}">${lien}<span aria-hidden="true">→</span></a>` : ""}</div></section>`;
 export const trioPhotos = (P, imgs) => `<section class="trio-photos">${imgs.map((i) => `<figure><img src="${P}assets/photos/${i}-m.jpg" alt="" loading="lazy"></figure>`).join("")}</section>`;
 export const PHOTO_CSS = `
 .bande-photo{position:relative;min-height:min(78vh,720px);display:flex;align-items:center;justify-content:center;overflow:hidden;background:#130F0C;padding:0!important;color:#F9F6F4;text-align:center}
-.bande-photo .bp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.85) brightness(.42) contrast(1.05);transform:scale(1.04);transition:transform 6s ease}
+.bande-photo .bp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.9);transform:scale(1.04);transition:transform 6s ease}
 .bande-photo:hover .bp-img{transform:scale(1.1)}
+.bande-photo .bp-voile{position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,.15),rgba(19,15,12,.45))}
 .bande-photo .bp-txt{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:26px;padding:80px 24px}
 .bande-photo .bp-logo{width:min(340px,70vw);height:auto}
 .bande-photo .bp-rlp{height:46px;width:auto;opacity:.9}
-.bande-photo .bp-phrase{font:400 clamp(22px,2.4vw,32px)/1.3 Gantari,system-ui,sans-serif;margin:14px 0 6px;max-width:640px}
+.bande-photo .bp-phrase{font:400 clamp(28px,3.4vw,48px)/1.15 Gantari,system-ui,sans-serif;margin:0 0 10px;max-width:820px;text-shadow:0 1px 24px rgba(0,0,0,.25)}
 .bande-photo .lien-b{color:#F9F6F4}
 .trio-photos{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-auto-rows:clamp(220px,27vw,400px);gap:6px;padding:0!important;background:#F9F6F4}
 .trio-photos figure{margin:0;overflow:hidden}
@@ -57,14 +58,14 @@ export function piedDePage(cfg, P = "", { horizon = false } = {}) {
 }
 export const PIED_CSS = `${PHOTO_CSS}
 footer.pied{background:#130F0C;color:rgba(249,246,244,.7);font-size:14px;padding:0}
-footer.pied .horizon{display:block;width:min(1240px,100%);height:auto;margin:0 auto;padding:0 40px;box-sizing:border-box;overflow:visible}
-footer.pied .horizon path{fill:none;stroke:rgba(249,246,244,.28);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+footer.pied .horizon{max-width:1240px;margin:0 auto;padding:56px 40px 0}footer.pied .horizon svg,.e .horizon svg{display:block;width:100%;height:150px}
+footer.pied .horizon .plex,.e .horizon .plex{fill:none;stroke:rgba(249,246,244,.42);stroke-width:.9;stroke-linejoin:round;stroke-linecap:round}
 footer.pied>.wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-top:60px;padding-bottom:40px;border-top:1px solid rgba(249,246,244,.14)}
 footer.pied a{color:rgba(249,246,244,.7);text-decoration:none}footer.pied a:hover{color:#F9F6F4}
 footer.pied h4{font-family:Gantari,system-ui,sans-serif;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,244,.5);margin:0 0 16px}
 footer.pied ul{margin:0;padding:0}footer.pied li{list-style:none;margin-bottom:8px;padding:0}
 footer.pied .horizon+.wrap{border-top:0}
-@media (max-width:860px){footer.pied .horizon,.e .horizon{height:64px;width:100%;padding:0}}
+@media (max-width:860px){footer.pied .horizon,.e .horizon{padding:40px 0 0;overflow:hidden}footer.pied .horizon svg,.e .horizon svg{width:260%;height:auto;margin-left:-80%}}
 footer.pied .logos{display:flex;align-items:center;gap:18px;margin-bottom:22px}footer.pied .logos img{height:26px;width:auto;margin:0}
 footer.pied .logos .sep{width:1px;height:26px;background:rgba(249,246,244,.25)}
 footer.pied .soc{display:inline-flex;align-items:center;gap:10px}
@@ -199,8 +200,8 @@ section{position:relative}
 .final{background:var(--ink);color:var(--paper);text-align:left;padding:120px 0 0}
 .e .final h2{font-size:clamp(32px,4vw,56px);max-width:900px}
 .e .final .btns{display:flex;gap:14px;flex-wrap:wrap;margin:44px 0 90px}
-.e .horizon{display:block;width:min(1240px,100%);height:auto;margin:0 auto;padding:0 40px;box-sizing:border-box}
-.e .horizon path{fill:none;stroke:rgba(249,246,244,.28);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.e .horizon{max-width:1240px;margin:0 auto;padding:56px 40px 0}
+
 .e footer{background:var(--ink);color:rgba(249,246,244,.7);font-size:14px;border-top:1px solid var(--lineD)}
 .e footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-top:60px;padding-bottom:40px}
 .e footer h4{font-family:Gantari,system-ui,sans-serif;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,244,.5);margin-bottom:16px}
@@ -260,7 +261,7 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
   </div>
 </div></section>
 
-${bandePhoto(P, "cuisine", "Votre prochain chapitre commence ici.", "Évaluation gratuite", "evaluation.html")}
+${bandePhoto(P, "cuisine", "Votre prochain chapitre commence ici.", "Obtenir mon évaluation", "evaluation.html")}
 
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">

@@ -908,7 +908,7 @@ function pageAPropos(cfg) {
 ${prixSection()}
 ${avisGoogle()}
 ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
-${bandePhoto("", "salle-de-bain", "Le souci du détail, du chantier jusqu'au notaire.", "Réserver un appel", "contact.html")}
+${bandePhoto("", "salle-de-bain", "Le souci du détail, du chantier jusqu'au notaire.", "Obtenir mon évaluation", "evaluation.html")}
 ` + footer(cfg) + end;
 }
 
@@ -989,7 +989,7 @@ function pageAcheter(cfg) {
 ${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un multilogement</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
-${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Réserver un appel", "contact.html")}
+${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Obtenir mon évaluation", "evaluation.html")}
 ` + footer(cfg) + end;
 }
 
@@ -1063,7 +1063,7 @@ f.addEventListener("input",calc);calc();})();</script>
 
 ${faqSection(faq, "Les questions <em>des investisseurs.</em>", "var(--warm)")}
 ${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde ensemble s'il tient la route, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
-${bandePhoto("", "facade", "Des immeubles à revenus qui tiennent la route.", "Réserver un appel", "contact.html")}
+${bandePhoto("", "facade", "Des immeubles à revenus qui tiennent la route.", "Obtenir mon évaluation", "evaluation.html")}
 ` + footer(cfg) + end;
 }
 
