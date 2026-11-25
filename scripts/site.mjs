@@ -2,6 +2,7 @@
 // Les inscriptions viennent de build.mjs (déjà filtrées : seulement les fiches en vigueur).
 
 import { T, R, JS } from "./en.mjs";
+import { existsSync, readFileSync } from "node:fs";
 import { pageEssai, piedDePage, PIED_CSS, bandePhoto, trioPhotos } from "./essai.mjs";
 import { ARTICLES, LIENS_RLP, TEXTES as TEXTES_BLOGUE, ARTICLES_RLP, TEXTES_RLP } from "./blogue.mjs";
 const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
@@ -1415,7 +1416,7 @@ for (const a of ARTICLES) {
   T[norm(lectureFr(a))] = lectureEn(a);
   for (const [t, f, e] of a.blocs) if (t !== "lien") T[norm(f)] = e;
 }
-const LIENS_EN = { "Obtenir une évaluation gratuite": "Get a free evaluation", "Voir comment je vous accompagne à l'achat": "See how I guide you when buying", "Voir comment je vous accompagne en investissement": "See how I guide you when investing", "Obtenir une évaluation gratuite de ma propriété": "Get a free evaluation of my property" };
+const LIENS_EN = { "Voir l'article original": "See the original article", "Article publié sur le blogue de Royal LePage.": "Article published on the Royal LePage blog.", "Obtenir une évaluation gratuite": "Get a free evaluation", "Voir comment je vous accompagne à l'achat": "See how I guide you when buying", "Voir comment je vous accompagne en investissement": "See how I guide you when investing", "Obtenir une évaluation gratuite de ma propriété": "Get a free evaluation of my property" };
 for (const [f, e] of Object.entries(LIENS_EN)) T[norm(f)] = e;
 for (const [f, e] of LIENS_RLP) T[norm(f)] = e;
 for (const [f, e] of TEXTES_RLP) T[norm(f)] = e;
@@ -1478,8 +1479,29 @@ section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 const escG = (t) => esc(t).replace(/« /g, "«&nbsp;").replace(/ »/g, "&nbsp;»");
 const carteArticle = (a) => a.photo ? `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${a.photo.replace(/\.jpg$/, "-m.jpg")}" alt="" loading="lazy" decoding="async"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></div></a>` : `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
 
-const carteRLP = (a) => `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${esc(a.vignette)}" alt="${esc(a.titre[0])}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(a.resume[0])}</p><span class="plus">Lire le résumé</span></div></a>`;
+const carteRLP = (a) => `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${esc(a.vignette)}" alt="${esc(a.titre[0])}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(a.resume[0])}</p><span class="plus">${existsSync(`contenu/blogue-rlp/${a.slug.replace(/\.html$/, "")}.txt`) ? "Lire l'article" : "Lire le résumé"}</span></div></a>`;
 const triRLP = () => [...ARTICLES_RLP].sort((x, y) => y.date.localeCompare(x.date));
+
+
+// Texte complet d'un article Royal LePage, déposé par l'équipe dans contenu/blogue-rlp/<slug>.txt (collé tel quel).
+// Lignes vides = paragraphes ; une ligne courte qui finit par « ? » ou qui commence par « ## » = intertitre ; « - » ou « • » = puce.
+const texteCompletRLP = (a) => {
+  const f = `contenu/blogue-rlp/${a.slug.replace(/\.html$/, "")}.txt`;
+  if (!existsSync(f)) return "";
+  const lignes = readFileSync(f, "utf8").replace(/\r/g, "").split("\n").map((l) => l.trim());
+  let h = "", liste = [];
+  const fermer = () => { if (liste.length) { h += `<ul>${liste.join("")}</ul>`; liste = []; } };
+  for (const l of lignes) {
+    if (!l) { fermer(); continue; }
+    if (/^[-•]\s+/.test(l)) { liste.push(`<li>${esc(l.replace(/^[-•]\s+/, ""))}</li>`); continue; }
+    fermer();
+    if (/^##\s*/.test(l)) h += `<h2>${esc(l.replace(/^##\s*/, ""))}</h2>`;
+    else if (l.length < 140 && /\?$/.test(l) && !/[.!]\s/.test(l)) h += `<h2>${esc(l)}</h2>`;
+    else h += `<p>${esc(l)}</p>`;
+  }
+  fermer();
+  return h;
+};
 
 function pageArticleRLP(cfg, a) {
   const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", image: a.image, author: { "@type": "Person", name: a.auteur }, publisher: { "@type": "Organization", name: "Royal LePage" }, isBasedOn: a.url, url: a.url }).replace(/</g, "\\u003c")}</script>`;
@@ -1492,10 +1514,11 @@ function pageArticleRLP(cfg, a) {
   <a class="retour" href="blogue.html">Retour au blogue</a>
   <p class="meta"><strong>Par ${esc(a.auteur)}</strong> · ${dateFr(a.date)} · Blogue Royal LePage</p>
 
-  <p>${escG(a.intro[0])}</p>
+  ${texteCompletRLP(a) ? `${texteCompletRLP(a)}
+  <p class="source-bas">Article publié sur le blogue de Royal LePage. ${bouton.replace("Lire l'article complet sur Royal LePage", "Voir l'article original")}</p>` : `<p>${escG(a.intro[0])}</p>
   <h2>Ce qu'il faut retenir</h2>
   <ul class="points">${a.points.map(([f]) => `<li>${escG(f)}</li>`).join("")}</ul>
-  <p class="source-bas">Résumé d'un article publié sur le blogue de Royal LePage. ${bouton}</p>
+  <p class="source-bas">Résumé d'un article publié sur le blogue de Royal LePage. ${bouton}</p>`}
   <a class="retour" style="margin-top:30px" href="blogue.html">Retour au blogue</a>
 </article></div></section>
 ${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteRLP).join("")}</div></div></section>` : ""}
