@@ -24,6 +24,7 @@ export const T = {
   "Prendre rendez-vous avec Gilles Jr. Dulude": "Book a meeting with Gilles Jr. Dulude",
   "Mes nouvelles propriétés et mes conseils immobiliers.": "My new listings and real estate tips.",
   "Facebook": "Facebook", "Instagram": "Instagram",
+  "Courtier immobilier · Rive-Sud": "Real estate broker · South Shore", "Votre prochain chapitre commence ici.": "Your next chapter starts here.",
   "Réserver un appel": "Book a call", "Évaluation gratuite": "Free evaluation", "En savoir plus →": "Learn more →",
   "Parlons de votre projet.": "Let’s talk about your project.", "Un appel de 15 minutes, sans engagement.": "A 15-minute call, no commitment.",
   "Gilles Jr. Dulude": "Gilles Jr. Dulude", "5 étoiles sur 5": "5 out of 5 stars", "Confidentialité": "Privacy",
