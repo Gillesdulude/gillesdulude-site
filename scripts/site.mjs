@@ -948,7 +948,7 @@ function pageVendre(cfg) {
     <p class="lead">Vendre, c'est simple. Vendre au maximum, ça prend une méthode.</p>
   </div>
 </div>
-<div class="wrap"><div class="v8list">${V8.map(([n, t, d], i) => `<div><b>${String(i + 1).padStart(2, "0")}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
+<div class="wrap"><div class="v8list">${V8.map(([n, t, d], i) => `<div><b>V${i + 1}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
 </section>
 
 <section id="etapes"><div class="wrap">
