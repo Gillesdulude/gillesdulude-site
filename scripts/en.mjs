@@ -13,7 +13,7 @@ export const T = {
   // En-tête, menu, pied de page
   "Aperçu avec des propriétés fictives.": "Preview with sample properties.",
   "Accueil": "Home", "Vendre": "Sell", "Acheter": "Buy", "Investir": "Invest", "Marché": "Market", "Propriétés": "Properties", "Contact": "Contact",
-  "À propos": "About", "Menu": "Menu", "Fermer": "Close", "Navigation": "Navigation", "Me joindre": "Get in touch", "Suivez-moi": "Follow me",
+  "À propos": "About", "Menu": "Menu", "Fermer": "Close", "Navigation": "Navigation", "Découvrir": "Discover", "Me joindre": "Get in touch", "Suivez-moi": "Follow me",
   "Gilles Jr. Dulude, courtier immobilier résidentiel et commercial": "Gilles Jr. Dulude, residential and commercial real estate broker",
   "Courtier immobilier résidentiel et commercial, immeubles à revenus.": "Residential and commercial real estate broker, income properties.",
   "Rive-Sud de Montréal. Français et anglais.": "Montreal South Shore. French and English.",

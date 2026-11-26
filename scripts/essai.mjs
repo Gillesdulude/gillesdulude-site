@@ -49,7 +49,8 @@ export function piedDePage(cfg, P = "", { horizon = false } = {}) {
   return `<footer class="pied"><img class="pied-motif" src="${P}assets/motif-contour.png" alt="" aria-hidden="true">
   <div class="wrap">
     <div><div class="logos"><img src="${P}assets/logo-h-light.png" alt="Gilles Jr. Dulude"><span class="sep"></span><img src="${P}assets/rlp-mono.png" alt="Royal LePage Distinction"></div><p>Courtier immobilier résidentiel et commercial. Rive-Sud de Montréal.</p></div>
-    <div><h4>Navigation</h4><ul><li><a href="${P}index.html">Accueil</a></li><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}evaluation.html">Évaluation gratuite</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}proprietes.html">Propriétés</a></li><li><a href="${P}blogue.html">Blogue</a></li><li><a href="${P}a-propos.html">À propos</a></li></ul></div>
+    <div><h4>Navigation</h4><ul><li><a href="${P}index.html">Accueil</a></li><li><a href="${P}vendre.html">Vendre</a></li><li><a href="${P}acheter.html">Acheter</a></li><li><a href="${P}investir.html">Investir</a></li><li><a href="${P}marche.html">Marché</a></li><li><a href="${P}blogue.html">Blogue</a></li><li><a href="${P}proprietes.html">Propriétés</a></li></ul></div>
+    <div><h4>Découvrir</h4><ul><li><a href="${P}evaluation.html">Évaluation gratuite</a></li><li><a href="${P}a-propos.html">À propos</a></li><li><a href="${P}contact.html">Contact</a></li></ul></div>
     <div><h4>Me joindre</h4><ul><li><a href="${telHref}">${esc(tel)}</a></li><li><a href="mailto:${esc(c.courriel)}">${esc(c.courriel)}</a></li></ul>${socs ? `<h4 style="margin-top:28px">Suivez-moi</h4><ul>${socs}</ul>` : ""}</div>
     <div><h4>Agence</h4><ul><li>Royal LePage Distinction</li><li>559, rue Pierre-Caisse</li><li>Saint-Jean-sur-Richelieu (Québec)&nbsp;J3A&nbsp;1P1</li></ul></div>
   </div>
@@ -62,7 +63,7 @@ footer.pied .pied-motif{position:absolute;right:-140px;bottom:-220px;width:620px
 footer.pied{position:relative;overflow:hidden;background:#130F0C;color:rgba(249,246,244,.7);font-size:14px;padding:0}
 footer.pied .horizon{max-width:1240px;margin:0 auto;padding:56px 40px 0}footer.pied .horizon svg,.e .horizon svg{display:block;width:100%;height:150px}
 footer.pied .horizon .plex,.e .horizon .plex{fill:none;stroke:rgba(249,246,244,.42);stroke-width:.9;stroke-linejoin:round;stroke-linecap:round}
-footer.pied>.wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;padding-top:60px;padding-bottom:40px;border-top:1px solid rgba(249,246,244,.14)}
+footer.pied>.wrap{display:grid;grid-template-columns:1.75fr .75fr .9fr 1fr 1fr;column-gap:48px;gap:40px;padding-top:60px;padding-bottom:40px;border-top:1px solid rgba(249,246,244,.14)}
 footer.pied a{color:rgba(249,246,244,.7);text-decoration:none}footer.pied a:hover{color:#F9F6F4}
 footer.pied h4{font-family:Gantari,system-ui,sans-serif;font-weight:500;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,246,244,.5);margin:0 0 16px}
 footer.pied ul{margin:0;padding:0}footer.pied li{list-style:none;margin-bottom:8px;padding:0}
@@ -73,7 +74,7 @@ footer.pied .logos .sep{width:1px;height:26px;background:rgba(249,246,244,.25)}
 footer.pied .soc{display:inline-flex;align-items:center;gap:10px}
 footer.pied .bas{border-top:1px solid rgba(249,246,244,.14);padding:22px 0;font-size:12px}
 footer.pied .bas .wrap{display:flex;justify-content:space-between;gap:20px}
-@media (max-width:980px){footer.pied>.wrap{grid-template-columns:1fr 1fr}}
+@media (max-width:980px){footer.pied>.wrap{grid-template-columns:1fr 1fr}footer.pied>.wrap>div:first-child{grid-column:1/-1}}
 @media (max-width:640px){footer.pied>.wrap{grid-template-columns:1fr}footer.pied .bas .wrap{flex-direction:column;gap:6px}}`;
 
 export function pageEssai(cfg, listings, { avis = [], prixRLP = [], rdv = "#", rdvAttrs = "", haut = "", cssAncien = "", avisUrl = "#", boucles = "", chat = "", P = "../", tete = "", essai = true } = {}) {
