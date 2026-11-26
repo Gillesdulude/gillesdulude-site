@@ -199,9 +199,9 @@ section{position:relative}
 .e .avis blockquote{font-size:18px;margin:18px 0 22px}
 .e .avis figcaption{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 .e /* Appel final */
-.final{background:var(--ink);color:var(--paper);text-align:left;padding:120px 0 0}
+.final{background:var(--ink);color:var(--paper);text-align:left;padding:130px 0 120px!important;border-bottom:1px solid rgba(249,246,244,.08)}
 .e .final h2{font-size:clamp(32px,4vw,56px);max-width:900px}
-.e .final .btns{display:flex;gap:14px;flex-wrap:wrap;margin:44px 0 90px}
+.e .final .btns{display:flex;gap:14px;flex-wrap:wrap;margin:44px 0 0}
 .e .horizon{max-width:1240px;margin:0 auto;padding:56px 40px 0}
 
 .e footer{background:var(--ink);color:rgba(249,246,244,.7);font-size:14px;border-top:1px solid var(--lineD)}

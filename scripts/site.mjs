@@ -881,6 +881,8 @@ function pageAPropos(cfg) {
   </div>
 </div></section>
 
+${bandePhoto("", "salle-de-bain", "Le souci du détail, du chantier jusqu'au notaire.", "Obtenir mon évaluation", "evaluation.html")}
+
 <section><div class="wrap">
   <p class="over">Mes engagements</p>
   <h2 style="margin-bottom:32px">Ce que vous pouvez <em>attendre de moi.</em></h2>
@@ -908,7 +910,6 @@ function pageAPropos(cfg) {
 ${prixSection()}
 ${avisGoogle()}
 ${band("On se parle ?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
-${bandePhoto("", "salle-de-bain", "Le souci du détail, du chantier jusqu'au notaire.", "Obtenir mon évaluation", "evaluation.html")}
 ` + footer(cfg) + end;
 }
 
@@ -942,11 +943,6 @@ ${bandePhoto("", "escalier", "Chaque propriété mérite d'être vue sous son me
 
 ${temoignages()}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
-<section class="cta-eval"><div class="wrap">
-  <div><p class="over">Évaluation gratuite</p><h2>Combien vaut votre propriété ?</h2>
-  <p class="lead">Une estimation basée sur les ventes récentes de votre secteur. Sans engagement.</p></div>
-  <a class="lien-b" href="evaluation.html">Obtenir mon évaluation<span aria-hidden="true">→</span></a>
-</div></section>
 
 ` + footer(cfg) + end;
 }
@@ -965,6 +961,8 @@ function pageAcheter(cfg) {
     <div><h3>On négocie</h3><p>Le meilleur prix et les meilleures conditions possibles, puis je coordonne tout jusqu'au notaire.</p></div>
   </div>
 </div></section>
+
+${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Obtenir mon évaluation", "evaluation.html")}
 
 <section id="premier" style="background:var(--warm)"><div class="wrap">
   <p class="over">Premier achat</p>
@@ -989,7 +987,6 @@ function pageAcheter(cfg) {
 ${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un multilogement</a></div></div></section>` : ""}
 ${faqSection(faq, "Les questions <em>qu'on me pose souvent.</em>", "var(--warm)")}
 ${band("Vous cherchez votre prochaine propriété ?", "Dites-moi ce que vous cherchez, je m'occupe du reste.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
-${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Obtenir mon évaluation", "evaluation.html")}
 ` + footer(cfg) + end;
 }
 
@@ -1009,6 +1006,8 @@ function pageInvestir(cfg) {
   </div>
 </div></section>
 
+${bandePhoto("", "facade", "Des immeubles à revenus qui tiennent la route.")}
+
 <section style="background:var(--warm)"><div class="wrap">
   <p class="over">Pour les analytiques</p>
   <h2 style="margin-bottom:28px">Les chiffres <em>que je regarde.</em></h2>
@@ -1018,7 +1017,7 @@ function pageInvestir(cfg) {
     <div><b>Cashflow</b><span>Ce qui reste chaque mois une fois les dépenses et l'hypothèque payées. Positif, l'immeuble se paie seul.</span></div>
     <div><b>Prix par porte</b><span>Le prix divisé par le nombre de logements. Utile pour comparer rapidement des immeubles du même secteur.</span></div>
   </div>
-  <div class="btns" style="margin-top:28px"><a class="btn" href="#calculateur">Calculer le rendement d'un multilogement</a><a class="btn ghost" href="marche.html">Voir les chiffres du mois</a></div>
+  <div class="btns" style="margin-top:28px"><a class="btn ghost" href="marche.html">Voir les chiffres du mois</a></div>
 </div></section>
 
 <section id="calculateur"><div class="wrap">
@@ -1063,7 +1062,6 @@ f.addEventListener("input",calc);calc();})();</script>
 
 ${faqSection(faq, "Les questions <em>des investisseurs.</em>", "var(--warm)")}
 ${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde ensemble s'il tient la route, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
-${bandePhoto("", "facade", "Des immeubles à revenus qui tiennent la route.", "Obtenir mon évaluation", "evaluation.html")}
 ` + footer(cfg) + end;
 }
 
