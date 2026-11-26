@@ -117,7 +117,7 @@ section[style*="warm"] .kpi,section[style*="warm"] .prem div,section[style*="war
 section[style*="warm"] .faq,section[style*="warm"] .faq details{border-color:rgba(19,15,12,.25)}
 section[style*="warm"] .faq details p{color:#2A2622}
 /* Bandes d'appel en charcoal pour varier avec le noir brun */
-section:has(> .wrap > .cta-warm),.cta-warm{background:#444444}
+section:has(> .wrap > .cta-warm),.cta-warm{background:#130F0C}
 
 /* Note clavardage sous les FAQ */
 .faq-chat{margin-top:26px;font-size:16px;color:var(--ch)}.faq-chat a{color:var(--nb);font-weight:600;white-space:nowrap}
@@ -319,12 +319,11 @@ ul.lst li::before{content:"";position:absolute;left:0;top:19px;width:10px;height
 .cta-eval .lien-b{color:var(--nb)}
 .prix-ligne{padding:72px 0!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .prix-ligne .over{margin-bottom:30px}
-.prix-ligne ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;row-gap:22px}
-.prix-ligne li{display:flex;flex-direction:column;gap:6px;padding:0 30px;border-left:1px solid var(--line)}
-.prix-ligne li:first-child{padding-left:0;border-left:0}
-.prix-ligne .an{font:500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;color:var(--ch)}
-.prix-ligne .nm{font:500 17px/1.25 Gantari,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--nb)}
-@media (max-width:860px){.prix-ligne li{padding:0 18px}.prix-ligne .nm{font-size:14px}}
+.prix-ligne ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);column-gap:48px}
+.prix-ligne ul{border-bottom:1px solid var(--line)}.prix-ligne li{display:flex;flex-direction:column;gap:8px;padding:22px 0;border-top:1px solid var(--line)}
+.prix-ligne .an{font:300 30px/1 Gantari,system-ui,sans-serif;color:#B0ADA6}
+.prix-ligne .nm{font:500 14px/1.35 Gantari,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--nb)}
+@media (max-width:860px){.prix-ligne ul{grid-template-columns:1fr 1fr;column-gap:24px}}
 .rlp-hero{display:inline-block;margin-bottom:22px}.rlp-hero img{height:52px;width:auto;display:block}
 @media (max-width:860px){.rlp-hero img{height:44px}}
 .badge.new{left:auto;right:14px;background:#B5532F;color:#fff}
@@ -1006,7 +1005,7 @@ function pageInvestir(cfg) {
   </div>
 </div></section>
 
-${bandePhoto("", "facade", "Des immeubles à revenus qui tiennent la route.")}
+${bandePhoto("", "https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?auto=format&fit=crop&w=2000&q=80", "Des immeubles à revenus qui tiennent la route.")}
 
 <section style="background:var(--warm)"><div class="wrap">
   <p class="over">Pour les analytiques</p>

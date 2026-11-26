@@ -21,7 +21,7 @@ const ICO_IG = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="tru
 // Pied de page commun à toutes les pages (même look que l'accueil).
 
 // Bande photo pleine largeur (logo sur photo assombrie) et trio de photos
-export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section class="bande-photo"><img class="bp-img" src="${P}assets/photos/${img}.jpg" srcset="${P}assets/photos/${img}-m.jpg 900w, ${P}assets/photos/${img}.jpg 2200w" sizes="100vw" alt="" loading="lazy">
+export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section class="bande-photo">${/^https?:/.test(img) ? `<img class="bp-img" src="${img}" alt="" loading="lazy">` : `<img class="bp-img" src="${P}assets/photos/${img}.jpg" srcset="${P}assets/photos/${img}-m.jpg 900w, ${P}assets/photos/${img}.jpg 2200w" sizes="100vw" alt="" loading="lazy">`}
   <div class="bp-voile"></div><div class="bp-txt">
   <p class="bp-phrase">${phrase}</p>${lien ? `<a class="lien-b" href="${P}${href}">${lien}<span aria-hidden="true">→</span></a>` : ""}</div></section>`;
 export const trioPhotos = (P, imgs) => `<section class="trio-photos">${imgs.map((i) => `<figure><img src="${P}assets/photos/${i}-m.jpg" alt="" loading="lazy"></figure>`).join("")}</section>`;
@@ -55,6 +55,7 @@ export const PHOTO_CSS = `
 .gros-chiffres b{display:block;font:300 clamp(40px,4.2vw,60px)/1 Gantari,system-ui,sans-serif;white-space:nowrap;color:inherit}
 .gros-chiffres span{display:block;font:500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#8a857f;margin:20px 0 8px}
 .gros-chiffres i{font:normal 400 15px Gantari,system-ui,sans-serif;color:#8a857f}
+section:has(.avis-carrousel) .avis-top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px}section:has(.avis-carrousel) .avis-top .over{justify-content:center}section:has(.avis-carrousel) .btns,section:has(.avis-carrousel) p:has(>.btn){justify-content:center;text-align:center;display:flex}
 .avis-carrousel{text-align:center;max-width:960px;margin:0 auto;padding:30px 0 10px}
 .avis-carrousel figure{margin:0}
 .avis-carrousel .et{color:#C9A66B;letter-spacing:.4em;font-size:14px;margin-bottom:34px}
@@ -301,12 +302,11 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
   </div>
 </div></section>
 <section class="svc-photos">
-  <a href="${P}vendre.html"><img src="${P}assets/photos/cuisine-m.jpg" alt="" loading="lazy"><span><em>01</em><strong>Vendre</strong><i>Le bon prix et une mise en valeur qui vend.</i><u>Découvrir</u></span></a>
+  <a href="${P}vendre.html"><img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><span><em>01</em><strong>Vendre</strong><i>Le bon prix et une mise en valeur qui vend.</i><u>Découvrir</u></span></a>
   <a href="${P}acheter.html"><img src="${P}assets/photos/salle-familiale-m.jpg" alt="" loading="lazy"><span><em>02</em><strong>Acheter</strong><i>L'œil d'un ancien entrepreneur à chaque visite.</i><u>Découvrir</u></span></a>
-  <a href="${P}investir.html"><img src="${P}assets/photos/plex-m.jpg" alt="" loading="lazy"><span><em>03</em><strong>Investir</strong><i>Des immeubles à revenus analysés avant l'offre.</i><u>Découvrir</u></span></a>
+  <a href="${P}investir.html"><img src="https://images.unsplash.com/photo-1629933520534-7ba5b4740b3b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><span><em>03</em><strong>Investir</strong><i>Des immeubles à revenus analysés avant l'offre.</i><u>Découvrir</u></span></a>
 </section>
 
-${bandePhoto(P, "salon-lumineux", "Votre prochain chapitre commence ici.", "Obtenir mon évaluation", "evaluation.html")}
 
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">
@@ -353,6 +353,8 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
   <h2 class="cap" style="margin-top:22px">Parlons de<br>votre projet.</h2>
   <div class="btns"><a class="btn plein" href="${esc(rdv)}"${rdvAttrs}>Réserver un appel <span class="fl">→</span></a><a class="btn trait" href="${telHref}">${esc(tel)}</a></div>
 </div>${HORIZON}</section>
+
+${bandePhoto(P, "salon-lumineux", "Votre prochain chapitre commence ici.")}
 
 ${piedDePage(cfg, P)}
 ${boucles}
