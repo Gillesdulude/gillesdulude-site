@@ -26,6 +26,7 @@ export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section cl
   <p class="bp-phrase">${phrase}</p>${lien ? `<a class="lien-b" href="${P}${href}">${lien}<span aria-hidden="true">→</span></a>` : ""}</div></section>`;
 export const trioPhotos = (P, imgs) => `<section class="trio-photos">${imgs.map((i) => `<figure><img src="${P}assets/photos/${i}-m.jpg" alt="" loading="lazy"></figure>`).join("")}</section>`;
 export const PHOTO_CSS = `
+h1,h2,h3,.bp-phrase,blockquote,.lead{text-wrap:balance}
 .bande-fin .tag{color:rgba(249,246,244,.75)!important;justify-content:center}
 .bande-fin .bp-phrase{font-size:clamp(34px,4.2vw,60px)!important;line-height:1.1!important}
 .bande-fin .btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
