@@ -625,7 +625,7 @@ function head(cfg, title, desc, extra = "") {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gillesdulude.com/assets/partage.jpg">
 ${jsonLd(cfg)}${extra}
-<link rel="icon" href="assets/favicon.png">
+<link rel="icon" href="assets/favicon.png?v=2">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1462,7 +1462,7 @@ function accueilEssai(cfg, listings, essai = false) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://gillesdulude.com/assets/partage.jpg">
 ${jsonLd(cfg)}
-<link rel="icon" href="assets/favicon.png">
+<link rel="icon" href="assets/favicon.png?v=2">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">`;
   const haut = acc.slice(i0, i1);
   const opts = { chat: cfg.clavardage ? `<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="${esc(cfg.clavardage)}"></script>` : "", boucles: BOUCLES_JS, avisUrl: AVIS_URL, avis: AVIS_GOOGLE, prixRLP: PRIX.map(([n, y]) => [n + " Royal LePage", String(y)]), rdv: RDV(cfg), rdvAttrs: rdvAttrs(cfg) };
@@ -1645,7 +1645,7 @@ function pageLiens(cfg) {
 <title>Gilles Jr. Dulude | Courtier immobilier</title>
 <meta name="description" content="Vendre, acheter ou investir sur la Rive-Sud avec Gilles Jr. Dulude, courtier immobilier, Royal LePage Distinction.">
 <meta property="og:title" content="Gilles Jr. Dulude | Courtier immobilier"><meta property="og:image" content="https://gillesdulude.com/assets/partage.jpg">
-<link rel="icon" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="icon" href="assets/favicon.png?v=2"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gantari:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
