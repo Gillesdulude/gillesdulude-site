@@ -969,12 +969,12 @@ ${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exac
   <form class="form evalform" id="rechf">
     <h3 class="evh">Votre projet</h3>
     <div class="row3"><label>Type de propriété *<select name="type" required><option value="">Choisir</option><option>Maison</option><option>Copropriété</option><option>Duplex ou triplex</option><option>Multilogement</option><option>Chalet</option><option>Terrain</option><option>Autre</option></select></label>
-    <label>Budget maximum *<select name="budget" required><option value="">Choisir</option><option>Moins de 400 000 $</option><option>400 000 $ à 550 000 $</option><option>550 000 $ à 700 000 $</option><option>700 000 $ à 900 000 $</option><option>900 000 $ à 1 200 000 $</option><option>Plus de 1 200 000 $</option></select></label>
+    <label>Budget ciblé *<select name="budget" required><option value="">Choisir</option><option>Moins de 400 000 $</option><option>400 000 $ à 550 000 $</option><option>550 000 $ à 700 000 $</option><option>700 000 $ à 900 000 $</option><option>900 000 $ à 1 200 000 $</option><option>Plus de 1 200 000 $</option></select></label>
     <label>Chambres minimum<select name="chambres"><option>Peu importe</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5 et plus</option></select></label></div>
     <label>Secteurs recherchés *<input name="secteurs" required placeholder="Ex. : La Prairie, Chambly, Saint-Jean-sur-Richelieu"></label>
     <div class="grp"><span class="glab">Essentiels</span><div class="chks"><label class="chk"><input type="checkbox" name="essentiels" value="Garage"> Garage</label><label class="chk"><input type="checkbox" name="essentiels" value="Grand terrain"> Grand terrain</label><label class="chk"><input type="checkbox" name="essentiels" value="Piscine"> Piscine</label><label class="chk"><input type="checkbox" name="essentiels" value="Sous-sol aménagé"> Sous-sol aménagé</label><label class="chk"><input type="checkbox" name="essentiels" value="Bureau à domicile"> Bureau à domicile</label><label class="chk"><input type="checkbox" name="essentiels" value="Près des écoles"> Près des écoles</label><label class="chk"><input type="checkbox" name="essentiels" value="Logement intergénération"> Logement intergénération</label></div></div>
     <div class="row3"><label>Quand voulez-vous acheter? *<select name="echeance" required><option value="">Choisir</option><option>Le plus tôt possible</option><option>D'ici 3 mois</option><option>D'ici 6 mois</option><option>Dans un an ou plus</option><option>Je regarde pour l'instant</option></select></label>
-    <label>Préapprobation hypothécaire<select name="preapprobation"><option>Pas encore</option><option>En cours</option><option>Oui, c'est fait</option></select></label>
+    <label>Financement<select name="preapprobation"><option>Préapprobation à venir</option><option>Préapprobation en cours</option><option>Préapprobation faite</option><option>Achat comptant</option></select></label>
     <label>Une propriété à vendre avant?<select name="avendre"><option>Non</option><option>Oui</option><option>Je ne sais pas encore</option></select></label></div>
     <h3 class="evh">Contact</h3>
     <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
@@ -989,7 +989,7 @@ ${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exac
   <script>(()=>{const f=document.getElementById("rechf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
   f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
    const ess=fd.getAll("essentiels").join(", ");
-   const resume="Recherche acheteur : "+d.type+" | Budget : "+d.budget+" | Secteurs : "+d.secteurs+" | Chambres : "+d.chambres+(ess?" | Essentiels : "+ess:"")+" | Achat : "+d.echeance+" | Préapprobation : "+d.preapprobation+" | Propriété à vendre : "+d.avendre+(d.autre?" | "+d.autre:"");
+   const resume="Recherche acheteur : "+d.type+" | Budget : "+d.budget+" | Secteurs : "+d.secteurs+" | Chambres : "+d.chambres+(ess?" | Essentiels : "+ess:"")+" | Achat : "+d.echeance+" | Financement : "+d.preapprobation+" | Propriété à vendre : "+d.avendre+(d.autre?" | "+d.autre:"");
    const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,type_propriete:d.type,budget:d.budget,secteurs:d.secteurs,chambres:d.chambres,essentiels:ess,echeance:d.echeance,preapprobation:d.preapprobation,propriete_a_vendre:d.avendre,autre:d.autre||"",message:resume,demande:"recherche acheteur",tag:"acheteur - site web",source:"site web gillesdulude.com",consentement:true};
    const k=document.getElementById("rechok");
    if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Je regarde ce qui correspond à votre recherche et je vous reviens rapidement.";k.style.display="block";f.reset()});return}
@@ -1038,7 +1038,7 @@ function pageInvestir(cfg) {
   </div>
 </div></section>
 
-${bandePhoto("", "https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?auto=format&fit=crop&w=2000&q=80", "Des immeubles à revenus qui tiennent la route.", "Me confier ma recherche", "#recherche-immeuble")}
+${bandePhoto("", "https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?auto=format&fit=crop&w=2000&q=80", "Des immeubles à revenus qui rapportent vraiment.", "Trouver mon prochain immeuble", "#recherche-immeuble")}
 
 <section style="background:var(--warm)"><div class="wrap">
   <p class="over">Pour les analytiques</p>
@@ -1087,17 +1087,17 @@ f.addEventListener("input",calc);calc();})();</script>
 </div></section>
 
 <section id="recherche-immeuble" style="background:var(--warm)"><div class="wrap">
-  <div class="entete-rech"><p class="over">Votre prochain immeuble</p><h2>Parlez-moi <em>de votre projet.</em></h2><p class="lead">Immeubles de 5 logements et plus. Donnez-moi vos critères, je vous présente seulement les occasions qui tiennent la route.</p></div>
+  <div class="entete-rech"><p class="over">Votre prochain immeuble</p><h2>Parlez-moi <em>de votre projet.</em></h2><p class="lead">Immeubles de 5 logements et plus. Donnez-moi vos critères, je vous présente seulement les occasions qui en valent la peine.</p></div>
   <form class="form evalform" id="immf">
     <h3 class="evh">L'immeuble recherché</h3>
     <div class="row3"><label>Taille de l'immeuble *<select name="taille" required><option value="">Choisir</option><option>5 à 11 logements</option><option>12 à 24 logements</option><option>25 logements et plus</option><option>Immeuble mixte (commercial et résidentiel)</option><option>Ouvert à tout</option></select></label>
-    <label>Prix maximum *<select name="budget" required><option value="">Choisir</option><option>Moins de 1 M$</option><option>1 M$ à 2 M$</option><option>2 M$ à 4 M$</option><option>4 M$ à 7 M$</option><option>Plus de 7 M$</option></select></label>
-    <label>Mise de fonds disponible<select name="mdf"><option>Je préfère en parler</option><option>Moins de 250 000 $</option><option>250 000 $ à 500 000 $</option><option>500 000 $ à 1 M$</option><option>Plus de 1 M$</option></select></label></div>
+    <label>Prix ciblé *<select name="budget" required><option value="">Choisir</option><option>Moins de 1 M$</option><option>1 M$ à 2 M$</option><option>2 M$ à 4 M$</option><option>4 M$ à 7 M$</option><option>Plus de 7 M$</option></select></label>
+    <label>Mode d'achat<select name="mode"><option>Je préfère en parler</option><option>Comptant</option><option>Financement approuvé</option><option>Financement en discussion</option><option>Financement à venir</option></select></label></div>
     <label>Secteurs recherchés *<input name="secteurs" required placeholder="Ex. : Rive-Sud, Saint-Jean-sur-Richelieu, Granby"></label>
     <div class="grp"><span class="glab">Votre stratégie</span><div class="chks"><label class="chk"><input type="checkbox" name="strategie" value="Revenus stables"> Revenus stables</label><label class="chk"><input type="checkbox" name="strategie" value="Loyers sous le marché"> Loyers sous le marché</label><label class="chk"><input type="checkbox" name="strategie" value="Rénovation et optimisation"> Rénovation et optimisation</label><label class="chk"><input type="checkbox" name="strategie" value="Immeuble récent"> Immeuble récent</label><label class="chk"><input type="checkbox" name="strategie" value="Ajout de logements"> Ajout de logements</label></div></div>
     <div class="row3"><label>Votre expérience<select name="experience"><option>Premier immeuble</option><option>Je possède déjà des plex</option><option>Je possède déjà des 5 logements et plus</option></select></label>
-    <label>Financement<select name="financement"><option>Pas encore commencé</option><option>En discussion avec un prêteur</option><option>Approuvé</option></select></label>
-    <label>Quand voulez-vous acheter? *<select name="echeance" required><option value="">Choisir</option><option>Le plus tôt possible</option><option>D'ici 3 mois</option><option>D'ici 6 mois</option><option>Dans un an ou plus</option><option>Je regarde pour l'instant</option></select></label></div>
+    <label>Quand voulez-vous acheter? *<select name="echeance" required><option value="">Choisir</option><option>Le plus tôt possible</option><option>D'ici 3 mois</option><option>D'ici 6 mois</option><option>Dans un an ou plus</option><option>Je regarde pour l'instant</option></select></label>
+    <label>Une propriété à vendre aussi?<select name="avendre"><option>Non</option><option>Oui, un immeuble</option><option>Oui, une maison ou un condo</option><option>Peut-être</option></select></label></div>
     <h3 class="evh">Contact</h3>
     <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
     <label>Votre nom *<input name="nomfamille" required autocomplete="family-name" placeholder="Entrez votre nom"></label>
@@ -1111,8 +1111,8 @@ f.addEventListener("input",calc);calc();})();</script>
   <script>(()=>{const f=document.getElementById("immf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
   f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
    const st=fd.getAll("strategie").join(", ");
-   const resume="Recherche investisseur 5 logements et plus : "+d.taille+" | Prix max : "+d.budget+" | Mise de fonds : "+d.mdf+" | Secteurs : "+d.secteurs+(st?" | Stratégie : "+st:"")+" | Expérience : "+d.experience+" | Financement : "+d.financement+" | Achat : "+d.echeance+(d.autre?" | "+d.autre:"");
-   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,taille_immeuble:d.taille,budget:d.budget,mise_de_fonds:d.mdf,secteurs:d.secteurs,strategie:st,experience:d.experience,financement:d.financement,echeance:d.echeance,autre:d.autre||"",message:resume,demande:"recherche investisseur",tag:"investisseur - site web",source:"site web gillesdulude.com",consentement:true};
+   const resume="Recherche investisseur 5 logements et plus : "+d.taille+" | Prix ciblé : "+d.budget+" | Mode d'achat : "+d.mode+" | Secteurs : "+d.secteurs+(st?" | Stratégie : "+st:"")+" | Expérience : "+d.experience+" | Propriété à vendre : "+d.avendre+" | Achat : "+d.echeance+(d.autre?" | "+d.autre:"");
+   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,taille_immeuble:d.taille,budget:d.budget,mode_achat:d.mode,secteurs:d.secteurs,strategie:st,experience:d.experience,propriete_a_vendre:d.avendre,echeance:d.echeance,autre:d.autre||"",message:resume,demande:"recherche investisseur",tag:"investisseur - site web",source:"site web gillesdulude.com",consentement:true};
    const k=document.getElementById("immok");
    if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! J'analyse vos critères et je vous reviens rapidement avec les occasions qui correspondent.";k.style.display="block";f.reset()});return}
    location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Recherche investisseur : "+d.prenom+" "+d.nomfamille)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" "+d.courriel+" "+d.telephone+" | "+resume)});})();</script>
@@ -1125,7 +1125,7 @@ f.addEventListener("input",calc);calc();})();</script>
 </div></div></section>
 
 ${faqSection(faq, "Les questions <em>des investisseurs.</em>", "var(--warm)")}
-${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde ensemble s'il tient la route, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+${band("Un immeuble en vue?", "Envoyez-moi l'annonce ou les chiffres. On regarde ensemble s'il est rentable, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
