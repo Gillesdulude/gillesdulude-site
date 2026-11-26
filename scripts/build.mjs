@@ -402,7 +402,7 @@ async function main() {
 
   const pages = renderSite(config, [...listings, ...vendus], { apercu: SAMPLE ? "Aperçu avec des propriétés fictives." : "" });
   if (!SAMPLE) await writeFile(path.join(dist, "etat.json"), JSON.stringify({ genere: new Date().toISOString(), actives: listings, vendus }));
-  for (const [f, html] of Object.entries(pages)) { await mkdir(path.dirname(path.join(dist, f)), { recursive: true }); await writeFile(path.join(dist, f), html); }
+  for (const [f, html] of Object.entries(pages)) { await mkdir(path.dirname(path.join(dist, f)), { recursive: true }); await writeFile(path.join(dist, f), html.replace(/(<section class="rlp-hero">[\s\S]*?<h1>)([^<]*)(<\/h1>)/, (m, a, t, b) => a + t.replace(/(\S+-\S+)/g, '<span style="white-space:nowrap">$1</span>') + b)); }
   await cp(path.join(ROOT, "assets"), path.join(dist, "assets"), { recursive: true });
   if (config.page.domainePersonnalise && !SAMPLE) {
     await writeFile(path.join(dist, "CNAME"), config.page.domainePersonnalise + "\n");
