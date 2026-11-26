@@ -464,7 +464,7 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 .tuiles .card .badge{position:absolute;top:28px;left:40px;z-index:3;font:600 11px/1 Gantari,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#F9F6F4;border:1px solid rgba(249,246,244,.7);padding:9px 14px;background:rgba(19,15,12,.25)}
 .tuiles .card .badge.new{left:auto;right:28px;background:#F9F6F4;color:#130F0C;border-color:#F9F6F4}
 .tuiles .card .badge.sold{background:#b3261e;border-color:#b3261e}
-.tuiles .card .badge.vid{top:auto;bottom:auto;top:76px}
+.tuiles .card .badge.vid{top:28px!important;bottom:auto!important;left:auto!important;right:28px!important;width:auto!important;max-width:max-content}.tuiles .card .badge.new~.badge.vid{top:72px!important}
 .tuiles .card .nphotos{position:absolute;right:28px;bottom:28px;z-index:3;font-size:12px;color:rgba(249,246,244,.75)}
 .tuiles .card video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .tuiles .empty{grid-column:1/-1;padding:60px 24px;text-align:center}
