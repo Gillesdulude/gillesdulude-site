@@ -3,7 +3,7 @@
 
 import { T, R, JS } from "./en.mjs";
 import { existsSync, readFileSync } from "node:fs";
-import { pageEssai, piedDePage, PIED_CSS, bandePhoto, trioPhotos } from "./essai.mjs";
+import { pageEssai, piedDePage, PIED_CSS, bandePhoto, trioPhotos, CARROUSEL_JS } from "./essai.mjs";
 import { ARTICLES, LIENS_RLP, TEXTES as TEXTES_BLOGUE, ARTICLES_RLP, TEXTES_RLP } from "./blogue.mjs";
 const norm = (s) => String(s).replace(/&nbsp;|\u00a0|\u202f/g, " ").replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/\s+/g, " ").trim();
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -598,7 +598,7 @@ const AVIS_URL = "https://www.google.com/search?q=%C3%89quipe+Dulude+-+Immobilie
 const avisGoogle = () => `<section><div class="wrap">
   <div class="avis-top"><div><p class="over">Avis Google</p><h2>Ce que mes clients <em>en disent.</em></h2></div>
   <div class="note-g"><b>5,0</b><span class="etoiles" aria-label="5 étoiles sur 5">★★★★★</span><span>${AVIS_GOOGLE.length} avis sur Google</span></div></div>
-  <div class="avis-grid">${AVIS_GOOGLE.map(([q, n, d]) => `<figure class="quote" style="margin:0"><span class="etoiles" aria-hidden="true">★★★★★</span><p>« ${q} »</p><figcaption class="who">${n}<span>${d}</span></figcaption></figure>`).join("")}</div>
+  <div class="avis-carrousel" data-carrousel>${AVIS_GOOGLE.map(([q, n], i) => `<figure${i ? " hidden" : ""}><div class="et">★★★★★</div><blockquote>« ${q} »</blockquote><figcaption>${n} · Avis Google</figcaption></figure>`).join("")}<nav><button type="button" data-prec aria-label="Avis précédent">←</button><span data-pos>1 / ${AVIS_GOOGLE.length}</span><button type="button" data-suiv aria-label="Avis suivant">→</button></nav></div>${CARROUSEL_JS}
   <p style="margin-top:28px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir les avis sur Google</a></p>
 </div></section>`;
 
@@ -711,7 +711,7 @@ const TEMOIGNAGES = [
 const temoignages = () => `<section><div class="wrap">
   <div class="avis-top"><div><p class="over">Avis Google</p><h2>Ils m'ont fait <em>confiance.</em></h2></div>
   <div class="note-g"><b>5,0</b><span class="etoiles" aria-label="5 étoiles sur 5">★★★★★</span><span>${AVIS_GOOGLE.length} avis sur Google</span></div></div>
-  <div class="cards3">${AVIS_GOOGLE.slice(0, 3).map(([q, n, d]) => `<figure class="quote" style="margin:0"><span class="etoiles" aria-hidden="true">★★★★★</span><p>« ${q} »</p><figcaption class="who">${n}<span>${d}</span></figcaption></figure>`).join("")}</div>
+  <div class="avis-carrousel" data-carrousel>${AVIS_GOOGLE.map(([q, n], i) => `<figure${i ? " hidden" : ""}><div class="et">★★★★★</div><blockquote>« ${q} »</blockquote><figcaption>${n} · Avis Google</figcaption></figure>`).join("")}<nav><button type="button" data-prec aria-label="Avis précédent">←</button><span data-pos>1 / ${AVIS_GOOGLE.length}</span><button type="button" data-suiv aria-label="Avis suivant">→</button></nav></div>${CARROUSEL_JS}
   <div class="btns" style="margin-top:24px"><a class="btn ghost" href="${AVIS_URL}" target="_blank" rel="noopener">Voir tous les avis</a><a class="btn ghost" href="a-propos.html">Qui est Gilles?</a></div>
 </div></section>`;
 
@@ -925,10 +925,10 @@ function pageVendre(cfg) {
     <p class="lead">Vendre, c'est simple. Vendre au maximum, ça prend une méthode.</p>
   </div>
 </div>
-<div class="wrap"><div class="v8list">${V8.map(([n, t, d]) => `<div><b>${n}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
+<div class="wrap"><div class="v8list">${V8.map(([n, t, d], i) => `<div><b>${String(i + 1).padStart(2, "0")}</b><h3>${t}</h3><p>${d}</p></div>`).join("")}</div></div>
 </section>
 
-<section id="etapes" style="background:var(--warm)"><div class="wrap">
+<section id="etapes"><div class="wrap">
   <p class="over">Comment ça commence</p>
   <h2 style="margin-bottom:32px">Simple, <em>sans engagement.</em></h2>
   <div class="steps3">

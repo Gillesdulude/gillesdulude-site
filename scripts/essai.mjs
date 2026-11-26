@@ -26,6 +26,44 @@ export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section cl
   <p class="bp-phrase">${phrase}</p>${lien ? `<a class="lien-b" href="${P}${href}">${lien}<span aria-hidden="true">→</span></a>` : ""}</div></section>`;
 export const trioPhotos = (P, imgs) => `<section class="trio-photos">${imgs.map((i) => `<figure><img src="${P}assets/photos/${i}-m.jpg" alt="" loading="lazy"></figure>`).join("")}</section>`;
 export const PHOTO_CSS = `
+
+/* Haut de gamme : sans boîtes */
+.svc-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0!important;background:transparent}
+.svc-photos a{position:relative;display:block;height:clamp(420px,40vw,600px);overflow:hidden;color:#F9F6F4;text-decoration:none}
+.svc-photos img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.85);transition:transform 1.4s ease}
+.svc-photos a:hover img{transform:scale(1.06)}
+.svc-photos a:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,0) 35%,rgba(19,15,12,.82))}
+.svc-photos span{position:absolute;left:40px;right:40px;bottom:42px;z-index:2;display:flex;flex-direction:column}
+.svc-photos em{font:normal 500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.28em;opacity:.75;margin-bottom:14px}
+.svc-photos strong{font:600 clamp(28px,2.6vw,38px)/1.05 Gantari,system-ui,sans-serif;text-transform:uppercase;margin-bottom:12px}
+.svc-photos i{font:normal 400 16px/1.5 Gantari,system-ui,sans-serif;opacity:.88;max-width:320px}
+.svc-photos u{text-decoration:none;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid;padding-bottom:7px;align-self:flex-start;margin-top:22px}
+.v8list{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:90px!important;row-gap:0!important;counter-reset:lev}
+.v8list>div{display:grid!important;grid-template-columns:86px 1fr;grid-template-rows:auto 1fr;padding:30px 0!important;border:0!important;border-top:1px solid #d9d4cd!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
+.v8list>div:nth-last-child(-n+2){border-bottom:1px solid #d9d4cd!important}
+.v8list>div>b{grid-row:1/3;font:300 44px/1 Gantari,system-ui,sans-serif!important;color:#B0ADA6!important;background:none!important;width:auto!important;height:auto!important;display:block!important;padding:0!important;border:0!important}
+.v8list>div>h3{font:500 19px/1.3 Gantari,system-ui,sans-serif!important;text-transform:uppercase;letter-spacing:.06em;margin:4px 0 10px!important}
+.v8list>div>p{font:400 16px/1.6 Gantari,system-ui,sans-serif;color:#55504a;margin:0}
+.steps3{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:60px!important;border-top:1px solid #130F0C;counter-reset:etape;margin-top:56px}
+.steps3>div{position:relative;padding:40px 0 0!important;border:0!important;background:transparent!important;box-shadow:none!important;counter-increment:etape}
+.steps3>div:after{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%!important;background:#130F0C}
+.steps3>div:before,.steps3>div::before{content:"0" counter(etape)!important;display:block!important;width:auto!important;height:auto!important;border-radius:0!important;background:none!important;font:300 80px/1 Gantari,system-ui,sans-serif!important;color:#130F0C!important;margin-bottom:22px!important;place-items:initial!important}
+.steps3>div h3{font:500 19px/1.3 Gantari,system-ui,sans-serif!important;text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px!important}
+.steps3>div p{font:400 16px/1.6 Gantari,system-ui,sans-serif;color:#55504a;max-width:320px}
+.gros-chiffres{display:grid;grid-template-columns:repeat(3,1fr);margin:64px 0 40px}
+.gros-chiffres div{padding:0 50px;border-left:1px solid currentColor;border-left-color:rgba(128,120,112,.3)}.gros-chiffres div:first-child{padding-left:0;border:0}
+.gros-chiffres b{display:block;font:300 clamp(40px,4.2vw,60px)/1 Gantari,system-ui,sans-serif;white-space:nowrap;color:inherit}
+.gros-chiffres span{display:block;font:500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#8a857f;margin:20px 0 8px}
+.gros-chiffres i{font:normal 400 15px Gantari,system-ui,sans-serif;color:#8a857f}
+.avis-carrousel{text-align:center;max-width:960px;margin:0 auto;padding:30px 0 10px}
+.avis-carrousel figure{margin:0}
+.avis-carrousel .et{color:#C9A66B;letter-spacing:.4em;font-size:14px;margin-bottom:34px}
+.avis-carrousel blockquote{font:300 clamp(22px,2.4vw,34px)/1.45 Gantari,system-ui,sans-serif;margin:0;color:#130F0C}
+.avis-carrousel figcaption{margin-top:36px;font:500 13px/1 Gantari,system-ui,sans-serif;letter-spacing:.26em;text-transform:uppercase;color:#130F0C}
+.avis-carrousel nav{margin-top:44px;display:flex;justify-content:center;align-items:center;gap:28px;font:400 13px Gantari,system-ui,sans-serif;letter-spacing:.2em;color:#8a857f}
+.avis-carrousel button{width:46px;height:46px;border:1px solid #130F0C;background:transparent;color:#130F0C;font-size:16px;cursor:pointer;transition:background .2s,color .2s}
+.avis-carrousel button:hover{background:#130F0C;color:#F9F6F4}
+@media (max-width:860px){.svc-photos{grid-template-columns:1fr}.svc-photos a{height:420px}.v8list{grid-template-columns:1fr!important}.v8list>div:nth-last-child(2){border-bottom:0!important}.v8list>div{grid-template-columns:64px 1fr}.v8list>div>b{font-size:34px!important}.steps3{grid-template-columns:1fr!important;gap:44px!important;border-top:0;border-left:1px solid #130F0C;padding-left:28px}.steps3>div{padding-top:0!important}.steps3>div:after{top:10px;left:-33px}.steps3>div:before{font-size:56px;margin-bottom:12px}.gros-chiffres{grid-template-columns:1fr;gap:34px}.gros-chiffres div{padding:0;border:0}}
 .bande-photo{position:relative;min-height:min(78vh,720px);display:flex;align-items:center;justify-content:center;overflow:hidden;background:#130F0C;padding:0!important;color:#F9F6F4;text-align:center}
 .bande-photo .bp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.9);transform:scale(1.04);transition:transform 6s ease}
 .bande-photo:hover .bp-img{transform:scale(1.1)}
@@ -41,6 +79,9 @@ export const PHOTO_CSS = `
 .trio-photos figure:hover img{transform:scale(1.06)}
 @media (max-width:860px){.bande-photo{min-height:520px}.trio-photos{grid-template-columns:1fr 1fr}.trio-photos figure:first-child{grid-column:1/-1}}
 `;
+
+
+export const CARROUSEL_JS = `<script>document.querySelectorAll("[data-carrousel]").forEach(function(c){var f=c.querySelectorAll("figure"),p=c.querySelector("[data-pos]"),i=0;function v(n){f[i].hidden=true;i=(n+f.length)%f.length;f[i].hidden=false;p.textContent=(i+1)+" / "+f.length}c.querySelector("[data-prec]").onclick=function(){v(i-1)};c.querySelector("[data-suiv]").onclick=function(){v(i+1)}})</script>`;
 
 export function piedDePage(cfg, P = "", { horizon = false } = {}) {
   const c = cfg.courtier, r = cfg.reseaux || {};
@@ -257,22 +298,21 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
   <div class="entete">
     <div><p class="tag">Accompagnement</p><h2 class="cap">Mes services.</h2></div>
   </div>
-  <div class="services">
-    <a href="${P}vendre.html">${FACADE.maison}<h3 class="cap">Vendre</h3><p>Le bon prix et une mise en valeur qui vend.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="${P}acheter.html">${FACADE.duplex}<h3 class="cap">Acheter</h3><p>L'œil d'un ancien entrepreneur à chaque visite.</p><span class="voir">Voir <span class="mono">→</span></span></a>
-    <a href="${P}investir.html">${FACADE.triplex}<h3 class="cap">Investir</h3><p>Des immeubles à revenus analysés avant l'offre.</p><span class="voir">Voir <span class="mono">→</span></span></a>
   </div>
 </div></section>
+<section class="svc-photos">
+  <a href="${P}vendre.html"><img src="${P}assets/photos/cuisine-m.jpg" alt="" loading="lazy"><span><em>01</em><strong>Vendre</strong><i>Le bon prix et une mise en valeur qui vend.</i><u>Découvrir</u></span></a>
+  <a href="${P}acheter.html"><img src="${P}assets/photos/salle-familiale-m.jpg" alt="" loading="lazy"><span><em>02</em><strong>Acheter</strong><i>L'œil d'un ancien entrepreneur à chaque visite.</i><u>Découvrir</u></span></a>
+  <a href="${P}investir.html"><img src="${P}assets/photos/plex-m.jpg" alt="" loading="lazy"><span><em>03</em><strong>Investir</strong><i>Des immeubles à revenus analysés avant l'offre.</i><u>Découvrir</u></span></a>
+</section>
 
-${bandePhoto(P, "cuisine", "Votre prochain chapitre commence ici.", "Obtenir mon évaluation", "evaluation.html")}
+${bandePhoto(P, "salon-lumineux", "Votre prochain chapitre commence ici.", "Obtenir mon évaluation", "evaluation.html")}
 
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Fiche technique</p><h2 class="cap">Le marché,<br>${esc((m.moisTitre || m.mois || "").toLowerCase())}.</h2></div>
   </div>
-  <div class="table">
-    ${rangs.map(([lab, v]) => `<div class="ligne"><span class="lab">${esc(lab)}</span><span class="val mono">${prix(v[0])}</span><span class="var mono ${v[1] > 0 ? "up" : v[1] < 0 ? "dn" : ""}">${signe(v[1])} % / an</span></div>`).join("")}
-  </div>
+  <div class="gros-chiffres">${Object.entries(m.prix || {}).slice(0, 3).map(([lab, v]) => `<div><b>${prix(v[0])}</b><span>${esc(lab)}</span><i>${signe(v[1])} % sur un an</i></div>`).join("")}</div>
   <p class="source mono">Source : ${esc(m.source || "")}. ${esc(m.region || "")}.</p>
 </div></section>` : ""}
 
@@ -304,7 +344,7 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Avis Google</p><h2 class="cap">Ce qu'en disent<br>les clients.</h2></div>
   </div>
-  <div class="avis">${avis1.map((a) => `<figure><div class="et">★★★★★</div><blockquote>« ${esc(a[0])} »</blockquote><figcaption>${esc(a[1])}</figcaption></figure>`).join("")}</div>
+  <div class="avis-carrousel" data-carrousel>${avis1.map((a, i) => `<figure${i ? " hidden" : ""}><div class="et">★★★★★</div><blockquote>« ${esc(a[0])} »</blockquote><figcaption>${esc(a[1])} · Avis Google</figcaption></figure>`).join("")}<nav><button type="button" data-prec aria-label="Avis précédent">←</button><span data-pos>1 / ${avis1.length}</span><button type="button" data-suiv aria-label="Avis suivant">→</button></nav></div>${CARROUSEL_JS}
   <div class="tout" style="justify-content:flex-start"><a href="${avisUrl}" target="_blank" rel="noopener">Voir les avis sur Google <span class="mono">→</span></a></div>
 </div></section>` : ""}
 
