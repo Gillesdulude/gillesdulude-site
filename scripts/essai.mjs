@@ -262,6 +262,19 @@ section{position:relative}
 .e .sec-tete{padding-bottom:0!important}.e .sec-tete .entete{margin-bottom:56px}
 .e .avis-carrousel{padding-top:20px}
 @media (max-width:980px){.e .entete{grid-template-columns:1fr;gap:24px}.e .ent-d{justify-self:start}.e .sec{padding:90px 0}}
+/* Continuité services / inscriptions : même système de tuiles photo */
+.e .props{gap:8px!important}
+.e .prop{aspect-ratio:auto!important;height:clamp(420px,40vw,600px)}
+.e .prop img{opacity:1;filter:brightness(.85)}
+.e .prop:hover img{transform:scale(1.06)}
+.e .prop::after{inset:0!important;background:linear-gradient(180deg,rgba(19,15,12,0) 35%,rgba(19,15,12,.82))!important}
+.e .prop .info{left:40px;right:40px;bottom:42px;display:flex;flex-direction:column}
+.e .prop .eti{font:500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.28em;color:rgba(249,246,244,.75)}
+.e .prop .px{font:600 clamp(28px,2.6vw,38px)/1.05 Gantari,system-ui,sans-serif;margin:14px 0 10px}
+.e .prop .ad{font:400 16px/1.5 Gantari,system-ui,sans-serif;color:rgba(249,246,244,.88)}
+.e .prop u{text-decoration:none;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid;padding-bottom:7px;align-self:flex-start;margin-top:22px;color:#F9F6F4}
+.e .prop .badge{position:absolute;top:28px;left:40px;z-index:2;font:600 11px/1 Gantari,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#F9F6F4;border:1px solid rgba(249,246,244,.7);padding:9px 14px;background:rgba(19,15,12,.25)}
+@media (max-width:860px){.e .prop{height:420px}}
 .e .essai{position:fixed;left:16px;bottom:16px;z-index:50;background:#F9F6F4;color:#130F0C;border:1px solid #130F0C;font-family:Gantari,system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px}
 @media (max-width:980px){
 .e .wrap{padding:0 24px}
@@ -328,14 +341,14 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 
 <section class="sec"><div class="wrap">
   <div class="entete">
-    <div><p class="tag">À vendre</p><h2 class="cap">Inscriptions<br>vedettes.</h2></div>
+    <div><p class="tag">Propriétés</p><h2 class="cap">Inscriptions<br>vedettes.</h2></div>
     <div class="ent-d"><p>Une sélection de mes propriétés à vendre en ce moment.</p><a class="ent-lien" href="${P}proprietes.html">Voir toutes les propriétés <span class="mono">→</span></a></div>
   </div>
 </div>
   <div class="props">
     ${actives.map((l) => `<a class="prop" href="${P}proprietes.html#${esc(l.id)}">
       ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}${l.boucle ? `<video class="boucle" muted loop playsinline preload="none" src="${esc(l.boucle)}"></video><span class="vidtag">▶ Vidéo</span>` : ""}
-      <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span></div></a>`).join("")}
+      <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span><u>Voir la propriété</u></div><span class="badge">À vendre</span></a>`).join("")}
   </div>
 </section>
 

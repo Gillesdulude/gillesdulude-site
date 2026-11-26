@@ -34,6 +34,7 @@ export const T = {
   "Quelques questions, et je vous reviens avec une estimation basée sur les ventes récentes de votre secteur. Sans engagement.": "A few questions, and I will get back to you with an estimate based on recent sales in your area. No commitment.",
   "Évaluation gratuite | Gilles Jr. Dulude, courtier immobilier": "Free evaluation | Gilles Jr. Dulude, real estate broker",
   "Vendre, acheter ou investir : un seul courtier, du premier appel jusqu'au notaire.": "Selling, buying or investing: one broker, from the first call to the notary.", "Les prix médians de la Rive-Sud, mis à jour chaque mois.": "South Shore median prices, updated every month.", "Voir les chiffres": "See the numbers", "Une sélection de mes propriétés à vendre en ce moment.": "A selection of my properties for sale right now.", "Note de 5,0 sur Google. Des clients qui reviennent et qui recommandent.": "Rated 5.0 on Google. Clients who come back and refer others.", "Votre prochain chapitre commence ici.": "Your next chapter starts here.",
+  "Voir la propriété": "View the property", "À vendre": "For sale",
   "Réserver un appel": "Book a call", "Évaluation gratuite": "Free evaluation", "En savoir plus →": "Learn more →",
   "Parlons de votre projet.": "Let’s talk about your project.", "Un appel de 15 minutes, sans engagement.": "A 15-minute call, no commitment.",
   "Gilles Jr. Dulude": "Gilles Jr. Dulude", "5 étoiles sur 5": "5 out of 5 stars", "Confidentialité": "Privacy",
