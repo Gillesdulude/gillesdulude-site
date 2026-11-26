@@ -332,7 +332,7 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
 </div></section>
 <section class="svc-photos">
   <a href="${P}vendre.html"><img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><span><em>01</em><strong>Vendre</strong><i>Le bon prix et une mise en valeur qui vend.</i><u>Découvrir</u></span></a>
-  <a href="${P}acheter.html"><img src="${P}assets/photos/salle-familiale-m.jpg" alt="" loading="lazy"><span><em>02</em><strong>Acheter</strong><i>L'œil d'un ancien entrepreneur à chaque visite.</i><u>Découvrir</u></span></a>
+  <a href="${P}acheter.html"><img src="https://images.unsplash.com/photo-1657346088167-b982455bf29a?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><span><em>02</em><strong>Acheter</strong><i>L'œil d'un ancien entrepreneur à chaque visite.</i><u>Découvrir</u></span></a>
   <a href="${P}investir.html"><img src="https://images.unsplash.com/photo-1629933520534-7ba5b4740b3b?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy"><span><em>03</em><strong>Investir</strong><i>Des immeubles à revenus analysés avant l'offre.</i><u>Découvrir</u></span></a>
 </section>
 
