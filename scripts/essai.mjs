@@ -191,7 +191,7 @@ section{position:relative}
 .e .services p{color:var(--mut);font-size:16px}
 .e .services .voir{margin-top:auto;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;display:flex;gap:10px}
 .e /* Chiffres : fiche technique */
-.fiche{background:var(--ink2);color:var(--paper)}
+.fiche{background:#130F0C;color:var(--paper)}
 .e .fiche .grille{position:absolute;inset:0;background-image:linear-gradient(90deg,var(--lineD) 1px,transparent 1px);background-size:calc(100%/6) 100%;opacity:.6}
 .e .fiche .wrap{position:relative}
 .e .fiche .entete p{color:rgba(249,246,244,.65)}
@@ -253,6 +253,15 @@ section{position:relative}
 .e footer li{list-style:none;margin-bottom:8px}
 .e footer .bas{border-top:1px solid var(--lineD);padding:22px 0;font-size:12px}
 .e footer .bas .wrap{display:flex;justify-content:space-between;padding:0 40px;grid-template-columns:none}
+.e .sec{padding:130px 0}
+.e .entete{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:end;margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.e .fiche .entete{border-bottom-color:rgba(128,120,112,.3)}
+.e .ent-d{justify-self:end;max-width:420px;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.e .ent-d p{margin:0;color:var(--mut);font-size:16px;line-height:1.6}
+.e .ent-lien{font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:8px;display:inline-flex;gap:12px}
+.e .sec-tete{padding-bottom:0!important}.e .sec-tete .entete{margin-bottom:56px}
+.e .avis-carrousel{padding-top:20px}
+@media (max-width:980px){.e .entete{grid-template-columns:1fr;gap:24px}.e .ent-d{justify-self:start}.e .sec{padding:90px 0}}
 .e .essai{position:fixed;left:16px;bottom:16px;z-index:50;background:#F9F6F4;color:#130F0C;border:1px solid #130F0C;font-family:Gantari,system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px}
 @media (max-width:980px){
 .e .wrap{padding:0 24px}
@@ -295,10 +304,10 @@ ${haut}
 <div class="e">
 ${essai ? `<div class="essai">Version d'essai</div>` : ""}
 
-<section class="sec"><div class="wrap">
+<section class="sec sec-tete"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Accompagnement</p><h2 class="cap">Mes services.</h2></div>
-  </div>
+    <div class="ent-d"><p>Vendre, acheter ou investir : un seul courtier, du premier appel jusqu'au notaire.</p><a class="ent-lien" href="${esc(rdv)}"${rdvAttrs}>Réserver un appel <span class="mono">→</span></a></div>
   </div>
 </div></section>
 <section class="svc-photos">
@@ -311,6 +320,7 @@ ${essai ? `<div class="essai">Version d'essai</div>` : ""}
 ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Fiche technique</p><h2 class="cap">Le marché,<br>${esc((m.moisTitre || m.mois || "").toLowerCase())}.</h2></div>
+    <div class="ent-d"><p>Les prix médians de la Rive-Sud, mis à jour chaque mois.</p><a class="ent-lien" href="${P}marche.html">Voir les chiffres <span class="mono">→</span></a></div>
   </div>
   <div class="gros-chiffres">${Object.entries(m.prix || {}).slice(0, 3).map(([lab, v]) => `<div><b>${prix(v[0])}</b><span>${esc(lab)}</span><i>${signe(v[1])} % sur un an</i></div>`).join("")}</div>
   <p class="source mono">Source : ${esc(m.source || "")}. ${esc(m.region || "")}.</p>
@@ -319,6 +329,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
 <section class="sec"><div class="wrap">
   <div class="entete">
     <div><p class="tag">À vendre</p><h2 class="cap">Inscriptions<br>vedettes.</h2></div>
+    <div class="ent-d"><p>Une sélection de mes propriétés à vendre en ce moment.</p><a class="ent-lien" href="${P}proprietes.html">Voir toutes les propriétés <span class="mono">→</span></a></div>
   </div>
 </div>
   <div class="props">
@@ -326,7 +337,6 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
       ${l.photos?.[0] ? `<img src="${esc(l.photos[0].url || l.photos[0])}" alt="${esc(l.adresse)}" loading="lazy">` : ""}${l.boucle ? `<video class="boucle" muted loop playsinline preload="none" src="${esc(l.boucle)}"></video><span class="vidtag">▶ Vidéo</span>` : ""}
       <div class="info"><span class="eti">${esc(l.sousType || l.type || "Propriété")} · ${esc(l.ville)}</span><span class="px mono">${l.prix ? prix(l.prix) : "Prix sur demande"}</span><span class="ad">${esc(l.adresse)}</span></div></a>`).join("")}
   </div>
-  <div class="wrap"><div class="tout-grand"><a href="${P}proprietes.html">Voir toutes les propriétés <span class="mono">→</span></a></div></div>
 </section>
 
 ${trioPhotos(P, ["escalier", "salle-a-manger", "verriere"])}
@@ -343,9 +353,9 @@ ${trioPhotos(P, ["escalier", "salle-a-manger", "verriere"])}
 ${avis1.length ? `<section class="sec"><div class="wrap">
   <div class="entete">
     <div><p class="tag">Avis Google</p><h2 class="cap">Ce qu'en disent<br>les clients.</h2></div>
+    <div class="ent-d"><p>Note de 5,0 sur Google. Des clients qui reviennent et qui recommandent.</p><a class="ent-lien" href="${avisUrl}" target="_blank" rel="noopener">Voir les avis sur Google <span class="mono">→</span></a></div>
   </div>
   <div class="avis-carrousel" data-carrousel>${avis1.map((a, i) => `<figure${i ? " hidden" : ""}><div class="et">★★★★★</div><blockquote>« ${esc(a[0])} »</blockquote><figcaption>${esc(a[1])} · Avis Google</figcaption></figure>`).join("")}<nav><button type="button" data-prec aria-label="Avis précédent">←</button><span data-pos>1 / ${avis1.length}</span><button type="button" data-suiv aria-label="Avis suivant">→</button></nav></div>${CARROUSEL_JS}
-  <div class="tout" style="justify-content:flex-start"><a href="${avisUrl}" target="_blank" rel="noopener">Voir les avis sur Google <span class="mono">→</span></a></div>
 </div></section>` : ""}
 
 <section class="final"><div class="wrap">
