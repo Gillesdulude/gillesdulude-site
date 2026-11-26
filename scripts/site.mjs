@@ -448,6 +448,7 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 @media (min-width:961px) and (max-width:1120px){.menu{gap:13px}.menu a{letter-spacing:.04em;font-size:12px}.menu .cta{padding:9px 12px}.top .logo img{width:150px;height:auto}}
 .facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
 .evalform{background:#fff;border:1px solid var(--line);border-radius:22px;padding:36px 40px}
+#recherche .entete-rech,#recherche-immeuble .entete-rech{max-width:760px;margin-bottom:36px}
 .evalform .evh{margin:14px 0 0;font-size:20px;padding-top:14px;border-top:1px solid var(--line)}.evalform .evh:first-child{border:0;padding-top:0;margin-top:0}
 .form .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.form .row4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.form .row5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .form .span2{grid-column:span 2}
@@ -781,7 +782,7 @@ const FAQ = {
     ["Combien de mise de fonds pour un multilogement?", "À partir de 5 logements, c'est un financement commercial : le prêteur regarde surtout la rentabilité de l'immeuble et sa valeur économique. La mise de fonds varie selon le prêteur et le type de prêt. Mon équipe hypothécaire peut vous donner l'heure juste pour votre projet."],
     ["Qu'est-ce qu'un bon MRB?", "Il n'y a pas de chiffre magique. Un MRB se compare à celui des immeubles semblables vendus dans le même secteur, en tenant compte de l'état de l'immeuble et des loyers par rapport au marché."],
     ["Les locataires restent-ils quand j'achète?", "Oui. Les baux suivent l'immeuble : les locataires restent, aux mêmes conditions. C'est pourquoi on lit chaque bail avant de faire une offre."],
-    ["Est-ce le bon moment pour investir?", "Ça dépend moins du marché que de l'immeuble et de votre plan. Les chiffres du mois sont sur la page Marché, et on peut analyser un immeuble précis ensemble."],
+    ["Est-ce le bon moment pour investir?", "Ça dépend moins du marché que de l'immeuble et de votre plan. Je suis les chiffres du marché chaque mois, et on peut analyser un immeuble précis ensemble."],
   ],
 };
 const faqSection = (items, titre = "Questions fréquentes", bg = "") => `<section${bg ? ` style="background:${bg}"` : ""}><div class="wrap">
@@ -961,7 +962,39 @@ function pageAcheter(cfg) {
   </div>
 </div></section>
 
-${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Obtenir mon évaluation", "evaluation.html")}
+${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exactement ce que vous achetez.", "Commencer ma recherche", "#recherche")}
+
+<section id="recherche"><div class="wrap">
+  <div class="entete-rech"><p class="over">Votre recherche</p><h2>Dites-moi <em>ce que vous cherchez.</em></h2><p class="lead">Quelques questions, et je commence à chercher pour vous. Je vous avise dès qu'une propriété correspond, souvent avant qu'elle soit affichée partout.</p></div>
+  <form class="form evalform" id="rechf">
+    <h3 class="evh">Votre projet</h3>
+    <div class="row3"><label>Type de propriété *<select name="type" required><option value="">Choisir</option><option>Maison</option><option>Copropriété</option><option>Duplex ou triplex</option><option>Multilogement</option><option>Chalet</option><option>Terrain</option><option>Autre</option></select></label>
+    <label>Budget maximum *<select name="budget" required><option value="">Choisir</option><option>Moins de 400 000 $</option><option>400 000 $ à 550 000 $</option><option>550 000 $ à 700 000 $</option><option>700 000 $ à 900 000 $</option><option>900 000 $ à 1 200 000 $</option><option>Plus de 1 200 000 $</option></select></label>
+    <label>Chambres minimum<select name="chambres"><option>Peu importe</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5 et plus</option></select></label></div>
+    <label>Secteurs recherchés *<input name="secteurs" required placeholder="Ex. : La Prairie, Chambly, Saint-Jean-sur-Richelieu"></label>
+    <div class="grp"><span class="glab">Essentiels</span><div class="chks"><label class="chk"><input type="checkbox" name="essentiels" value="Garage"> Garage</label><label class="chk"><input type="checkbox" name="essentiels" value="Grand terrain"> Grand terrain</label><label class="chk"><input type="checkbox" name="essentiels" value="Piscine"> Piscine</label><label class="chk"><input type="checkbox" name="essentiels" value="Sous-sol aménagé"> Sous-sol aménagé</label><label class="chk"><input type="checkbox" name="essentiels" value="Bureau à domicile"> Bureau à domicile</label><label class="chk"><input type="checkbox" name="essentiels" value="Près des écoles"> Près des écoles</label><label class="chk"><input type="checkbox" name="essentiels" value="Logement intergénération"> Logement intergénération</label></div></div>
+    <div class="row3"><label>Quand voulez-vous acheter? *<select name="echeance" required><option value="">Choisir</option><option>Le plus tôt possible</option><option>D'ici 3 mois</option><option>D'ici 6 mois</option><option>Dans un an ou plus</option><option>Je regarde pour l'instant</option></select></label>
+    <label>Préapprobation hypothécaire<select name="preapprobation"><option>Pas encore</option><option>En cours</option><option>Oui, c'est fait</option></select></label>
+    <label>Une propriété à vendre avant?<select name="avendre"><option>Non</option><option>Oui</option><option>Je ne sais pas encore</option></select></label></div>
+    <h3 class="evh">Contact</h3>
+    <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
+    <label>Votre nom *<input name="nomfamille" required autocomplete="family-name" placeholder="Entrez votre nom"></label>
+    <label>Votre téléphone *<input name="telephone" type="tel" required autocomplete="tel" placeholder="Ex. : 555-000-0000"></label>
+    <label>Votre courriel *<input name="courriel" type="email" required autocomplete="email" placeholder="Ex. : votrenom@domaine.com"></label></div>
+    <label>Autre chose à savoir?<textarea name="autre" style="min-height:90px"></textarea></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
+    <div><button class="btn" type="submit">Envoyer ma recherche</button></div>
+    <div class="ok" id="rechok"></div>
+  </form>
+  <script>(()=>{const f=document.getElementById("rechf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
+  f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
+   const ess=fd.getAll("essentiels").join(", ");
+   const resume="Recherche acheteur : "+d.type+" | Budget : "+d.budget+" | Secteurs : "+d.secteurs+" | Chambres : "+d.chambres+(ess?" | Essentiels : "+ess:"")+" | Achat : "+d.echeance+" | Préapprobation : "+d.preapprobation+" | Propriété à vendre : "+d.avendre+(d.autre?" | "+d.autre:"");
+   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,type_propriete:d.type,budget:d.budget,secteurs:d.secteurs,chambres:d.chambres,essentiels:ess,echeance:d.echeance,preapprobation:d.preapprobation,propriete_a_vendre:d.avendre,autre:d.autre||"",message:resume,demande:"recherche acheteur",tag:"acheteur - site web",source:"site web gillesdulude.com",consentement:true};
+   const k=document.getElementById("rechok");
+   if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! Je regarde ce qui correspond à votre recherche et je vous reviens rapidement.";k.style.display="block";f.reset()});return}
+   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Recherche acheteur : "+d.prenom+" "+d.nomfamille)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" "+d.courriel+" "+d.telephone+" | "+resume)});})();</script>
+</div></section>
 
 <section id="premier" style="background:var(--warm)"><div class="wrap">
   <p class="over">Premier achat</p>
@@ -980,7 +1013,7 @@ ${bandePhoto("", "salle-a-manger", "Trouver la bonne propriété, et savoir exac
 
 <section id="investir"><div class="wrap cols">
   <div><p class="over">Investisseurs</p><h2>Duplex, triplex <em>et multilogements.</em></h2><p class="lead">Revenus, dépenses, baux, état de l'immeuble. Un bon investissement se juge sur du concret.</p></div>
-  <div><a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir avec moi</h3><p>Ce que j'analyse avant chaque offre, les chiffres que je regarde et le calculateur de rendement.</p><span class="go">Voir la page Investir →</span></a></div>
+  <div><a class="tile" href="investir.html"><span class="ic">${ICON.plex}</span><h3>Investir avec moi</h3><p>Ce que j'analyse avant chaque offre, les chiffres que je regarde et le calculateur de rendement.</p><span class="go">Découvrir mon approche →</span></a></div>
 </div></section>
 
 ${cfg.marche ? `<section><div class="wrap"><p class="over">Le marché, ${esc((cfg.marche.moisTitre || cfg.marche.mois).toLowerCase())}</p><h2 style="margin-bottom:28px">Les chiffres <em>de la Rive-Sud.</em></h2>${marcheStats(cfg)}<div class="btns" style="margin-top:24px"><a class="btn ghost" href="investir.html#calculateur">Calculer le rendement d'un multilogement</a></div></div></section>` : ""}
@@ -1005,7 +1038,7 @@ function pageInvestir(cfg) {
   </div>
 </div></section>
 
-${bandePhoto("", "https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?auto=format&fit=crop&w=2000&q=80", "Des immeubles à revenus qui tiennent la route.")}
+${bandePhoto("", "https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?auto=format&fit=crop&w=2000&q=80", "Des immeubles à revenus qui tiennent la route.", "Me confier ma recherche", "#recherche-immeuble")}
 
 <section style="background:var(--warm)"><div class="wrap">
   <p class="over">Pour les analytiques</p>
@@ -1051,6 +1084,38 @@ function calc(){const prix=$("prix"),rev=$("loyers")*12,dep=$("depenses"),mdf=$(
  '<div class="kpi"><span>Paiement hypothécaire</span><b>'+m$(pmt)+' / mois</b></div>'+
  '<div class="kpi big '+(cash>=0?"pos":"neg")+'"><span>Cashflow approximatif</span><b>'+(cash>=0?"+":"")+m$(cash)+' / mois</b></div>'}
 f.addEventListener("input",calc);calc();})();</script>
+</div></section>
+
+<section id="recherche-immeuble" style="background:var(--warm)"><div class="wrap">
+  <div class="entete-rech"><p class="over">Votre prochain immeuble</p><h2>Parlez-moi <em>de votre projet.</em></h2><p class="lead">Immeubles de 5 logements et plus. Donnez-moi vos critères, je vous présente seulement les occasions qui tiennent la route.</p></div>
+  <form class="form evalform" id="immf">
+    <h3 class="evh">L'immeuble recherché</h3>
+    <div class="row3"><label>Taille de l'immeuble *<select name="taille" required><option value="">Choisir</option><option>5 à 11 logements</option><option>12 à 24 logements</option><option>25 logements et plus</option><option>Immeuble mixte (commercial et résidentiel)</option><option>Ouvert à tout</option></select></label>
+    <label>Prix maximum *<select name="budget" required><option value="">Choisir</option><option>Moins de 1 M$</option><option>1 M$ à 2 M$</option><option>2 M$ à 4 M$</option><option>4 M$ à 7 M$</option><option>Plus de 7 M$</option></select></label>
+    <label>Mise de fonds disponible<select name="mdf"><option>Je préfère en parler</option><option>Moins de 250 000 $</option><option>250 000 $ à 500 000 $</option><option>500 000 $ à 1 M$</option><option>Plus de 1 M$</option></select></label></div>
+    <label>Secteurs recherchés *<input name="secteurs" required placeholder="Ex. : Rive-Sud, Saint-Jean-sur-Richelieu, Granby"></label>
+    <div class="grp"><span class="glab">Votre stratégie</span><div class="chks"><label class="chk"><input type="checkbox" name="strategie" value="Revenus stables"> Revenus stables</label><label class="chk"><input type="checkbox" name="strategie" value="Loyers sous le marché"> Loyers sous le marché</label><label class="chk"><input type="checkbox" name="strategie" value="Rénovation et optimisation"> Rénovation et optimisation</label><label class="chk"><input type="checkbox" name="strategie" value="Immeuble récent"> Immeuble récent</label><label class="chk"><input type="checkbox" name="strategie" value="Ajout de logements"> Ajout de logements</label></div></div>
+    <div class="row3"><label>Votre expérience<select name="experience"><option>Premier immeuble</option><option>Je possède déjà des plex</option><option>Je possède déjà des 5 logements et plus</option></select></label>
+    <label>Financement<select name="financement"><option>Pas encore commencé</option><option>En discussion avec un prêteur</option><option>Approuvé</option></select></label>
+    <label>Quand voulez-vous acheter? *<select name="echeance" required><option value="">Choisir</option><option>Le plus tôt possible</option><option>D'ici 3 mois</option><option>D'ici 6 mois</option><option>Dans un an ou plus</option><option>Je regarde pour l'instant</option></select></label></div>
+    <h3 class="evh">Contact</h3>
+    <div class="row4"><label>Votre prénom *<input name="prenom" required autocomplete="given-name" placeholder="Entrez votre prénom"></label>
+    <label>Votre nom *<input name="nomfamille" required autocomplete="family-name" placeholder="Entrez votre nom"></label>
+    <label>Votre téléphone *<input name="telephone" type="tel" required autocomplete="tel" placeholder="Ex. : 555-000-0000"></label>
+    <label>Votre courriel *<input name="courriel" type="email" required autocomplete="email" placeholder="Ex. : votrenom@domaine.com"></label></div>
+    <label>Autre chose à savoir?<textarea name="autre" style="min-height:90px"></textarea></label>
+    <label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-weight:400;font-size:14px"><input type="checkbox" required style="margin-top:4px"><span> J'accepte que Gilles Jr. Dulude utilise ces renseignements pour répondre à ma demande et faire un suivi. <a href="confidentialite.html" target="_blank" style="text-decoration:underline">Confidentialité</a></span></label>
+    <div><button class="btn" type="submit">Envoyer mes critères</button></div>
+    <div class="ok" id="immok"></div>
+  </form>
+  <script>(()=>{const f=document.getElementById("immf"),AVA=${JSON.stringify(cfg.ava?.webhook || "")};
+  f.addEventListener("submit",e=>{e.preventDefault();const fd=new FormData(f),d=Object.fromEntries(fd);
+   const st=fd.getAll("strategie").join(", ");
+   const resume="Recherche investisseur 5 logements et plus : "+d.taille+" | Prix max : "+d.budget+" | Mise de fonds : "+d.mdf+" | Secteurs : "+d.secteurs+(st?" | Stratégie : "+st:"")+" | Expérience : "+d.experience+" | Financement : "+d.financement+" | Achat : "+d.echeance+(d.autre?" | "+d.autre:"");
+   const o={prenom:d.prenom,nomfamille:d.nomfamille,nom:d.prenom+" "+d.nomfamille,courriel:d.courriel,telephone:d.telephone,taille_immeuble:d.taille,budget:d.budget,mise_de_fonds:d.mdf,secteurs:d.secteurs,strategie:st,experience:d.experience,financement:d.financement,echeance:d.echeance,autre:d.autre||"",message:resume,demande:"recherche investisseur",tag:"investisseur - site web",source:"site web gillesdulude.com",consentement:true};
+   const k=document.getElementById("immok");
+   if(AVA){fetch(AVA+(AVA.includes("?")?"&":"?")+new URLSearchParams(o),{mode:"no-cors"}).then(()=>{k.textContent="Merci! J'analyse vos critères et je vous reviens rapidement avec les occasions qui correspondent.";k.style.display="block";f.reset()});return}
+   location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Recherche investisseur : "+d.prenom+" "+d.nomfamille)+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" "+d.courriel+" "+d.telephone+" | "+resume)});})();</script>
 </div></section>
 
 <section><div class="wrap"><div class="cta-warm" style="text-align:left;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center">
@@ -1371,7 +1436,11 @@ s.addEventListener("submit",e=>{e.preventDefault();const d=Object.fromEntries(ne
  location.href="mailto:info@gillesdulude.com,gilles@gillesdulude.com?subject="+encodeURIComponent("Inscription infolettre statistiques")+"&body="+encodeURIComponent(d.prenom+" "+d.nomfamille+" ("+d.courriel+"), secteur : "+d.secteur+", "+d.profil)});
 })();
 </script>
-${band("Est-ce le bon moment pour vous ?", "Chaque situation est différente. Parlons de la vôtre, 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
+<section class="bande-photo bande-fin"><img class="bp-img" src="https://images.unsplash.com/photo-1603298108410-e6f28ad2708d?auto=format&fit=crop&w=2200&q=80" srcset="https://images.unsplash.com/photo-1603298108410-e6f28ad2708d?auto=format&fit=crop&w=900&q=80 900w, https://images.unsplash.com/photo-1603298108410-e6f28ad2708d?auto=format&fit=crop&w=2200&q=80 2200w" sizes="100vw" alt="" loading="lazy"><div class="bp-voile"></div><div class="bp-txt">
+  <p class="tag">Votre situation</p>
+  <p class="bp-phrase">Est-ce le bon moment?</p>
+  <div class="btns"><a class="btn plein" href="${esc(RDV(cfg))}"${rdvAttrs(cfg)}>Réserver un appel <span class="fl">→</span></a><a class="btn trait" href="tel:${cfg.courtier.telephone.replace(/[^\d+]/g, "")}">${esc(cfg.courtier.telephone)}</a></div>
+</div></section>
 ` + footer(cfg) + end;
 }
 
@@ -1474,7 +1543,7 @@ section.rlp-hero{display:flex!important;width:100%;box-sizing:border-box}
 @media (max-width:640px){.blogue-grille{grid-template-columns:1fr}.article h2{font-size:24px}.article p,.article li{font-size:17px}}
 </style>`;
 const escG = (t) => esc(t).replace(/« /g, "«&nbsp;").replace(/ »/g, "&nbsp;»");
-const carteArticle = (a) => a.photo ? `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${a.photo.replace(/\.jpg$/, "-m.jpg")}" alt="" loading="lazy" decoding="async"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></div></a>` : `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
+const carteArticle = (a) => a.photo ? `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${a.photo.replace(/\.jpg$/, "-m.jpg").replace("w=2000", "w=900")}" alt="" loading="lazy" decoding="async"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></div></a>` : `<a class="blogue-carte" href="${a.slug}"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">${lectureFr(a)}</p><p>${esc(a.resume[0])}</p><span class="plus">Lire l'article</span></a>`;
 
 const carteRLP = (a) => `<a class="blogue-carte img" href="${a.slug}"><div class="ph"><img src="${esc(a.vignette)}" alt="${esc(a.titre[0])}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="in"><p class="cat">${esc(a.cat[0])}</p><h3>${esc(a.titre[0])}</h3><p class="meta">Par ${esc(a.auteur)} · ${dateFr(a.date)}</p><p class="meta src">Blogue Royal LePage</p><p>${esc(a.resume[0])}</p><span class="plus">${existsSync(`contenu/blogue-rlp/${a.slug.replace(/\.html$/, "")}.txt`) ? "Lire l'article" : "Lire le résumé"}</span></div></a>`;
 const triRLP = () => [...ARTICLES_RLP].sort((x, y) => y.date.localeCompare(x.date));

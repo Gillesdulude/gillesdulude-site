@@ -6,7 +6,7 @@ export const ARTICLES = [
   {
     slug: "blogue-vendre-en-hiver.html",
     publie: true,
-    photo: "assets/photos/cuisine2.jpg",
+    photo: "https://images.unsplash.com/photo-1553550319-d8d5393e1c80?auto=format&fit=crop&w=2000&q=80",
     date: "2026-11-25",
     lecture: 4,
     cat: ["Vendre", "Selling"],

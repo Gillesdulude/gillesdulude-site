@@ -26,6 +26,19 @@ export const bandePhoto = (P, img, phrase, lien = "", href = "") => `<section cl
   <p class="bp-phrase">${phrase}</p>${lien ? `<a class="lien-b" href="${P}${href}">${lien}<span aria-hidden="true">→</span></a>` : ""}</div></section>`;
 export const trioPhotos = (P, imgs) => `<section class="trio-photos">${imgs.map((i) => `<figure><img src="${P}assets/photos/${i}-m.jpg" alt="" loading="lazy"></figure>`).join("")}</section>`;
 export const PHOTO_CSS = `
+.bande-fin .tag{color:rgba(249,246,244,.75)!important;justify-content:center}
+.bande-fin .bp-phrase{font-size:clamp(34px,4.2vw,60px)!important;line-height:1.1!important}
+.bande-fin .btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.bande-fin .btn.trait{color:#F9F6F4;border-color:rgba(249,246,244,.8);background:transparent}
+.bande-fin .bp-phrase{max-width:720px}
+@media (max-width:600px){.bande-fin .bp-phrase{font-size:27px!important}}
+.bande-fin .tag{font-family:Gantari,system-ui,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin:0 0 18px}
+.bande-fin .tag::after{content:"";height:1px;width:56px;background:currentColor;opacity:.6}
+.bande-fin .btn{display:inline-flex;align-items:center;gap:14px;padding:18px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid currentColor;border-radius:0;text-decoration:none;transition:background .25s,color .25s}
+.bande-fin .btn.plein{background:#F9F6F4;border-color:#F9F6F4;color:#130F0C}
+.bande-fin .btn.plein:hover{background:#B0ADA6;border-color:#B0ADA6}
+.bande-fin .btn.trait:hover{background:#F9F6F4;color:#130F0C}
+.bande-fin .btn .fl{font-weight:400}
 
 /* Haut de gamme : sans boîtes */
 .svc-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0!important;background:transparent}
@@ -281,6 +294,13 @@ section{position:relative}
 .bande-fin .btn.trait{color:#F9F6F4;border-color:rgba(249,246,244,.8);background:transparent}
 .bande-fin .bp-phrase{max-width:720px}
 @media (max-width:600px){.bande-fin .bp-phrase{font-size:27px!important}}
+.bande-fin .tag{font-family:Gantari,system-ui,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:14px;margin:0 0 18px}
+.bande-fin .tag::after{content:"";height:1px;width:56px;background:currentColor;opacity:.6}
+.bande-fin .btn{display:inline-flex;align-items:center;gap:14px;padding:18px 28px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border:1px solid currentColor;border-radius:0;text-decoration:none;transition:background .25s,color .25s}
+.bande-fin .btn.plein{background:#F9F6F4;border-color:#F9F6F4;color:#130F0C}
+.bande-fin .btn.plein:hover{background:#B0ADA6;border-color:#B0ADA6}
+.bande-fin .btn.trait:hover{background:#F9F6F4;color:#130F0C}
+.bande-fin .btn .fl{font-weight:400}
 h1,h2,h3,.bp-phrase,blockquote,.lead{text-wrap:balance}
 .e .essai{position:fixed;left:16px;bottom:16px;z-index:50;background:#F9F6F4;color:#130F0C;border:1px solid #130F0C;font-family:Gantari,system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px}
 @media (max-width:980px){
