@@ -359,7 +359,7 @@ ${rangs.length ? `<section class="sec fiche"><div class="wrap">
   </div>
 </section>
 
-${trioPhotos(P, ["escalier", "salle-a-manger", "verriere"])}
+
 <section class="sec gilles"><div class="photo"><img src="${P}assets/gilles-sourire.webp" alt="Gilles Jr. Dulude"></div><div class="wrap">
   <div>
     <p class="tag">Le courtier</p>
