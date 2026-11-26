@@ -275,6 +275,13 @@ section{position:relative}
 .e .prop u{text-decoration:none;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid;padding-bottom:7px;align-self:flex-start;margin-top:22px;color:#F9F6F4}
 .e .prop .badge{position:absolute;top:28px;left:40px;z-index:2;font:600 11px/1 Gantari,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#F9F6F4;border:1px solid rgba(249,246,244,.7);padding:9px 14px;background:rgba(19,15,12,.25)}
 @media (max-width:860px){.e .prop{height:420px}}
+.bande-fin .tag{color:rgba(249,246,244,.75)!important;justify-content:center}
+.bande-fin .bp-phrase{font-size:clamp(34px,4.2vw,60px)!important;line-height:1.1!important}
+.bande-fin .btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.bande-fin .btn.trait{color:#F9F6F4;border-color:rgba(249,246,244,.8);background:transparent}
+.bande-fin .bp-phrase{max-width:720px}
+@media (max-width:600px){.bande-fin .bp-phrase{font-size:27px!important}}
+h1,h2,h3,.bp-phrase,blockquote,.lead{text-wrap:balance}
 .e .essai{position:fixed;left:16px;bottom:16px;z-index:50;background:#F9F6F4;color:#130F0C;border:1px solid #130F0C;font-family:Gantari,system-ui,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px}
 @media (max-width:980px){
 .e .wrap{padding:0 24px}
@@ -371,13 +378,11 @@ ${avis1.length ? `<section class="sec"><div class="wrap">
   <div class="avis-carrousel" data-carrousel>${avis1.map((a, i) => `<figure${i ? " hidden" : ""}><div class="et">★★★★★</div><blockquote>« ${esc(a[0])} »</blockquote><figcaption>${esc(a[1])} · Avis Google</figcaption></figure>`).join("")}<nav><button type="button" data-prec aria-label="Avis précédent">←</button><span data-pos>1 / ${avis1.length}</span><button type="button" data-suiv aria-label="Avis suivant">→</button></nav></div>${CARROUSEL_JS}
 </div></section>` : ""}
 
-<section class="final"><div class="wrap">
+<section class="bande-photo bande-fin"><img class="bp-img" src="${P}assets/photos/salon-lumineux.jpg" srcset="${P}assets/photos/salon-lumineux-m.jpg 900w, ${P}assets/photos/salon-lumineux.jpg 2200w" sizes="100vw" alt="" loading="lazy"><div class="bp-voile"></div><div class="bp-txt">
   <p class="tag">Prochaine étape</p>
-  <h2 class="cap" style="margin-top:22px">Parlons de<br>votre projet.</h2>
+  <p class="bp-phrase">Votre prochain chapitre commence ici.</p>
   <div class="btns"><a class="btn plein" href="${esc(rdv)}"${rdvAttrs}>Réserver un appel <span class="fl">→</span></a><a class="btn trait" href="${telHref}">${esc(tel)}</a></div>
-</div>${HORIZON}</section>
-
-${bandePhoto(P, "salon-lumineux", "Votre prochain chapitre commence ici.")}
+</div></section>
 
 ${piedDePage(cfg, P)}
 ${boucles}
