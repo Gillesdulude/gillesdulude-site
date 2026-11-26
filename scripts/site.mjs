@@ -1700,7 +1700,7 @@ dialog{border:0;padding:0;width:100%;max-width:480px;margin:auto auto 0;max-heig
 <nav class="so"><a href="https://www.facebook.com/GillesJrDulude/" target="_blank" rel="noopener" aria-label="Facebook">${so.fb}</a><a href="https://www.instagram.com/gillesjrdulude" target="_blank" rel="noopener" aria-label="Instagram">${so.ig}</a><a href="mailto:info@gillesdulude.com" aria-label="Courriel">${so.mail}</a><a href="tel:+14507001533" aria-label="Téléphone">${so.tel}</a></nav>
 <div class="g">
 ${tuile("big", "https://images.unsplash.com/photo-1793891703775-98bdf109c08a?auto=format&fit=crop&w=1200&h=600&q=80", "50% 50%", "Vendre", "Combien vaut ma propriété ?", 'href="#" data-f="vendre"')}
-${tuile("", "https://images.unsplash.com/photo-1758565811176-ccd94357a844?auto=format&fit=crop&w=700&h=800&q=80", "50% 50%", "Acheter", "Trouver ma propriété", 'href="#" data-f="acheter"')}
+${tuile("", "https://images.unsplash.com/photo-1564078516393-cf04bd966897?auto=format&fit=crop&w=700&h=800&q=80", "50% 50%", "Acheter", "Trouver ma propriété", 'href="#" data-f="acheter"')}
 ${tuile("", "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=700&h=800&q=80", "50% 50%", "Investir", "Immeubles à revenus", 'href="#" data-f="investir"')}
 </div>
 <a class="appel" href="${esc(RDV(cfg))}" target="_blank" rel="noopener">Réserver un appel avec Gilles <span>→</span></a>
