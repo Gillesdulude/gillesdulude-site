@@ -1660,7 +1660,7 @@ function pageLiens(cfg) {
     mail: '<svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.6L4.6 7H4v.5l8 6.1 8-6.1V7h-.6z"/></svg>',
     tel: '<svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>',
   };
-  const tuile = (cls, img, pos, lab, titre, attrs) => `<a class="t ${cls}" ${attrs}><img src="assets/liens/${img}" alt="" style="object-position:${pos}" loading="lazy"><span class="x"><span class="l">${lab}</span><span class="h">${titre}</span></span></a>`;
+  const tuile = (cls, img, pos, lab, titre, attrs) => `<a class="t ${cls}" ${attrs}><img src="${/^https?:/.test(img) ? img : "assets/liens/" + img}" alt="" style="object-position:${pos}" loading="lazy"><span class="x"><span class="l">${lab}</span><span class="h">${titre}</span></span></a>`;
   return `<!DOCTYPE html>
 <html lang="fr-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gilles Jr. Dulude | Courtier immobilier</title>
@@ -1670,22 +1670,22 @@ function pageLiens(cfg) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gantari:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}html{background:#fff}body{font-family:Gantari,Arial,sans-serif;color:#130F0C;background:#fff;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}.pg{max-width:480px;margin:0 auto;padding-bottom:34px}
-.top{position:relative;height:96vw;max-height:440px;overflow:hidden}.top .m{position:absolute;left:-15%;top:-6%;width:130%;opacity:.9}
-.top .p{position:absolute;left:50%;transform:translateX(-50%);bottom:0;height:97%;max-width:none}.top::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(rgba(255,255,255,0),#fff)}
-.logo{display:block;width:88%;max-width:400px;margin:6px auto 0}
-.so{display:flex;justify-content:center;gap:28px;margin:20px 0 22px}.so a{width:26px;height:26px;display:block}.so svg{width:100%;height:100%;fill:#130F0C;color:#130F0C}
-.g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px}
-.t{position:relative;aspect-ratio:1/1.15;overflow:hidden;background:#130F0C;display:block;cursor:pointer}
-.t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}.t:hover img{transform:scale(1.04)}
-.t::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(19,15,12,0) 35%,rgba(19,15,12,.85))}
-.x{position:absolute;left:14px;right:14px;bottom:14px;z-index:2;color:#F9F6F4;display:block}
-.l{display:block;font-weight:600;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;opacity:.85}
-.h{display:block;font-weight:800;font-size:19px;line-height:1.1;margin-top:5px}
-.a{position:absolute;top:12px;right:12px;z-index:2;width:30px;height:30px;border:1px solid rgba(249,246,244,.8);color:#F9F6F4;display:flex;align-items:center;justify-content:center;font-size:15px}
-.big{grid-column:1/-1;aspect-ratio:2/1}.app{grid-column:1/-1;aspect-ratio:2.4/1}.app img{left:auto;width:58%;object-position:50% 18%}
-.rlp{text-align:center;margin-top:30px}.rlp img{height:52px;display:block;margin:0 auto}.rlp small{display:block;font-size:10px;line-height:13px;color:#444;margin-top:6px}
+*{box-sizing:border-box;margin:0;padding:0}html{background:#130F0C}body{font-family:Gantari,Arial,sans-serif;color:#F9F6F4;background:#130F0C;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}.pg{max-width:480px;margin:0 auto;padding-bottom:40px}
+.top{position:relative;height:100vw;max-height:470px;overflow:hidden;background:#000}.top .p{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.top::after{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(rgba(19,15,12,0),#130F0C)}
+.logo{display:block;width:78%;max-width:360px;margin:-28px auto 0;position:relative;z-index:2}
+.so{display:flex;justify-content:center;gap:30px;margin:26px 0 30px}.so a{width:22px;height:22px;display:block;opacity:.9}.so svg{width:100%;height:100%;fill:#F9F6F4;color:#F9F6F4}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 14px}
+.t{position:relative;aspect-ratio:1/1.25;overflow:hidden;background:#000;display:block;cursor:pointer}
+.t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.82);transition:transform 1.2s}.t:hover img{transform:scale(1.05)}
+.t::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(19,15,12,0) 40%,rgba(19,15,12,.88))}
+.x{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;color:#F9F6F4;display:block}
+.l{display:block;font-weight:500;font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.75}
+.h{display:block;font-weight:500;font-size:19px;line-height:1.15;margin-top:8px}
+.big{grid-column:1/-1;aspect-ratio:16/9}.big .h{font-size:24px}
+.appel{display:flex;justify-content:space-between;align-items:center;margin:6px 14px 0;padding:22px 20px;border:1px solid rgba(249,246,244,.35);font-weight:600;font-size:12px;letter-spacing:2.4px;text-transform:uppercase;transition:background .25s,color .25s}.appel:hover{background:#F9F6F4;color:#130F0C}
+.rlp{text-align:center;margin-top:40px}.rlp img{height:46px;display:block;margin:0 auto;opacity:.9}.rlp small{display:block;font-size:10px;line-height:14px;color:rgba(249,246,244,.55);margin-top:8px}
 dialog{border:0;padding:0;width:100%;max-width:480px;margin:auto auto 0;max-height:92vh;background:#fff;color:#130F0C}dialog::backdrop{background:rgba(19,15,12,.6)}
 .f{padding:26px 22px 28px;position:relative}.f h2{font-weight:800;font-size:22px;line-height:1.15;margin:4px 30px 6px 0}.f .sl{font-weight:600;font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:#444}
 .f p.i{font-size:14px;color:#444;margin-bottom:16px}.f label{display:block;font-weight:600;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;margin:12px 0 5px}
@@ -1695,16 +1695,16 @@ dialog{border:0;padding:0;width:100%;max-width:480px;margin:auto auto 0;max-heig
 .f .fx{position:absolute;top:16px;right:14px;background:none;border:0;font-size:26px;line-height:1;cursor:pointer;color:#130F0C}.f .r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ok{display:none;padding:40px 22px;text-align:center}.ok h2{font-weight:800;font-size:22px;margin-bottom:8px}
 </style></head><body><main class="pg">
-<div class="top"><img class="m" src="assets/liens/motif.png" alt=""><img class="p" src="assets/liens/gilles.webp" alt="Gilles Jr. Dulude"></div>
-<a href="index.html"><img class="logo" src="assets/logo-h-dark.png" alt="Gilles Jr. Dulude, courtier immobilier"></a>
+<div class="top"><img class="p" src="assets/gilles-sourire.webp" alt="Gilles Jr. Dulude"></div>
+<a href="index.html"><img class="logo" src="assets/logo-h-light.png" alt="Gilles Jr. Dulude, courtier immobilier"></a>
 <nav class="so"><a href="https://www.facebook.com/GillesJrDulude/" target="_blank" rel="noopener" aria-label="Facebook">${so.fb}</a><a href="https://www.instagram.com/gillesjrdulude" target="_blank" rel="noopener" aria-label="Instagram">${so.ig}</a><a href="mailto:info@gillesdulude.com" aria-label="Courriel">${so.mail}</a><a href="tel:+14507001533" aria-label="Téléphone">${so.tel}</a></nav>
 <div class="g">
-${tuile("big", "vendre.jpg", "50% 45%", "Vendre", "Combien vaut ma propriété ?", 'href="#" data-f="vendre"')}
-${tuile("", "acheter.jpg", "45% 50%", "Acheter", "Trouver ma propriété", 'href="#" data-f="acheter"')}
-${tuile("", "investir.jpg", "50% 50%", "Investir", "Immeubles à revenus", 'href="#" data-f="investir"')}
-<a class="t app" href="${esc(RDV(cfg))}" target="_blank" rel="noopener"><img src="assets/gilles.jpg" alt="" loading="lazy"><span class="x"><span class="l">Une question ?</span><span class="h">Réserver un appel avec Gilles</span></span></a>
+${tuile("big", "https://images.unsplash.com/photo-1793891703775-98bdf109c08a?auto=format&fit=crop&w=1200&h=600&q=80", "50% 50%", "Vendre", "Combien vaut ma propriété ?", 'href="#" data-f="vendre"')}
+${tuile("", "https://images.unsplash.com/photo-1758565811176-ccd94357a844?auto=format&fit=crop&w=700&h=800&q=80", "50% 50%", "Acheter", "Trouver ma propriété", 'href="#" data-f="acheter"')}
+${tuile("", "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=700&h=800&q=80", "50% 50%", "Investir", "Immeubles à revenus", 'href="#" data-f="investir"')}
 </div>
-<div class="rlp"><img src="assets/liens/rlp-rouge.png" alt="Royal LePage Distinction"><small>Agence immobilière<br>Franchisé indépendant et autonome</small></div>
+<a class="appel" href="${esc(RDV(cfg))}" target="_blank" rel="noopener">Réserver un appel avec Gilles <span>→</span></a>
+<div class="rlp"><img src="assets/rlp-mono.png" alt="Royal LePage Distinction"><small>Agence immobilière<br>Franchisé indépendant et autonome</small></div>
 </main>
 <dialog id="dlg"><form class="f" id="lf"><button type="button" class="fx" aria-label="Fermer">×</button>
 <div class="sl" id="lsl"></div><h2 id="lh"></h2><p class="i" id="li"></p>
@@ -1719,8 +1719,8 @@ ${tuile("", "investir.jpg", "50% 50%", "Investir", "Immeubles à revenus", 'href
 const sel=(n,l,o)=>'<label>'+l+' *</label><select name="'+n+'" required><option value="">Choisir</option>'+o.map(x=>'<option>'+x+'</option>').join("")+'</select>';
 const F={
 vendre:{sl:"Vendre",h:"Combien vaut ma propriété ?",i:"Recevez une évaluation gratuite, sans engagement.",x:'<label>Adresse de la propriété *</label><input name="adresse" required autocomplete="street-address"><label>Ville *</label><input name="ville" required>'+sel("type","Type de propriété",["Maison","Condo","Duplex","Triplex","Quadruplex et plus","Terrain","Autre"]),tag:"lien instagram - vendre",dem:"evaluation gratuite"},
-acheter:{sl:"Acheter",h:"Trouver ma propriété",i:"Dites-moi ce que vous cherchez, je vous envoie les meilleures options.",x:sel("type","Type de propriété",["Maison","Condo","Plex","Terrain","Je ne sais pas encore"])+sel("budget","Budget",["Moins de 400 000 $","400 000 $ à 600 000 $","600 000 $ à 800 000 $","800 000 $ à 1 M$","Plus de 1 M$"])+'<label>Secteur recherché *</label><input name="secteur" required placeholder="Ex. : Chambly, Saint-Jean-sur-Richelieu">',tag:"lien instagram - acheter",dem:"recherche de propriete"},
-investir:{sl:"Investir",h:"Immeubles à revenus",i:"Recevez les plex qui correspondent à vos critères, avant tout le monde.",x:sel("logements","Nombre de logements",["2 à 3","4 à 6","7 et plus","Je ne sais pas encore"])+sel("budget","Budget",["Moins de 600 000 $","600 000 $ à 900 000 $","900 000 $ à 1,5 M$","Plus de 1,5 M$"])+'<label>Secteur recherché</label><input name="secteur" placeholder="Ex. : Rive-Sud">',tag:"lien instagram - investir",dem:"investissement plex"}};
+acheter:{sl:"Acheter",h:"Trouver ma propriété",i:"Dites-moi ce que vous cherchez, je vous envoie les meilleures options.",x:sel("type","Type de propriété",["Maison","Condo","Plex","Terrain","Je ne sais pas encore"])+sel("budget","Budget ciblé",["Moins de 400 000 $","400 000 $ à 600 000 $","600 000 $ à 800 000 $","800 000 $ à 1 M$","Plus de 1 M$"])+sel("financement","Financement",["Préapprobation à venir","Préapprobation en cours","Préapprobation faite","Achat comptant"])+sel("avendre","Une propriété à vendre avant?",["Non","Oui","Je ne sais pas encore"])+'<label>Secteur recherché *</label><input name="secteur" required placeholder="Ex. : Chambly, Saint-Jean-sur-Richelieu">',tag:"lien instagram - acheter",dem:"recherche de propriete"},
+investir:{sl:"Investir",h:"Immeubles à revenus",i:"Immeubles de 5 logements et plus. Recevez les occasions qui correspondent à vos critères.",x:sel("logements","Taille de l'immeuble",["5 à 11 logements","12 à 24 logements","25 logements et plus","Immeuble mixte","Ouvert à tout"])+sel("budget","Prix ciblé",["Moins de 1 M$","1 M$ à 2 M$","2 M$ à 4 M$","4 M$ à 7 M$","Plus de 7 M$"])+sel("mode","Mode d'achat",["Je préfère en parler","Comptant","Financement approuvé","Financement en discussion","Financement à venir"])+sel("avendre","Une propriété à vendre aussi?",["Non","Oui, un immeuble","Oui, une maison ou un condo","Peut-être"])+'<label>Secteur recherché</label><input name="secteur" placeholder="Ex. : Rive-Sud">',tag:"lien instagram - investir",dem:"recherche investisseur"}};
 let cur;document.querySelectorAll("[data-f]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();cur=F[a.dataset.f];
  lsl.textContent=cur.sl;lh.textContent=cur.h;li.textContent=cur.i;lx.innerHTML=cur.x;f.reset();f.style.display="";ok.style.display="none";d.showModal()}));
 d.querySelector(".fx").onclick=()=>d.close();d.addEventListener("click",e=>{if(e.target===d)d.close()});
