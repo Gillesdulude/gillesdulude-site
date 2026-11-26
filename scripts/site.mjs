@@ -447,6 +447,29 @@ footer ul{list-style:none;margin:0;padding:0}footer li{padding:4px 0}
 @media (min-width:961px) and (max-width:1400px){.menu{gap:20px}.menu a{letter-spacing:.1em}}
 @media (min-width:961px) and (max-width:1120px){.menu{gap:13px}.menu a{letter-spacing:.04em;font-size:12px}.menu .cta{padding:9px 12px}.top .logo img{width:150px;height:auto}}
 .facon .tile h3{font:italic 400 24px/1.25 "Source Serif 4",Georgia,serif}
+/* Propriétés : tuiles pleine largeur comme à l'accueil */
+.grid.tuiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.tuiles .card{position:relative;display:block;width:100%;max-width:none;margin:0;font:inherit;cursor:pointer;height:clamp(420px,40vw,600px);border:0;border-radius:0;background:#130F0C;color:#F9F6F4;overflow:hidden;padding:0;text-align:left;box-shadow:none!important;transform:none!important}
+.tuiles .card .ph{position:absolute;inset:0;aspect-ratio:auto;height:auto}
+.tuiles .card .ph img{width:100%;height:100%;object-fit:cover;filter:brightness(.85);opacity:1;transition:transform 1.4s ease}
+.tuiles .card:hover .ph img{transform:scale(1.06)}
+.tuiles .card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,15,12,0) 35%,rgba(19,15,12,.82));pointer-events:none;z-index:1}
+.tuiles .card .body{position:absolute;left:40px;right:40px;bottom:42px;z-index:2;padding:0;background:none;display:flex;flex-direction:column}
+.tuiles .card .ptype{order:-1;font:500 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.28em;text-transform:uppercase;color:rgba(249,246,244,.75)}
+.tuiles .card .price{font:600 clamp(28px,2.6vw,38px)/1.05 Gantari,system-ui,sans-serif;margin:14px 0 10px;color:#F9F6F4}
+.tuiles .card .addr{font:400 16px/1.5 Gantari,system-ui,sans-serif;color:rgba(249,246,244,.88)}
+.tuiles .card .city{font-size:14px;color:rgba(249,246,244,.7)}
+.tuiles .card .facts{display:flex;gap:16px;margin-top:14px;font-size:13px;color:rgba(249,246,244,.8);border:0;padding:0}
+.tuiles .card .facts b{color:#F9F6F4}
+.tuiles .card .badge{position:absolute;top:28px;left:40px;z-index:3;font:600 11px/1 Gantari,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#F9F6F4;border:1px solid rgba(249,246,244,.7);padding:9px 14px;background:rgba(19,15,12,.25)}
+.tuiles .card .badge.new{left:auto;right:28px;background:#F9F6F4;color:#130F0C;border-color:#F9F6F4}
+.tuiles .card .badge.sold{background:#b3261e;border-color:#b3261e}
+.tuiles .card .badge.vid{top:auto;bottom:auto;top:76px}
+.tuiles .card .nphotos{position:absolute;right:28px;bottom:28px;z-index:3;font-size:12px;color:rgba(249,246,244,.75)}
+.tuiles .card video.boucle{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.tuiles .empty{grid-column:1/-1;padding:60px 24px;text-align:center}
+@media (max-width:900px){.grid.tuiles{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.grid.tuiles{grid-template-columns:1fr}.tuiles .card .body{left:24px;right:24px;bottom:30px}.tuiles .card .badge{left:24px}}
 .evalform{background:#fff;border:1px solid var(--line);border-radius:22px;padding:36px 40px}
 #recherche .entete-rech,#recherche-immeuble .entete-rech{max-width:760px;margin-bottom:36px}
 .evalform .evh{margin:14px 0 0;font-size:20px;padding-top:14px;border-top:1px solid var(--line)}.evalform .evh:first-child{border:0;padding-top:0;margin-top:0}
@@ -1140,9 +1163,10 @@ function pageProprietes(cfg, listings) {
     <div class="chips" id="chips" role="group" aria-label="Filtrer par type"></div>
     <select id="sort" aria-label="Trier"><option value="new">Plus récentes</option><option value="desc">Prix décroissant</option><option value="asc">Prix croissant</option></select>
   </div>
-  <div class="grid" id="grid"></div>
-  <p class="note" id="maj" style="margin-top:40px"></p>
-</div></section>
+</div>
+  <div class="grid tuiles" id="grid"></div>
+  <div class="wrap"><p class="note" id="maj" style="margin-top:40px"></p></div>
+</section>
 <dialog id="dlg" aria-label="Fiche de la propriété"></dialog>
 ${band("Vous ne trouvez pas ce que vous cherchez ?", "Je peux vous aviser dès qu'une propriété correspondant à vos critères arrive sur le marché.", "Avisez-moi", "contact.html?sujet=achat")}
 ${dataTag({ listings, courtier: { nom: c.nom, titre: c.titre, telephone: c.telephone, courriel: c.courriel }, ava: cfg.ava?.webhook || "", majLe: new Date().toISOString() })}
@@ -1438,7 +1462,7 @@ s.addEventListener("submit",e=>{e.preventDefault();const d=Object.fromEntries(ne
 </script>
 <section class="bande-photo bande-fin"><img class="bp-img" src="https://images.unsplash.com/photo-1603298108410-e6f28ad2708d?auto=format&fit=crop&w=2200&q=80" srcset="https://images.unsplash.com/photo-1603298108410-e6f28ad2708d?auto=format&fit=crop&w=900&q=80 900w, https://images.unsplash.com/photo-1603298108410-e6f28ad2708d?auto=format&fit=crop&w=2200&q=80 2200w" sizes="100vw" alt="" loading="lazy"><div class="bp-voile"></div><div class="bp-txt">
   <p class="tag">Votre situation</p>
-  <p class="bp-phrase">Est-ce le bon moment?</p>
+  <p class="bp-phrase">Est-ce le bon moment pour votre projet?</p>
   <div class="btns"><a class="btn plein" href="${esc(RDV(cfg))}"${rdvAttrs(cfg)}>Réserver un appel <span class="fl">→</span></a><a class="btn trait" href="tel:${cfg.courtier.telephone.replace(/[^\d+]/g, "")}">${esc(cfg.courtier.telephone)}</a></div>
 </div></section>
 ` + footer(cfg) + end;
@@ -1588,7 +1612,6 @@ function pageArticleRLP(cfg, a) {
   <a class="retour" style="margin-top:30px" href="blogue.html">Retour au blogue</a>
 </article></div></section>
 ${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteRLP).join("")}</div></div></section>` : ""}
-${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
@@ -1600,7 +1623,6 @@ function pageBlogue(cfg) {
     pageHero("Blogue", "Le blogue <em>immobilier.</em>", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété.") + `
 <section><div class="wrap"><div class="blogue-grille">${cartes}</div>
 <p style="margin-top:36px"><a class="btn ghost" href="https://blogue.royallepage.ca/" target="_blank" rel="noopener">Tous les articles sur le blogue de Royal LePage</a></p></div></section>
-${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
@@ -1625,7 +1647,6 @@ function pageArticle(cfg, a) {
   ${corps}
 </article></div></section>
 ${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteArticle).join("")}</div></div></section>` : ""}
-${band("Une question sur votre projet?", "Un appel de 15 minutes, sans engagement.", "Réserver un appel", RDV(cfg), rdvAttrs(cfg))}
 ` + footer(cfg) + end;
 }
 
