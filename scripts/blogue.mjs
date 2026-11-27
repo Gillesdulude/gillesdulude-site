@@ -157,6 +157,21 @@ export const TEXTES = [
 const IMG = "https://blogue.royallepage.ca/wp-content/uploads/";
 export const ARTICLES_RLP = [
   {
+    slug: "blogue-deco-fetes-maison-a-vendre.html",
+    cat: ["Décoration", "Decor"],
+    titre: ["Tendances déco des Fêtes 2026 : ce qui est en vogue cette saison", "2026 holiday decor trends: what’s in style this season"],
+    auteur: "Michelle McNally", date: "2026-11-26",
+    image: IMG + "2026/11/2027-holiday-decor-heor-image.jpg", vignette: IMG + "2026/11/2027-holiday-decor-heor-image-1013x675.jpg",
+    resume: ["Couleurs profondes, objets vintage, grandes boucles et verdure : les tendances déco des Fêtes cette année, et comment décorer quand la maison est à vendre.", "Deep colours, vintage pieces, big bows and greenery: this year’s holiday decor trends, and how to decorate when your home is for sale."],
+    intro: ["Royal LePage présente les tendances déco des Fêtes pour 2026, avec des idées simples pour chaque style.", "Royal LePage presents the 2026 holiday decor trends, with simple ideas for each style."],
+    points: [
+      ["Les couleurs riches comme le bourgogne et le vert forêt remplacent les teintes vives.", "Rich colours like burgundy and forest green replace bright tones."],
+      ["Les décorations de famille et vintage reviennent en force.", "Family heirlooms and vintage decorations are back."],
+      ["Quand la maison est à vendre, on garde un décor sobre qui met la propriété en valeur.", "When the home is for sale, keep decor simple so the property shines."],
+    ],
+    url: "https://blogue.royallepage.ca/tendances-deco-des-fetes-2026-ce-qui-est-en-vogue-cette-saison/",
+  },
+  {
     slug: "blogue-marche-canadien-octobre-2026.html",
     cat: ["Tendances immobilières", "Market trends"],
     titre: ["Le marché immobilier canadien demeure stable en octobre, alors que les ventes et les inscriptions progressent légèrement", "Canada’s housing market holds steady in October as sales and listings edge up"],

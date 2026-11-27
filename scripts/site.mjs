@@ -1593,16 +1593,33 @@ const texteCompletRLP = (a) => {
   return h;
 };
 
+const PARTAGE_CSS = `<style>.partage{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0 34px}.partage span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#777;margin-right:6px}
+.partage a,.partage button{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid #d8d3cc;background:none;color:#130F0C;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;border-radius:0;transition:background .2s,color .2s}
+.partage a:hover,.partage button:hover{background:#130F0C;color:#F9F6F4;border-color:#130F0C}.partage svg{width:16px;height:16px;fill:currentColor}@media (max-width:600px){.partage a,.partage button{width:46px;height:46px;padding:0;justify-content:center;font-size:0}.partage b{font-size:0}.partage svg{width:18px;height:18px}}</style>`;
+const PARTAGE = `<div class="partage"><span>Partager</span>
+<a data-p="fb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.5V14h2.7v8z"/></svg>Facebook</a>
+<a data-p="li" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3.3 9h3.4v11.5H3.3zM9 9h3.3v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.4 4.2 5.4v6.4h-3.4v-5.7c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.8H9z"/></svg>LinkedIn</a>
+<a data-p="mail"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.6L4.6 7H4v.5l8 6.1 8-6.1V7h-.6z"/></svg>Courriel</a>
+<button type="button" data-p="copie"><svg viewBox="0 0 24 24"><path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10zm3 4H10a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16h-9V7h9z"/></svg><b style="font-weight:600">Copier le lien</b></button>
+</div><script>(()=>{const u=encodeURIComponent(location.href.split("#")[0].split("?")[0]),t=encodeURIComponent(document.querySelector("h1").textContent.trim());
+document.querySelectorAll(".partage").forEach(b=>{b.querySelector('[data-p=fb]').href="https://www.facebook.com/sharer/sharer.php?u="+u;
+b.querySelector('[data-p=li]').href="https://www.linkedin.com/sharing/share-offsite/?url="+u;
+b.querySelector('[data-p=mail]').href="mailto:?subject="+t+"&body="+t+"%0A%0A"+u;
+const c=b.querySelector('[data-p=copie]');c.onclick=()=>{navigator.clipboard.writeText(decodeURIComponent(u)).then(()=>{const l=c.querySelector("b"),o=l.textContent;l.textContent=document.documentElement.lang.startsWith("en")?"Link copied":"Lien copié";setTimeout(()=>l.textContent=o,1800)})}})})();</script>`;
+// Aperçu Facebook : photo, titre et lien propres à l'article
+const ogArticle = (h, slug, photo) => h.replace('<meta property="og:image" content="https://gillesdulude.com/assets/partage.jpg">', `<meta property="og:image" content="${/^https?:/.test(photo) ? photo : "https://gillesdulude.com/" + photo}"><meta property="og:type" content="article"><meta property="og:url" content="https://gillesdulude.com/${slug}">`).replace('<meta name="twitter:image" content="https://gillesdulude.com/assets/partage.jpg">', `<meta name="twitter:image" content="${/^https?:/.test(photo) ? photo : "https://gillesdulude.com/" + photo}">`).replace(/<meta property="og:image:(width|height)" content="\d+">\n?/g, "");
+
 function pageArticleRLP(cfg, a) {
   const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", image: a.image, author: { "@type": "Person", name: a.auteur }, publisher: { "@type": "Organization", name: "Royal LePage" }, isBasedOn: a.url, url: a.url }).replace(/</g, "\\u003c")}</script>`;
   const autres = triRLP().filter((b) => b !== a).slice(0, 3);
   const bouton = `<a class="lien-rlp" href="${esc(a.url)}" target="_blank" rel="noopener">Lire l'article complet sur Royal LePage</a>`;
-  return head(cfg, a.titre[0] + " | Blogue | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
+  return ogArticle(head(cfg, a.titre[0] + " | Blogue | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + PARTAGE_CSS + ld), a.slug, a.image) +
     header(cfg, "blogue.html") + `
 <section class="rlp-hero"><img src="${esc(a.image)}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async" referrerpolicy="no-referrer"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1></div><p class="credit">Photo : Royal LePage</p></section>
 <section><div class="wrap"><article class="article">
   <a class="retour" href="blogue.html">Retour au blogue</a>
   <p class="meta"><strong>Par ${esc(a.auteur)}</strong> · ${dateFr(a.date)} · Blogue Royal LePage</p>
+  ${PARTAGE}
 
   ${texteCompletRLP(a) ? `${texteCompletRLP(a)}
   <p class="source-bas">Article publié sur le blogue de Royal LePage. ${bouton.replace("Lire l'article complet sur Royal LePage", "Voir l'article original")}</p>` : `<p>${escG(a.intro[0])}</p>
@@ -1639,11 +1656,12 @@ function pageArticle(cfg, a) {
   fermer();
   const autres = ARTICLES_PUBLIES().filter((b) => b !== a).slice(0, 3);
   const ld = `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: a.titre[0], datePublished: a.date, inLanguage: "fr-CA", author: { "@type": "Person", name: "Gilles Jr. Dulude" }, publisher: { "@type": "Organization", name: "Gilles Jr. Dulude, courtier immobilier" } }).replace(/</g, "\\u003c")}</script>`;
-  return head(cfg, a.titre[0] + " | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + ld) +
+  return ogArticle(head(cfg, a.titre[0] + " | Gilles Jr. Dulude", a.resume[0], CSS_BLOGUE + PARTAGE_CSS + ld), a.slug, a.photo || "assets/partage.jpg") +
     header(cfg, "blogue.html") + (a.photo ? `<section class="rlp-hero"><img src="${a.photo}" alt="${esc(a.titre[0])}" fetchpriority="high" decoding="async"><div class="wrap"><p class="over">${esc(a.cat[0])}</p><h1>${esc(a.titre[0])}</h1></div></section>` : pageHero(esc(a.cat[0]), esc(a.titre[0]), esc(a.resume[0]))) + `
 <section><div class="wrap"><article class="article">
   <a class="retour" href="blogue.html">Retour au blogue</a>
   <p class="meta"><span>Par Gilles Jr. Dulude</span> · <span>${lectureFr(a)}</span></p>
+  ${PARTAGE}
   ${corps}
 </article></div></section>
 ${autres.length ? `<section><div class="wrap"><p class="over">À lire aussi</p><div class="blogue-grille" style="margin-top:20px">${autres.map(carteArticle).join("")}</div></div></section>` : ""}
