@@ -125,7 +125,7 @@ export const T = {
   "Mode d'achat": "How you'll buy", "Comptant": "Cash", "Financement approuvé": "Financing approved", "Financement en discussion": "Financing in discussion", "Financement à venir": "Financing to come",
   "Une propriété à vendre aussi?": "A property to sell as well?", "Oui, un immeuble": "Yes, a building", "Oui, une maison ou un condo": "Yes, a house or condo", "Peut-être": "Maybe",
   "Préapprobation à venir": "Pre-approval to come", "Préapprobation en cours": "Pre-approval in progress", "Préapprobation faite": "Pre-approved", "Achat comptant": "Cash purchase",
-  "Partager": "Share", "Courriel": "Email", "Copier le lien": "Copy link",
+  "Partager": "Share", "Envoyer par courriel": "Send by email", "Copier le lien": "Copy link",
   "Votre situation": "Your situation", "Est-ce le bon moment pour votre projet?": "Is this the right time for your project?",
   "Trouver mon prochain immeuble": "Find my next building", "Votre prochain immeuble": "Your next building", "Parlez-moi": "Tell me", "de votre projet.": "about your project.",
   "Immeubles de 5 logements et plus. Donnez-moi vos critères, je vous présente seulement les occasions qui en valent la peine.": "Buildings with 5 units or more. Give me your criteria and I'll only show you the opportunities worth your time.",

@@ -1593,19 +1593,27 @@ const texteCompletRLP = (a) => {
   return h;
 };
 
-const PARTAGE_CSS = `<style>.partage{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0 34px}.partage span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#777;margin-right:6px}
-.partage a,.partage button{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid #d8d3cc;background:none;color:#130F0C;font:600 12px/1 Gantari,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;border-radius:0;transition:background .2s,color .2s}
-.partage a:hover,.partage button:hover{background:#130F0C;color:#F9F6F4;border-color:#130F0C}.partage svg{width:16px;height:16px;fill:currentColor}@media (max-width:600px){.partage a,.partage button{width:46px;height:46px;padding:0;justify-content:center;font-size:0}.partage b{font-size:0}.partage svg{width:18px;height:18px}}</style>`;
+const PARTAGE_CSS = `<style>.partage{position:relative;display:flex;align-items:center;gap:10px;margin:6px 0 34px}.partage>span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#777;margin-right:8px}
+.partage .rond{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%!important;background:#130F0C;color:#F9F6F4;border:0;padding:0;cursor:pointer;transition:background .2s,transform .2s}
+.partage .rond:hover{background:#444;transform:translateY(-2px)}.partage .rond svg{width:17px;height:17px;fill:currentColor}
+.partage .menu{display:none;position:absolute;top:50px;left:0;z-index:5;background:#fff;border:1px solid #d8d3cc;box-shadow:0 12px 30px rgba(19,15,12,.12);min-width:220px}
+.partage .menu.ouvert{display:block}.partage .menu a,.partage .menu button{display:block;width:100%;text-align:left;padding:14px 18px;background:none;border:0;font:500 14px/1.2 Gantari,system-ui,sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:#130F0C;cursor:pointer;text-decoration:none!important;border-radius:0!important}
+.partage .menu a:hover,.partage .menu button:hover{background:#F2EFEC}</style>`;
 const PARTAGE = `<div class="partage"><span>Partager</span>
-<a data-p="fb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.5V14h2.7v8z"/></svg>Facebook</a>
-<a data-p="li" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3.3 9h3.4v11.5H3.3zM9 9h3.3v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.4 4.2 5.4v6.4h-3.4v-5.7c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.8H9z"/></svg>LinkedIn</a>
-<a data-p="mail"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.6L4.6 7H4v.5l8 6.1 8-6.1V7h-.6z"/></svg>Courriel</a>
-<button type="button" data-p="copie"><svg viewBox="0 0 24 24"><path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10zm3 4H10a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16h-9V7h9z"/></svg><b style="font-weight:600">Copier le lien</b></button>
-</div><script>(()=>{const u=encodeURIComponent(location.href.split("#")[0].split("?")[0]),t=encodeURIComponent(document.querySelector("h1").textContent.trim());
-document.querySelectorAll(".partage").forEach(b=>{b.querySelector('[data-p=fb]').href="https://www.facebook.com/sharer/sharer.php?u="+u;
-b.querySelector('[data-p=li]').href="https://www.linkedin.com/sharing/share-offsite/?url="+u;
-b.querySelector('[data-p=mail]').href="mailto:?subject="+t+"&body="+t+"%0A%0A"+u;
-const c=b.querySelector('[data-p=copie]');c.onclick=()=>{navigator.clipboard.writeText(decodeURIComponent(u)).then(()=>{const l=c.querySelector("b"),o=l.textContent;l.textContent=document.documentElement.lang.startsWith("en")?"Link copied":"Lien copié";setTimeout(()=>l.textContent=o,1800)})}})})();</script>`;
+<a class="rond" data-p="fb" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.5V14h2.7v8z"/></svg></a>
+<a class="rond" data-p="x" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg></a>
+<a class="rond" data-p="li" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3.3 9h3.4v11.5H3.3zM9 9h3.3v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.4 4.2 5.4v6.4h-3.4v-5.7c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.8H9z"/></svg></a>
+<a class="rond" data-p="wa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.2-.1-1-.4-2-1.2-.7-.7-1.2-1.5-1.4-1.7-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 2.2.9 2.6.7 3.1.6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3z"/></svg></a>
+<button type="button" class="rond" data-p="plus" aria-label="Partager"><svg viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.2 1l-7-4.1a3 3 0 0 0 0-1.8l7-4.1A3 3 0 1 0 15 5a3 3 0 0 0 .1.9l-7 4.1a3 3 0 1 0 0 4l7 4.1a3 3 0 1 0 2.9-2.1z"/></svg></button>
+<div class="menu"><a data-p="mail">Envoyer par courriel</a><button type="button" data-p="copie">Copier le lien</button></div>
+</div><script>(()=>{const L=location.href.split("#")[0].split("?")[0],u=encodeURIComponent(L),T=document.querySelector("h1").textContent.trim(),t=encodeURIComponent(T),en=document.documentElement.lang.startsWith("en");
+document.querySelectorAll(".partage").forEach(b=>{const q=k=>b.querySelector('[data-p='+k+']');
+q("fb").href="https://www.facebook.com/sharer/sharer.php?u="+u;q("x").href="https://twitter.com/intent/tweet?url="+u+"&text="+t;
+q("li").href="https://www.linkedin.com/sharing/share-offsite/?url="+u;q("wa").href="https://wa.me/?text="+t+"%20"+u;
+q("mail").href="mailto:?subject="+t+"&body="+t+"%0A%0A"+u;const m=b.querySelector(".menu");
+q("plus").onclick=e=>{e.stopPropagation();if(navigator.share&&matchMedia("(pointer:coarse)").matches){navigator.share({title:T,url:L}).catch(()=>{});return}m.style.left=q("plus").offsetLeft+"px";m.classList.toggle("ouvert")};
+document.addEventListener("click",()=>m.classList.remove("ouvert"));
+q("copie").onclick=e=>{e.stopPropagation();navigator.clipboard.writeText(L).then(()=>{q("copie").textContent=en?"Link copied":"Lien copié";setTimeout(()=>{q("copie").textContent=en?"Copy link":"Copier le lien";m.classList.remove("ouvert")},1500)})}})})();</script>`;
 // Aperçu Facebook : photo, titre et lien propres à l'article
 const ogArticle = (h, slug, photo) => h.replace('<meta property="og:image" content="https://gillesdulude.com/assets/partage.jpg">', `<meta property="og:image" content="${/^https?:/.test(photo) ? photo : "https://gillesdulude.com/" + photo}"><meta property="og:type" content="article"><meta property="og:url" content="https://gillesdulude.com/${slug}">`).replace('<meta name="twitter:image" content="https://gillesdulude.com/assets/partage.jpg">', `<meta name="twitter:image" content="${/^https?:/.test(photo) ? photo : "https://gillesdulude.com/" + photo}">`).replace(/<meta property="og:image:(width|height)" content="\d+">\n?/g, "");
 
