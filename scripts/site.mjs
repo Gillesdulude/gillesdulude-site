@@ -1540,6 +1540,14 @@ const CSS_BLOGUE = `<style>
 .article h2{font-size:28px;margin:44px 0 14px}
 .article p,.article li{font-size:18px;line-height:1.7}
 .article ul{padding-left:22px;margin:0 0 20px}
+.article h2{text-transform:none!important;letter-spacing:0!important}
+.article p.chapeau{font-size:21px;line-height:1.6;color:#130F0C}
+.article h2.num{display:flex;gap:18px;align-items:baseline;font-size:26px;line-height:1.25;margin:56px 0 16px;padding-top:28px;border-top:1px solid var(--line)}
+.article h2.num span{font-weight:400;font-size:15px;letter-spacing:.2em;color:#8a857e;flex:none}
+.article p.astuce{background:#F2EFEC;border-left:3px solid #130F0C;padding:18px 22px;margin:22px 0}
+.article p.astuce strong{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
+.article strong{font-weight:600;color:#130F0C}
+.article .instagram-media{margin:28px auto!important;max-width:480px!important;min-width:280px!important}
 .article .suite{display:inline-block;margin-top:26px}
 .article .retour{display:inline-block;margin-bottom:26px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:inherit}
 .blogue-carte.img{padding:0}.blogue-carte.img .ph{aspect-ratio:3/2;overflow:hidden;background:#2b2724}
@@ -1579,17 +1587,43 @@ const texteCompletRLP = (a) => {
   const f = `contenu/blogue-rlp/${a.slug.replace(/\.html$/, "")}.txt`;
   if (!existsSync(f)) return "";
   const lignes = readFileSync(f, "utf8").replace(/\r/g, "").split("\n").map((l) => l.trim());
-  let h = "", liste = [];
+  // Blocs : paragraphes séparés, avec leur type
+  const bl = [];
+  lignes.forEach((l, i) => {
+    if (!l) return;
+    const ig = l.match(/^https?:\/\/(?:www\.)?instagram\.com\/(p|reel)\/([\w-]+)/);
+    if (ig) return bl.push({ t: "ig", v: `https://www.instagram.com/${ig[1]}/${ig[2]}/` });
+    if (/^[-•]\s+/.test(l)) return bl.push({ t: "li", v: l.replace(/^[-•]\s+/, "") });
+    if (/^##\s*/.test(l)) return bl.push({ t: "h2", v: l.replace(/^##\s*/, "") });
+    const suivant = lignes.slice(i + 1).find((x) => x);
+    const court = l.length < 110 && !/[.!:;,]$/.test(l);
+    if (/^\d{1,2}[.)]\s+\S/.test(l) && l.length < 120) return bl.push({ t: "h2", v: l, num: true });
+    if (court && /\?$/.test(l) && !/[.!]\s/.test(l)) return bl.push({ t: "h2", v: l });
+    if (court && i > 0 && suivant && suivant.length > 110) return bl.push({ t: "h2", v: l });
+    bl.push({ t: "p", v: l });
+  });
+  // Première phrase en gras dans une suite de conseils (3 paragraphes ou plus qui commencent par une phrase courte)
+  const premiere = (v) => { const m = v.match(/^([^.!?]{8,75}[.!?])\s+\S/); return m ? m[1] : null; };
+  for (let i = 0; i < bl.length; ) {
+    let j = i; while (j < bl.length && bl[j].t === "p" && premiere(bl[j].v) && !/^[^:]{3,40}\s:\s/.test(bl[j].v)) j++;
+    if (j - i >= 3) for (let k = i; k < j; k++) bl[k].gras = premiere(bl[k].v);
+    i = Math.max(j, i + 1);
+  }
+  let h = "", liste = [], premierP = true;
   const fermer = () => { if (liste.length) { h += `<ul>${liste.join("")}</ul>`; liste = []; } };
-  for (const l of lignes) {
-    if (!l) { fermer(); continue; }
-    if (/^[-•]\s+/.test(l)) { liste.push(`<li>${esc(l.replace(/^[-•]\s+/, ""))}</li>`); continue; }
+  for (const x of bl) {
+    if (x.t === "li") { liste.push(`<li>${esc(x.v)}</li>`); continue; }
     fermer();
-    if (/^##\s*/.test(l)) h += `<h2>${esc(l.replace(/^##\s*/, ""))}</h2>`;
-    else if (l.length < 140 && /\?$/.test(l) && !/[.!]\s/.test(l)) h += `<h2>${esc(l)}</h2>`;
-    else h += `<p>${esc(l)}</p>`;
+    if (x.t === "ig") { h += `<blockquote class="instagram-media" data-instgrm-permalink="${x.v}" data-instgrm-version="14"><a href="${x.v}" target="_blank" rel="noopener">Voir cette publication sur Instagram</a></blockquote>`; continue; }
+    if (x.t === "h2") { h += x.num ? `<h2 class="num"><span>${esc(x.v.match(/^\d+/)[0].padStart(2, "0"))}</span>${esc(x.v.replace(/^\d{1,2}[.)]\s+/, ""))}</h2>` : `<h2>${esc(x.v)}</h2>`; continue; }
+    const lab = x.v.match(/^([^:]{3,40})\s:\s+(.+)$/);
+    if (lab && !/[.!?]/.test(lab[1])) { h += `<p class="astuce"><strong>${esc(lab[1])}</strong>${esc(lab[2])}</p>`; continue; }
+    if (x.gras) { h += `<p><strong>${esc(x.gras)}</strong> ${esc(x.v.slice(x.gras.length).trim())}</p>`; continue; }
+    h += premierP ? `<p class="chapeau">${esc(x.v)}</p>` : `<p>${esc(x.v)}</p>`;
+    premierP = false;
   }
   fermer();
+  if (h.includes("instagram-media")) h += `<script async src="https://www.instagram.com/embed.js"></script>`;
   return h;
 };
 
@@ -1646,8 +1680,11 @@ function pageBlogue(cfg) {
   return head(cfg, "Blogue | Gilles Jr. Dulude, courtier immobilier résidentiel et commercial", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété, présentés par Gilles Jr. Dulude, courtier sur la Rive-Sud.", CSS_BLOGUE) +
     header(cfg, "blogue.html") +
     pageHero("Blogue", "Le blogue <em>immobilier.</em>", "Des articles choisis sur le blogue de Royal LePage pour vendre, acheter et prendre soin de votre propriété.") + `
-<section><div class="wrap"><div class="blogue-grille">${cartes}</div>
-<p style="margin-top:36px"><a class="btn ghost" href="https://blogue.royallepage.ca/" target="_blank" rel="noopener">Tous les articles sur le blogue de Royal LePage</a></p></div></section>
+<section><div class="wrap"><div class="blogue-grille" id="grille-blogue">${cartes}</div>
+<p class="plus-articles" style="margin-top:44px;text-align:center"><button type="button" class="btn ghost" id="plus-articles">Voir plus d'articles</button></p></div></section>
+<script>(()=>{const c=[...document.querySelectorAll("#grille-blogue>*")],b=document.getElementById("plus-articles");let n=9;
+const maj=()=>{c.forEach((x,i)=>x.style.display=i<n?"":"none");b.parentNode.style.display=n<c.length?"":"none"};
+b.onclick=()=>{n+=9;maj()};maj()})();</script>
 ` + footer(cfg) + end;
 }
 
