@@ -1547,7 +1547,7 @@ const CSS_BLOGUE = `<style>
 .article p.astuce{background:#F2EFEC;border-left:3px solid #130F0C;padding:18px 22px;margin:22px 0}
 .article p.astuce strong{display:block;font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
 .article strong{font-weight:600;color:#130F0C}
-.article .instagram-media{margin:28px auto!important;max-width:480px!important;min-width:280px!important}
+.article .instagram-media{margin:32px auto!important;width:100%!important;max-width:620px!important;min-width:280px!important}
 .article .suite{display:inline-block;margin-top:26px}
 .article .retour{display:inline-block;margin-bottom:26px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:inherit}
 .blogue-carte.img{padding:0}.blogue-carte.img .ph{aspect-ratio:3/2;overflow:hidden;background:#2b2724}
